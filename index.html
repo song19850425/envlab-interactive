@@ -126,50 +126,10 @@ h2.collapsed .arrow{transform:rotate(-90deg)}
   <a class="card" href="Decision-Dashboard-v2.0.html"><span class="ico">📊</span><span class="info"><span class="nm">Decision Dashboard</span><span class="sg">CEO决策面板</span></span></a>
 </div>
 
-<!-- 部署说明 -->
-<h2 style="background:rgba(255,255,255,.04);color:var(--muted);border-left:3px solid #475569;cursor:default">📋 三种部署方式 · 成本对比</h2>
 
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:8px 0">
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px">
-    <div style="font-size:13px;font-weight:700;color:var(--green)">🟢 GitHub Pages</div>
-    <div style="font-size:10px;color:var(--muted);margin:4px 0">费用：<strong style="color:var(--green)">$0</strong></div>
-    <div style="font-size:10px;color:var(--muted)">HTTPS · 自定义域名 · 全球CDN<br>适合主站，国内访问需加速</div>
-    <div style="font-size:10px;color:var(--muted);margin-top:4px;padding:4px;background:rgba(0,0,0,.2);border-radius:4px">git push → 自动部署</div>
-  </div>
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px">
-    <div style="font-size:13px;font-weight:700;color:var(--amber)">🟡 腾讯云 COS 静态网站</div>
-    <div style="font-size:10px;color:var(--muted);margin:4px 0">费用：<strong style="color:var(--amber)">≈¥3-5/月</strong></div>
-    <div style="font-size:10px;color:var(--muted)">国内访问快 · 支持CDN加速<br>5GB流量内几乎免费</div>
-    <div style="font-size:10px;color:var(--muted);margin-top:4px;padding:4px;background:rgba(0,0,0,.2);border-radius:4px">上传文件夹 → 开启托管</div>
-  </div>
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px">
-    <div style="font-size:13px;font-weight:700;color:var(--purple)">🟣 Vercel / Netlify</div>
-    <div style="font-size:10px;color:var(--muted);margin:4px 0">费用：<strong style="color:var(--green)">$0</strong></div>
-    <div style="font-size:10px;color:var(--muted)">自动CI/CD · Serverless<br>国内访问速度一般</div>
-    <div style="font-size:10px;color:var(--muted);margin-top:4px;padding:4px;background:rgba(0,0,0,.2);border-radius:4px">连GitHub → 自动部署</div>
-  </div>
-</div>
+<script>function tog(e,i){document.getElementById(i).classList.toggle('hide');e.classList.toggle('collapsed')}</script>
 
-<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;margin:8px 0">
-  <div style="font-size:12px;font-weight:700;margin-bottom:4px">✅ 推荐方案：GitHub Pages 主站 + 腾讯云 COS 国内镜像</div>
-  <div style="font-size:11px;color:var(--muted);line-height:1.7">
-    1️⃣ 创建 GitHub 仓库 → 上传本文件夹 → 开启 Pages → 获得 <code style="background:rgba(0,0,0,.2);padding:1px 4px;border-radius:2px">yourname.github.io/envlab</code><br>
-    2️⃣ 新购域名（如 envlab.cn ¥35/年）→ 绑定 GitHub Pages<br>
-    3️⃣ 腾讯云 COS 创建 bucket → 上传同样文件 → 开启静态网站 → 绑定域名 → 可选 CDN<br>
-    4️⃣ 用 <code style="background:rgba(0,0,0,.2);padding:1px 4px;border-radius:2px">coscmd sync</code> 脚本保持两端同步
-  </div>
-</div>
-
-<script>
-function tog(el, id){
-  const c = document.getElementById(id);
-  c.classList.toggle('hide');
-  el.classList.toggle('collapsed');
-}
-</script>
-
-<div class="ft">EnvLab · 全部页面为单文件 HTML · 部署即用 · <em>jinghao.song@gmail.com</em></div>
-<span style="display:block;text-align:center;font-size:10px;color:var(--muted);margin-top:-16px;padding-bottom:16px">部署脚本 <code style="background:rgba(0,0,0,.2);padding:1px 4px;border-radius:2px">python deploy.py help</code></span>
+<div class="ft">EnvLab · 环境检测交互实验室 · <em>jinghao.song@gmail.com</em></div>
 </div>
 </body>
 </html>
