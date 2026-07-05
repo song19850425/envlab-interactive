@@ -13,6 +13,9 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'PingFang 
 .hero h1{font-size:26px;font-weight:800;position:relative;z-index:1}
 .hero h1 em{color:var(--pink);font-style:normal}
 .hero .hb{font-size:12px;color:var(--muted);margin-top:4px;position:relative}
+.hero .lang{position:absolute;top:16px;right:20px;z-index:2;font-size:11px}
+.hero .lang a{color:var(--accent);text-decoration:none;padding:4px 10px;border:1px solid rgba(14,165,233,.2);border-radius:6px;background:rgba(14,165,233,.06)}
+.hero .lang a:hover{background:rgba(14,165,233,.12)}
 .hero .count{display:flex;gap:20px;justify-content:center;margin-top:14px;position:relative;flex-wrap:wrap}
 .hero .count span{font-size:11px;color:var(--muted)}
 .hero .count b{color:var(--accent);font-weight:700}
@@ -44,6 +47,7 @@ h2.collapsed .arrow{transform:rotate(-90deg)}
 <body>
 
 <div class="hero">
+  <div class="lang"><a href="en/index.html">🇬🇧 English</a></div>
   <h1>🧪 <em>EnvLab</em> 环境检测交互实验室</h1>
   <div class="hb">25 个 PhET 级交互教学页面 · 6 个亲子科学实验 · 全部单文件 · 即开即用</div>
   <div class="count">

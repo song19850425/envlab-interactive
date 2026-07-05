@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EnvLab · Environmental Testing Interactive Lab</title>
+<style>
+:root{--bg:#0a0e17;--card:#131a2e;--card2:#1e293b;--border:rgba(255,255,255,.06);--text:#e2e8f0;--muted:#64748b;--accent:#0ea5e9;--pink:#f472b6;--green:#22c55e;--amber:#f59e0b;--purple:#a78bfa}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;min-height:100vh}
+.hero{text-align:center;padding:40px 20px 28px;background:linear-gradient(135deg,#0f172a,#1e1b4b);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 40%,rgba(244,114,182,.05) 0%,transparent 50%),radial-gradient(circle at 70% 60%,rgba(14,165,233,.03) 0%,transparent 40%);pointer-events:none}
+.hero h1{font-size:26px;font-weight:800;position:relative;z-index:1}
+.hero h1 em{color:var(--pink);font-style:normal}
+.hero .hb{font-size:12px;color:var(--muted);margin-top:4px;position:relative}
+.hero .lang{position:absolute;top:16px;right:20px;z-index:2;font-size:11px}
+.hero .lang a{color:var(--accent);text-decoration:none;padding:4px 10px;border:1px solid rgba(14,165,233,.2);border-radius:6px;background:rgba(14,165,233,.06)}
+.hero .lang a:hover{background:rgba(14,165,233,.12)}
+.hero .count{display:flex;gap:20px;justify-content:center;margin-top:14px;position:relative;flex-wrap:wrap}
+.hero .count span{font-size:11px;color:var(--muted)}
+.hero .count b{color:var(--accent);font-weight:700}
+.wrap{max-width:960px;margin:0 auto;padding:16px}
+h2{font-size:14px;font-weight:700;margin:16px 0 6px;padding:6px 12px;border-radius:6px;display:flex;align-items:center;gap:6px;cursor:pointer}
+h2 .arrow{font-size:10px;transition:transform .2s;color:var(--muted)}
+h2.collapsed .arrow{transform:rotate(-90deg)}
+.cat{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px;margin-bottom:4px;overflow:hidden;max-height:2000px;transition:max-height .4s}
+.cat.hide{max-height:0;margin-bottom:0}
+.card{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--card);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text);transition:.2s;font-size:12px}
+.card:hover{background:var(--card2);border-color:var(--accent);transform:translateY(-1px)}
+.card .ico{font-size:16px;width:22px;text-align:center;flex-shrink:0}
+.card .info{flex:1;min-width:0}
+.card .info .nm{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .info .sg{font-size:9px;color:var(--muted)}
+.card .tag{font-size:9px;padding:1px 5px;border-radius:3px;font-weight:600;flex-shrink:0}
+.tag-p{background:rgba(244,114,182,.15);color:var(--pink)}
+.tag-b{background:rgba(14,165,233,.15);color:var(--accent)}
+.tag-g{background:rgba(34,197,55,.15);color:var(--green)}
+.tag-y{background:rgba(251,191,36,.15);color:var(--amber)}
+.tag-r{background:rgba(147,51,234,.15);color:var(--purple)}
+.ft{text-align:center;padding:24px;font-size:11px;color:var(--muted);margin-top:20px;border-top:1px solid var(--border)}
+.ft em{color:var(--pink);font-style:normal}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="lang"><a href="../index.html">🇨🇳 中文</a></div>
+  <h1>🧪 <em>EnvLab</em> Interactive Lab</h1>
+  <div class="hb">PhET-style environmental testing simulations · Drag, click, explore — no login required</div>
+  <div class="count">
+    <span>🧪 Water/Instruments <b>14</b></span>
+    <span>🧱 Soil Remediation <b>6</b></span>
+    <span>🌍 Environmental Sampling <b>5</b></span>
+    <span>🎪 Parent-Child Science <b>6</b></span>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- Parent-Child Science Lab -->
+<h2 style="background:rgba(244,114,182,.08);color:var(--pink);border-left:3px solid var(--pink)" onclick="tog(this,'c0')">
+  <span class="arrow">▼</span> 🎪 Parent-Child Science Lab
+</h2>
+<div class="cat" id="c0">
+  <div class="card" onclick="window.open('../亲子实验-pH试纸-PhET级.html','_blank')"><span class="ico">🧪</span><span class="info"><span class="nm">pH Paper Test · Household Liquids</span><span class="sg">10 liquids · color chart</span></span><span class="tag tag-p">classic</span></div>
+  <div class="card" onclick="window.open('../显微镜看微生物-PhET级叙事教学.html','_blank')"><span class="ico">🔬</span><span class="info"><span class="nm">Microscope · Microorganisms</span><span class="sg">7 organisms · 3 zoom levels</span></span><span class="tag tag-p">classic</span></div>
+  <div class="card" onclick="window.open('../噪声仪测吉他-PhET级叙事教学.html','_blank')"><span class="ico">🎸</span><span class="info"><span class="nm">Sound Meter · Guitar dB</span><span class="sg">6 strings · everyday sounds</span></span><span class="tag tag-p">classic</span></div>
+  <div class="card" onclick="window.open('../自制净水器-PhET级叙事教学.html','_blank')"><span class="ico">🚰</span><span class="info"><span class="nm">DIY Water Filter</span><span class="sg">6 materials · stacking · scoring</span></span><span class="tag tag-p">classic</span></div>
+  <div class="card" onclick="window.open('../亲子实验-十万分之一天平-PhET级.html','_blank')"><span class="ico">⚖️</span><span class="info"><span class="nm">0.01mg Precision Balance</span><span class="sg">draft shield · vibration · tare</span></span><span class="tag tag-p">🆕</span></div>
+  <div class="card" onclick="window.open('../亲子实验-PM2.5监测-PhET级.html','_blank')"><span class="ico">🌫️</span><span class="info"><span class="nm">PM2.5 Monitor</span><span class="sg">weather · sampling · AQI</span></span><span class="tag tag-p">🆕</span></div>
+</div>
+
+<!-- Soil & Groundwater -->
+<h2 style="background:rgba(14,165,233,.08);color:var(--accent);border-left:3px solid var(--accent)" onclick="tog(this,'c1')">
+  <span class="arrow">▼</span> 🧱 Soil & Groundwater Remediation
+</h2>
+<div class="cat" id="c1">
+  <div class="card" onclick="window.open('../SVE土壤气提-PhET级升级.html','_blank')"><span class="ico">🌬️</span><span class="info"><span class="nm">SVE Soil Vapor Extraction</span><span class="sg">4 parameters + concentration curve</span></span></div>
+  <div class="card" onclick="window.open('../土壤淋洗洗脱-PhET级升级.html','_blank')"><span class="ico">💧</span><span class="info"><span class="nm">Soil Washing</span><span class="sg">3 reagents + percolation animation</span></span></div>
+  <div class="card" onclick="window.open('../P&T抽水处理-PhET级升级.html','_blank')"><span class="ico">🕳️</span><span class="info"><span class="nm">Pump & Treat</span><span class="sg">water table · plume shrinkage</span></span></div>
+  <div class="card" onclick="window.open('../截获槽暗管-PhET级升级.html','_blank')"><span class="ico">🧱</span><span class="info"><span class="nm">Hydraulic Cut-off Wall</span><span class="sg">wall vs no-wall comparison</span></span></div>
+  <div class="card" onclick="window.open('../微生物修复-PhET级升级.html','_blank')"><span class="ico">🦠</span><span class="info"><span class="nm">In-Situ Bioremediation</span><span class="sg">aerobic/anaerobic + S-curve</span></span></div>
+  <div class="card" onclick="window.open('../AAS原子吸收-PhET级升级.html','_blank')"><span class="ico">⚗️</span><span class="info"><span class="nm">AAS Atomic Absorption</span><span class="sg">heavy metal detection</span></span></div>
+</div>
+
+<!-- Environmental Sampling -->
+<h2 style="background:rgba(251,191,36,.08);color:var(--amber);border-left:3px solid var(--amber)" onclick="tog(this,'c2')">
+  <span class="arrow">▼</span> 🌍 Environmental Sampling
+</h2>
+<div class="cat" id="c2">
+  <div class="card" onclick="window.open('../地表水采样布点-PhET级升级.html','_blank')"><span class="ico">🌊</span><span class="info"><span class="nm">Surface Water Sampling</span><span class="sg">SVG river · 3 depths</span></span></div>
+  <div class="card" onclick="window.open('../土壤采样布点-PhET级升级.html','_blank')"><span class="ico">🌱</span><span class="info"><span class="nm">Soil Sampling Grid Design</span><span class="sg">3 methods · sample count calc</span></span></div>
+  <div class="card" onclick="window.open('../地下水洗井采样-PhET级升级.html','_blank')"><span class="ico">💧</span><span class="info"><span class="nm">Groundwater Purging & Sampling</span><span class="sg">3 parameter stabilization</span></span></div>
+  <div class="card" onclick="window.open('../环境空气PM25采样-PhET级升级.html','_blank')"><span class="ico">🌬️</span><span class="info"><span class="nm">Ambient Air PM2.5 Sampling</span><span class="sg">filter · calibration · sampling</span></span></div>
+  <div class="card" onclick="window.open('../固定源废气采样-PhET级升级.html','_blank')"><span class="ico">🏭</span><span class="info"><span class="nm">Stationary Source Emission Sampling</span><span class="sg">isokinetic · stack grid</span></span></div>
+</div>
+
+<!-- Water & Instrument Analysis -->
+<h2 style="background:rgba(34,197,55,.08);color:var(--green);border-left:3px solid var(--green)" onclick="tog(this,'c3')">
+  <span class="arrow">▼</span> 🧪 Water Quality & Instrument Analysis
+</h2>
+<div class="cat" id="c3">
+  <div class="card" onclick="window.open('../总氮测定-PhET级升级.html','_blank')"><span class="ico">🧪</span><span class="info"><span class="nm">Total Nitrogen</span><span class="sg">dual wavelength · standard curve</span></span></div>
+  <div class="card" onclick="window.open('../浊度测定-PhET级升级.html','_blank')"><span class="ico">🧪</span><span class="info"><span class="nm">Turbidity Measurement</span><span class="sg">4 samples · calibration · comparison</span></span></div>
+  <div class="card" onclick="window.open('../GC-MS气质联用-PhET级升级.html','_blank')"><span class="ico">⚗️</span><span class="info"><span class="nm">GC-MS</span><span class="sg">chromatogram + mass spectrum</span></span></div>
+  <div class="card" onclick="window.open('../HPLC液相色谱-PhET级升级.html','_blank')"><span class="ico">⚗️</span><span class="info"><span class="nm">HPLC</span><span class="sg">mobile phase · resolution</span></span></div>
+  <div class="card" onclick="window.open('../ICP-OES等离子体发射光谱-PhET级升级.html','_blank')"><span class="ico">⚗️</span><span class="info"><span class="nm">ICP-OES</span><span class="sg">multi-element simultaneous</span></span></div>
+  <div class="card" onclick="window.open('../AFS原子荧光-PhET级升级.html','_blank')"><span class="ico">⚗️</span><span class="info"><span class="nm">AFS Atomic Fluorescence</span><span class="sg">As/Se/Hg detection</span></span></div>
+  <div class="card" onclick="window.open('../LC-MS液质联用-PhET级升级.html','_blank')"><span class="ico">⚗️</span><span class="info"><span class="nm">LC-MS</span><span class="sg">ion source · mass spectrum</span></span></div>
+  <div class="card" onclick="window.open('../FTIR红外光谱-PhET级升级.html','_blank')"><span class="ico">⚗️</span><span class="info"><span class="nm">FTIR</span><span class="sg">functional group · fingerprint</span></span></div>
+</div>
+
+<!-- Read & Tools -->
+<h2 style="background:rgba(147,51,234,.08);color:var(--purple);border-left:3px solid var(--purple)" onclick="tog(this,'c4')">
+  <span class="arrow">▼</span> 📖 Assessment Tools & References
+</h2>
+<div class="cat" id="c4">
+  <div class="card" onclick="window.open('../读懂一条河Demo.html','_blank')"><span class="ico">🌊</span><span class="info"><span class="nm">River Health Assessment</span><span class="sg">water quality demo</span></span></div>
+  <div class="card" onclick="window.open('../环境质量综合体检中心.html','_blank')"><span class="ico">🩺</span><span class="info"><span class="nm">Environmental Health Checkup</span><span class="sg">multi-dimension analysis</span></span></div>
+  <div class="card" onclick="window.open('../监测方案智能生成器.html','_blank')"><span class="ico">📐</span><span class="info"><span class="nm">Monitoring Plan Generator</span><span class="sg">3-step generation</span></span></div>
+  <div class="card" onclick="window.open('../环境质量空间关联分析.html','_blank')"><span class="ico">🗺️</span><span class="info"><span class="nm">Spatial Correlation Analysis</span><span class="sg">geo-environmental</span></span></div>
+  <div class="card" onclick="window.open('../气相色谱方法开发速查表.html','_blank')"><span class="ico">🧪</span><span class="info"><span class="nm">GC Method Dev Quick Reference</span><span class="sg">method development</span></span></div>
+  <div class="card" onclick="window.open('../水质评价标准速查表.html','_blank')"><span class="ico">📊</span><span class="info"><span class="nm">Water Quality Standards Ref</span><span class="sg">standard limits lookup</span></span></div>
+</div>
+
+<script>function tog(e,i){document.getElementById(i).classList.toggle('hide');e.classList.toggle('collapsed')}</script>
+
+<div class="ft">EnvLab · All pages are standalone single-file HTML · <em>jinghao.song@gmail.com</em></div>
+
+</div>
+</body>
+</html>
