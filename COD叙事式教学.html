@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COD 检测 · 叙事式交互教学</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --ink: #1a1a2e;
+            --ink-light: #555;
+            --paper: #faf9f6;
+            --paper-warm: #f5f0e8;
+            --accent: #c0362c;
+            --accent-light: #fdf2f0;
+            --green: #2d6a4f;
+            --green-light: #f0fdf4;
+            --gold: #b45309;
+            --gold-light: #fefce8;
+            --blue: #1e40af;
+            --blue-light: #eff6ff;
+            --border: #e8e0d4;
+            --serif: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', serif;
+            --sans: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--sans);
+            color: var(--ink);
+            background: var(--paper);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Scroll Progress ── */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--gold));
+            z-index: 1000; transition: width 0.1s linear;
+        }
+
+        /* ── Section Nav ── */
+        #section-nav {
+            position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+            z-index: 999; display: flex; flex-direction: column; gap: 14px;
+        }
+        .nav-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: var(--border); cursor: pointer; transition: 0.3s;
+            border: 2px solid transparent; position: relative;
+        }
+        .nav-dot.active { background: var(--accent); transform: scale(1.5); }
+        .nav-dot:hover { border-color: var(--accent); }
+        .nav-dot .nav-label {
+            position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+            font-size: 11px; white-space: nowrap; color: var(--ink-light);
+            background: #fff; padding: 3px 10px; border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); opacity: 0;
+            pointer-events: none; transition: opacity 0.2s;
+        }
+        .nav-dot:hover .nav-label { opacity: 1; }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 40px 24px; position: relative;
+            background: linear-gradient(180deg, var(--paper) 0%, var(--paper-warm) 100%);
+        }
+        .hero-badge {
+            display: inline-block; padding: 6px 18px; border-radius: 20px;
+            background: var(--accent-light); color: var(--accent);
+            font-size: 12px; font-weight: 600; letter-spacing: 1px;
+            margin-bottom: 24px; border: 1px solid rgba(192,54,44,0.15);
+        }
+        .hero h1 {
+            font-family: var(--serif); font-size: clamp(36px, 6vw, 72px);
+            font-weight: 900; line-height: 1.1; color: var(--ink);
+            max-width: 700px;
+        }
+        .hero h1 em { font-style: normal; color: var(--accent); }
+        .hero-sub {
+            margin-top: 20px; font-size: clamp(14px, 2vw, 18px);
+            color: var(--ink-light); max-width: 520px; line-height: 1.7;
+        }
+        .hero-stats { display: flex; gap: 40px; margin-top: 48px; flex-wrap: wrap; justify-content: center; }
+        .hero-stat { text-align: center; }
+        .hero-stat .num {
+            font-family: var(--serif); font-size: 40px; font-weight: 900;
+            color: var(--accent); display: block; line-height: 1;
+        }
+        .hero-stat .lbl { font-size: 12px; color: var(--ink-light); margin-top: 4px; }
+
+        .scroll-hint {
+            position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            color: var(--ink-light); font-size: 12px; letter-spacing: 1px;
+            animation: float 2s ease-in-out infinite;
+        }
+        .scroll-hint .arrow { font-size: 18px; }
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        /* ── Generic Section ── */
+        .section {
+            max-width: 900px; margin: 0 auto; padding: 100px 24px;
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .section.visible { opacity: 1; transform: translateY(0); }
+
+        .section-num {
+            font-size: 11px; font-weight: 600; letter-spacing: 3px;
+            color: var(--accent); text-transform: uppercase; margin-bottom: 8px;
+        }
+        .section-title {
+            font-family: var(--serif); font-size: clamp(28px, 4vw, 48px);
+            font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 12px;
+        }
+        .section-desc {
+            font-size: 16px; color: var(--ink-light); line-height: 1.8;
+            max-width: 600px; margin-bottom: 48px;
+        }
+
+        /* ── Reagent Cards ── */
+        .reagent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 32px; }
+        .reagent-card {
+            background: #fff; border-radius: 12px; padding: 24px;
+            border: 1px solid var(--border); cursor: pointer;
+            transition: 0.35s ease; position: relative; overflow: hidden;
+        }
+        .reagent-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--accent); transform: scaleX(0); transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        .reagent-card:hover::before { transform: scaleX(1); }
+        .reagent-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+        .reagent-card.revealed { background: var(--accent-light); border-color: rgba(192,54,44,0.2); }
+        .reagent-icon { width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 14px; }
+        .reagent-name { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+        .reagent-formula { font-size: 12px; color: var(--ink-light); font-family: 'Courier New', monospace; }
+        .reagent-role { font-size: 13px; color: var(--ink-light); line-height: 1.6; margin-top: 10px; max-height: 0; overflow: hidden; transition: max-height 0.5s ease, margin-top 0.5s ease; }
+        .reagent-card.revealed .reagent-role { max-height: 200px; margin-top: 10px; }
+        .reagent-dose { display: inline-block; margin-top: 10px; padding: 3px 10px; background: var(--gold-light); color: var(--gold); border-radius: 6px; font-size: 12px; font-weight: 600; }
+
+        /* ── Instrument Cards ── */
+        .instrument-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-bottom: 32px; }
+        .instrument-card { background: #fff; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); transition: 0.35s ease; }
+        .instrument-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.1); }
+        .instrument-visual { height: 120px; display: flex; align-items: center; justify-content: center; font-size: 56px; position: relative; overflow: hidden; }
+        .instrument-visual::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.03) 100%); }
+        .instrument-info { padding: 20px; }
+        .instrument-name { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+        .instrument-name-en { font-size: 11px; color: var(--ink-light); font-weight: 400; }
+        .instrument-desc { font-size: 13px; color: var(--ink-light); line-height: 1.7; }
+        .instrument-spec { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+        .instrument-spec span { padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+
+        /* ── Procedure Timeline ── */
+        .procedure-timeline { position: relative; padding-left: 40px; }
+        .procedure-timeline::before { content: ''; position: absolute; left: 15px; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
+        .proc-step { position: relative; margin-bottom: 40px; opacity: 0; transform: translateX(-20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .proc-step.visible { opacity: 1; transform: translateX(0); }
+        .proc-step::before { content: ''; position: absolute; left: -33px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--paper); border: 2px solid var(--border); transition: 0.3s; }
+        .proc-step.visible::before { background: var(--accent); border-color: var(--accent); }
+        .proc-step-num { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 1px; margin-bottom: 4px; }
+        .proc-step-title { font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+        .proc-step-desc { font-size: 14px; color: var(--ink-light); line-height: 1.7; }
+        .proc-step-note { display: inline-block; margin-top: 8px; padding: 4px 12px; background: var(--gold-light); color: var(--gold); border-radius: 6px; font-size: 12px; }
+/* ── PhET-style COD Lab ── */
+        .phet-lab {
+            background: linear-gradient(160deg, #1a1a2e, #12121e);
+            border-radius: 20px; padding: 28px; position: relative;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.06);
+            overflow: hidden;
+        }
+        .phet-lab::before {
+            content: ''; position: absolute; inset: -1px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(59,130,246,.08), transparent 40%, transparent 60%, rgba(239,68,68,.08));
+            z-index: 0; pointer-events: none;
+        }
+        .phet-lab > * { position: relative; z-index: 1; }
+
+        /* Sample rack */
+        .sample-rack {
+            display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+            margin-bottom: 20px; padding: 12px 16px;
+            background: rgba(0,0,0,.25); border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .sample-card {
+            padding: 8px 16px; border-radius: 10px; cursor: pointer;
+            transition: .25s ease; text-align: center; min-width: 56px;
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+            font-size: 13px; color: #94a3b8;
+        }
+        .sample-card:hover { background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.2); }
+        .sample-card.active { background: rgba(59,130,246,0.12); border-color: #3b82f6; color: #60a5fa; box-shadow: 0 0 16px rgba(59,130,246,0.1); }
+        .sample-card .s-icon { font-size: 20px; display: block; margin-bottom: 2px; }
+
+        /* Lab bench grid */
+        .bench-grid {
+            display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px;
+            margin-bottom: 16px;
+        }
+        @media (max-width:640px) { .bench-grid { grid-template-columns: 1fr; } }
+
+        /* Main flask area */
+        .flask-stage {
+            background: rgba(0,0,0,.2); border-radius: 14px; padding: 20px;
+            display: flex; flex-direction: column; align-items: center;
+            gap: 12px; border: 1px solid rgba(255,255,255,0.04);
+            position: relative; min-height: 300px; justify-content: center;
+        }
+        .flask-viz {
+            position: relative; width: 140px; height: 160px;
+        }
+        .flask-viz svg { width: 100%; height: 100%; }
+        .flask-viz .liquid-fill {
+            transition: fill .6s ease, height .4s ease;
+        }
+        .flask-label-badge {
+            text-align: center; font-size: 12px; color: #64748b; margin-top: -4px;
+        }
+        .flask-status-line {
+            display: flex; gap: 16px; align-items: center; justify-content: center;
+            flex-wrap: wrap;
+        }
+        .flask-status-line .fs-item {
+            display: flex; align-items: center; gap: 6px;
+            padding: 4px 12px; background: rgba(0,0,0,.2); border-radius: 8px;
+            font-size: 12px; color: #94a3b8; border: 1px solid rgba(255,255,255,0.04);
+        }
+        .flask-status-line .fs-val { color: #e2e8f0; font-weight: 600; font-family: monospace; font-size: 14px; }
+
+        /* Reagent tray (below flask) */
+        .reagent-tray {
+            display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;
+        }
+        .rgt-btn {
+            padding: 6px 12px; border-radius: 8px; cursor: pointer;
+            font-size: 11px; border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.03); color: #94a3b8;
+            transition: .2s; display: flex; align-items: center; gap: 4px;
+        }
+        .rgt-btn:hover { background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.15); }
+        .rgt-btn.done { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.15); color: #4ade80; }
+        .rgt-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        /* Controls panel (right side) */
+        .ctrl-strip {
+            background: rgba(0,0,0,.2); border-radius: 14px; padding: 20px;
+            border: 1px solid rgba(255,255,255,0.04);
+            display: flex; flex-direction: column; gap: 16px;
+        }
+        .ctrl-group { }
+        .ctrl-group .cg-label {
+            font-size: 11px; color: #64748b; margin-bottom: 6px;
+            display: flex; justify-content: space-between;
+        }
+        .ctrl-group .cg-label .cg-val { color: #e2e8f0; font-weight: 600; font-family: monospace; }
+        .ctrl-group input[type=range] {
+            width: 100%; height: 4px; -webkit-appearance: none; appearance: none;
+            background: rgba(255,255,255,0.08); border-radius: 2px; outline: none;
+        }
+        .ctrl-group input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 18px; height: 18px;
+            border-radius: 50%; background: #3b82f6; cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 12px rgba(59,130,246,.3);
+        }
+        .ctrl-group input[type=range]:disabled { opacity: 0.3; }
+        .ctrl-group input[type=range]:disabled::-webkit-slider-thumb { cursor: not-allowed; }
+
+        /* COD result panel */
+        .cod-result-panel {
+            background: rgba(0,0,0,.2); border-radius: 12px; padding: 16px;
+            text-align: center; border: 1px solid rgba(34,197,94,0.1);
+            margin-bottom: 16px;
+        }
+        .cod-result-panel .cod-num {
+            font-size: 36px; font-weight: 800; color: #4ade80;
+            font-family: 'Courier New', monospace; line-height: 1;
+        }
+        .cod-result-panel .cod-unit {
+            font-size: 12px; color: #64748b; margin-top: 4px;
+        }
+        .cod-result-panel .cod-detail {
+            font-size: 11px; color: #64748b; margin-top: 6px;
+        }
+
+        /* Experiment log */
+        .exp-log {
+            margin-top: 12px; padding: 14px 18px;
+            background: rgba(0,0,0,.15); border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.04);
+            max-height: 120px; overflow-y: auto; font-family: monospace;
+            font-size: 14px; color: #94a3b8; line-height: 2;
+        }
+        .exp-log::-webkit-scrollbar { width: 3px; }
+        .exp-log::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+        .exp-log .log-time { color: #475569; margin-right: 8px; }
+        .exp-log .log-ok { color: #4ade80; }
+        .exp-log .log-info { color: #60a5fa; }
+        .exp-log .log-warn { color: #fbbf24; }
+
+        /* Flame animation */
+        .flame-wrapper { position: relative; }
+        .flame {
+            position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+            width: 30px; height: 36px; opacity: 0;
+            transition: opacity .5s;
+        }
+        .flame.on { opacity: 1; }
+        .flame .f-inner {
+            width: 100%; height: 100%;
+            background: radial-gradient(ellipse at center 60%, #f59e0b 0%, #ef4444 40%, transparent 70%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: flicker 1.5s ease-in-out infinite;
+            filter: blur(4px);
+        }
+        .flame .f-core {
+            position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+            width: 8px; height: 16px;
+            background: radial-gradient(ellipse, #fef08a 0%, #f59e0b 50%, transparent 70%);
+            border-radius: 50%; animation: flicker2 1s ease-in-out infinite;
+        }
+        @keyframes flicker {
+            0%, 100% { transform: scaleY(1) scaleX(1); }
+            25% { transform: scaleY(1.08) scaleX(0.92); }
+            50% { transform: scaleY(0.92) scaleX(1.06); }
+            75% { transform: scaleY(1.05) scaleX(0.95); }
+        }
+        @keyframes flicker2 {
+            0%, 100% { transform: translateX(-50%) scaleY(1); opacity: .8; }
+            50% { transform: translateX(-50%) scaleY(1.2); opacity: 1; }
+        }
+
+        /* Reagent bottle icons */
+        .rgt-icon { font-size: 16px; }
+
+        /* Burette animation helper */
+        .drop-anim {
+            position: absolute; width: 4px; height: 4px;
+            border-radius: 50%; background: #60a5fa;
+            animation: dropFall 0.8s ease-in forwards;
+            pointer-events: none;
+        }
+        @keyframes dropFall {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            80% { opacity: 0.6; }
+            100% { opacity: 0; transform: translateY(30px) scale(0.3); }
+        }
+
+        /* Vial bubbles for digestion */
+        .bubble { position: absolute; border-radius: 50%; pointer-events: none; }
+        @keyframes bubbleUp {
+            0% { opacity: 0.6; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-30px) scale(0.3); }
+        }
+        /* Drip drop animation */
+        .drip {
+            position: absolute; width: 5px; height: 10px; border-radius: 50%;
+            background: linear-gradient(to bottom, rgba(96,165,250,0.5), rgba(96,165,250,0.9));
+            pointer-events: none; animation: dripFall 0.8s ease-in forwards;
+            box-shadow: 0 0 4px rgba(96,165,250,0.3);
+        }
+        @keyframes dripFall {
+            0% { opacity: 1; transform: translateY(0) scaleX(1); }
+            40% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(80px) scaleX(0.5); }
+        }
+
+        /* ── Calculation ── */
+        .calc-box {
+            background: #fff; border-radius: 16px; padding: 40px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+        }
+        .calc-formula {
+            font-family: var(--serif); font-size: 22px;
+            text-align: center; padding: 24px; background: var(--paper-warm);
+            border-radius: 12px; margin-bottom: 24px; color: var(--ink);
+        }
+        .calc-formula .var { color: var(--accent); font-weight: 700; }
+        .calc-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .calc-inputs label { font-size: 12px; font-weight: 600; color: var(--ink-light); display: block; margin-bottom: 4px; }
+        .calc-inputs input {
+            width: 100%; padding: 10px 14px; border: 1.5px solid var(--border);
+            border-radius: 8px; font-size: 15px; font-weight: 600;
+            font-family: 'Courier New', monospace; background: var(--paper); transition: 0.2s;
+        }
+        .calc-inputs input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(192,54,44,0.1); }
+        .calc-result { text-align: center; padding: 24px; background: var(--green-light); border-radius: 12px; margin-top: 16px; }
+        .calc-result .val { font-family: var(--serif); font-size: 48px; font-weight: 900; color: var(--green); }
+        .calc-result .unit { font-size: 14px; color: var(--ink-light); margin-top: 4px; }
+
+        /* ── Footer ── */
+        .footer {
+            text-align: center; padding: 60px 24px; color: var(--ink-light);
+            font-size: 13px; border-top: 1px solid var(--border);
+            background: var(--paper-warm);
+        }
+        .footer a { color: var(--accent); text-decoration: none; }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            .hero-stats { gap: 24px; }
+            .input-grid { grid-template-columns: 1fr; }
+            .calc-inputs { grid-template-columns: 1fr; }
+            .exp-steps { flex-wrap: wrap; }
+            .exp-step-tab { min-width: 50%; }
+            #section-nav { right: 12px; }
+            .procedure-timeline { padding-left: 32px; }
+            .titration-visual { gap: 20px; }
+            .exp-panel { padding: 24px; }
+            .sample-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+
+<div id="section-nav">
+    <div class="nav-dot active" onclick="scrollToSection(0)"><span class="nav-label">开篇</span></div>
+    <div class="nav-dot" onclick="scrollToSection(1)"><span class="nav-label">试剂</span></div>
+    <div class="nav-dot" onclick="scrollToSection(2)"><span class="nav-label">仪器</span></div>
+    <div class="nav-dot" onclick="scrollToSection(3)"><span class="nav-label">流程</span></div>
+    <div class="nav-dot" onclick="scrollToSection(4)"><span class="nav-label">实验操作</span></div>
+    <div class="nav-dot" onclick="scrollToSection(5)"><span class="nav-label">计算</span></div>
+    <div class="nav-dot" onclick="scrollToSection(6)"><span class="nav-label">总结</span></div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- HERO                                   -->
+<!-- ══════════════════════════════════════ -->
+<section class="hero">
+    <div class="hero-badge">环境检测 · 交互式教学</div>
+    <h1>掌握 <em>COD</em> 检测方法（HJ 828-2017）</h1>
+    <p class="hero-sub">
+        涵盖试剂、仪器、操作流程与计算。<br>
+        结合标准方法与交互操作，系统掌握 COD 检测。
+    </p>
+    <div class="hero-stats">
+        <div class="hero-stat"><span class="num">5</span><span class="lbl">种核心试剂</span></div>
+        <div class="hero-stat"><span class="num">4</span><span class="lbl">件关键仪器</span></div>
+        <div class="hero-stat"><span class="num">6</span><span class="lbl">步标准流程</span></div>
+        <div class="hero-stat"><span class="num">148</span><span class="lbl">℃ 消解温度</span></div>
+    </div>
+    <div class="scroll-hint">
+        <span>向下滚动开始</span>
+        <span class="arrow">↓</span>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION 01 · REAGENTS                   -->
+<!-- ══════════════════════════════════════ -->
+<section class="section" id="sec-01">
+    <div class="section-num">Section 01 · 试剂</div>
+    <h2 class="section-title">试剂种类与作用</h2>
+    <p class="section-desc">
+        COD 检测采用重铬酸盐法（HJ 828-2017），涉及多种化学试剂，各有其关键作用。
+        点击卡片查看每种试剂的详细信息。
+    </p>
+    <div class="reagent-grid">
+        <div class="reagent-card" onclick="revealCard(this)">
+            <div class="reagent-icon" style="background:#fdf2f0;">🧪</div>
+            <div class="reagent-name">重铬酸钾 <span class="reagent-formula">K₂Cr₂O₇</span></div>
+            <div class="reagent-role">
+                <strong>氧化剂。</strong>在强酸性条件下将水样中有机物氧化。
+                溶液呈橙红色，被还原后变为绿色 Cr³⁺，颜色变化是滴定基础。
+            </div>
+            <span class="reagent-dose">10.00 mL · 0.25 N</span>
+        </div>
+        <div class="reagent-card" onclick="revealCard(this)">
+            <div class="reagent-icon" style="background:#f0fdf4;">💧</div>
+            <div class="reagent-name">硫酸-硫酸银 <span class="reagent-formula">H₂SO₄-Ag₂SO₄</span></div>
+            <div class="reagent-role">
+                <strong>催化剂 + 介质。</strong>硫酸提供强酸性环境；硫酸银作为催化剂，
+                帮助氧化难以降解的直链脂肪族或芳香族有机物。
+            </div>
+            <span class="reagent-dose">30 mL · 含 1% Ag₂SO₄</span>
+        </div>
+        <div class="reagent-card" onclick="revealCard(this)">
+            <div class="reagent-icon" style="background:#fefce8;">🧂</div>
+            <div class="reagent-name">硫酸汞 <span class="reagent-formula">HgSO₄</span></div>
+            <div class="reagent-role">
+                <strong>掩蔽剂。</strong>水中氯离子（Cl⁻）会消耗重铬酸钾，导致结果偏高。
+                硫酸汞与 Cl⁻ 形成稳定络合物，消除干扰。当 Cl⁻ &lt; 1000 mg/L 时使用。
+            </div>
+            <span class="reagent-dose">0.4 g · 视 Cl⁻ 含量</span>
+        </div>
+        <div class="reagent-card" onclick="revealCard(this)">
+            <div class="reagent-icon" style="background:#eff6ff;">💉</div>
+            <div class="reagent-name">硫酸亚铁铵 <span class="reagent-formula">Fe(NH₄)₂(SO₄)₂</span></div>
+            <div class="reagent-role">
+                <strong>滴定剂。</strong>用标定好的 FAS 溶液滴定剩余的重铬酸钾。
+                浓度约 0.1 N，需用重铬酸钾标准溶液标定。
+            </div>
+            <span class="reagent-dose">约 0.1 N · 需标定</span>
+        </div>
+        <div class="reagent-card" onclick="revealCard(this)">
+            <div class="reagent-icon" style="background:#fdf2f0;">🔴</div>
+            <div class="reagent-name">试亚铁灵指示剂 <span class="reagent-formula">Ferroin</span></div>
+            <div class="reagent-role">
+                <strong>指示剂。</strong>氧化还原指示剂。在游离 Fe²⁺ 存在时呈红棕色，
+                当 Fe²⁺ 被完全氧化后变为蓝绿色，即为终点。
+            </div>
+            <span class="reagent-dose">2~3 滴</span>
+        </div>
+    </div>
+    <p style="font-size:13px;color:var(--ink-light);text-align:center;">
+        💡 点击任意卡片查看试剂详情 · 已揭开 <span id="reveal-count">0</span>/5 张
+    </p>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION 02 · INSTRUMENTS                -->
+<!-- ══════════════════════════════════════ -->
+<section class="section" id="sec-02">
+    <div class="section-num">Section 02 · 仪器</div>
+    <h2 class="section-title">仪器配置与功能</h2>
+    <p class="section-desc">
+        工欲善其事，必先利其器。COD 检测的准确性，很大程度上取决于这些仪器的正确使用。
+    </p>
+    <div class="instrument-grid">
+        <div class="instrument-card">
+            <div class="instrument-visual" style="background:linear-gradient(135deg,#fef3c7,#fde68a);">🔥</div>
+            <div class="instrument-info">
+                <div class="instrument-name">COD 消解仪 <span class="instrument-name-en">COD Digester</span></div>
+                <div class="instrument-desc">
+                    加热消解的核心设备。标准方法要求 148℃ 恒温加热 2 小时。
+                    现代消解仪采用铝块加热，温度均匀性好。
+                </div>
+                <div class="instrument-spec">
+                    <span style="background:#fef3c7;color:#92400e;">148℃</span>
+                    <span style="background:#dbeafe;color:#1e40af;">2h</span>
+                    <span style="background:#f0fdf4;color:#166534;">铝块加热</span>
+                </div>
+            </div>
+        </div>
+        <div class="instrument-card">
+            <div class="instrument-visual" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);">🔄</div>
+            <div class="instrument-info">
+                <div class="instrument-name">回流冷凝装置 <span class="instrument-name-en">Reflux Condenser</span></div>
+                <div class="instrument-desc">
+                    传统方法（GB 11914-89）使用玻璃回流装置，在冷凝管中冷凝蒸汽，
+                    防止挥发性有机物损失。现代快速法多用密封消解管替代。
+                </div>
+                <div class="instrument-spec">
+                    <span style="background:#dbeafe;color:#1e40af;">玻璃</span>
+                    <span style="background:#f0fdf4;color:#166534;">水冷冷凝</span>
+                    <span style="background:#fef3c7;color:#92400e;">防挥发</span>
+                </div>
+            </div>
+        </div>
+        <div class="instrument-card">
+            <div class="instrument-visual" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);">🧪</div>
+            <div class="instrument-info">
+                <div class="instrument-name">滴定管 <span class="instrument-name-en">Burette</span></div>
+                <div class="instrument-desc">
+                    精确加入滴定剂（FAS）的工具。常用 25 mL 或 50 mL 酸式滴定管，
+                    读数需估读至 0.01 mL。终点颜色变化需仔细观察。
+                </div>
+                <div class="instrument-spec">
+                    <span style="background:#f0fdf4;color:#166534;">25 mL</span>
+                    <span style="background:#dbeafe;color:#1e40af;">酸式</span>
+                    <span style="background:#fef3c7;color:#92400e;">0.01 mL 估读</span>
+                </div>
+            </div>
+        </div>
+        <div class="instrument-card">
+            <div class="instrument-visual" style="background:linear-gradient(135deg,#fdf2f0,#fce7f3);">🧫</div>
+            <div class="instrument-info">
+                <div class="instrument-name">消解管 / 锥形瓶 <span class="instrument-name-en">Digest Tube</span></div>
+                <div class="instrument-desc">
+                    反应容器。快速密闭消解法使用专用消解管（耐高压、耐高温）；
+                    传统方法使用 250 mL 锥形瓶 + 回流冷凝管。
+                </div>
+                <div class="instrument-spec">
+                    <span style="background:#fdf2f0;color:#9f1239;">耐热玻璃</span>
+                    <span style="background:#f0fdf4;color:#166534;">密封</span>
+                    <span style="background:#dbeafe;color:#1e40af;">250 mL</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION 03 · PROCEDURE                   -->
+<!-- ══════════════════════════════════════ -->
+<section class="section" id="sec-03">
+    <div class="section-num">Section 03 · 操作流程</div>
+    <h2 class="section-title">标准流程六步法</h2>
+    <p class="section-desc">
+        以 HJ 828-2017《水质 化学需氧量的测定 重铬酸盐法》为准。
+        滚动查看每一步的要点，然后进入实验操作环节。
+    </p>
+    <div class="procedure-timeline">
+        <div class="proc-step">
+            <div class="proc-step-num">STEP 01</div>
+            <div class="proc-step-title">样品采集与保存</div>
+            <div class="proc-step-desc">
+                用玻璃瓶采集水样，加入硫酸酸化至 pH &lt; 2，4℃ 冷藏保存，
+                24 小时内分析。记录水样编号、采样点、保存条件。
+            </div>
+            <span class="proc-step-note">⚠️ 含 Cl⁻ 高的水样需加 HgSO₄ 掩蔽</span>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">STEP 02</div>
+            <div class="proc-step-title">加试剂 · 混匀</div>
+            <div class="proc-step-desc">
+                取 20.0 mL 水样（或适量稀释水样）于消解管中，
+                依次加入 0.4 g HgSO₄、10.00 mL K₂Cr₂O₇ 标准溶液、
+                30 mL H₂SO₄-Ag₂SO₄ 溶液，轻轻摇匀（注意放热！）。
+            </div>
+            <span class="proc-step-note">🔥 加酸时会剧烈放热，需边加边摇</span>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">STEP 03</div>
+            <div class="proc-step-title">消解 · 148℃ × 2h</div>
+            <div class="proc-step-desc">
+                将消解管放入已预热至 148℃ 的消解仪中，加热 2 小时。
+                若是回流法，需连接冷凝管，开启冷却水，加热回流 2 小时。
+            </div>
+            <span class="proc-step-note">🌡️ 消解仪需提前预热至 148℃</span>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">STEP 04</div>
+            <div class="proc-step-title">冷却 · 冲洗</div>
+            <div class="proc-step-desc">
+                消解完成后，取出消解管，自然冷却至室温。
+                若为回流装置，用少量蒸馏水冲洗冷凝管内壁，洗液并入消化液。
+            </div>
+            <span class="proc-step-note">💡 冷却后溶液呈橙黄色（未耗尽 Cr⁶⁺）</span>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">STEP 05</div>
+            <div class="proc-step-title">滴定 · 终点判断</div>
+            <div class="proc-step-desc">
+                加入 2~3 滴试亚铁灵指示剂，用标定好的 FAS 溶液滴定。
+                溶液颜色变化：橙黄 → 蓝绿 → 红棕。红棕色出现即为终点。
+                记录消耗的 FAS 体积 V<sub>样品</sub>。
+            </div>
+            <span class="proc-step-note">🎯 终点：红棕色持续 30s 不褪色</span>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">STEP 06</div>
+            <div class="proc-step-title">空白试验 · 计算</div>
+            <div class="proc-step-desc">
+                用 20.0 mL 蒸馏水替代水样，同步进行上述操作，
+                得到空白消耗体积 V<sub>空白</sub>。用两者差值计算 COD 值。
+            </div>
+            <span class="proc-step-note">📋 空白试验不可省略！</span>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION 04 · COD LAB (Simplified)      -->
+<!-- ══════════════════════════════════════ -->
+<section class="experiment-section" id="sec-04">
+    <div class="section" style="padding-bottom:0;">
+        <div class="section-num">Section 04 · 实验操作</div>
+        <h2 class="section-title">COD 检测模拟实验</h2>
+        <p class="section-desc">
+            按步骤操作：加入试剂 → 加热消解 → 滴定读数。每一步都有即时反馈。
+        </p>
+    </div>
+
+    <div style="max-width:760px;margin:0 auto;padding:0 24px 100px;">
+    <div class="phet-lab">
+
+        <!-- Step indicator -->
+        <div style="display:flex;gap:4px;margin-bottom:16px;justify-content:center;">
+            <div id="stepBadge1" style="padding:6px 18px;border-radius:20px;font-size:13px;font-weight:600;background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.2);">① 加试剂</div>
+            <div id="stepBadge2" style="padding:6px 18px;border-radius:20px;font-size:13px;font-weight:600;background:rgba(0,0,0,.2);color:#64748b;border:1px solid rgba(255,255,255,0.04);">② 消解</div>
+            <div id="stepBadge3" style="padding:6px 18px;border-radius:20px;font-size:13px;font-weight:600;background:rgba(0,0,0,.2);color:#64748b;border:1px solid rgba(255,255,255,0.04);">③ 滴定</div>
+        </div>
+
+        <!-- Single area: Flask + Controls integrated -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+            <!-- Flask + Burette visualization -->
+            <div class="flask-stage" style="min-height:180px;width:100%;max-width:440px;padding:16px 12px;">
+                <div style="display:flex;align-items:center;gap:16px;justify-content:center;">
+                    <!-- Burette (left) -->
+                    <div style="display:flex;flex-direction:column;align-items:center;">
+                        <div style="width:28px;height:140px;background:rgba(0,0,0,.2);border-radius:4px 4px 14px 14px;border:1px solid rgba(255,255,255,0.08);position:relative;overflow:hidden;">
+                            <div id="buretteFill" style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(96,165,250,.5),rgba(96,165,250,.2));border-radius:0 0 13px 13px;height:100%;transition:height .15s;"></div>
+                        </div>
+                        <div style="font-size:10px;color:#64748b;margin-top:4px;">FAS</div>
+                    </div>
+                    <!-- Flask (center) - replaced with heating block + tube -->
+                    <div class="flask-viz" style="width:120px;height:150px;position:relative;">
+                        <svg viewBox="0 0 160 180" style="width:100%;height:100%;">
+                            <defs>
+                                <clipPath id="tubeClip">
+                                    <rect x="58" y="28" width="44" height="100" rx="8"/>
+                                </clipPath>
+                                <pattern id="heatingGrid" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+                                    <path d="M0,4 h8 M4,0 v8" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
+                                </pattern>
+                            </defs>
+
+                            <!-- Heating block / hot plate (消解仪加热盘) -->
+                            <rect x="30" y="120" width="100" height="28" rx="6" fill="rgba(100,116,139,.2)" stroke="rgba(148,163,184,.15)" stroke-width="1.5"/>
+                            <rect x="36" y="118" width="88" height="4" rx="2" fill="rgba(148,163,184,.08)"/>
+                            <!-- Heating element glow -->
+                            <rect id="heatGlow" x="34" y="130" width="92" height="12" rx="6" fill="rgba(255,255,255,0)" opacity="0"/>
+                            <!-- Heating grid/mesh -->
+                            <g id="heatMesh">
+                                <line x1="40" y1="130" x2="40" y2="144" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                                <line x1="52" y1="130" x2="52" y2="144" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                                <line x1="64" y1="130" x2="64" y2="144" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                                <line x1="76" y1="130" x2="76" y2="144" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                                <line x1="88" y1="130" x2="88" y2="144" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                                <line x1="100" y1="130" x2="100" y2="144" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                                <line x1="112" y1="130" x2="112" y2="144" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                                <line x1="124" y1="130" x2="124" y2="144" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                            </g>
+                            <!-- Mesh glow (overlay that lights up when hot) -->
+                            <g id="heatMeshGlow" opacity="0">
+                                <line x1="40" y1="130" x2="40" y2="144" stroke="#f59e0b" stroke-width="2" opacity="0.6"/>
+                                <line x1="52" y1="130" x2="52" y2="144" stroke="#f59e0b" stroke-width="2" opacity="0.6"/>
+                                <line x1="64" y1="130" x2="64" y2="144" stroke="#f59e0b" stroke-width="2" opacity="0.6"/>
+                                <line x1="88" y1="130" x2="88" y2="144" stroke="#f59e0b" stroke-width="2" opacity="0.6"/>
+                                <line x1="100" y1="130" x2="100" y2="144" stroke="#f59e0b" stroke-width="2" opacity="0.6"/>
+                                <line x1="112" y1="130" x2="112" y2="144" stroke="#f59e0b" stroke-width="2" opacity="0.6"/>
+                                <line x1="124" y1="130" x2="124" y2="144" stroke="#f59e0b" stroke-width="2" opacity="0.6"/>
+                            </g>
+
+                            <!-- Digestion tube (消解管) -->
+                            <rect x="58" y="28" width="44" height="100" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+                            <!-- Tube neck -->
+                            <rect x="60" y="22" width="40" height="10" rx="3" fill="rgba(148,163,184,.1)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                            <!-- Tube cap -->
+                            <rect x="58" y="18" width="44" height="8" rx="2" fill="rgba(100,116,139,.15)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+                            <!-- Liquid fill inside tube -->
+                            <rect id="tubeFill" x="63" y="120" width="34" height="0" rx="4" fill="#60a5fa" opacity="0.6" clip-path="url(#tubeClip)"/>
+
+                            <!-- Drip target -->
+                            <circle id="dripTarget" cx="80" cy="24" r="2" fill="rgba(96,165,250,0)"/>
+                        </svg>
+                        <!-- Drip overlay moved slightly -->
+                        <div id="dripContainer" style="position:absolute;top:18px;left:50%;transform:translateX(-50%);width:0;height:0;pointer-events:none;"></div>
+                        <!-- Flame below heating block -->
+                        <div class="flame-wrapper" style="position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);">
+                            <div class="flame" id="flameEl" style="bottom:0;"><div class="f-inner"></div><div class="f-core"></div></div>
+                        </div>
+                    </div>
+                    <!-- Info (right) -->
+                    <div style="text-align:center;">
+                        <span id="flaskLabel" style="font-size:14px;font-weight:600;color:#e2e8f0;">🧫 河水</span>
+                        <div style="margin-top:6px;display:flex;flex-direction:column;gap:4px;font-size:11px;color:#94a3b8;">
+                            <span>🌡️ <b id="fsTemp" style="color:#e2e8f0;">25</b>°C</span>
+                            <span>⏱️ <b id="fsTimer" style="color:#e2e8f0;">0</b>min</span>
+                            <span>🎨 <b id="fsColor" style="color:#e2e8f0;">无色</b></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reagent buttons -->
+            <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;" id="reagentRow"></div>
+
+            <!-- Controls -->
+            <div style="width:100%;max-width:400px;">
+                <div style="background:rgba(0,0,0,.2);border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.04);display:flex;flex-direction:column;gap:12px;">
+
+                    <!-- Heat -->
+                    <div>
+                        <div style="display:flex;justify-content:space-between;font-size:12px;color:#94a3b8;margin-bottom:4px;">
+                            <span>🔥 加热温度</span>
+                            <span><b id="heatVal" style="color:#e2e8f0;">25</b>°C</span>
+                        </div>
+                        <input type="range" id="heatSlider" min="25" max="148" value="25" step="1" disabled
+                               style="width:100%;height:4px;-webkit-appearance:none;appearance:none;background:rgba(255,255,255,0.08);border-radius:2px;outline:none;">
+                    </div>
+
+                    <!-- Digestion timer -->
+                    <div>
+                        <div style="display:flex;justify-content:space-between;font-size:12px;color:#94a3b8;margin-bottom:4px;">
+                            <span>⏱️ 消解时间</span>
+                            <span><b id="digestVal" style="color:#e2e8f0;">0</b> / 120 min</span>
+                        </div>
+                        <input type="range" id="digestSlider" min="0" max="120" value="0" step="1" disabled
+                               style="width:100%;height:4px;-webkit-appearance:none;appearance:none;background:rgba(255,255,255,0.08);border-radius:2px;outline:none;">
+                        <button class="btn btn-secondary" id="btnDigest" onclick="pAutoDigest()" disabled style="margin-top:6px;width:100%;padding:8px;font-size:13px;">🔥 自动消解 (148°C × 120 min)</button>
+                    </div>
+
+                    <!-- Titration -->
+                    <div>
+                        <div style="display:flex;justify-content:space-between;font-size:12px;color:#94a3b8;margin-bottom:4px;">
+                            <span>💉 FAS 滴定</span>
+                            <span><b id="titrateVal" style="color:#e2e8f0;">0.00</b> mL</span>
+                        </div>
+                        <input type="range" id="titrateSlider" min="0" max="12" value="0" step="0.01" disabled
+                               style="width:100%;height:4px;-webkit-appearance:none;appearance:none;background:rgba(255,255,255,0.08);border-radius:2px;outline:none;">
+                        <button class="btn btn-secondary" id="btnTitrate" onclick="pAutoTitrate()" disabled style="margin-top:6px;width:100%;padding:8px;font-size:13px;">💉 开始自动滴定</button>
+                    </div>
+
+                    <!-- COD Result -->
+                    <div style="text-align:center;padding:10px;background:rgba(0,0,0,.15);border-radius:10px;border:1px solid rgba(34,197,94,0.08);">
+                        <div style="font-size:28px;font-weight:800;font-family:'Courier New',monospace;color:#4ade80;" id="codDisplay">—</div>
+                        <div style="font-size:11px;color:#64748b;margin-top:2px;">COD [mg O₂/L]</div>
+                        <div style="font-size:11px;color:#64748b;margin-top:4px;" id="codDetail">等待实验完成</div>
+                    </div>
+
+                    <div style="display:flex;gap:8px;">
+                        <button class="btn btn-primary" onclick="pReset()" style="flex:1;padding:8px;font-size:13px;">🔄 重新实验</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Log -->
+        <div class="exp-log" id="phetLog" style="margin-top:12px;max-height:60px;">
+            <div><span class="log-time">⏳</span>按顺序操作：加试剂 → 调温 → 消解 → 滴定</div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION 05 · CALCULATION                 -->
+<!-- ══════════════════════════════════════ -->
+<section class="section" id="sec-05">
+    <div class="section-num">Section 05 · 计算原理</div>
+    <h2 class="section-title">从体积到浓度</h2>
+    <p class="section-desc">
+        滴定得到的体积差，如何转化为 COD 浓度？输入你的实验数据，自动计算。
+    </p>
+    <div class="calc-box">
+        <div class="calc-formula">
+            COD = <span class="var">(V<sub>空白</sub> − V<sub>样品</sub>)</span> × <span class="var">N</span> × 8000 / <span class="var">V<sub>样</sub></span>
+        </div>
+        <div class="calc-inputs">
+            <div>
+                <label>空白消耗 FAS 体积 V<sub>空白</sub> (mL)</label>
+                <input type="number" id="calc-vblank" value="8.20" step="0.01">
+            </div>
+            <div>
+                <label>样品消耗 FAS 体积 V<sub>样品</sub> (mL)</label>
+                <input type="number" id="calc-vsample" value="5.35" step="0.01">
+            </div>
+            <div>
+                <label>FAS 标准溶液浓度 N (mol/L)</label>
+                <input type="number" id="calc-n" value="0.100" step="0.001">
+            </div>
+            <div>
+                <label>水样体积 V<sub>样</sub> (mL)</label>
+                <input type="number" id="calc-vs" value="20.00" step="0.01">
+            </div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;font-size:16px;padding:14px;" onclick="doCalc()">
+            📐 计算 COD
+        </button>
+        <div class="calc-result" id="calc-result" style="display:none;">
+            <div class="val" id="calc-val">0.0</div>
+            <div class="unit">mg O₂ / L</div>
+            <div style="font-size:13px;color:var(--ink-light);margin-top:8px;" id="calc-detail"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION 06 · SUMMARY                     -->
+<!-- ══════════════════════════════════════ -->
+<section class="section" id="sec-06">
+    <div class="section-num">Section 06 · 总结</div>
+    <h2 class="section-title">关键要点回顾</h2>
+    <p class="section-desc">
+        掌握以下核心要点，有助于准确执行 COD 检测。
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">
+        <div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--border);">
+            <div style="font-size:28px;margin-bottom:8px;">⚖️</div>
+            <div style="font-weight:700;font-size:14px;margin-bottom:4px;">空白校正不可省</div>
+            <div style="font-size:12px;color:var(--ink-light);line-height:1.6;">空白值反映试剂本底消耗，是准确计算的基础</div>
+        </div>
+        <div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--border);">
+            <div style="font-size:28px;margin-bottom:8px;">🌡️</div>
+            <div style="font-weight:700;font-size:14px;margin-bottom:4px;">消解温度需精确</div>
+            <div style="font-size:12px;color:var(--ink-light);line-height:1.6;">148℃ 是标准方法要求，温度不足氧化不完全</div>
+        </div>
+        <div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--border);">
+            <div style="font-size:28px;margin-bottom:8px;">🎯</div>
+            <div style="font-weight:700;font-size:14px;margin-bottom:4px;">终点判断要敏锐</div>
+            <div style="font-size:12px;color:var(--ink-light);line-height:1.6;">蓝绿→红棕的转变点，需半滴半滴接近终点</div>
+        </div>
+        <div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--border);">
+            <div style="font-size:28px;margin-bottom:8px;">🧂</div>
+            <div style="font-weight:700;font-size:14px;margin-bottom:4px;">高氯水样需掩蔽</div>
+            <div style="font-size:12px;color:var(--ink-light);line-height:1.6;">Cl⁻ 会消耗 Cr⁶⁺，HgSO₄ 掩蔽是必要步骤</div>
+        </div>
+    </div>
+    <div style="text-align:center;margin-top:48px;">
+        <a href="#" style="display:inline-block;padding:14px 40px;background:var(--ink);color:#fff;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;transition:0.3s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+            📥 下载完整实验记录表
+        </a>
+    </div>
+</section>
+
+<div class="footer">
+    <p>EnvLab · 环境检测交互式教学实验平台</p>
+    <p style="margin-top:4px;">联系方式：jinghao.song@gmail.com</p>
+</div>
+
+<script>
+// ══════════════════════════════════════
+// SCROLL PROGRESS & SECTION OBSERVER
+// ══════════════════════════════════════
+window.addEventListener('scroll', () => {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = (window.scrollY / h) * 100;
+    document.getElementById('scroll-progress').style.width = pct + '%';
+});
+
+const sections = document.querySelectorAll('.section, .experiment-section');
+const dots = document.querySelectorAll('.nav-dot');
+
+const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1 });
+sections.forEach(s => sectionObserver.observe(s));
+
+const procObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+}, { threshold: 0.2 });
+document.querySelectorAll('.proc-step').forEach(s => procObserver.observe(s));
+
+window.addEventListener('scroll', () => {
+    let current = 0;
+    sections.forEach((s, i) => {
+        if (window.scrollY >= s.offsetTop - 300) current = i;
+    });
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+});
+
+function scrollToSection(i) {
+    if (sections[i]) sections[i].scrollIntoView({ behavior: 'smooth' });
+}
+
+// ══════════════════════════════════════
+// REAGENT CARD REVEAL
+// ══════════════════════════════════════
+let revealCount = 0;
+function revealCard(card) {
+    if (!card.classList.contains('revealed')) {
+        card.classList.add('revealed');
+        revealCount++;
+        document.getElementById('reveal-count').textContent = revealCount;
+    }
+}
+
+// ══════════════════════════════════════
+// ═══════════════════════════════════════════
+// COD LAB - Simplified + Enhanced Titration
+// ═══════════════════════════════════════════
+const R = [
+    {icon:'🧪',label:'K₂Cr₂O₇',dose:'10.00 mL'},
+    {icon:'⚗️',label:'H₂SO₄·Ag₂SO₄',dose:'30 mL'},
+    {icon:'🧂',label:'HgSO₄',dose:'0.4 g'},
+    {icon:'🔴',label:'试亚铁灵',dose:'2~3滵'},
+];
+let st={r:[false,false,false,false],t:25,d:0,v:0,done:false,_int:null};
+let lastDripVol = 0;
+
+function lg(m,t){
+    let e=document.getElementById('phetLog'),d=new Date(),s=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+    e.innerHTML+='<div><span class="log-time">'+s+'</span><span class="log-'+(t||'info')+'">'+m+'</span></div>';
+    e.scrollTop=e.scrollHeight;
+}
+
+const RW=document.getElementById('reagentRow');
+RW.innerHTML=R.map((r,i)=>'<button class="rgt-btn" data-i="'+i+'" onclick="aR('+i+')"><span class="rgt-icon">'+r.icon+'</span> '+r.label+'</button>').join('');
+
+function aR(i){
+    if(st.r[i])return; st.r[i]=true;
+    let b=document.querySelectorAll('.rgt-btn')[i]; b.classList.add('done'); b.disabled=true;
+    lg('➕ 加入 '+R[i].label+' ('+R[i].dose+')','ok');
+    fls(); cod();
+    if(st.r.every(Boolean)){
+        document.getElementById('heatSlider').disabled=false;
+        document.getElementById('stepBadge1').style.background='rgba(34,197,94,.15)'; document.getElementById('stepBadge1').style.color='#4ade80';
+        document.getElementById('stepBadge2').style.background='rgba(59,130,246,.15)'; document.getElementById('stepBadge2').style.color='#60a5fa';
+        lg('✅ 试剂已加完，调节温度开始消解','ok');
+    }
+}
+
+function getTitrationColor(ratio){
+    if(ratio===0||!ratio) return '#1a4a1a';
+    if(ratio<0.15) return '#3b7a3b'; // very dark green starting
+    if(ratio<0.30) return '#65a30d'; // lime-green
+    if(ratio<0.45) return '#84cc16'; // bright green
+    if(ratio<0.55) return '#a3e635'; // yellow-green
+    if(ratio<0.65) return '#d9f99d'; // pale yellow-green
+    if(ratio<0.75) return '#fde047'; // golden yellow
+    if(ratio<0.85) return '#f59e0b'; // amber (near endpoint warning)
+    if(ratio<0.92) return '#d97706'; // dark amber (slow down!)
+    return '#92400e'; // reddish-brown ENDPOINT!
+}
+
+function getColorLabel(ratio){
+    if(ratio===0||!ratio) return '暗绿(消解完)';
+    if(ratio<0.15) return '暗绿';
+    if(ratio<0.30) return '绿色';
+    if(ratio<0.45) return '亮绿';
+    if(ratio<0.55) return '黄绿';
+    if(ratio<0.65) return '浅黄';
+    if(ratio<0.75) return '金黄';
+    if(ratio<0.85) return '橙色 (快到了!)';
+    if(ratio<0.95) return '深橙 (慢滴!)';
+    return '🟤 红棕 (终点!)';
+}
+
+function drip(){
+    let container=document.getElementById('dripContainer');
+    let d=document.createElement('div'); d.className='drip';
+    d.style.left=(Math.random()*12-6)+'px';
+    d.style.animationDuration=(0.7+Math.random()*0.2)+'s';
+    container.appendChild(d);
+    setTimeout(()=>d.remove(), 1200);
+}
+
+function fls(){
+    let r=st.r.filter(Boolean).length;
+    // Flask color
+    let fillColor = '#60a5fa'; // initial water
+    if(r>0 && r<3) fillColor = '#f59e0b'; // partial orange
+    else if(r>=3 && st.t<140) fillColor = '#f97316'; // full orange (dichromate)
+    else if(st.t>=140 && st.d<120) fillColor = '#1a3a1a'; // digesting dark
+    else if(st.d>=120 && st.v===0) fillColor = '#1a4a1a'; // digested
+    else if(st.d>=120 && st.v>0){
+        let ep = st.endpoint || 10.0;
+        let ratio = Math.min(st.v/ep, 1);
+        fillColor = getTitrationColor(ratio);
+    }
+
+    // Flask liquid height: rises with titration volume
+    let flaskH = 0;
+    if(st.r.filter(Boolean).length>0) flaskH = Math.max(flaskH, 15);
+    if(st.t>=140) flaskH = Math.max(flaskH, 20);
+    if(st.d>=120) flaskH = Math.max(flaskH, 25);
+    if(st.v>0){
+        // Liquid rises as titration progresses
+        let ratio = Math.min(st.v/10, 1);
+        flaskH = 25 + ratio * 85;
+    }
+
+    document.getElementById('tubeFill').setAttribute('y', 132 - flaskH);
+    document.getElementById('tubeFill').setAttribute('height', flaskH);
+    document.getElementById('tubeFill').setAttribute('fill', fillColor);
+
+    // Burette level
+    let burettePct = st.d>=120 ? Math.max(0, 100 - (st.v/12)*85) : 100;
+    document.getElementById('buretteFill').style.height = burettePct + '%';
+
+    // Color label
+    let cl=document.getElementById('fsColor');
+    if(st.v>0){
+        let ep = st.endpoint || 10.0;
+        let ratio = Math.min(st.v/ep, 1);
+        cl.textContent = getColorLabel(ratio);
+    } else if(st.d>=120) cl.textContent='暗绿(消解完)';
+    else if(st.t>=140&&st.d>0) cl.textContent='消解中';
+    else if(r>=3) cl.textContent='橙黄(Cr⁶⁺)';
+    else if(r>0) cl.textContent='浅橙';
+    else cl.textContent='无色';
+}
+
+function cod(){
+    let vb=8.20,N=0.100,Vs=20.00,vs=Math.max(0,8.20-(st.v/10)*2.85),cod=Math.max(0,(vb-vs)*N*8000/Vs);
+    let d=document.getElementById('codDisplay'),dt=document.getElementById('codDetail');
+    if(st.v===0){d.textContent='—'; dt.textContent='加试剂→加热→滴定后显示'; return;}
+    d.textContent=cod.toFixed(1); d.style.color=cod<10?'#4ade80':cod<100?'#fbbf24':'#f87171';
+    dt.textContent='FAS '+st.v.toFixed(2)+'mL · '+(cod<10?'✅达标':cod<100?'⚠️需关注':'🔴超标');
+}
+
+function upd(){
+    document.getElementById('heatVal').textContent=st.t; document.getElementById('fsTemp').textContent=st.t;
+    document.getElementById('digestVal').textContent=st.d; document.getElementById('fsTimer').textContent=st.d;
+    document.getElementById('flameEl').classList.toggle('on',st.t>50); document.getElementById('heatGlow').setAttribute('fill',st.t>100?'rgba(245,158,11,0.25)':'rgba(255,255,255,0)'); document.getElementById('heatMeshGlow').setAttribute('opacity',st.t>100?'0.8':'0');
+}
+
+document.getElementById('heatSlider').addEventListener('input',function(){
+    st.t=parseInt(this.value); upd(); fls(); cod();
+    document.getElementById('btnDigest').disabled=!(st.t>=140&&st.r.every(Boolean)&&!st.done);
+});
+
+document.getElementById('digestSlider').addEventListener('input',function(){
+    st.d=parseInt(this.value); upd(); fls();
+    if(st.d>=120){
+        st.done=true; st.endpoint=8.0+Math.random()*3.5; document.getElementById('titrateSlider').disabled=false;document.getElementById('btnTitrate').disabled=false;
+        document.getElementById('stepBadge2').style.background='rgba(34,197,94,.15)'; document.getElementById('stepBadge2').style.color='#4ade80';
+        document.getElementById('stepBadge3').style.background='rgba(59,130,246,.15)'; document.getElementById('stepBadge3').style.color='#60a5fa';
+        lg('✅ 消解完成，拖动滴定滑块读数','ok');
+    }
+});
+
+function pAutoDigest(){
+    if(st.done||!st.r.every(Boolean))return;
+    if(st.t<140){lg('⚠️ 先将温度升至 148°C','warn');return;}
+    lg('🔥 消解开始 148°C×120min','ok');
+    document.getElementById('btnDigest').disabled=true;
+    let sl=document.getElementById('digestSlider'); sl.disabled=false; let t=0;
+    if(st._int)clearInterval(st._int);
+    st._int=setInterval(()=>{t+=2; if(t>=120){t=120;clearInterval(st._int);st._int=null;} st.d=t; sl.value=t; upd(); fls(); if(t>=120){st.done=true; st.endpoint=8.0+Math.random()*3.5; document.getElementById('titrateSlider').disabled=false;document.getElementById('btnTitrate').disabled=false; document.getElementById('stepBadge2').style.background='rgba(34,197,94,.15)'; document.getElementById('stepBadge2').style.color='#4ade80'; document.getElementById('stepBadge3').style.background='rgba(59,130,246,.15)'; document.getElementById('stepBadge3').style.color='#60a5fa'; lg('✅ 消解完成','ok');}},100);
+}
+
+document.getElementById('titrateSlider').addEventListener('input',function(){
+    let prev = st.v;
+    if(st._titrating) return; // ignore manual input while auto-titrating
+    st.v=parseFloat(this.value); document.getElementById('titrateVal').textContent=st.v.toFixed(2);
+    fls(); cod();
+
+    // Drip animation when volume increases
+    if(st.v > prev && st.v > 0.1){
+        drip();
+    }
+
+    let ep = st.endpoint || 10.0;
+    if(st.v>=ep*0.85&&st.v<ep*0.92){lg('⚠️ 接近终点，慢滴观察颜色变化','warn');}
+    if(st.v>=ep*0.92){
+        lg('🎯 终点！FAS '+st.v.toFixed(2)+' mL','ok');
+        document.getElementById('stepBadge3').style.background='rgba(34,197,94,.15)'; document.getElementById('stepBadge3').style.color='#4ade80';
+    }
+});
+
+// Auto titration
+function pAutoTitrate(){
+    if(st._titrating || (st.endpoint && st.v>=st.endpoint)) return;
+    if(!st.done){lg('⚠️ 请先完成消解','warn');return;}
+    lg('💉 自动滴定开始...','ok');
+    st._titrating = true;
+    document.getElementById('btnTitrate').disabled = true;
+    document.getElementById('btnTitrate').textContent = '⏳ 滴定中...';
+    document.getElementById('titrateSlider').disabled = false;
+
+    let step = 0;
+    if(st._int) clearInterval(st._int);
+    st._int = setInterval(() => {
+        step++;
+        let ep = st.endpoint || 10.0;
+        let vol = step * 0.07;
+        if(vol > ep) vol = ep;
+
+        st.v = parseFloat(vol.toFixed(2));
+        document.getElementById('titrateSlider').value = st.v;
+        document.getElementById('titrateVal').textContent = st.v.toFixed(2);
+        if(step%3===0) drip(); // one drip every 3 ticks
+        fls(); cod();
+
+        if(st.v >= ep * 0.85 && st.v < ep * 0.92) {
+            lg('⚠️ 接近终点，观察颜色变化','warn');
+        }
+        if(st.v >= ep){
+            clearInterval(st._int); st._int = null;
+            st._titrating = false;
+            document.getElementById('btnTitrate').textContent = '✅ 滴定完成';
+            document.getElementById('btnTitrate').disabled = true;
+            document.getElementById('stepBadge3').style.background='rgba(34,197,94,.15)'; document.getElementById('stepBadge3').style.color='#4ade80';
+            lg('🎯 终点！FAS '+st.v.toFixed(2)+' mL','ok');
+        }
+    }, 80);
+}
+
+function pReset(){
+    if(st._int){clearInterval(st._int); st._int=null;}
+    st._titrating = false;
+    st={r:[false,false,false,false],t:25,d:0,v:0,done:false,endpoint:10.0,_int:null,_titrating:false};
+    document.getElementById('heatSlider').value=25; document.getElementById('heatSlider').disabled=true;
+    document.getElementById('digestSlider').value=0; document.getElementById('digestSlider').disabled=true;
+    document.getElementById('titrateSlider').value=0; document.getElementById('titrateSlider').disabled=true;
+    document.getElementById('btnDigest').disabled=true;
+    document.getElementById('btnTitrate').disabled=true; document.getElementById('btnTitrate').textContent='💉 开始自动滴定';
+    document.querySelectorAll('.rgt-btn').forEach(b=>{b.classList.remove('done');b.disabled=false;});
+    document.getElementById('tubeFill').setAttribute('y','132'); document.getElementById('tubeFill').setAttribute('height','0');
+    document.getElementById('tubeFill').setAttribute('fill','#60a5fa');
+    document.getElementById('buretteFill').style.height='100%';
+    document.getElementById('fsColor').textContent='无色';
+    document.getElementById('codDisplay').textContent='—'; document.getElementById('codDisplay').style.color='#4ade80';
+    document.getElementById('codDetail').textContent='等待实验完成';
+    document.getElementById('titrateVal').textContent='0.00';
+    document.getElementById('dripContainer').innerHTML='';
+    upd();
+    document.getElementById('phetLog').innerHTML='<div><span class="log-time">⏳</span>按顺序操作：加试剂 → 调温 → 消解 → 滴定</div>';
+    ['stepBadge1','stepBadge2','stepBadge3'].forEach(function(id){
+        var el=document.getElementById(id);
+        if(id==='stepBadge1'){el.style.background='rgba(59,130,246,.15)';el.style.color='#60a5fa';}
+        else{el.style.background='rgba(0,0,0,.2)';el.style.color='#64748b';}
+    });
+    lg('🔄 已重置','info');
+}
+
+// Init
+document.getElementById('stepBadge1').style.background='rgba(59,130,246,.15)';
+document.getElementById('stepBadge1').style.color='#60a5fa';
+// CALCULATION TAB
+// ══════════════════════════════════════
+function doCalc() {
+    const vBlank = parseFloat(document.getElementById('calc-vblank').value) || 0;
+    const vSample = parseFloat(document.getElementById('calc-vsample').value) || 0;
+    const N = parseFloat(document.getElementById('calc-n').value) || 0.1;
+    const Vs = parseFloat(document.getElementById('calc-vs').value) || 20;
+    const cod = (vBlank - vSample) * N * 8000 / Vs;
+    const codClamped = Math.max(0, cod);
+
+    const resultEl = document.getElementById('calc-result');
+    resultEl.style.display = 'block';
+    document.getElementById('calc-detail').innerHTML =
+        `(${vBlank.toFixed(2)} − ${vSample.toFixed(2)}) × ${N} × 8000 / ${Vs} = <strong>${codClamped.toFixed(1)} mg/L</strong>`;
+
+    const valEl = document.getElementById('calc-val');
+    const startTime = performance.now();
+    const duration = 1000;
+    function animate(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        valEl.textContent = (codClamped * eased).toFixed(1);
+        if (progress < 1) requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+}
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize reagent items as hidden
+    document.querySelectorAll('#expReagentList .exp-reagent-item').forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(-10px)';
+    });
+});
+</script>
+</body>
+</html>

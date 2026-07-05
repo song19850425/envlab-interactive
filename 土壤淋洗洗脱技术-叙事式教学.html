@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>土壤淋洗/洗脱技术 · 叙事式教学</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}:root{--a:#92400e;--al:#fef3c7;--b:#e8e0d4;--sr:'Noto Serif SC','Source Han Serif SC','Songti SC',serif;--sn:'Inter',-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth}body{font-family:var(--sn);color:#1a1a2e;background:#faf9f6;overflow-x:hidden}
+#sp{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--a),#16a34a);z-index:1000}
+#nv{position:fixed;right:24px;top:50%;z-index:999;display:flex;flex-direction:column;gap:14px}
+.nd{width:10px;height:10px;border-radius:50%;background:var(--b);cursor:pointer;border:2px solid transparent;position:relative}
+.nd.ac{background:var(--a);transform:scale(1.5)}.nd:hover{border-color:var(--a)}
+.nd .nl{position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:11px;white-space:nowrap;color:#555;background:#fff;padding:3px 10px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.1);opacity:0;pointer-events:none;transition:opacity .2s}
+.nd:hover .nl{opacity:1}
+.he{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 24px;background:linear-gradient(180deg,var(--al),#faf9f6)}
+.he h1{font-family:var(--sr);font-size:clamp(36px,6vw,72px);font-weight:900;color:#1a1a2e}.he h1 em{color:var(--a);font-style:normal}
+.hb{display:inline-block;padding:6px 18px;border-radius:20px;background:var(--al);color:var(--a);font-size:12px;font-weight:600;margin-bottom:24px}
+.he p{margin-top:20px;font-size:clamp(14px,2vw,18px);color:#555;max-width:560px;line-height:1.7}
+.hs{display:flex;gap:32px;margin-top:48px;flex-wrap:wrap;justify-content:center}.hs div{text-align:center}.hs .n{font-family:var(--sr);font-size:36px;font-weight:900;color:var(--a);display:block}
+.sh{position:absolute;bottom:32px;left:50%;color:#555;font-size:12px;animation:fl 2s infinite}@keyframes fl{0%,100%{transform:translateX(-50%)}50%{transform:translateX(-50%) translateY(8px)}}
+.sc{max-width:900px;margin:0 auto;padding:100px 24px;opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}.sc.vi{opacity:1;transform:translateY(0)}
+.sn{font-size:11px;font-weight:600;letter-spacing:3px;color:var(--a);margin-bottom:8px}
+.st{font-family:var(--sr);font-size:clamp(28px,4vw,48px);font-weight:700;margin-bottom:12px}
+.sd{font-size:16px;color:#555;line-height:1.8;max-width:600px;margin-bottom:48px}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.ic{background:#fff;border-radius:12px;padding:24px;border:1px solid var(--b);cursor:pointer;transition:.35s ease;margin-bottom:16px}
+.ic:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.08)}.ic.rv{background:var(--al)}
+.ii{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
+.in{font-weight:700;font-size:15px}.is{font-size:12px;color:#555}
+.ib{font-size:13px;color:#555;line-height:1.6;margin-top:10px;max-height:0;overflow:hidden;transition:.5s}.ic.rv .ib{max-height:300px;margin-top:10px}.it{display:inline-block;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600}
+.tl{position:relative;padding-left:40px}.tl::before{content:'';position:absolute;left:15px;top:8px;bottom:8px;width:2px;background:var(--b)}
+.ps{position:relative;margin-bottom:40px;opacity:0;transform:translateX(-20px);transition:.6s}.ps.vi{opacity:1;transform:translateX(0)}
+.ps::before{content:'';position:absolute;left:-33px;top:6px;width:12px;height:12px;border-radius:50%;background:#faf9f6;border:2px solid var(--b);transition:.3s}
+.ps.vi::before{background:var(--a);border-color:var(--a)}.pn{font-size:11px;font-weight:700;color:var(--a);margin-bottom:4px}
+.pt{font-weight:700;font-size:16px;margin-bottom:6px}.pd{font-size:14px;color:#555;line-height:1.7}
+.po{display:inline-block;padding:4px 12px;background:var(--al);color:var(--a);border-radius:6px;font-size:12px;margin-top:8px}
+.es{background:linear-gradient(180deg,var(--al),#faf9f6);padding:80px 24px 100px}
+.ec{background:#fff;border-radius:20px;border:1px solid var(--b);overflow:hidden;max-width:920px;margin:0 auto}
+.eh{padding:24px 28px;border-bottom:1px solid var(--b)}.eh h3{font-size:18px;font-weight:700;font-family:var(--sr)}
+.eb{padding:28px}.sw{background:#faf6ee;border-radius:14px;padding:16px;border:1px solid var(--b);margin-bottom:16px;text-align:center;min-height:150px;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.sb{padding:10px 24px;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;margin:4px;font-family:var(--sn)}
+.s1{background:linear-gradient(135deg,var(--a),#78350f);color:#fff}.s1:hover{transform:translateY(-2px)}
+.s2{background:linear-gradient(135deg,#78716c,#444);color:#fff}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:16px}
+.sg div{padding:14px;border-radius:10px;text-align:center}.sg .v{font-family:var(--sr);font-size:28px;font-weight:900;line-height:1}
+.ft{text-align:center;padding:60px 24px;color:#555;font-size:13px;border-top:1px solid var(--b);background:#f5f0e8}</style></head><body>
+<div id="sp"></div>
+<div id="nv"><div class="nd ac" onclick="gs(0)"><span class="nl">开篇</span></div><div class="nd" onclick="gs(1)"><span class="nl">药剂</span></div><div class="nd" onclick="gs(2)"><span class="nl">条件</span></div><div class="nd" onclick="gs(3)"><span class="nl">流程</span></div><div class="nd" onclick="gs(4)"><span class="nl">模拟</span></div><div class="nd" onclick="gs(5)"><span class="nl">总结</span></div></div>
+<div class="he"><div class="hb">土壤修复 · 交互式教学</div><h1>土壤<em>淋洗/洗脱</em>技术</h1><p>Soil Washing/Flushing<br>通过水或化学溶液冲洗土壤，将污染物从固相转移至液相再处理。</p><div class="hs"><div><span class="n">4</span><span>种药剂</span></div><div><span class="n">60~99</span><span>% 去除率</span></div><div><span class="n">5</span><span>步流程</span></div><div><span class="n">≤2mm</span><span>适用粒径</span></div></div><div class="sh">↓ 向下滚动</div></div>
+<div class="sc vi" id="s1"><div class="sn">Section 01 · 淋洗药剂</div><h2 class="st">认识淋洗剂</h2><p class="sd">点击卡片查看各类淋洗剂。</p><div class="cg">
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#e0f2fe;">💧</div><div class="in">清水淋洗</div><div class="is">Water Flushing</div><div class="ib">利用水的溶解作用将可溶性污染物（无机盐、极性有机物）从土壤中洗出。适用于高渗透性土壤，成本低但效率有限。</div><span class="it" style="background:#e0f2fe;color:#0c4a6e;">物理溶解</span></div>
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#fef3c7;">🧪</div><div class="in">表面活性剂</div><div class="is">Surfactant</div><div class="ib">降低油水界面张力，提高疏水性有机物（石油烃、PAHs）的溶解度和迁移性。常用阴离子型和非离子型。</div><span class="it" style="background:#fef3c7;color:#92400e;">增溶</span></div>
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#f0fdf4;">🧫</div><div class="in">络合剂</div><div class="is">Chelating Agent</div><div class="ib">EDTA、柠檬酸与重金属离子形成水溶性络合物。适用于Pb、Cd、Cu、Zn等重金属污染土壤。</div><span class="it" style="background:#f0fdf4;color:#166534;">络合</span></div>
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#fef2f2;">⚗️</div><div class="in">有机溶剂</div><div class="is">Organic Solvent</div><div class="ib">乙醇、异丙醇提高非极性有机物溶解度。适用于高浓度有机污染，需配套溶剂回收装置。</div><span class="it" style="background:#fef2f2;color:#991b1b;">溶剂</span></div></div></div>
+<div class="sc" id="s2"><div class="sn">Section 02 · 适用条件</div><h2 class="st">适用范围</h2><p class="sd">点击查看。</p><div class="cg">
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#fef3c7;">🏞️</div><div class="in">土壤条件</div><div class="is">Soil</div><div class="ib">砂土和粉砂（<60%黏粒），渗透系数k>10⁻⁴cm/s。黏土含量高时淋洗效果差，需筛分预处理。</div><span class="it" style="background:#fef3c7;color:#92400e;">砂土最佳</span></div>
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#e0f2fe;">🧪</div><div class="in">污染物</div><div class="is">Contaminant</div><div class="ib">重金属（Pb/Cd/Cu/Zn/Ni/Cr）和有机物（石油烃/PAHs/农药）。疏水性有机物需配合表面活性剂。</div><span class="it" style="background:#e0f2fe;color:#0c4a6e;">广泛</span></div>
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#f0fdf4;">💰</div><div class="in">经济条件</div><div class="is">Cost</div><div class="ib">土壤量>1000m³时经济性较好。淋洗废液需配套水处理设施。</div><span class="it" style="background:#f0fdf4;color:#166534;">规模效益</span></div></div></div>
+<div class="sc" id="s3"><div class="sn">Section 03 · 工艺流程</div><h2 class="st">淋洗五步法</h2><div class="tl">
+<div class="ps"><div class="pn">STEP 01</div><div class="pt">土壤预处理</div><div class="pd">挖掘→破碎→筛分（去除>50mm石块杂物）。</div><span class="po">🪨 筛分提升效率</span></div>
+<div class="ps"><div class="pn">STEP 02</div><div class="pt">淋洗混合</div><div class="pd">土壤与淋洗剂按固液比1:2~1:10混合搅拌15~60min。</div><span class="po">⚗️ 固液比影响成本</span></div>
+<div class="ps"><div class="pn">STEP 03</div><div class="pt">固液分离</div><div class="pd">沉淀或离心分离，废液送处理，土壤检测后回填。</div><span class="po">💧 离心效率高</span></div>
+<div class="ps"><div class="pn">STEP 04</div><div class="pt">废液处理</div><div class="pd">经沉淀+过滤+吸附后循环利用或达标排放。</div><span class="po">🔄 废液回用降本</span></div>
+<div class="ps"><div class="pn">STEP 05</div><div class="pt">土壤回填</div><div class="pd">检测达标后回填，长期监测确认无反弹。</div><span class="po">✅ 回填前检测</span></div></div></div>
+<div class="es" id="s4"><div class="sc" style="padding-bottom:0;"><div class="sn">Section 04 · 交互模拟</div><h2 class="st">模拟淋洗过程</h2><p class="sd">观察不同淋洗剂的效果。</p></div>
+<div style="max-width:920px;margin:0 auto;padding:0 24px 100px;"><div class="ec"><div class="eh"><h3>🧪 淋洗模拟器</h3></div><div class="eb">
+<div class="sw"><div style="font-size:48px;">🧪</div><p style="color:#555;font-size:14px;">污染土壤 + 淋洗剂 → 清洗后土壤 + 废液处理</p></div>
+<div style="text-align:center;"><button class="sb s1" id="sb" onclick="ts()">▶ 启动</button><button class="sb s2" onclick="rs()">🔄 重置</button></div>
+<div class="sg" id="stBox"><div style="background:#fef2f2;"><div class="v" id="v1" style="color:#dc2626;">100</div><div>初始浓度 [%]</div></div><div style="background:#f0fdf4;"><div class="v" id="v2" style="color:#16a34a;">—</div><div>去除率 [%]</div></div><div style="background:#e0f2fe;"><div class="v" id="v3" style="color:#0ea5e9;">0</div><div>淋洗轮次</div></div></div>
+<div id="info" style="margin-top:12px;padding:14px;border-radius:10px;background:#fafaf8;border:1px solid var(--b);font-size:12px;color:#555;line-height:1.7;"><strong>状态：</strong><span id="st">未启动</span></div>
+</div></div></div></div>
+<div class="sc" id="s5"><div class="sn">Section 05 · 总结</div><h2 class="st">要点回顾</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">
+<div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--b);"><div style="font-size:28px;margin-bottom:8px;">🧪</div><div style="font-weight:700;font-size:14px;margin-bottom:4px;">药剂选择是关键</div><div style="font-size:12px;color:#555;line-height:1.6;">根据污染物类型选择适宜药剂</div></div>
+<div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--b);"><div style="font-size:28px;margin-bottom:8px;">🏞️</div><div style="font-weight:700;font-size:14px;margin-bottom:4px;">砂土最佳</div><div style="font-size:12px;color:#555;line-height:1.6;">黏土需筛分预处理</div></div>
+<div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--b);"><div style="font-size:28px;margin-bottom:8px;">🔄</div><div style="font-weight:700;font-size:14px;margin-bottom:4px;">废液必处理</div><div style="font-size:12px;color:#555;line-height:1.6;">配套水处理设施</div></div>
+<div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--b);"><div style="font-size:28px;margin-bottom:8px;">💰</div><div style="font-weight:700;font-size:14px;margin-bottom:4px;">规模效益</div><div style="font-size:12px;color:#555;line-height:1.6;">>1000m³经济性较好</div></div></div></div>
+<div class="ft"><p>EnvLab · 环境检测交互式教学平台</p><p style="margin-top:4px;">联系方式：jinghao.song@gmail.com</p></div>
+<script>
+window.addEventListener('scroll',()=>{let h=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('sp').style.width=(window.scrollY/h*100)+'%'})
+let ss=document.querySelectorAll('.sc,.es'),dd=document.querySelectorAll('.nd')
+new IntersectionObserver(e=>e.forEach(n=>n.isIntersecting&&n.target.classList.add('vi')),{threshold:.1}).observe(ss)
+new IntersectionObserver(e=>e.forEach(n=>n.isIntersecting&&n.target.classList.add('vi')),{threshold:.2}).observe(document.querySelectorAll('.ps'))
+window.addEventListener('scroll',()=>{let c=0;ss.forEach((s,i)=>{if(window.scrollY>=s.offsetTop-300)c=i});dd.forEach((d,i)=>d.classList.toggle('ac',i===c))})
+function gs(i){if(ss[i])ss[i].scrollIntoView({behavior:'smooth'})}
+function rc(c){if(!c.classList.contains('rv'))c.classList.add('rv')}
+let r=0,t=null,n=0;function ts(){if(r){r=0;clearInterval(t);t=null;document.getElementById('sb').textContent='▶ 启动'}else{r=1;t=setInterval(()=>{n++;let e=Math.max(5,100*Math.exp(-.4*n));document.getElementById('v1').textContent=Math.round(e);document.getElementById('v2').textContent=(100-e).toFixed(1);document.getElementById('v3').textContent=n;document.getElementById('info').innerHTML='<strong>状态：</strong><span style=\"color:green;\">运行中 | 轮次 '+n+' | 去除率 '+(100-e).toFixed(1)+'%</span>';if(e<5){clearInterval(t);r=0;document.getElementById('sb').textContent='▶ 启动';document.getElementById('info').innerHTML='<strong>状态：</strong><span style=\"color:green;\">✅ 淋洗完成</span>'}},800);document.getElementById('sb').textContent='⏸ 暂停'}}
+function rs(){r=0;clearInterval(t);t=null;n=0;document.getElementById('sb').textContent='▶ 启动';document.getElementById('v1').textContent='100';document.getElementById('v2').textContent='—';document.getElementById('v3').textContent='0';document.getElementById('info').innerHTML='<strong>状态：</strong><span>已重置</span>'}
+</script></body></html>

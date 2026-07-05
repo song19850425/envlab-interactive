@@ -1,0 +1,224 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>环境科技赛道 · 竞品全景分析</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a14;color:#e0e0f0;font-family:'Inter',system-ui,sans-serif;overflow-x:hidden}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,0,128,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,180,255,.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+.app{max-width:1000px;margin:0 auto;padding:32px 20px;position:relative;z-index:1}
+header{text-align:center;margin-bottom:48px}
+header .tag{padding:4px 14px;border-radius:12px;border:1px solid rgba(255,0,128,.4);color:#ff0080;font-size:11px;display:inline-block;margin-bottom:12px;letter-spacing:2px}
+header h1{font-size:clamp(28px,5vw,48px);font-weight:900;background:linear-gradient(135deg,#00b4ff,#ff0080);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+header p{color:#8888aa;font-size:14px;margin-top:8px;max-width:600px;margin-inline:auto;line-height:1.7}
+/* CATEGORY */
+.cat{display:grid;grid-template-columns:1fr;gap:24px;margin-bottom:40px}
+.cat-card{border-radius:16px;border:1px solid rgba(255,255,255,.06);overflow:hidden;transition:.3s}
+.cat-card:hover{border-color:rgba(0,180,255,.2);transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.cat-hd{padding:20px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.cat-hd .ci{font-size:28px}
+.cat-hd .cn{font-size:18px;font-weight:700}
+.cat-hd .cs{font-size:11px;color:#8888aa}
+.cat-stat{display:flex;gap:12px;margin-left:auto;flex-wrap:wrap}
+.cat-stat div{text-align:center;background:rgba(255,255,255,.04);border-radius:8px;padding:6px 12px;min-width:50px}
+.cat-stat .c-n{font-weight:700;font-size:14px;color:#00b4ff;display:block}
+.cat-stat .c-l{font-size:9px;color:#666}
+.cat-body{padding:0 24px 24px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.cat-body{grid-template-columns:1fr}}
+.cat-card.c0 .cat-hd{background:linear-gradient(135deg,rgba(0,180,255,.1),transparent)}
+.cat-card.c1 .cat-hd{background:linear-gradient(135deg,rgba(0,255,128,.1),transparent)}
+.cat-card.c2 .cat-hd{background:linear-gradient(135deg,rgba(255,0,128,.1),transparent)}
+.cat-card.c0{border-color:rgba(0,180,255,.15)}
+.cat-card.c1{border-color:rgba(0,255,128,.15)}
+.cat-card.c2{border-color:rgba(255,0,128,.15)}
+/* ITEM */
+.item{border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:14px;transition:.2s}
+.item:hover{background:rgba(255,255,255,.06)}
+.item .in{font-weight:600;font-size:13px;margin-bottom:4px}
+.item .id{font-size:11px;color:#8888aa;line-height:1.6}
+.item .it{display:inline-block;margin-top:6px;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
+.c0 .item .it{background:rgba(0,180,255,.15);color:#00b4ff}
+.c1 .item .it{background:rgba(0,255,128,.15);color:#00ff80}
+.c2 .item .it{background:rgba(255,0,128,.15);color:#ff0080}
+/* COMPARE TABLE */
+.cp{overflow-x:auto;border-radius:12px;border:1px solid rgba(255,255,255,.06);margin:32px 0}
+.cp table{width:100%;border-collapse:collapse;font-size:12px;min-width:700px}
+.cp th{background:rgba(255,255,255,.05);padding:12px 14px;text-align:left;font-weight:600;font-size:11px;color:#8888aa;border-bottom:1px solid rgba(255,255,255,.08)}
+.cp td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:#ccc}
+.cp tr:hover td{background:rgba(255,255,255,.03)}
+.cp th:first-child,.cp td:first-child{position:sticky;left:0;background:#0a0a14;z-index:2}
+.cp tr:hover td:first-child{background:#12121e}
+.cp .hl{color:#00b4ff;font-weight:600}
+.cp .hl2{color:#ff0080;font-weight:600}
+/* YOU BOX */
+.you{background:linear-gradient(135deg,rgba(255,0,128,.08),rgba(0,180,255,.08));border-radius:16px;border:1px solid rgba(255,0,128,.2);padding:24px;margin:32px 0}
+.you h3{font-size:16px;font-weight:700;margin-bottom:12px;color:#ff0080}
+.you-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.you-grid{grid-template-columns:1fr}}
+.you-item{border-radius:8px;padding:12px;background:rgba(0,0,0,.3)}
+.you-item .yn{font-weight:600;font-size:12px;margin-bottom:4px}
+.you-item .yd{font-size:11px;color:#8888aa;line-height:1.6}
+.you-item .ye{color:#00ff80;font-size:11px;font-weight:600}
+.you-item .yx{color:#ff6666;font-size:11px;font-weight:600}
+.ft{text-align:center;padding:32px;color:#444;font-size:11px;border-top:1px solid rgba(255,255,255,.05);margin-top:48px}
+</style></head><body>
+<div class="bg-grid"></div>
+<div class="app">
+<header>
+<div class="tag">ENVIRONMENT × TECHNOLOGY</div>
+<h1>环境科技赛道 · 竞品全景分析</h1>
+<p>国内环境信息化/虚拟仿真三大赛道的典型玩家、产品形态、商业模式、与你所做内容的对比</p>
+</header>
+
+<!-- CAT 0 -->
+<div class="cat">
+<div class="cat-card c0">
+<div class="cat-hd">
+<span class="ci">📟</span>
+<span class="cn">IoT 硬件 · 环境监测</span>
+<span class="cs">硬件+云端，数据采集层</span>
+<div class="cat-stat"><div><span class="c-n">100+</span><span class="c-l">开源项目</span></div><div><span class="c-n">¥50~500</span><span class="c-l">硬件成本</span></div><div><span class="c-n">⭐较低</span><span class="c-l">进入门槛</span></div></div>
+</div>
+<div class="cat-body">
+<div class="item"><div class="in">ESP32 + 传感器组合</div><div class="id">温湿度/PM2.5/CO₂/水质传感器，通过WiFi上传到MQTT/阿里云IoT。多数开源项目止步于数据采集和简单展示。</div><span class="it">GitHub 星数 50~500</span></div>
+<div class="item"><div class="in">AirGradient 开源空气监测仪</div><div class="id">专业级开源空气监测仪，支持PM2.5/CO₂/温湿度，提供PCB设计和3D打印外壳，生产级文档完整。</div><span class="it">GitHub 2.2k stars</span></div>
+<div class="item"><div class="in">立创 EDA 开源硬件</div><div class="id">OSHWHUB 平台上有大量 ESP32 环境监测开源方案，从简单传感器到带TFT彩屏的专业监测站。</div><span class="it">国内开源硬件社区</span></div>
+<div class="item"><div class="in">CanAirIO 空气质量网络</div><div class="id">开源空气质量监测网络项目，支持ESP32+传感器，数据可贡献到全球公民科学地图。</div><span class="it">GitHub 1.5k stars</span></div>
+</div>
+</div>
+
+<!-- CAT 1 -->
+<div class="cat-card c1">
+<div class="cat-hd">
+<span class="ci">📊</span>
+<span class="cn">数据大屏 · 可视化</span>
+<span class="cs">前端+数据接口，展示层</span>
+<div class="cat-stat"><div><span class="c-n">ECharts</span><span class="c-l">主流框架</span></div><div><span class="c-n">¥0~5万</span><span class="c-l">开发成本</span></div><div><span class="c-n">⭐中等</span><span class="c-l">进入门槛</span></div></div>
+</div>
+<div class="cat-body">
+<div class="item"><div class="in">阿里云 DataV / 腾讯云图</div><div class="id">拖拽式数据大屏工具，支持接入各类数据源。政府环保部门的大屏展示首选，年费2~10万，定制另计。</div><span class="it">商业产品</span></div>
+<div class="item"><div class="in">ECharts + 开源大屏方案</div><div class="id">基于Vue/ECharts的环保数据大屏，GitHub上大量模板。典型功能：GIS地图+实时曲线+指标仪表盘。</div><span class="it">GitHub 1k~5k stars</span></div>
+<div class="item"><div class="in">海康/大华 环保IOC平台</div><div class="id">基于视频+传感器的环境综合监管平台，融合AI识别、GIS一张图、应急指挥。单项目100~500万。</div><span class="it">企业级产品</span></div>
+<div class="item"><div class="in">AirVisual / IQAir 全球空气质量地图</div><div class="id">全球空气质量可视化平台，覆盖主要城市实时AQI数据。界面设计标杆，前端交互标杆级产品。</div><span class="it">全球TOP 1</span></div>
+</div>
+</div>
+
+<!-- CAT 2 -->
+<div class="cat-card c2">
+<div class="cat-hd">
+<span class="ci">🥽</span>
+<span class="cn">虚拟仿真 · 教学平台</span>
+<span class="cs">3D+VR+AI，教学层</span>
+<div class="cat-stat"><div><span class="c-n">1500+</span><span class="c-l">高校客户</span></div><div><span class="c-n">¥10~50万</span><span class="c-l">项目单价</span></div><div><span class="c-n">⭐⭐⭐高</span><span class="c-l">进入门槛</span></div></div>
+</div>
+<div class="cat-body">
+<div class="item"><div class="in">北京欧倍尔 · 环境监测仿真软件</div><div class="id">14年老牌公司，540+员工，500+软著，1500+高校客户。产品线涵盖化工、环境、制药、食品等。3D虚拟仿真+VR+AI智慧实验室。商业模式：软件授权+实训基地建设（单项目30~300万）。</div><span class="it">头部玩家 案例最多</span></div>
+<div class="item"><div class="in">复旦大学 · ilab-x 国家虚拟仿真平台</div><div class="id">国家级虚拟仿真实验教学共享平台，汇集全国高校虚拟仿真课程。环境类含：水环境生态安全评估、土壤重金属修复等。Browser-based，无需安装。</div><span class="it">国家级平台</span></div>
+<div class="item"><div class="in">PhET 交互式仿真（科罗拉多大学）</div><div class="id">全球最大免费交互式科学仿真平台。诺贝尔奖得主创立，覆盖物理/化学/生物/地理。HTML5技术栈，开源可二次开发。pH Scale、Beer's Law Lab 是环境检测相关。</div><span class="it">全球标杆 免费开源</span></div>
+<div class="item"><div class="in">Labster 虚拟实验室（丹麦）</div><div class="id">全球领先的虚拟实验室平台，3D沉浸式实验模拟。覆盖生物/化学/医学。曾被 Quizlet 3.2亿美元收购。订阅制，学校年费$5k~$50k。</div><span class="it">商业标杆 已退出</span></div>
+</div>
+</div>
+</div>
+
+<!-- COMPARE -->
+<h2 style="font-size:20px;font-weight:700;margin:48px 0 20px;text-align:center">横向对比 + 你的位置</h2>
+<div class="cp">
+<table>
+<thead><tr><th style="min-width:120px">维度</th><th>IoT 硬件</th><th>数据大屏</th><th>虚拟仿真（欧倍尔）</th><th>虚拟仿真（PhET/Labster）</th><th style="color:#ff0080">你做的 EnvLab</th></tr></thead>
+<tbody>
+<tr>
+<td>产品形态</td>
+<td>硬件+App</td>
+<td>Web 大屏</td>
+<td>3D客户端/VR</td>
+<td>Web 交互仿真</td>
+<td style="color:#ff0080">HTML 交互教学</td>
+</tr>
+<tr>
+<td>技术栈</td>
+<td>C++/Python/IoT</td>
+<td>Vue/ECharts/GIS</td>
+<td>Unity3D/VR/数字孪生</td>
+<td>HTML5/React/Canvas</td>
+<td style="color:#ff0080">纯 HTML/CSS/JS</td>
+</tr>
+<tr>
+<td>交互深度</td>
+<td>数据采集+图表</td>
+<td>查看+筛选</td>
+<td>3D操作+VR沉浸</td>
+<td style="color:#00b4ff">高互动+即时反馈</td>
+<td style="color:#ff0080">中等（点击+动画）</td>
+</tr>
+<tr>
+<td>教学贴合度</td>
+<td>低（偏工程）</td>
+<td>低（偏展示）</td>
+<td style="color:#00b4ff">高（完整课程）</td>
+<td style="color:#00b4ff">极高（教学设计）</td>
+<td style="color:#ff0080">中高（有框架缺内容）</td>
+</tr>
+<tr>
+<td>开发成本</td>
+<td>¥50~500/台</td>
+<td>¥0~5万</td>
+<td>¥10~50万/门课</td>
+<td>¥100万+（团队）</td>
+<td style="color:#ff0080">¥0（单文件搞定）</td>
+</tr>
+<tr>
+<td>商业模式</td>
+<td>卖硬件/方案</td>
+<td>项目制/SaaS</td>
+<td style="color:#00b4ff">软件授权+实训基地</td>
+<td>订阅制/授权</td>
+<td style="color:#ff0080">❌ 暂无</td>
+</tr>
+<tr>
+<td>团队规模</td>
+<td>1~5人</td>
+<td>1~10人</td>
+<td>540人</td>
+<td>50~200人</td>
+<td style="color:#ff0080">你一个人</td>
+</tr>
+<tr>
+<td>竞争格局</td>
+<td>极度分散</td>
+<td>中尾部竞争激烈</td>
+<td>头部垄断</td>
+<td>全球2~3家</td>
+<td style="color:#ff0080">❓ 细分无人区</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- YOU -->
+<div class="you">
+<h3>⚡ 你的独特定位（无人交叉点）</h3>
+<div class="you-grid">
+<div class="you-item">
+<div class="yn">🎯 你做了别人没做的</div>
+<div class="yd">环境检测标准方法（HJ系列）+ 交互式HTML教学，这个交叉点目前没有任何产品覆盖。欧倍尔做3D仿真但不做检测方法教学，PhET做科学仿真但不做环境检测标准。</div>
+<div class="ye">✅ 真正差异化的赛道</div>
+</div>
+<div class="you-item">
+<div class="yn">⚠️ 你缺的</div>
+<div class="yd">没有商业模式——22个页面都是免费的。没有获客渠道——没人知道这些页面存在。没有课程体系——单页面有，但没有"从入门到精通"的路径。没有互动深度——还停留在点击揭示+数字动画。</div>
+<div class="yx">❌ 从作品到产品缺三环</div>
+</div>
+<div class="you-item">
+<div class="yn">📦 你最该抄谁的</div>
+<div class="yd"><strong>PhET 的模式</strong>：一个实验一个页面，免费开放，靠品牌和口碑传播。不做3D，不做硬件，专注交互教学设计。<br><strong>Labster 的模式</strong>：打包成课程体系，卖给学校和培训机构。</div>
+<div class="ye">✅ 参考方向明确</div>
+</div>
+<div class="you-item">
+<div class="yn">🚀 最小可行动作</div>
+<div class="yd">1. 选一个实验做到 PhET 级别的交互深度（不是点击卡片，是真的模拟）<br>2. 部署上线获得公开链接<br>3. 发一篇公众号说明这个页面解决了什么问题<br>4. 看有没有人主动来找你</div>
+<div class="ye">✅ 先验证需求是否存在</div>
+</div>
+</div>
+</div>
+
+<div class="ft">环境检测 · 交互式教学 | jinghao.song@gmail.com | 2026.06.29</div>
+</div>
+</body></html>

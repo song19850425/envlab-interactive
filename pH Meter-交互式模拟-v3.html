@@ -1,0 +1,398 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"><title>pH Meter · 电极拖拽模拟</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:#0f0f23;color:#e0e0f0;font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;overflow-x:hidden;user-select:none;-webkit-user-select:none}
+.app{max-width:1000px;margin:0 auto;padding:clamp(6px,2vw,16px);display:flex;flex-direction:column;gap:clamp(6px,1.5vw,12px);min-height:100dvh}
+
+/* HEADER */
+header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:4px 0}
+header h1{font-size:clamp(13px,2.5vw,18px);font-weight:700;display:flex;align-items:center;gap:4px}
+header h1 small{font-size:clamp(8px,1.2vw,10px);font-weight:400;color:#666}
+.st{display:flex;align-items:center;gap:4px;padding:3px 8px;border-radius:5px;background:rgba(255,255,255,.03);font-size:clamp(9px,1.2vw,10px);color:#888}
+.sd{width:6px;height:6px;border-radius:50%;display:inline-block}
+
+/* METER + BENCH LAYOUT */
+.mb{display:grid;grid-template-columns:1fr 1fr;gap:clamp(6px,1.5vw,12px)}@media(max-width:700px){.mb{grid-template-columns:1fr}}
+
+/* ===== PH METER ===== */
+.meter-wrap{background:#0a0a1e;border-radius:14px;border:1px solid rgba(255,255,255,.06);padding:clamp(12px,2vw,20px);display:flex;flex-direction:column;align-items:center;gap:8px}
+.meter-face{position:relative;width:clamp(160px,30vw,240px);height:clamp(160px,30vw,240px)}
+.meter-face svg{width:100%;height:100%}
+.meter-val{text-align:center}
+.meter-val .pv{font-size:clamp(36px,7vw,64px);font-weight:900;letter-spacing:-2px;transition:color .3s;line-height:1}
+.meter-val .pu{font-size:clamp(10px,1.5vw,13px);color:#666}
+.meter-val .pl{font-size:clamp(10px,1.3vw,12px);margin-top:2px;font-weight:500}
+.meter-bar{width:100%;max-width:300px}
+.meter-bar .ms{height:clamp(6px,1vw,10px);border-radius:5px;position:relative;overflow:hidden;background:linear-gradient(90deg,#ff3333,#ff9933,#ffcc00,#66cc66,#3399ff,#6633cc)}
+.meter-bar .mf{height:100%;border-radius:5px;transition:width .5s ease,background .5s;width:50%}
+.meter-bar .sl{display:flex;justify-content:space-between;font-size:clamp(7px,1vw,9px);color:#444;margin-top:1px}
+
+/* ===== ELECTRODE ===== */
+.elec-wrap{position:relative}
+.elec{position:absolute;width:clamp(28px,4vw,38px);height:clamp(120px,20vw,180px);z-index:50;cursor:grab;touch-action:none;display:flex;flex-direction:column;align-items:center;pointer-events:none}
+.elec .rod{width:clamp(5px,.7vw,7px);height:clamp(65px,10vw,95px);background:linear-gradient(180deg,#aaa,#666,#555);border-radius:3px;position:relative}
+.elec .rod::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:clamp(8px,1.2vw,12px);height:clamp(6px,.8vw,8px);background:#888;border-radius:2px}
+.elec .tip{width:clamp(14px,2.2vw,20px);height:clamp(14px,2.2vw,20px);border-radius:50%;background:radial-gradient(circle at 35% 35%,#888,#333);border:clamp(2px,.3vw,3px)solid #999;margin-top:-3px;flex-shrink:0;position:relative}
+.elec .tip::after{content:'';position:absolute;bottom:clamp(-4px,-.6vw,-3px);left:50%;transform:translateX(-50%);width:clamp(4px,.5vw,5px);height:clamp(4px,.5vw,5px);border-radius:50%;background:#222}
+.elec .elbl{font-size:clamp(7px,.9vw,9px);color:#888;margin-top:3px;white-space:nowrap;background:rgba(0,0,0,.5);padding:2px 6px;border-radius:4px;letter-spacing:.5px}
+.elec .drop-line{position:absolute;bottom:0;left:50%;width:1px;background:linear-gradient(180deg,transparent,rgba(255,0,128,.2));transition:height .3s;height:0}
+
+/* ===== BENCH ===== */
+.bench-wrap{background:#14142a;border-radius:14px;border:1px solid rgba(255,255,255,.06);padding:clamp(10px,1.5vw,16px);min-height:clamp(180px,30vw,260px);position:relative}
+.bench-label{font-size:clamp(8px,1vw,10px);color:#555;margin-bottom:clamp(6px,1vw,10px);letter-spacing:.5px}
+.sol-grid{display:flex;flex-wrap:wrap;gap:clamp(4px,.8vw,8px);justify-content:center;position:relative;z-index:2}
+.beaker{width:clamp(58px,10vw,80px);height:clamp(75px,13vw,100px);border-radius:0 0 8px 8px;border:1.5px solid rgba(255,255,255,.08);border-top:none;cursor:pointer;position:relative;transition:.2s;background:rgba(255,255,255,.02);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:3px}
+.beaker:hover{transform:translateY(-3px)}
+.beaker.ac{border-color:#00b4ff;box-shadow:0 0 10px rgba(0,180,255,.15);transform:translateY(-3px)}
+.beaker.drag-over{border-color:#ff0080;box-shadow:0 0 16px rgba(255,0,128,.25)}
+.beaker .liq{position:absolute;bottom:0;left:1px;right:1px;border-radius:0 0 7px 7px;height:clamp(40px,7vw,55px);transition:background .3s}
+.beaker .bn{font-size:clamp(7px,1.1vw,9px);color:#999;position:relative;z-index:1;text-align:center;line-height:1.2;margin-bottom:1px}
+.beaker .bt{font-size:clamp(6px,.8vw,7px);color:#555;position:relative;z-index:1}
+
+/* ===== CONTROLS ===== */
+.ctrl-wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(6px,1vw,10px)}@media(max-width:480px){.ctrl-wrap{grid-template-columns:1fr}}
+.ctrl-panel{background:#0a0a1e;border-radius:12px;border:1px solid rgba(255,255,255,.06);padding:clamp(10px,1.5vw,14px)}
+.ctrl-panel h3{font-size:clamp(9px,1.2vw,11px);color:#888;margin-bottom:6px;letter-spacing:.5px}
+.ctrl{display:flex;align-items:center;gap:4px;margin-bottom:4px}
+.ctrl label{font-size:clamp(9px,1.1vw,11px);color:#888;min-width:clamp(30px,4vw,40px)}
+.ctrl input[type=range]{flex:1;height:3px;accent-color:#00b4ff}
+.ctrl .cv{font-size:clamp(9px,1.1vw,11px);font-weight:600;min-width:clamp(24px,3vw,30px);text-align:right;color:#00b4ff}
+.btns{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.btn{padding:clamp(4px,.6vw,7px) clamp(8px,1.2vw,14px);border-radius:5px;border:none;font-size:clamp(9px,1.1vw,11px);font-weight:500;cursor:pointer;transition:.15s;font-family:inherit;min-height:clamp(28px,4vw,34px);display:flex;align-items:center;justify-content:center}
+.btn-b{background:#00b4ff;color:#fff}.btn-b:hover{background:#0098d8}
+.btn-p{background:#ff0080;color:#fff}.btn-p:hover{background:#d8006b}
+.btn-o{background:transparent;border:1px solid rgba(255,255,255,.1);color:#aaa}.btn-o:hover{background:rgba(255,255,255,.05)}
+.btn-o.done{border-color:#00ff80;color:#00ff80;background:rgba(0,255,128,.08)}
+.btn:active{transform:scale(.95)}
+.cal-st{font-size:clamp(8px,1vw,10px);color:#555;margin-top:4px}
+
+/* ===== RIGHT SIDE ===== */
+.side{display:flex;flex-direction:column;gap:clamp(6px,1vw,10px)}
+.panel{background:#14142a;border-radius:12px;border:1px solid rgba(255,255,255,.06);padding:clamp(8px,1.2vw,12px)}
+.panel h3{font-size:clamp(9px,1.1vw,10px);font-weight:600;color:#888;margin-bottom:clamp(4px,.6vw,6px);letter-spacing:.5px}
+.chart{display:flex;gap:4px;align-items:flex-end;height:clamp(36px,5vw,50px)}
+.cb{flex:1;border-radius:2px 2px 0 0;transition:height .6s,background .6s;min-width:16px;position:relative;text-align:center;font-size:clamp(6px,.8vw,7px);color:#555;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:2px}
+.cb .bv{position:absolute;top:clamp(-14px,-2vw,-12px);left:50%;transform:translateX(-50%);font-size:clamp(7px,.9vw,8px);font-weight:600;white-space:nowrap}
+.hist{max-height:clamp(80px,14vw,140px);overflow-y:auto}
+.hi{display:grid;grid-template-columns:clamp(40px,5vw,55px) 1fr clamp(28px,3.5vw,35px) clamp(24px,3vw,30px);gap:2px;padding:2px 4px;font-size:clamp(8px,1vw,10px);align-items:center;border-bottom:1px solid rgba(255,255,255,.03)}
+.hi .ht{color:#555}
+.log-box{font-size:clamp(8px,1vw,10px);color:#aaa;line-height:1.7;max-height:clamp(60px,10vw,120px);overflow-y:auto;font-family:monospace}
+.log-box div{display:grid;grid-template-columns:clamp(38px,5vw,50px) 1fr;gap:4px;padding:1px 0}
+.log-box .lt{color:#555}
+
+/* ===== TIPS ===== */
+.hint{text-align:center;font-size:clamp(8px,1vw,10px);color:#555;padding:4px}
+
+/* FINETUNE */
+@media(max-width:700px){.mb{grid-template-columns:1fr}.ctrl-wrap{grid-template-columns:1fr}.app{gap:8px}}
+</style></head><body>
+
+<div class="app">
+<header>
+<h1>🧪 pH Meter <small>· 拖拽式模拟</small></h1>
+<div class="st"><span class="sd" id="sDot"></span><span id="sTxt">就绪</span></div>
+</header>
+
+<div class="mb">
+<!-- LEFT: METER -->
+<div class="meter-wrap">
+<div class="meter-face" id="meterFace">
+<svg viewBox="0 0 240 240" style="width:100%;height:100%">
+<circle cx="120" cy="130" r="100" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="3"/>
+<circle cx="120" cy="130" r="92" fill="none" stroke="rgba(255,255,255,.03)" stroke-width="1"/>
+<!-- Tick marks -->
+<script type="text/ecmascript">for(let i=0;i<=14;i++){let a=(i/14*280-140)*Math.PI/180;let r1=78,r2=i%2===0?70:76;document.write(`<line x1="${120+r1*Math.sin(a)}" y1="${130-r1*Math.cos(a)}" x2="${120+r2*Math.sin(a)}" y2="${130-r2*Math.cos(a)}" stroke="${i%2===0?'rgba(255,255,255,.3)':'rgba(255,255,255,.1)'}" stroke-width="${i%2===0?2:1}"/>`)}</script>
+<!-- Labels -->
+<text x="120" y="45" text-anchor="middle" font-size="10" fill="#666">0</text>
+<text x="210" y="95" text-anchor="middle" font-size="10" fill="#666">7</text>
+<text x="170" y="220" text-anchor="middle" font-size="10" fill="#666">14</text>
+<!-- Color arc -->
+<path d="M42,130 A78,78 0 0,1 198,130" fill="none" stroke="url(#arcGrad)" stroke-width="6" opacity=".5"/>
+<defs>
+<linearGradient id="arcGrad" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0%" stop-color="#ff3333"/><stop offset="25%" stop-color="#ffcc00"/>
+<stop offset="50%" stop-color="#66cc66"/><stop offset="75%" stop-color="#3399ff"/><stop offset="100%" stop-color="#6633cc"/>
+</linearGradient>
+</defs>
+<!-- Needle -->
+<g id="needle" style="transform-origin:120px 130px;transition:transform .6s cubic-bezier(.34,1.56,.64,1)">
+<line x1="120" y1="130" x2="120" y2="55" stroke="#ff0080" stroke-width="2.5" stroke-linecap="round" id="needleLine"/>
+<circle cx="120" cy="130" r="6" fill="#ff0080"/>
+<circle cx="120" cy="130" r="3" fill="#0a0a1e"/>
+</g>
+</svg>
+</div>
+<div class="meter-val">
+<div class="pv" id="phVal">7.00</div>
+<div class="pu">pH</div>
+<div class="pl" id="phLbl" style="color:#666">选择或拖拽电极到溶液中</div>
+</div>
+<div class="meter-bar"><div class="ms"><div class="mf" id="phFill"></div></div><div class="sl"><span>0</span><span>4</span><span>7</span><span>10</span><span>14</span></div></div>
+</div>
+
+<!-- RIGHT: BENCH -->
+<div class="bench-wrap" id="bench">
+<div class="bench-label">🔬 拖拽电极到溶液中 · 或点击选择</div>
+<div class="sol-grid" id="solGrid"></div>
+<!-- Electrode (position absolute, moved via JS) -->
+<div class="elec" id="electrode">
+<div class="rod"></div>
+<div class="tip"></div>
+<div class="drop-line" id="dropLine"></div>
+<div class="elbl">▼ 探针</div>
+</div>
+</div>
+</div>
+
+<!-- CONTROLS -->
+<div class="ctrl-wrap">
+<div class="ctrl-panel">
+<h3>⚙️ 仪器控制</h3>
+<div class="ctrl"><label>🌡️ 温度</label><input type="range" min="0" max="50" value="25" id="tmpS" oninput="setT(this.value)"><span class="cv" id="tmpV">25°C</span></div>
+<div class="ctrl" style="flex-wrap:wrap;gap:3px">
+<button class="btn btn-o" id="c0" onclick="cal(0)">校准 4.00</button>
+<button class="btn btn-o" id="c1" onclick="cal(1)">校准 6.86</button>
+<button class="btn btn-o" id="c2" onclick="cal(2)">校准 9.18</button>
+</div>
+<div class="btns"><button class="btn btn-b" id="recBtn" onclick="rec()">📝 记录</button><button class="btn btn-p" onclick="rst()">↺ 重置</button></div>
+<div class="cal-st" id="calStat">⚡ 未校准</div>
+</div>
+<div class="ctrl-panel">
+<h3>📊 校准精度</h3>
+<div class="chart" id="calChart"></div>
+</div>
+</div>
+
+<!-- SIDE PANELS -->
+<div class="side" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(6px,1vw,10px)">
+<div class="panel"><h3>📋 测量记录</h3><div class="hist" id="history"><div class="hi" style="color:#555;grid-template-columns:1fr">暂无</div></div></div>
+<div class="panel"><h3>📜 实验日志</h3><div class="log-box" id="log"></div></div>
+</div>
+
+<div class="hint" id="hint">💡 先校准三点（4.00→6.86→9.18），再测量水样 · 手机端点击溶液即可</div>
+</div>
+
+<script>
+const samples=[
+{id:'b0',name:'pH 4.00',ph:4.00,grp:'std',color:'#ff4444',desc:'邻苯二甲酸氢钾'},
+{id:'b1',name:'pH 6.86',ph:6.86,grp:'std',color:'#e8d48b',desc:'混合磷酸盐'},
+{id:'b2',name:'pH 9.18',ph:9.18,grp:'std',color:'#3a7bd5',desc:'四硼酸钠'},
+{id:'b3',name:'自来水',ph:7.8,grp:'water',color:'#87ceeb',desc:'GB 5749'},
+{id:'b4',name:'河水',ph:6.5,grp:'water',color:'#5b8c5a',desc:'地表水Ⅲ类'},
+{id:'b5',name:'工业废水',ph:3.2,grp:'water',color:'#c86432',desc:'超�±'},
+{id:'b6',name:'地下水',ph:7.2,grp:'water',color:'#6ba3d6',desc:'GB/T 14848'},
+{id:'b7',name:'雨水',ph:5.6,grp:'water',color:'#b0c4de',desc:'酸雨阈值'},
+{id:'b8',name:'纯水',ph:6.8,grp:'water',color:'#e0f0ff',desc:'去离子水'},
+];
+
+let sel=3,tmp=25,calDone=[false,false,false],recs=[];
+const stdNames=['pH 4.00 缓冲液','pH 6.86 缓冲液','pH 9.18 缓冲液'];
+
+function renderSol(){
+  let g=document.getElementById('solGrid');
+  g.innerHTML=samples.map((s,i)=>`
+    <div class="beaker" data-idx="${i}" onclick="pick(${i})">
+      <div class="liq" style="background:${s.color}"></div>
+      <div class="bn">${s.name}</div>
+      <div class="bt">${s.grp==='std'?'标准':'水样'}</div>
+    </div>`).join('');
+  // Highlight default
+  document.querySelectorAll('.beaker')[sel].classList.add('ac');
+}
+renderSol();
+
+function pick(n){
+  sel=n;
+  document.querySelectorAll('.beaker').forEach((b,i)=>b.classList.toggle('ac',i===n));
+  update();
+  log(`选择 ${samples[n].name}`);
+}
+
+function update(){
+  let s=samples[sel];
+  let off=calOff();
+  let tc=(tmp-25)*0.003;
+  let ph=Math.max(0,Math.min(14,s.ph+off+tc));
+  
+  document.getElementById('phVal').textContent=ph.toFixed(2);
+  let pct=ph/14*100;
+  let f=document.getElementById('phFill');
+  f.style.width=Math.min(100,Math.max(0,pct))+'%';
+  
+  // Needle rotation
+  let deg=-140+(ph/14*280);
+  document.getElementById('needle').style.transform=`rotate(${deg}deg)`;
+  
+  // Color
+  let h;if(ph<3)h=0;else if(ph<5)h=15;else if(ph<6.5)h=40;else if(ph<7.5)h=120;else if(ph<9)h=200;else if(ph<11)h=240;else h=280;
+  let col=`hsl(${h},75%,${ph>2&&ph<12?48:38}%)`;
+  document.getElementById('phVal').style.color=col;
+  f.style.background=col;
+  
+  let type=ph<5.6?'酸性':ph<6.5?'弱酸性':ph<7.5?'中性':ph<8.5?'弱碱性':'碱性';
+  let cs=calDone.filter(Boolean).length;
+  let ct=cs===3?'✅ 已校准':cs>0?'⚠️ 部分校准':'❌ 未校准';
+  document.getElementById('phLbl').textContent=`${type} · ${s.desc} ${ct}`;
+  document.getElementById('phLbl').style.color=col;
+}
+
+function calOff(){
+  let n=calDone.filter(Boolean).length;
+  return n===3?0:n===2?0.05:n===1?0.15:0.3;
+}
+
+function setT(v){
+  tmp=parseFloat(v);
+  document.getElementById('tmpV').textContent=v+'°C';
+  update();
+}
+
+function cal(n){
+  if(calDone[n])return;
+  calDone[n]=true;
+  let btn=document.getElementById('c'+n);
+  btn.classList.add('done');
+  btn.textContent='✅ '+stdNames[n];
+  let c=calDone.filter(Boolean).length;
+  let st=document.getElementById('calStat');
+  if(c===3){st.textContent='🎯 三点校准完成 · 精度±0.02';st.style.color='#00ff80';log('✅ 三点校准完成');}
+  else{st.textContent=`⚠️ ${c}/3 · 误差±${c===2?'0.05':'0.15'}`;st.style.color='#ffcc00';log(`✅ ${stdNames[n]} 校准完成`);}
+  update();
+  renderChart();
+}
+renderChart();
+function renderChart(){
+  let c=document.getElementById('calChart');
+  let err=[0.3,0.15,0.05,0],lbl=['未','1点','2点','3点'],h=calDone.filter(Boolean).length;
+  c.innerHTML=err.map((e,i)=>`<div class="cb" style="height:${18+(3-i)*8}px;background:${i<=h?'rgba(0,255,128,.3)':'rgba(255,255,255,.05)'}"><span class="bv" style="color:${i<=h?'#00ff80':'#555'}">±${e}</span>${lbl[i]}</div>`).join('');
+}
+
+function rec(){
+  let s=samples[sel],off=calOff(),ph=Math.max(0,Math.min(14,s.ph+off+(tmp-25)*0.003));
+  let t=new Date(),ts=`${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`;
+  recs.push({time:ts,name:s.name,ph:ph.toFixed(2),type:s.grp==='std'?'标准':'水样'});
+  let h=document.getElementById('history');
+  h.innerHTML=recs.map(r=>`<div class="hi"><span class="ht">${r.time}</span><span style="color:${phColor(parseFloat(r.ph))}">${r.name}</span><span style="font-weight:600;color:${phColor(parseFloat(r.ph))}">${r.ph}</span><span style="color:#888">${r.type}</span></div>`).join('')
+    +'<div class="hi" style="grid-template-columns:1fr;font-size:8px;color:#555;cursor:pointer" onclick="exp()">📤 导出CSV</div>';
+  log(`📝 ${s.name}: pH ${ph.toFixed(2)}`);
+  let b=document.getElementById('recBtn');b.textContent='✅ 已记录';setTimeout(()=>b.textContent='📝 记录',800);
+}
+function phColor(p){return p<4?'#ff4444':p<6?'#ff9933':p<7.5?'#66cc66':p<9?'#3399ff':'#6633cc'}
+function exp(){
+  if(!recs.length)return;
+  let csv='时间,样品,pH,类型\n'+recs.map(r=>`${r.time},${r.name},${r.ph},${r.type}`).join('\n');
+  let b=new Blob([csv],{type:'text/csv'}),a=document.createElement('a');
+  a.href=URL.createObjectURL(b);a.download=`pH记录_${Date.now()}.csv`;a.click();
+  log('📤 数据已导出');
+}
+
+function log(m){
+  let l=document.getElementById('log');
+  let t=new Date(),ts=`${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}:${String(t.getSeconds()).padStart(2,'0')}`;
+  l.innerHTML+=`<div><span class="lt">${ts}</span><span>${m}</span></div>`;
+  l.scrollTop=l.scrollHeight;
+  let d=document.getElementById('sDot'),tx=document.getElementById('sTxt');
+  if(m.includes('✅')){d.style.background='#00ff80';tx.textContent=m.replace('✅','');}
+  else if(m.includes('⚠️')){d.style.background='#ffcc00';tx.textContent=m;}
+  else{d.style.background='#00ff80';tx.textContent=m.replace(/[📝📤💡🔄]/g,'');}
+}
+
+function rst(){
+  calDone=[false,false,false];
+  [0,1,2].forEach(i=>{let b=document.getElementById('c'+i);b.classList.remove('done');b.textContent=['校准 4.00','校准 6.86','校准 9.18'][i];});
+  document.getElementById('calStat').textContent='⚡ 未校准';document.getElementById('calStat').style.color='#555';
+  tmp=25;document.getElementById('tmpS').value=25;document.getElementById('tmpV').textContent='25°C';
+  sel=3;document.querySelectorAll('.beaker').forEach((b,i)=>b.classList.toggle('ac',i===3));
+  renderChart();recs=[];document.getElementById('history').innerHTML='<div class="hi" style="color:#555;grid-template-columns:1fr">暂无</div>';
+  document.getElementById('log').innerHTML='';update();log('🔄 已重置');
+}
+
+// ===== DRAG: 电极从上往下叉 =====
+const elec=document.getElementById('electrode');
+let drag=false,offX=0,offY=0,startY=0;
+
+function initElec(){
+  // Position electrode above the beakers, centered, pointing down
+  elec.style.left='50%';
+  elec.style.top='-40px';
+  elec.style.transform='translateX(-50%)';
+  elec.style.pointerEvents='auto';
+  elec.style.transition='top .4s ease';
+}
+initElec();
+
+function startDrag(e){
+  drag=true;
+  let p=e.type.includes('mouse')?e:e.touches[0];
+  let r=elec.getBoundingClientRect();
+  offX=p.clientX-(r.left+r.width/2);
+  offY=p.clientY-r.top;
+  startY=p.clientY;
+  elec.style.transition='none';
+  elec.style.zIndex=100;
+  elec.style.cursor='grabbing';
+}
+function moveDrag(e){
+  if(!drag)return;
+  e.preventDefault();
+  let p=e.type.includes('mouse')?e:e.touches[0];
+  let br=document.getElementById('bench').getBoundingClientRect();
+  let x=p.clientX-br.left-offX;
+  let y=p.clientY-br.top-offY;
+  x=Math.max(-elec.offsetWidth/2,Math.min(br.width-elec.offsetWidth/2,x));
+  y=Math.max(-elec.offsetHeight,Math.min(br.height-20,y));
+  elec.style.left=x+'px';
+  elec.style.top=y+'px';
+  elec.style.transform='none';
+  
+  // Drop line: show distance from start
+  let dy=Math.max(0,p.clientY-startY-20);
+  document.getElementById('dropLine').style.height=Math.min(dy,60)+'px';
+  
+  // Check collision with beakers
+  let er=elec.getBoundingClientRect();
+  let cx=er.left+er.width/2,cy=er.top+er.height-10; // tip position
+  document.querySelectorAll('.beaker').forEach((b,i)=>{
+    let r=b.getBoundingClientRect();
+    b.classList.toggle('drag-over',cx>=r.left&&cx<=r.right&&cy>=r.top&&cy<=r.bottom);
+  });
+}
+function endDrag(e){
+  if(!drag)return;
+  drag=false;
+  elec.style.zIndex=50;
+  elec.style.cursor='grab';
+  document.getElementById('dropLine').style.height='0';
+  // Check which beaker tip is over
+  let er=elec.getBoundingClientRect();
+  let cx=er.left+er.width/2,cy=er.top+er.height-10;
+  let found=false;
+  document.querySelectorAll('.beaker').forEach((b,i)=>{
+    let r=b.getBoundingClientRect();
+    b.classList.remove('drag-over');
+    if(!found&&cx>=r.left&&cx<=r.right&&cy>=r.top&&cy<=r.bottom){
+      pick(i);
+      found=true;
+    }
+  });
+  // Animate back up
+  elec.style.transition='all .4s ease';
+  elec.style.left='50%';
+  elec.style.top='-40px';
+  elec.style.transform='translateX(-50%)';
+}
+
+// Mouse events
+elec.addEventListener('mousedown',startDrag);
+document.addEventListener('mousemove',moveDrag);
+document.addEventListener('mouseup',endDrag);
+// Touch events
+elec.addEventListener('touchstart',startDrag,{passive:true});
+document.addEventListener('touchmove',moveDrag,{passive:false});
+document.addEventListener('touchend',endDrag);
+
+// Init
+update();
+log('💡 拖拽电极到溶液瓶上方释放 · 或点击溶液瓶');
+</script>
+</body></html>

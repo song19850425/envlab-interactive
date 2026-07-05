@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorkBuddy 从 0 到 1：一份让妈妈也能用的 AI 助手教程</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f5f5;color:#333;line-height:1.8;font-size:16px}
+.container{max-width:680px;margin:0 auto;background:#fff;padding:30px 24px}
+
+h1{font-size:22px;font-weight:700;color:#1a1a1a;margin-bottom:12px;line-height:1.4}
+.meta{font-size:13px;color:#999;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #eee}
+.meta span{margin-right:16px}
+
+h2{font-size:18px;font-weight:700;color:#1a1a1a;margin:28px 0 12px;padding-left:10px;border-left:3px solid #07c160}
+h3{font-size:15px;font-weight:700;color:#333;margin:20px 0 8px}
+
+p{margin-bottom:14px;text-align:justify}
+p strong{color:#1a1a1a}
+
+.highlight-box{background:linear-gradient(135deg,#f0fdf4,#f1f8e9);border-left:4px solid #07c160;padding:16px 20px;margin:18px 0;border-radius:0 8px 8px 0;font-size:15px;line-height:1.7}
+.highlight-box strong{color:#166534}
+
+.warn-box{background:linear-gradient(135deg,#fef2f2,#fff1f2);border-left:4px solid #ef4444;padding:14px 18px;margin:18px 0;border-radius:0 8px 8px 0;font-size:14px;line-height:1.7}
+.warn-box strong{color:#b91c1c;display:block;margin-bottom:4px}
+
+.data-card{background:#fafafa;border:1px solid #e0e0e0;border-radius:8px;padding:16px 20px;margin:16px 0}
+.data-card .label{font-size:13px;color:#888;margin-bottom:4px}
+.data-card .value{font-size:28px;font-weight:700;color:#07c160}
+
+.tag{display:inline-block;background:#e8f5e9;color:#166534;padding:2px 10px;border-radius:12px;font-size:13px;margin:2px 3px}
+
+.ending{margin-top:32px;padding-top:20px;border-top:1px solid #eee;font-size:14px;color:#888;line-height:1.6}
+.ending .signature{font-weight:600;color:#555;margin-top:8px}
+
+.qr{width:200px;height:200px;margin:16px auto;border:1px solid #eee;border-radius:8px;overflow:hidden;display:block}
+
+ol,ul{margin:10px 0 14px;padding-left:22px}
+li{margin-bottom:6px;font-size:15px;line-height:1.7}
+
+.code-block{background:#f8f8f8;border:1px solid #eee;border-radius:6px;padding:14px 16px;margin:12px 0;font-size:13px;font-family:'SF Mono','Fira Code','Courier New',monospace;line-height:1.5;overflow-x:auto;color:#333}
+
+.img-placeholder{width:100%;background:#f0f0f0;border-radius:8px;padding:30px 20px;margin:16px 0;text-align:center;color:#999;font-size:13px;border:1px dashed #ddd}
+
+button.cta-btn{display:block;margin:20px auto;padding:12px 32px;background:#07c160;color:#fff;border:none;border-radius:24px;font-size:15px;font-weight:600;cursor:pointer;text-align:center;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>WorkBuddy 从 0 到 1：一份让妈妈也能用的 AI 助手教程</h1>
+
+<div class="meta">
+  <span>原创</span>
+  <span>小宋的环保笔记</span>
+  <span>2026-07-03</span>
+</div>
+
+<p>之前发布了《Windows/Mac 安装 Claude Code / Codex》之后，确实帮助了很多小白使用上了 AI 工具。</p>
+
+<p>不过毕竟是海外工具，无论是注册、支付、安装都还是有门槛，还是有人用不上。</p>
+
+<p>而工作还得继续。汇报要写、数据要理、PPT 要出、代码要改。</p>
+
+<p>所以决定再补一篇关于国产 Agent —— <strong>WorkBuddy</strong> 的教程。</p>
+
+<div class="highlight-box">
+<strong>坦白说：</strong>WorkBuddy 目前是我在国产通用 Agent 里，愿意持续打开的少数几个之一。<br><br>
+如果你不打算硬啃开发流程，也不想折腾环境，那可以说：<strong>日常办公，七成以上的活，它都能接。</strong>
+</div>
+
+<p>我拿一个"办公场景"加一个"开发场景"两条线，把整个流程串一遍。跟着走一遍，你就上手了。</p>
+
+<div style="text-align:center;margin:20px 0;font-size:30px">⬇️</div>
+
+<!-- ═══════════════════════ -->
+<h2>一、下载与安装</h2>
+
+<p>第一步，装上它。</p>
+
+<p><strong>官网直接进：</strong><a href="https://workbuddy.cn" target="_blank">workbuddy.cn</a></p>
+
+<p>Mac、Windows 两个版本都有，适配自己系统选择下载。安装包下下来，双击一路默认，装完打开客户端。</p>
+
+<p>登录环节是本篇第一个<strong>"友好点"</strong>：<strong>直接微信扫码</strong>。</p>
+
+<p>说真的，作为一个平时被各种 API Key、双重验证、代理配置折磨麻木的人，第一次看到微信登录框弹出来的时候，愣了两秒才反应过来——原来 Agent 产品也可以不折腾。</p>
+
+<p>扫码 → 授权 → 进主界面。</p>
+
+<!-- ═══════════════════════ -->
+<h2>二、主界面</h2>
+
+<p>第一次进去，先别急着发消息，花两分钟熟悉一下布局，后面用得顺不顺，全看这一步。</p>
+
+<h3>中间：对话区 + 三种场景</h3>
+
+<p>右侧那块大对话面板，就是你和 WorkBuddy 打交道的主战场。上方能切三个"场景"：</p>
+
+<div class="data-card">
+  <div class="label">🎯 三个工作场景</div>
+  <div style="margin-top:8px">
+    <span class="tag">💻 代码开发</span>
+    <span class="tag">📋 日常办公</span>
+    <span class="tag">🎨 设计创意</span>
+  </div>
+</div>
+
+<p>这三个场景不是摆设。你切到哪一个，下方的<strong>「快捷入口」</strong>就跟着变。</p>
+
+<p>切到「日常办公」，变成文档处理、数据分析可视化、深度研究、幻灯片。</p>
+
+<p>切到「代码开发」，底下摆的是日常开发、网站开发、Agent 应用、Skill 开发。</p>
+
+<p>切到「设计创意」，就是网站设计、App 端、PPT、原型、品牌。</p>
+
+<p>每个入口再往里点，还有一层。以「日常办公 → 文档处理」为例，你会拿到一叠<strong>预置的提示词模板</strong>，你只要把里面的字段换成自己的实际需求，改两下就能直接发。这一层"模板化"对新手极友好，可以说是国内产品里做得比较用心的。</p>
+
+<h3>对话框下方左侧的这一排</h3>
+
+<p>从左到右过一遍。</p>
+
+<p><strong>1. 工作模式（三档）</strong></p>
+
+<ul>
+  <li><strong>Craft</strong>：完整的 Agent 模式，接活就直接干，日常主要用它。</li>
+  <li><strong>Ask</strong>：只聊天，问一句答一句，等价于豆包这种普通对话。</li>
+  <li><strong>Plan</strong>：先给你出计划，你点头它再动手。新手怕 AI 乱开火，先用它过一遍最稳。</li>
+</ul>
+
+<div class="warn-box">
+  <strong>⚠️ 一个坑</strong>
+  WorkBuddy 默认是 <strong>Craft</strong> 模式。也就是你随便发条消息，它就直接开始跑了，积分同步开始扣。<br><br>
+  所以只是想问句话，先切 <strong>Ask</strong>；还没想清楚怎么办，先切 <strong>Plan</strong>。
+</div>
+
+<p><strong>2. 模型选择</strong></p>
+
+<p>WorkBuddy 把国产主流模型都塞进来了：腾讯混元、DeepSeek、GLM、Kimi 这些。不同模型消耗的积分不一样。</p>
+
+<p><strong>选哪个？</strong>推荐 <strong>DeepSeek V4 Pro</strong>：价格友好、综合能力扎实，世界知识、编码、Agent 能力几乎都在合格线以上，除了缺多模态，其他基本是水桶型。</p>
+
+<p>想接自己的 API Key 也可以，走「设置 → 模型 → 添加模型」，兼容 OpenAI 协议的接口都吃。</p>
+
+<p><strong>3. 权限</strong></p>
+
+<p>两档：默认权限、完全访问。我自己的习惯是选<strong>完全访问</strong>——那些弹窗提示我大部分也看不懂，最后都是无脑点确认，不如省心一点让它自己跑。</p>
+
+<p><strong>4. 对话记忆</strong></p>
+
+<p>打开后它会从聊天里提炼关键信息存起来，下次遇到相关话题自动调用。用得越久，它对你的偏好、语气、习惯就越有把握。</p>
+
+<h3>右侧的加号 &amp; 工作空间</h3>
+
+<p>点开是上传入口。本地文件、腾讯文档、知识库都能塞进来。特别提一句：它跟 <strong>ima 知识库</strong>全面打通。</p>
+
+<p>「工作空间」你把它当成"项目文件夹"就行。任务开始前挑一个目录，WorkBuddy 会基于这个目录读文件、写产物。</p>
+
+<div class="highlight-box">
+<strong>💡 一句真心话：</strong>前期把分类做好。前面偷一下懒，后面找东西真的能崩溃。
+</div>
+
+<!-- ═══════════════════════ -->
+<h2>三、专家、技能与连接器</h2>
+
+<p>从左侧点「专家」进去，你会看到顶部有三个 tab：<strong>专家 / 技能 / 连接器</strong>。</p>
+
+<p>三者不一样，分开看。</p>
+
+<h3>专家：封装好的垂直 Agent</h3>
+
+<p><strong>专家 = 已经调好人设、装好工具、配好知识的一个垂直方向的 Agent。</strong></p>
+
+<p>WorkBuddy 内置了 100+ 个专家，按行业分类摆好。每个专家一张卡片，写清楚它擅长啥。点进去就是对话，用法和普通对话一模一样，区别是背后已经换了一个"带专业视角"的 Agent。</p>
+
+<p>举几个例子：</p>
+
+<ul>
+  <li><strong>内容创作专家</strong>：擅长创作引人入胜的多平台内容</li>
+  <li><strong>UI设计师</strong>：精通设计系统和组件库，追求像素级完美</li>
+  <li><strong>AI图像提示词工程师</strong>：精通AI图像生成的语言密码</li>
+</ul>
+
+<h3>专家团：多 Agent 协作</h3>
+
+<p>专家是一个 Agent 干活，<strong>专家团就是一群 Agent 分工干活</strong>。你把需求扔给专家团，团里的"负责人"会自动拆任务、分派、并行推进，最后把结果给你收拢起来。</p>
+
+<p>代价是：积分消耗大概是单专家的 3–5 倍。有预算再上。</p>
+
+<h3>技能（Skills）</h3>
+
+<p>技能这个概念其实不新，很多国外 Agent 都有。但 WorkBuddy 做了一个像样的 <strong>Skills 市场</strong>，这一步对国内用户来说非常关键——不用自己到处找、到处装。</p>
+
+<p>进去分几个区：推荐官方精选、Skillub 社区作品、套件（插件包）。想自己做一个？右上角「添加技能 → 创建技能」，一句大白话讲需求。</p>
+
+<h3>连接器（MCP）</h3>
+
+<p>连接器就是 MCP，<strong>把 WorkBuddy 和你日常在用的外部服务打通</strong>。</p>
+
+<p>WorkBuddy 在这块最大的优势，是无缝接腾讯自家生态：</p>
+
+<ul>
+  <li><strong>QQ 邮箱</strong>：直接收发、搜索、整理邮件</li>
+  <li><strong>腾讯会议、腾讯文档</strong>：都能接</li>
+  <li><strong>通达信 MCP</strong>：看行情，炒股党狂喜</li>
+</ul>
+
+<p>配置极简单：扫码 → 手机端授权 → 完事。其他服务都是这个套路，跟着页面提示走就行。</p>
+
+<!-- ═══════════════════════ -->
+<h2>四、开工前把设置调好</h2>
+
+<p>点右上角头像 → 打开「设置」。</p>
+
+<p><strong>系统设置里的两个开关</strong></p>
+<ul>
+  <li><strong>技能自动更新</strong> —— 开。安装的技能会跟着升级，一劳永逸。</li>
+  <li><strong>锁屏远程</strong> —— 开。电脑不进休眠，出去开会任务照跑。</li>
+</ul>
+
+<p><strong>个性化：自定义指令</strong></p>
+<p>这项相当于给整个 WorkBuddy 定"总纲"。你在别处写过 CLAUDE.md 的话，理解成一回事。</p>
+
+<p>下面是一份很好用的模板，直接抄走：</p>
+
+<div class="code-block">
+# 减少常见 LLM 编码错误的行为准则<br><br>
+## 1. 先想清楚再写<br>
+- 先理解任务目标再开始修改代码<br>
+- 关键假设必须说明<br>
+- 如果有多种理解，先列出可能解释<br><br>
+## 2. 简洁优先<br>
+- 用最少、最直接的代码解决当前问题<br>
+- 不添加未要求的功能<br><br>
+## 3. 精准修改<br>
+- 只修改必需的代码<br>
+- 不顺手重构、不顺手优化<br><br>
+## 4. 目标驱动<br>
+- 多步任务先给简短计划<br>
+- 修改后说明改了什么、如何验证<br><br>
+## 5. 验证优先<br>
+- 优先用现有测试方式验证<br>
+- 修复 bug 时先解释根因
+</div>
+
+<!-- ═══════════════════════ -->
+<h2>五、案例一：办公任务</h2>
+
+<p>先来个办公向的实战。WorkBuddy 在办公场景下确实下了不少功夫。</p>
+
+<p><strong>流程：</strong></p>
+<ol>
+  <li>切到「日常办公」场景</li>
+  <li>选一个工作空间目录，不选也行，对话框右边加号临时上传</li>
+  <li>挑一个模型</li>
+  <li>输入需求</li>
+</ol>
+
+<p>发消息旁边有个 <strong>「优化提示词」</strong> 按钮。新手强烈推荐点一下，它会自动把你那句大白话，改造成一份结构化的提示词。</p>
+
+<div class="highlight-box">
+<strong>💡 小技巧：</strong>对国产模型来说，喂结构化提示词的效果差异很明显——这是有一堆研究撑腰的结论，不是我瞎讲。
+</div>
+
+<p>跑完之后：右侧栏能看到产物文件和预览。也可以点开始工作空间目录，直接看到本地生成的东西。</p>
+
+<!-- ═══════════════════════ -->
+<h2>六、案例二：开发任务</h2>
+
+<p>再来一个开发向的案例，vibe coding 一个小网页。</p>
+
+<p><strong>流程：</strong></p>
+<ol>
+  <li>切到「代码开发」场景</li>
+  <li>点「网站开发」</li>
+  <li>用 Plan 模式，先出方案</li>
+  <li>点「优化提示词」，回答反问</li>
+  <li>确认，让它自己跑</li>
+</ol>
+
+<p>然后还可以进一步，挂一个自己写的 Skill 继续跟 WorkBuddy 说："用我那个服务器 Skill 把这个网页部署上线。" 它会照办。</p>
+
+<div class="warn-box">
+<strong>🤔 关于开发这块讲句实话：</strong><br>
+国产模型在代码上离最顶尖的那批还有差距。小项目、小网页、小工具没问题，但真上复杂大工程，我依然强烈建议你想办法用上 Claude Code 或 Codex。这个话搁两年后再看会不会翻，我也不知道，但眼下就是这样。
+</div>
+
+<!-- ═══════════════════════ -->
+<h2>七、远程控制：不在电脑前，也能让它干活</h2>
+
+<p>这是我个人非常喜欢的一块。因为是腾讯自家产品，WorkBuddy 的远程控制<strong>原生打通了微信</strong>——这一点很多海外 Agent 想做都做不到。</p>
+
+<p><strong>配置步骤：</strong></p>
+<ol>
+  <li>打开左侧功能区里的「助理」</li>
+  <li>点「设置」，把开关打开</li>
+  <li>掏出手机，微信扫码，进入小程序授权登录</li>
+  <li>客户端左上角出现"已连接"字样，就 OK</li>
+</ol>
+
+<p>手机端小程序里有两种模式：</p>
+<ul>
+  <li><strong>云端工作</strong>：任务在云端沙箱跑，电脑关着都行</li>
+  <li><strong>连接电脑</strong>：远程操控你本地这台机器，适合需要读本地文件的任务</li>
+</ul>
+
+<div class="highlight-box">
+<strong>举个真实场景：</strong>我人在外面，突然被催"把电脑里某份文件发给财务"。搁以前，只能赶回去处理。现在我掏出手机，在小程序里跟它说一声就完事。
+</div>
+
+<!-- ═══════════════════════ -->
+<h2>写在最后</h2>
+
+<p>我一直有个观点：<strong>对绝大多数普通人来说，Agent 最大的价值不是帮你写出漂亮代码，而是把每天那些琐碎、重复、让人烦躁的办公任务自动化掉。</strong></p>
+
+<p>发一封邮件、整理一批数据、出一份 PPT、跑一个小站——这些活加起来，才是"AI 真正让生活变轻"的部分。</p>
+
+<p>WorkBuddy 现在把这几件事都接住了，而且做得挺体面。</p>
+
+<p>之前写 Claude Code 和 Codex 教程时，最扎心的评论永远是那句「好是好，用不了」。看了几百遍还是无奈。这一篇算是把那块缺的拼图补上了。</p>
+
+<div class="ending">
+  <p>📝 一个工科男的环保日常</p>
+  <p>不测评，不说教，只分享一个基层环保人用AI的真实体验。</p>
+  <p class="signature">—— 做得了检测，写得了代码，带得了娃的环保人</p>
+</div>
+
+</div>
+</body>
+</html>

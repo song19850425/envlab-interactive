@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EnvLab · 商业战略路线图 · Decision Dashboard v2.0</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#0a0e17;color:#e2e8f0;line-height:1.6;font-size:14px}
+.top-banner{background:linear-gradient(135deg,#0f172a 0%,#1e293b 40%,#0f766e 100%);padding:36px 24px;text-align:center;border-bottom:1px solid rgba(255,255,255,.06)}
+.top-banner h1{font-size:14px;font-weight:600;color:#64748b;letter-spacing:4px;text-transform:uppercase;margin-bottom:4px}
+.top-banner h2{font-size:30px;font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:2px}
+.top-banner .ver{font-size:11px;color:#5eead4;font-weight:600;border:1px solid #5eead4;display:inline-block;padding:1px 10px;border-radius:12px;margin-top:4px}
+.container{max-width:960px;margin:0 auto;padding:20px 20px 60px}
+
+/* ═══ Scorecards ═══ */
+.score-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 24px}
+@media(max-width:640px){.score-row{grid-template-columns:repeat(2,1fr)}}
+.score-card{background:linear-gradient(135deg,#131a2e,#1a2332);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:18px 14px;text-align:center}
+.score-card .sc-label{font-size:10px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+.score-card .sc-value{font-size:28px;font-weight:800;margin:6px 0 2px}
+.score-card .sc-sub{font-size:11px;color:#94a3b8}
+.score-card .sc-stars{font-size:14px;letter-spacing:2px;margin-bottom:4px}
+.green{color:#22c55e}.amber{color:#f59e0b}.blue{color:#38bdf8}.rose{color:#fb7185}.purple{color:#a78bfa}.teal{color:#5eead4}
+
+/* ═══ Section headers ═══ */
+.section{background:#0f172a;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:20px 22px;margin-bottom:20px}
+.section-title{font-size:13px;font-weight:700;color:#64748b;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-title .num{background:#1e293b;color:#5eead4;padding:1px 10px;border-radius:8px;font-size:11px;font-weight:700}
+
+/* ═══ SWOT grid ═══ */
+.swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.swot-grid{grid-template-columns:1fr}}
+.swot-card{border-radius:10px;padding:16px}
+.swot-card h4{font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:8px}
+.swot-card ul{margin:0;padding:0;list-style:none}
+.swot-card li{padding:4px 0;font-size:12px;line-height:1.5;display:flex;align-items:center;gap:6px}
+.swot-s{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2)}
+.swot-s h4{color:#22c55e}.swot-s li{color:#86efac}
+.swot-w{background:rgba(251,113,133,.08);border:1px solid rgba(251,113,133,.2)}
+.swot-w h4{color:#fb7185}.swot-w li{color:#fda4af}
+.swot-o{background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.2)}
+.swot-o h4{color:#38bdf8}.swot-o li{color:#7dd3fc}
+.swot-t{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2)}
+.swot-t h4{color:#f59e0b}.swot-t li{color:#fcd34d}
+
+/* ═══ Path cards ═══ */
+.path-card{background:#131a2e;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.path-card .pc-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px}
+.path-card .pc-badge{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0}
+.path-card .pc-info{flex:1}
+.path-card .pc-name{font-size:16px;font-weight:700}
+.path-card .pc-sub{font-size:11px;color:#64748b;margin-top:1px}
+.path-card .pc-stars{font-size:13px;letter-spacing:1px;margin:4px 0}
+.path-card .pc-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.path-card .pm-item{text-align:center;padding:8px 4px;background:rgba(255,255,255,.03);border-radius:6px}
+.path-card .pm-item .pm-label{font-size:9px;color:#64748b;text-transform:uppercase}
+.path-card .pm-item .pm-val{font-size:15px;font-weight:700;margin-top:2px}
+.path-card .pm-item .pm-bar{height:3px;border-radius:2px;margin-top:4px;background:rgba(255,255,255,.06)}
+.path-card .pm-item .pm-bar .pm-fill{height:100%;border-radius:2px}
+.path-card .pc-detail{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 0}
+@media(max-width:640px){.path-card .pc-detail{grid-template-columns:1fr}}
+.path-card .pc-reason{font-size:11px;color:#94a3b8;line-height:1.5;padding:8px 10px;background:rgba(255,255,255,.02);border-radius:6px}
+.path-card .pc-reason strong{color:#e2e8f0}
+.bg-p0{background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff}
+.bg-p1{background:linear-gradient(135deg,#d97706,#f59e0b);color:#fff}
+.bg-p2{background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff}
+.bg-p3{background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff}
+.bg-p4{background:linear-gradient(135deg,#7c3aed,#8b5cf6);color:#fff}
+.bg-new{background:linear-gradient(135deg,#0891b2,#06b6d4);color:#fff}
+
+/* ═══ Kill List ═══ */
+.kill-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:640px){.kill-grid{grid-template-columns:1fr}}
+.kill-item{display:flex;align-items:flex-start;gap:10px;background:rgba(251,113,133,.06);border:1px solid rgba(251,113,133,.15);border-radius:8px;padding:12px 14px}
+.kill-item .k-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.kill-item .k-info{flex:1}
+.kill-item .k-title{font-size:13px;font-weight:600;color:#fda4af}
+.kill-item .k-reason{font-size:11px;color:#64748b;margin-top:2px}
+.kill-yes{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.2)}
+.kill-maybe{background:rgba(251,191,36,.06);border-color:rgba(251,191,36,.15)}
+.kill-drop .k-title{color:#fb7185}
+
+/* ═══ Timeline ═══ */
+.timeline-bar{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:14px 0}
+@media(max-width:640px){.timeline-bar{grid-template-columns:repeat(3,1fr)}}
+.tl-month{background:#131a2e;border-radius:8px;padding:10px;border:1px solid rgba(255,255,255,.06)}
+.tl-month .tl-label{font-size:10px;font-weight:700;color:#64748b;margin-bottom:6px}
+.tl-month .tl-item{padding:3px 0;font-size:10px;line-height:1.5;display:flex;align-items:center;gap:4px}
+.tl-month .tl-bar{height:4px;border-radius:2px;margin:2px 0}
+.tl-month .tl-bar-wrap{height:4px;background:rgba(255,255,255,.04);border-radius:2px;margin:2px 0;overflow:hidden}
+.tl-month .tl-bar-wrap .tl-fill{height:100%;border-radius:2px}
+
+/* ═══ Revenue waterfall ═══ */
+.waterfall{position:relative;margin:14px 0}
+.wf-item{display:flex;align-items:center;gap:12px;padding:6px 0}
+.wf-item .wf-label{width:80px;font-size:12px;font-weight:600;color:#94a3b8;flex-shrink:0;text-align:right}
+.wf-item .wf-bar-wrap{flex:1;height:28px;background:rgba(255,255,255,.03);border-radius:4px;position:relative;overflow:hidden}
+.wf-item .wf-bar{height:100%;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;font-size:11px;font-weight:700;color:#fff;transition:width .6s}
+.wf-item .wf-val{width:70px;font-size:13px;font-weight:700;color:#e2e8f0;flex-shrink:0}
+.wf-arrow{text-align:center;font-size:12px;color:#64748b;padding:1px 0 1px 92px}
+
+/* ═══ Resource bar ═══ */
+.resource-bar{display:flex;height:36px;border-radius:8px;overflow:hidden;margin:12px 0;font-size:0}
+.resource-bar .rb-seg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;letter-spacing:.5px;position:relative;transition:width .6s}
+.resource-bar .rb-seg span{opacity:0;transition:opacity .3s}
+.resource-bar:hover .rb-seg span{opacity:1}
+.resource-legend{display:flex;gap:16px;flex-wrap:wrap;margin:8px 0 4px;font-size:11px}
+.resource-legend .rl-item{display:flex;align-items:center;gap:6px}
+.resource-legend .rl-dot{width:10px;height:10px;border-radius:3px}
+
+/* ═══ Kill List header ═══ */
+.no-list{list-style:none;padding:0;margin:0}
+.no-list li{position:relative;padding-left:18px;margin-bottom:4px;font-size:12px;color:#94a3b8;line-height:1.5}
+.no-list li::before{content:"→";position:absolute;left:0;color:#64748b}
+
+/* ═══ New routes ═══ */
+.new-route{background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.15);border-radius:10px;padding:16px;margin-bottom:12px}
+.new-route .nr-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:8px}
+.new-route .nr-badge{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;flex-shrink:0}
+.new-route .nr-name{font-size:15px;font-weight:700}
+.new-route .nr-stars{font-size:12px;letter-spacing:1px;margin:2px 0}
+.new-route .nr-sub{font-size:12px;color:#94a3b8;line-height:1.6}
+.new-route .nr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+@media(max-width:640px){.new-route .nr-grid{grid-template-columns:1fr}}
+.new-route .nr-stat{text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:6px}
+.new-route .nr-stat .ns-label{font-size:9px;color:#64748b}
+.new-route .nr-stat .ns-val{font-size:13px;font-weight:700;color:#e2e8f0}
+
+/* ═══ Final ═══ */
+.final-box{background:linear-gradient(135deg,#0f766e,#0d9488);border-radius:14px;padding:28px 24px;text-align:center;margin-bottom:16px}
+.final-box .fb-quote{font-size:22px;font-weight:800;color:#fff;line-height:1.4;letter-spacing:-.3px}
+.final-box .fb-sub{font-size:12px;color:#99f6e4;margin-top:6px}
+.funnel{display:flex;flex-direction:column;align-items:center;gap:4px;margin:16px 0}
+.funnel .fn-item{display:flex;align-items:center;gap:10px;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;min-width:200px;justify-content:center}
+.funnel .fn-arrow{font-size:16px;color:#64748b}
+
+/* ═══ Decision Matrix ═══ */
+.matrix-table{width:100%;border-collapse:collapse;font-size:11px;margin:12px 0}
+.matrix-table th{background:#1e293b;color:#64748b;padding:8px 10px;text-align:center;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,.06)}
+.matrix-table th:first-child{text-align:left}
+.matrix-table td{padding:8px 10px;text-align:center;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle;font-size:12px}
+.matrix-table td:first-child{text-align:left;font-weight:700;font-size:13px}
+.matrix-table tr:hover{background:rgba(255,255,255,.02)}
+
+/* ═══ Delete section ═══ */
+.delete-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.12);border-radius:8px;margin-bottom:10px}
+.delete-item .d-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.delete-item .d-info{flex:1}
+.delete-item .d-title{font-size:13px;font-weight:600;color:#fca5a5}
+.delete-item .d-reason{font-size:11px;color:#64748b;margin-top:2px}
+
+/* ═══ Misc ═══ */
+.verdict{display:inline-block;padding:2px 10px;border-radius:10px;font-size:10px;font-weight:700;letter-spacing:.5px}
+.v-go{background:rgba(34,197,94,.15);color:#22c55e}
+.v-hold{background:rgba(251,191,36,.12);color:#f59e0b}
+.v-stop{background:rgba(239,68,68,.12);color:#ef4444}
+</style>
+</head>
+<body>
+
+<div class="top-banner">
+  <h1>EnvLab</h1>
+  <h2>商业战略路线图</h2>
+  <div class="ver">Decision Dashboard v2.0</div>
+</div>
+
+<div class="container">
+
+<!-- ════════════════════════════════════ -->
+<!-- H1: 战略总览评分卡 -->
+<!-- ════════════════════════════════════ -->
+<div class="score-row">
+  <div class="score-card">
+    <div class="sc-stars amber">★★★★★</div>
+    <div class="sc-label">总体可行性</div>
+    <div class="sc-value amber">8.9</div>
+    <div class="sc-sub">/ 10</div>
+  </div>
+  <div class="score-card">
+    <div class="sc-stars green">●●●○</div>
+    <div class="sc-label">成功概率</div>
+    <div class="sc-value green">82%</div>
+    <div class="sc-sub">基于现有资产</div>
+  </div>
+  <div class="score-card">
+    <div class="sc-stars blue">▲</div>
+    <div class="sc-label">预计首年收入</div>
+    <div class="sc-value blue">15~40万</div>
+    <div class="sc-sub">保守~乐观</div>
+  </div>
+  <div class="score-card">
+    <div class="sc-stars teal">▶</div>
+    <div class="sc-label">建议</div>
+    <div class="sc-value teal">立即执行</div>
+    <div class="sc-sub">今天就可以启动</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- H2: 总体评估（SWOT） -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="num">01</span> 总体评估 · SWOT</div>
+  <div class="swot-grid">
+    <div class="swot-card swot-s">
+      <h4>优势 Strength</h4>
+      <ul>
+        <li>✓ AI 内容生产能力（已验证：37个交互实验 + 10篇公众号 + 8个SKILL）</li>
+        <li>✓ 环保行业 8+ 年一手经验（实验室主任→咨询公司副总）</li>
+        <li>✓ 已有 37 个交互 Demo 可做内容源</li>
+        <li>✓ 10 篇公众号草稿箱 + 14 篇已发布文章 = 内容库存充裕</li>
+        <li>✓ 8 个已封装 WorkBuddy SKILL = 产品化能力</li>
+        <li>✓ 零成本生产管线（AI → HTML → 公众号，全自动化）</li>
+      </ul>
+    </div>
+    <div class="swot-card swot-w">
+      <h4>不足 Weakness</h4>
+      <ul>
+        <li>△ 品牌影响力不足（公众号粉丝 < 1000，尚未破圈）</li>
+        <li>△ 没有付费客户案例（尚未完成第一单咨询）</li>
+        <li>△ 精力有限（一人公司，每周可用约 40h）</li>
+        <li>△ 获客渠道尚未验证（7个关键词钩子还未放出去）</li>
+        <li>△ 没有稳定的内容发布节奏</li>
+        <li>△ 缺少销售/商务能力（技术出身，不太会"卖"）</li>
+      </ul>
+    </div>
+    <div class="swot-card swot-o">
+      <h4>机会 Opportunity</h4>
+      <ul>
+        <li>○ 环保 + AI 交叉领域，全国能做的人不超过 50 个</li>
+        <li>○ 数字化教学需求爆发（高校虚拟仿真/企业培训/政策教育）</li>
+        <li>○ 环保资金申报刚需（每年数百亿中央资金，地方缺专业能力）</li>
+        <li>○ 企业创A/合规自查需求（政策驱动，刚需且高频）</li>
+        <li>○ 知识付费/在线教育市场仍在增长</li>
+        <li>○ 个人IP + 一人公司模式，轻资产运营</li>
+      </ul>
+    </div>
+    <div class="swot-card swot-t">
+      <h4>风险 Threat</h4>
+      <ul>
+        <li>⚠ 平台流量算法变化（公众号/小红书推广效果不确定性）</li>
+        <li>⚠ SaaS 开发周期过长（没有用户验证前投入就是浪费）</li>
+        <li>⚠ AI 课程赛道竞争加剧（通用AI课已饱和，细分赛道窗口期）</li>
+        <li>⚠ 个人IP 建立周期长（至少 3-6 个月才见明显效果）</li>
+        <li>⚠ 精力分散风险（4条路径同时推进 → 每条都做不透）</li>
+        <li>⚠ 渣土项目未决风险（设备投资500万+环评+特许经营）</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- H3: 四条路线重新评分 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="num">02</span> 四维决策矩阵</div>
+
+  <table class="matrix-table">
+    <tr><th style="width:100px">路径</th><th>收益</th><th>难度</th><th>时间</th><th>风险</th><th>综合评分</th><th>决策</th></tr>
+    <tr>
+      <td>P0 内容+咨询</td>
+      <td><span style="color:#22c55e">★★★★★</span></td>
+      <td><span style="color:#22c55e">★</span></td>
+      <td><span style="color:#22c55e">★</span></td>
+      <td><span style="color:#22c55e">★</span></td>
+      <td><span style="color:#22c55e;font-weight:800">9.5</span></td>
+      <td><span class="verdict v-go">全力投入</span></td>
+    </tr>
+    <tr>
+      <td>P1 AI 课程</td>
+      <td><span style="color:#22c55e">★★★★★</span></td>
+      <td><span style="color:#f59e0b">★★</span></td>
+      <td><span style="color:#22c55e">★★</span></td>
+      <td><span style="color:#22c55e">★★</span></td>
+      <td><span style="color:#f59e0b;font-weight:800">8.2</span></td>
+      <td><span class="verdict v-go">跟进投入</span></td>
+    </tr>
+    <tr>
+      <td>P2 咨询 SaaS</td>
+      <td><span style="color:#f59e0b">★★★★</span></td>
+      <td><span style="color:#f59e0b">★★★</span></td>
+      <td><span style="color:#f59e0b">★★★</span></td>
+      <td><span style="color:#f59e0b">★★★</span></td>
+      <td><span style="color:#f59e0b;font-weight:800">6.5</span></td>
+      <td><span class="verdict v-hold">等待验证</span></td>
+    </tr>
+    <tr>
+      <td>P3 食品检测扩张</td>
+      <td><span style="color:#f59e0b">★★★</span></td>
+      <td><span style="color:#f59e0b">★★★</span></td>
+      <td><span style="color:#ef4444">★★★★</span></td>
+      <td><span style="color:#f59e0b">★★★</span></td>
+      <td><span style="color:#f59e0b;font-weight:800">5.0</span></td>
+      <td><span class="verdict v-stop">暂时搁置</span></td>
+    </tr>
+    <tr>
+      <td><span style="color:#06b6d4">新路线</span> 企业培训</td>
+      <td><span style="color:#22c55e">★★★★★</span></td>
+      <td><span style="color:#22c55e">★★</span></td>
+      <td><span style="color:#22c55e">★★</span></td>
+      <td><span style="color:#22c55e">★</span></td>
+      <td><span style="color:#22c55e;font-weight:800">8.8</span></td>
+      <td><span class="verdict v-go">建议新增</span></td>
+    </tr>
+  </table>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- H3续：四条路线详细评分 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="num">03</span> 四条路线 · 详细评分</div>
+
+  <!-- P0 -->
+  <div class="path-card">
+    <div class="pc-header">
+      <div class="pc-badge bg-p0">P0</div>
+      <div class="pc-info">
+        <div class="pc-name">内容导流 → 咨询变现</div>
+        <div class="pc-sub">启动成本：近乎零 · 首年天花板：¥5-15万</div>
+        <div class="pc-stars" style="color:#22c55e">★★★★★ 可行性评分：9.5</div>
+      </div>
+      <div><span class="verdict v-go">全力投入</span></div>
+    </div>
+    <div class="pc-metrics">
+      <div class="pm-item">
+        <div class="pm-label">投入</div>
+        <div class="pm-val" style="color:#22c55e">★☆☆☆☆</div>
+        <div class="pm-bar"><div class="pm-fill" style="width:20%;background:#22c55e"></div></div>
+      </div>
+      <div class="pm-item">
+        <div class="pm-label">风险</div>
+        <div class="pm-val" style="color:#22c55e">★★☆☆☆</div>
+        <div class="pm-bar"><div class="pm-fill" style="width:30%;background:#22c55e"></div></div>
+      </div>
+      <div class="pm-item">
+        <div class="pm-label">现金流</div>
+        <div class="pm-val" style="color:#22c55e">★★★★★</div>
+        <div class="pm-bar"><div class="pm-fill" style="width:90%;background:#22c55e"></div></div>
+      </div>
+      <div class="pm-item">
+        <div class="pm-label">可规模化</div>
+        <div class="pm-val" style="color:#f59e0b">★★★☆☆</div>
+        <div class="pm-bar"><div class="pm-fill" style="width:60%;background:#f59e0b"></div></div>
+      </div>
+    </div>
+    <div class="pc-detail">
+      <div class="pc-reason"><strong>为什么值得做</strong><br>10篇草稿箱已就绪，7个关键词钩子已设计，零成本。今天发文章 = 今天开始积累信任。咨询是环保行业最高频的付费场景（资金申报/土壤调查/创A），客单价¥5,000-20,000，利润率高。</div>
+      <div class="pc-reason"><strong>最大风险</strong><br>获客速度不确定。内容发出后需要2-3个月才能看到明显效果。如果公众号初始阅读量一直在100以下，需要调整选题方向或投入额外精力。</div>
+      <div class="pc-reason"><strong>建议调整</strong><br>不要等粉丝破千才放咨询入口。从第1篇文章开始就在文末放「免费诊断」钩子。先接2-3单，跑通SOP，再考虑规模化。</div>
+    </div>
+  </div>
+
+  <!-- P1 -->
+  <div class="path-card">
+    <div class="pc-header">
+      <div class="pc-badge bg-p1">P1</div>
+      <div class="pc-info">
+        <div class="pc-name">环保 × AI 课程</div>
+        <div class="pc-sub">启动成本：2周· 首年天花板：¥10-30万</div>
+        <div class="pc-stars" style="color:#f59e0b">★★★★☆ 可行性评分：8.2</div>
+      </div>
+      <div><span class="verdict v-go">跟进投入</span></div>
+    </div>
+    <div class="pc-metrics">
+      <div class="pm-item">
+        <div class="pm-label">投入</div>
+        <div class="pm-val" style="color:#22c55e">★★☆☆☆</div>
+        <div class="pm-bar"><div class="pm-fill" style="width:35%;background:#22c55e"></div></div>
+      </div>
+      <div class="pm-item">
+        <div class="pm-label">风险</div>
+        <div class="pm-val" style="color:#22c55e">★★☆☆☆</div>
+        <div class="pm-bar"><div class="pm-fill" style="width:30%;background:#22c55e"></div></div>
+      </div>
+      <div class="pm-item">
+        <div class="pm-label">现金流</div>
+        <div class="pm-val" style="color:#f59e0b">★★★★☆</div>
+        <div class="pm-bar"><div class="pm-fill" style="width:75%;background:#f59e0b"></div></div>
+      </div>
+      <div class="pm-item">
+        <div class="pm-label">可规模化</div>
+        <div class="pm-val" style="color:#f59e0b">★★★★☆</div>
+        <div class="pm-bar"><div class="pm-fill" style="width:70%;background:#f59e0b"></div></div>
+      </div>
+    </div>
+    <div class="pc-detail">
+      <div class="pc-reason"><strong>为什么值得做</strong><br>你已经是在环保行业真用AI的人。全国能同时讲「环保+AI」的人极少，这是稀缺性定价权。7门课目录已定，素材齐全，2周可完成录制。¥299/人，30份就是¥9,000。</div>
+      <div class="pc-reason"><strong>最大风险</strong><br>录课 = 大量时间投入，如果没卖出去就是沉没成本。需要先用公众号验证「环保AI」这个方向是否有人关注。</div>
+      <div class="pc-reason"><strong>建议调整</strong><br>先发2篇「环保AI」主题的公众号文章看反馈。如果打开率好 + 有人问，再花2周录课。否则先放一放。</div>
+    </div>
+  </div>
+
+  <!-- P2 -->
+  <div class="path-card">
+    <div class="pc-header">
+      <div class="pc-badge bg-p2">P2</div>
+      <div class="pc-info">
+        <div class="pc-name">咨询产品化（SaaS）</div>
+        <div class="pc-sub">启动成本：4-8周 · 首年天花板：¥20-50万</div>
+        <div class="pc-stars" style="color:#f59e0b">★★★☆☆ 可行性评分：6.5</div>
+      </div>
+      <div><span class="verdict v-hold">等待验证</span></div>
+    </div>
+    <div class="pc-metrics">
+      <div class="pm-item">
+        <div class="pm-label">投入</div>
+        <div class="pm-val" style="color:#ef4444">★★★★☆</div>
+        <div class="pm-bar"><div class="pm-fill" style="width:70%;background:#ef4444"></div></div>
+      </div>
+      <div class="pm-item">
+        <div class="pm-label">风险</div>
+        <div class="pm-val" style="color:#f59e0b">★★★☆☆</div>
+        <div class="pm-bar"><div class="pm-fill" style="width:55%;background:#f59e0b"></div></div>
+      </div>
+      <div class="pm-item">
+        <div class="pm-label">现金流</div>
+        <div class="pm-val" style="color:#22c55e">★★★★★</div>
+        <div class="pm-bar"><div class="pm-fill" style="width:85%;background:#22c55e"></div></div>
+      </div>
+      <div class="pm-item">
+        <div class="pm-label">可规模化</div>
+        <div class="pm-val" style="color:#22c55e">★★★★★</div>
+        <div class="pm-bar"><div class="pm-fill" style="width:95%;background:#22c55e"></div></div>
+      </div>
+    </div>
+    <div class="pc-detail">
+      <div class="pc-reason"><strong>为什么值得做</strong><br>SaaS是最可持续的收入模型。资金申报（年度刚需）、土壤报告（频次高）、创A自评（政策驱动），三个方向都有明确的B端付费意愿。天花板最高的一条路。</div>
+      <div class="pc-reason"><strong>最大风险</strong><br>没有付费用户验证就开发 = 浪费4-8周。功能做多了没人用，做少了没人买。</div>
+      <div class="pc-reason"><strong>建议调整</strong><br>先通过P0接5-10单咨询，把「用户到底要什么」摸清楚。然后用Excel + AI做「手动版SaaS」，验证用户愿意付费后，再花时间开发真正的系统。</div>
+    </div>
+  </div>
+
+  <!-- P3 -->
+  <div class="path-card">
+    <div class="pc-header">
+      <div class="pc-badge bg-p3">P3</div>
+      <div class="pc-info">
+        <div class="pc-name">食品检测横向扩张</div>
+        <div class="pc-sub">启动成本：6-8周 · 首年天花板：¥15-40万</div>
+        <div class="pc-stars" style="color:#ef4444">★★☆☆☆ 可行性评分：5.0</div>
+      </div>
+      <div><span class="verdict v-stop">暂时搁置</span></div>
+    </div>
+    <div class="pc-metrics">
+      <div class="pm-item">
+        <div class="pm-label">投入</div>
+        <div class="pm-val" style="color:#ef4444">★★★★☆</div>
+        <div class="pm-bar"><div class="pm-fill" style="width:70%;background:#ef4444"></div></div>
+      </div>
+      <div class="pm-item">
+        <div class="pm-label">风险</div>
+        <div class="pm-val" style="color:#f59e0b">★★★☆☆</div>
+        <div class="pm-bar"><div class="pm-fill" style="width:50%;background:#f59e0b"></div></div>
+      </div>
+      <div class="pm-item">
+        <div class="pm-label">现金流</div>
+        <div class="pm-val" style="color:#f59e0b">★★★☆☆</div>
+        <div class="pm-bar"><div class="pm-fill" style="width:50%;background:#f59e0b"></div></div>
+      </div>
+      <div class="pm-item">
+        <div class="pm-label">可规模化</div>
+        <div class="pm-val" style="color:#22c55e">★★★★☆</div>
+        <div class="pm-bar"><div class="pm-fill" style="width:70%;background:#22c55e"></div></div>
+      </div>
+    </div>
+    <div class="pc-detail">
+      <div class="pc-reason"><strong>为什么值得做</strong><br>市场大（320-380亿）、方法高重合（HPLC/UV/滴定）、在校生2.5倍、客户重叠。长期来看是最有想象力的扩张方向。</div>
+      <div class="pc-reason"><strong>最大风险</strong><br>你现在还没验证环境方向能不能变现。同时做两条线 = 精力分散 = 两条都做不透。食品检测涉及的客户、渠道、内容生态跟环境不完全重叠。</div>
+      <div class="pc-reason"><strong>建议调整</strong><br>2026年Q4评估是否启动。前提条件：环境方向月收入稳定 > ¥10,000 且环境实验总数 > 44个。在此之前，零投入。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- H4: 建议删除 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="num">04</span> 建议删除 · 减法清单</div>
+  <div class="highlight" style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:11px;color:#94a3b8">
+    战略不是你要做什么，而是你决定不做什么。—— 迈克尔·波特
+  </div>
+
+  <div class="delete-item">
+    <div class="d-icon">❌</div>
+    <div class="d-info">
+      <div class="d-title">一开始就开发 SaaS</div>
+      <div class="d-reason">没有用户验证 = 4-8周沉没成本。先用Excel+AI做手动版，有人买单再考虑开发。</div>
+    </div>
+  </div>
+  <div class="delete-item">
+    <div class="d-icon">❌</div>
+    <div class="d-info">
+      <div class="d-title">同时运营知乎 + 公众号 + 小红书</div>
+      <div class="d-reason">精力过度分散。7月只做公众号（已有10篇草稿）+ 小红书（轻量日更），知乎暂缓。</div>
+    </div>
+  </div>
+  <div class="delete-item">
+    <div class="d-icon">❌</div>
+    <div class="d-info">
+      <div class="d-title">食品检测与环保方向同步推进</div>
+      <div class="d-reason">两条线同时做 = 两条都做不透。2026年全力聚焦环保，食品检测等Q4评估。</div>
+    </div>
+  </div>
+  <div class="delete-item">
+    <div class="d-icon">❌</div>
+    <div class="d-info">
+      <div class="d-title">渣土项目继续投入精力</div>
+      <div class="d-reason">基本面分析已完成，但500万设备投资+环评+特许经营三个致命级未解决。保持观察，不投入新资源。</div>
+    </div>
+  </div>
+  <div class="delete-item">
+    <div class="d-icon">❌</div>
+    <div class="d-info">
+      <div class="d-title">花时间打磨 EnvLab 页面细节</div>
+      <div class="d-reason">页面已经足够好（37个，9个PhET级）。继续迭代单个页面的边际收益递减。改用内容营销驱动流量。</div>
+    </div>
+  </div>
+  <div class="delete-item">
+    <div class="d-icon">❌</div>
+    <div class="d-info">
+      <div class="d-title">花钱买流量/投放广告</div>
+      <div class="d-reason">内容营销成本为零且尚未验证ROI。先跑通免费获客，有稳定转化率后再考虑付费渠道。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- H5: 建议新增路线 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="num">05</span> 建议新增路线</div>
+
+  <div class="new-route">
+    <div class="nr-header">
+      <div class="nr-badge bg-new">N1</div>
+      <div>
+        <div class="nr-name">企业 AI 内训</div>
+        <div class="nr-stars" style="color:#22c55e">★★★★★ 推荐优先级：最高</div>
+      </div>
+    </div>
+    <div class="nr-sub">
+      环保行业正在进行 AI 化转型，但市面上的通用 AI 培训完全不解决行业问题。环评机构、检测公司、咨询公司需要的是"环保行业怎么用AI"，而不是"ChatGPT 怎么用"。你已经有了 Skill 封装经验、交互实验生产管线、公众号自动化流程——你是少数能讲清楚"环保AI"的人之一。
+    </div>
+    <div class="nr-grid">
+      <div class="nr-stat">
+        <div class="ns-label">市场规模</div>
+        <div class="ns-val" style="color:#22c55e">¥5-15万/年</div>
+      </div>
+      <div class="nr-stat">
+        <div class="ns-label">获客方式</div>
+        <div class="ns-val" style="color:#38bdf8">公众号→咨询→内训</div>
+      </div>
+      <div class="nr-stat">
+        <div class="ns-label">预计客单价</div>
+        <div class="ns-val" style="color:#f59e0b">¥10,000-30,000/场</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="new-route">
+    <div class="nr-header">
+      <div class="nr-badge bg-new">N2</div>
+      <div>
+        <div class="nr-name">教材数字资源配套</div>
+        <div class="nr-stars" style="color:#22c55e">★★★★☆ 推荐优先级：高</div>
+      </div>
+    </div>
+    <div class="nr-sub">
+      EnvLab 的交互实验天然适合作为职业院校教材的数字配套资源。环境检测/食品检测/水处理方向的教材出版社正在寻找可交互、可嵌入教材的HTML资源。37个交互实验 + 叙事式教学框架 = 完整的教材配套方案。
+    </div>
+    <div class="nr-grid">
+      <div class="nr-stat">
+        <div class="ns-label">市场规模</div>
+        <div class="ns-val" style="color:#22c55e">¥5-30万/年</div>
+      </div>
+      <div class="nr-stat">
+        <div class="ns-label">获客方式</div>
+        <div class="ns-val" style="color:#38bdf8">出版社BD + 教师推荐</div>
+      </div>
+      <div class="nr-stat">
+        <div class="ns-label">预计客单价</div>
+        <div class="ns-val" style="color:#f59e0b">¥5,000-20,000/校</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="new-route">
+    <div class="nr-header">
+      <div class="nr-badge bg-new">N3</div>
+      <div>
+        <div class="nr-name">个人 AI 顾问（环保方向）</div>
+        <div class="nr-stars" style="color:#f59e0b">★★★☆☆ 推荐优先级：中等</div>
+      </div>
+    </div>
+    <div class="nr-sub">
+      "小宋的环保笔记"人设建立后，延伸到一对一/一对多的 AI 顾问服务。帮助环保从业者（检测机构/咨询公司/环评机构）搭建 AI 工作流。适合在公众号有一定粉丝基础后推出。
+    </div>
+    <div class="nr-grid">
+      <div class="nr-stat">
+        <div class="ns-label">市场规模</div>
+        <div class="ns-val" style="color:#f59e0b">¥5-10万/年</div>
+      </div>
+      <div class="nr-stat">
+        <div class="ns-label">获客方式</div>
+        <div class="ns-val" style="color:#38bdf8">公众号粉丝 + 咨询老客户</div>
+      </div>
+      <div class="nr-stat">
+        <div class="ns-label">预计客单价</div>
+        <div class="ns-val" style="color:#f59e0b">¥3,000-8,000/年</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- H6: Kill List -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="num">06</span> Kill List · 今年坚决不做</div>
+
+  <div class="kill-grid">
+    <div class="kill-item kill-yes">
+      <div class="k-icon">🚫</div>
+      <div class="k-info">
+        <div class="k-title">不做 App 或桌面软件</div>
+        <div class="k-reason">HTML + PWA 已经够用。App 开发周期长、分发成本高、维护麻烦。</div>
+      </div>
+    </div>
+    <div class="kill-item kill-yes">
+      <div class="k-icon">🚫</div>
+      <div class="k-info">
+        <div class="k-title">不做大型 SaaS 平台</div>
+        <div class="k-reason">没有用户验证之前，不写一行SaaS代码。先做Excel+AI手动版。</div>
+      </div>
+    </div>
+    <div class="kill-item kill-yes">
+      <div class="k-icon">🚫</div>
+      <div class="k-info">
+        <div class="k-title">不同时做两个行业</div>
+        <div class="k-reason">2026年全年聚焦环保（环境检测+咨询+培训）。食品检测是2027年的事。</div>
+      </div>
+    </div>
+    <div class="kill-item kill-yes">
+      <div class="k-icon">🚫</div>
+      <div class="k-info">
+        <div class="k-title">不花钱买流量/投广告</div>
+        <div class="k-reason">内容营销成本为零，先验证免费获客ROI。有稳定转化率再考虑付费。</div>
+      </div>
+    </div>
+    <div class="kill-item kill-yes">
+      <div class="k-icon">🚫</div>
+      <div class="k-info">
+        <div class="k-title">不做多平台扩张</div>
+        <div class="k-reason">7-8月只做公众号+小红书（双平台）。知乎/抖音/B站/视频号全部暂缓。</div>
+      </div>
+    </div>
+    <div class="kill-item kill-maybe">
+      <div class="k-icon">⚠️</div>
+      <div class="k-info">
+        <div class="k-title" style="color:#fcd34d">渣土项目不投入新资源</div>
+        <div class="k-reason">已完成的财务模型/南阳版/宛城卧龙版保持不动。等政策信号或合作方出现再评估。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- H7: 每周资源投入 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="num">07</span> 每周资源投入（7-8月）</div>
+  <div style="text-align:center;font-size:11px;color:#64748b;margin-bottom:4px">每周可用：约 40 小时 / 单人</div>
+
+  <div class="resource-bar">
+    <div class="rb-seg" style="width:60%;background:linear-gradient(135deg,#dc2626,#ef4444)"><span>P0 内容+咨询 24h</span></div>
+    <div class="rb-seg" style="width:25%;background:linear-gradient(135deg,#d97706,#f59e0b)"><span>P1 课程准备 10h</span></div>
+    <div class="rb-seg" style="width:10%;background:linear-gradient(135deg,#2563eb,#3b82f6)"><span>P2 探索 4h</span></div>
+    <div class="rb-seg" style="width:5%;background:linear-gradient(135deg,#64748b,#94a3b8)"><span>学习 2h</span></div>
+  </div>
+
+  <div class="resource-legend">
+    <div class="rl-item"><div class="rl-dot" style="background:#dc2626"></div> P0 内容+咨询（60% · 24h）</div>
+    <div class="rl-item"><div class="rl-dot" style="background:#d97706"></div> P1 课程准备（25% · 10h）</div>
+    <div class="rl-item"><div class="rl-dot" style="background:#2563eb"></div> P2 探索（10% · 4h）</div>
+    <div class="rl-item"><div class="rl-dot" style="background:#64748b"></div> 学习（5% · 2h）</div>
+  </div>
+
+  <div style="font-size:11px;color:#94a3b8;margin-top:8px;line-height:1.6">
+    <strong style="color:#e2e8f0">时间分配说明：</strong><br>
+    P0 占 60% —> 7月主力。发文章、做小红书、接咨询，这是现金流来源。<br>
+    P1 占 25% —> 7月中开始录课。用P0的内容反馈决定是否全力投入。<br>
+    P2 占 10% —> 观察P0的咨询需求，记录用户痛点，不做开发。<br>
+    学习 5% —> 关注环保AI趋势，但不用刻意腾时间。
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- H8: 未来一年路线图 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="num">08</span> 未来一年路线图</div>
+
+  <div class="timeline-bar">
+    <div class="tl-month">
+      <div class="tl-label">7月</div>
+      <div class="tl-bar-wrap"><div class="tl-fill" style="width:90%;background:#dc2626"></div></div>
+      <div class="tl-item" style="color:#fca5a5">🔥 公众号启动</div>
+      <div class="tl-item" style="color:#fcd34d">🔥 小红书日更</div>
+      <div class="tl-item" style="color:#86efac">✅ 接首单咨询</div>
+      <div class="tl-item" style="color:#93c5fd">⏳ 课程大纲确认</div>
+    </div>
+    <div class="tl-month">
+      <div class="tl-label">8月</div>
+      <div class="tl-bar-wrap"><div class="tl-fill" style="width:80%;background:#dc2626"></div></div>
+      <div class="tl-item" style="color:#fca5a5">📈 公众号破千粉</div>
+      <div class="tl-item" style="color:#fcd34d">🔥 咨询SOP跑通</div>
+      <div class="tl-item" style="color:#86efac">✅ 课程上线早鸟</div>
+      <div class="tl-item" style="color:#93c5fd">🎯 验证环保AI热度</div>
+    </div>
+    <div class="tl-month">
+      <div class="tl-label">9月</div>
+      <div class="tl-bar-wrap"><div class="tl-fill" style="width:70%;background:#d97706"></div></div>
+      <div class="tl-item" style="color:#fca5a5">💰 首次变现高潮</div>
+      <div class="tl-item" style="color:#86efac">✅ 课程正式价¥299</div>
+      <div class="tl-item" style="color:#fcd34d">🔥 企业内训首单</div>
+      <div class="tl-item" style="color:#93c5fd">🎯 累计收入¥15,000</div>
+    </div>
+    <div class="tl-month">
+      <div class="tl-label">10月</div>
+      <div class="tl-bar-wrap"><div class="tl-fill" style="width:50%;background:#d97706"></div></div>
+      <div class="tl-item" style="color:#86efac">✅ 咨询标准化3档</div>
+      <div class="tl-item" style="color:#fcd34d">🔥 第二门课录制</div>
+      <div class="tl-item" style="color:#93c5fd">🎯 年度顾问首单</div>
+      <div class="tl-item" style="color:#e2e8f0">-- 评估P2启动 --</div>
+    </div>
+    <div class="tl-month">
+      <div class="tl-label">11月</div>
+      <div class="tl-bar-wrap"><div class="tl-fill" style="width:40%;background:#2563eb"></div></div>
+      <div class="tl-item" style="color:#93c5fd">🚀 资金申报MVP</div>
+      <div class="tl-item" style="color:#86efac">✅ 内测3-5家企业</div>
+      <div class="tl-item" style="color:#fcd34d">🔥 企业内训标准化</div>
+      <div class="tl-item" style="color:#e2e8f0">-- 月入破¥20,000 --</div>
+    </div>
+    <div class="tl-month">
+      <div class="tl-label">12月</div>
+      <div class="tl-bar-wrap"><div class="tl-fill" style="width:30%;background:#16a34a"></div></div>
+      <div class="tl-item" style="color:#86efac">✅ 环境实验>44个</div>
+      <div class="tl-item" style="color:#93c5fd">🎯 食品检测评估</div>
+      <div class="tl-item" style="color:#fcd34d">📊 年度复盘</div>
+      <div class="tl-item" style="color:#e2e8f0">-- 制定2027计划 --</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- H9: 收入预测瀑布 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="num">09</span> 月收入预测 · 增长路径</div>
+
+  <div class="waterfall">
+    <div class="wf-item">
+      <div class="wf-label">7月</div>
+      <div class="wf-bar-wrap"><div class="wf-bar" style="width:5%;background:#64748b">¥0</div></div>
+      <div class="wf-val" style="color:#64748b">¥0</div>
+    </div>
+    <div class="wf-arrow">↓ 内容积累期</div>
+
+    <div class="wf-item">
+      <div class="wf-label">8月</div>
+      <div class="wf-bar-wrap"><div class="wf-bar" style="width:20%;background:#dc2626">¥5,000</div></div>
+      <div class="wf-val" style="color:#fca5a5">¥5,000</div>
+    </div>
+    <div class="wf-arrow">↓ 首单咨询 + 课程早鸟</div>
+
+    <div class="wf-item">
+      <div class="wf-label">9月</div>
+      <div class="wf-bar-wrap"><div class="wf-bar" style="width:35%;background:#f59e0b">¥15,000</div></div>
+      <div class="wf-val" style="color:#fcd34d">¥15,000</div>
+    </div>
+    <div class="wf-arrow">↓ 课程正式价 + 企业内训</div>
+
+    <div class="wf-item">
+      <div class="wf-label">10月</div>
+      <div class="wf-bar-wrap"><div class="wf-bar" style="width:50%;background:#38bdf8">¥25,000</div></div>
+      <div class="wf-val" style="color:#93c5fd">¥25,000</div>
+    </div>
+    <div class="wf-arrow">↓ 咨询稳定 + 第二门课</div>
+
+    <div class="wf-item">
+      <div class="wf-label">11月</div>
+      <div class="wf-bar-wrap"><div class="wf-bar" style="width:55%;background:#8b5cf6">¥35,000</div></div>
+      <div class="wf-val" style="color:#c4b5fd">¥35,000</div>
+    </div>
+    <div class="wf-arrow">↓ 企业内训x3 + 资金申报</div>
+
+    <div class="wf-item">
+      <div class="wf-label">12月</div>
+      <div class="wf-bar-wrap"><div class="wf-bar" style="width:70%;background:#22c55e">¥40,000</div></div>
+      <div class="wf-val" style="color:#86efac">¥40,000+</div>
+    </div>
+  </div>
+
+  <div style="font-size:11px;color:#64748b;margin-top:8px;text-align:center">
+    保守估计首年营收 ¥15-40万 · 乐观估计可达 ¥60万（如企业内训快速放量）
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- H10: 最终战略 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="num">10</span> 最终战略</div>
+
+  <div class="final-box">
+    <div class="fb-quote">先现金流，再课程，再产品，最后平台化。</div>
+    <div class="fb-sub">一人公司的核心原则：先活着，再长大，再飞。</div>
+  </div>
+
+  <div class="funnel">
+    <div class="fn-item" style="background:#dc2626;color:#fff">内容获客 —— 公众号 + 小红书</div>
+    <div class="fn-arrow">↓</div>
+    <div class="fn-item" style="background:#d97706;color:#fff">咨询验证 —— 跑通 SOP 与付费意愿</div>
+    <div class="fn-arrow">↓</div>
+    <div class="fn-item" style="background:#2563eb;color:#fff">课程复制 —— 把经验打包成可销售产品</div>
+    <div class="fn-arrow">↓</div>
+    <div class="fn-item" style="background:#7c3aed;color:#fff">工具标准化 —— 把服务变成可重复的系统</div>
+    <div class="fn-arrow">↓</div>
+    <div class="fn-item" style="background:#0f766e;color:#fff">企业服务 —— B2B 内训 + 年度顾问</div>
+    <div class="fn-arrow">↓</div>
+    <div class="fn-item" style="background:#16a34a;color:#fff">SaaS —— 产品化最终的飞轮</div>
+  </div>
+
+  <div style="margin-top:16px;padding:12px 14px;background:rgba(255,255,255,.02);border-radius:8px;text-align:center;font-size:11px;color:#64748b">
+    <strong style="color:#94a3b8">每一步都是下一步的前提。</strong> 不要跳步，不要贪多。<br>
+    2026年7月2日 · 小宋的环保笔记 · Decision Dashboard v2.0
+  </div>
+</div>
+
+</div>
+</body>
+</html>

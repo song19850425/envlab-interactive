@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>南阳县域渣土资源化项目 · 投资汇报</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{--ink:#1a1f36;--gray:#6b7280;--line:#e5e5e0;--green:#166534;--green-l:#f0fdf4;--blue:#1e40af;--blue-l:#eff6ff;--amber:#b45309;--amber-l:#fffbeb}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#f8f7f4;color:var(--ink);-webkit-font-smoothing:antialiased}
+
+.header{
+  background:linear-gradient(135deg,#1a1f36,#2d3348);color:#fff;
+  padding:40px 32px 36px;text-align:center;
+}
+.header h1{font-size:28px;font-weight:900;letter-spacing:-.02em;margin-bottom:6px}
+.header .sub{font-size:14px;color:rgba(255,255,255,.5);margin-bottom:20px}
+.header .data-strip{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.header .data-strip .d{background:rgba(255,255,255,.06);border-radius:10px;padding:14px 20px;min-width:100px;text-align:center}
+.header .data-strip .d .num{font-size:24px;font-weight:900;color:#5eead4}
+.header .data-strip .d .lbl{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px}
+
+.nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);display:flex;gap:0;overflow-x:auto;justify-content:center}
+.nav a{display:flex;align-items:center;gap:4px;padding:12px 18px;font-size:12px;font-weight:600;color:var(--gray);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:.2s}
+.nav a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+
+.container{max-width:960px;margin:0 auto;padding:0 20px}
+
+.section{padding:40px 0;border-bottom:1px solid var(--line)}
+.section:last-child{border-bottom:none}
+.section-label{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--amber);margin-bottom:4px}
+.section-title{font-size:20px;font-weight:900;letter-spacing:-.02em;margin-bottom:8px}
+.section-desc{font-size:13px;color:var(--gray);line-height:1.7;margin-bottom:20px}
+
+.chart-wrap{background:#fff;border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:16px;position:relative}
+.chart-wrap h4{font-size:13px;font-weight:700;margin-bottom:12px;text-align:center}
+.chart-wrap .chart-container{position:relative;height:260px;width:100%}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+
+.info-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px}
+.info-card .ic-label{font-size:10px;color:var(--gray);letter-spacing:.06em}
+.info-card .ic-num{font-size:22px;font-weight:900;margin:2px 0}
+.info-card .ic-sub{font-size:11px;color:var(--gray)}
+.info-card .ic-chart{height:80px;margin-top:8px}
+
+table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
+th{background:#1a1f36;color:#fff;padding:8px 12px;text-align:left;font-weight:600;font-size:11px}
+td{padding:7px 12px;border-bottom:0.5px solid var(--line)}
+tr:nth-child(even) td{background:#fafaf8}
+.num{text-align:right;font-family:"Verdana","Consolas",monospace;font-weight:600}
+
+.highlight{background:var(--green-l);border-left:3px solid var(--green);padding:12px 16px;font-size:12px;color:var(--green);margin:12px 0;border-radius:0 6px 6px 0}
+.highlight-blue{background:var(--blue-l);border-left:3px solid var(--blue);padding:12px 16px;font-size:12px;color:var(--blue);margin:12px 0;border-radius:0 6px 6px 0}
+.highlight-amber{background:var(--amber-l);border-left:3px solid var(--amber);padding:12px 16px;font-size:12px;color:var(--amber);margin:12px 0;border-radius:0 6px 6px 0}
+
+.tag{display:inline-block;padding:2px 10px;border-radius:4px;font-size:10px;font-weight:600}
+.tag-green{background:var(--green-l);color:var(--green)}
+.tag-blue{background:var(--blue-l);color:var(--blue)}
+.tag-amber{background:var(--amber-l);color:var(--amber)}
+
+.flow{display:flex;gap:8px;flex-wrap:wrap}
+.flow .step{flex:1;min-width:110px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:12px;text-align:center}
+.flow .step .sn{font-size:10px;font-weight:700;color:var(--gray)}
+.flow .step .st{font-weight:700;margin:2px 0;font-size:13px}
+.flow .step .sd{font-size:11px;color:var(--gray)}
+
+.conclusion{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:24px;margin:24px 0}
+.conclusion h3{font-size:16px;font-weight:900;margin-bottom:8px}
+.conclusion p{font-size:13px;color:var(--gray);line-height:1.8}
+
+.footer{text-align:center;padding:24px;color:var(--gray);font-size:11px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>南阳县域渣土资源化项目<br>投资可行性汇报</h1>
+  <div class="sub">国企主导投资 + 民企技术运维 + 绿色信贷 | 100万方/年规模</div>
+  <div class="data-strip">
+    <div class="d"><div class="num">4,445万</div><div class="lbl">总投资</div></div>
+    <div class="d"><div class="num">1,018万</div><div class="lbl">年净利润</div></div>
+    <div class="d"><div class="num">3.7年</div><div class="lbl">回收期</div></div>
+    <div class="d"><div class="num">45.8%</div><div class="lbl">自有资金IRR</div></div>
+    <div class="d"><div class="num">1.6年</div><div class="lbl">我方回本</div></div>
+  </div>
+</div>
+
+<div class="nav">
+  <a href="#summary">总览</a>
+  <a href="#market">市场</a>
+  <a href="#mode">合作模式</a>
+  <a href="#finance">财务测算</a>
+  <a href="#compare">双模式对比</a>
+  <a href="#repayment">还款能力</a>
+  <a href="#roadmap">推进路径</a>
+</div>
+
+<div class="container">
+
+<!-- ═══════════ 1. SUMMARY ═══════════ -->
+<div class="section" id="summary">
+  <div class="section-label">01 · 项目总览</div>
+  <h2 class="section-title">南阳建筑垃圾资源化的市场机会</h2>
+
+  <div class="grid2">
+    <div class="info-card">
+      <div class="ic-label">目标资源化率</div>
+      <div class="ic-num" style="color:var(--green)">85%</div>
+      <div class="ic-sub">现状仅40%，缺口45个百分点</div>
+    </div>
+    <div class="info-card">
+      <div class="ic-label">全域年产生量</div>
+      <div class="ic-num" style="color:var(--amber)">800-1,200</div>
+      <div class="ic-sub">万吨/年 · 全省最大人口地级市</div>
+    </div>
+    <div class="info-card">
+      <div class="ic-label">县域设施空白率</div>
+      <div class="ic-num" style="color:var(--red)">~100%</div>
+      <div class="ic-sub">9个县中8个无资源化设施</div>
+    </div>
+    <div class="info-card">
+      <div class="ic-label">竞争烈度</div>
+      <div class="ic-num" style="color:var(--green)">★☆☆☆☆</div>
+      <div class="ic-sub">全省最低，几乎无竞争者</div>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <h4>南阳各区县渣土产生量分布（万吨/年）</h4>
+    <div class="chart-container"><canvas id="chartCounty" role="img" aria-label="柱状图：南阳各区县渣土产生量"></canvas></div>
+  </div>
+
+  <div class="grid2">
+    <div class="info-card" style="border-color:var(--green)">
+      <div class="ic-label" style="color:var(--green)">🥇 首选唐河县</div>
+      <div class="ic-num" style="color:var(--green)">120-200<span style="font-size:12px;font-weight:400;color:var(--gray)"> 万吨/年</span></div>
+      <div class="ic-sub">已有消纳场基础，扩建成本低，竞争空白</div>
+    </div>
+    <div class="info-card" style="border-color:var(--blue)">
+      <div class="ic-label" style="color:var(--blue)">🥈 次选邓州市</div>
+      <div class="ic-num" style="color:var(--blue)">150-260<span style="font-size:12px;font-weight:400;color:var(--gray)"> 万吨/年</span></div>
+      <div class="ic-sub">省管县级市，独立审批权，决策链短</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ 2. MARKET ═══════════ -->
+<div class="section" id="market">
+  <div class="section-label">02 · 市场空间</div>
+  <h2 class="section-title">利润模型与市场前景</h2>
+  <p class="section-desc">建筑渣土处置净利润约10元/方。十五五/十六五期间，大量交通/水利/市政工程建设严禁挖地取土，循环利用渣土成为刚需替代品。</p>
+
+  <div class="chart-wrap">
+    <h4>利润-规模敏感性分析</h4>
+    <div class="chart-container"><canvas id="chartSensitivity" role="img" aria-label="敏感性分析图"></canvas></div>
+  </div>
+
+  <div class="highlight-amber">
+    <strong>核心判断：</strong>100万方/年是"值得干的门槛"——年净利润1,000万级。50万方仅500万，经济性不足。南阳唐河/邓州任何一个县的渣土量都足够支撑100万方/年规模。
+  </div>
+</div>
+
+<!-- ═══════════ 3. MODE ═══════════ -->
+<div class="section" id="mode">
+  <div class="section-label">03 · 合作模式</div>
+  <h2 class="section-title">推荐：国企主导 + 民企运维 + 银行贷款</h2>
+  <p class="section-desc">渣土最大消纳场景在交通/水利/市政工程——这些都是国企的项目。让国企入局=让买家入局。安南7年运营经验输出+智慧化装备。</p>
+
+  <div class="flow" style="margin-bottom:16px">
+    <div class="step"><div class="sn">🏛️</div><div class="st">国企</div><div class="sd">投资+审批+消纳<br>出资1,067万<br>年收益595万</div></div>
+    <div class="step" style="border-color:var(--amber)"><div class="sn">🔧</div><div class="st">我方（民企）</div><div class="sd">技术+运维+装备<br>出资267万<br>年分成170万</div></div>
+    <div class="step" style="border-color:var(--green)"><div class="sn">🏦</div><div class="st">银行（贷款）</div><div class="sd">绿色信贷3,111万<br>国企担保+收费质押<br>利率2.5-3%</div></div>
+  </div>
+
+  <table>
+    <tr><th>角色</th><th>投入</th><th>收益分配</th><th>风险承担</th></tr>
+    <tr><td>国企方</td><td>出资1,067万 + 审批/消纳资源</td><td>净利润 × 70%</td><td>投资风险（土地/设备）</td></tr>
+    <tr><td>我方（民企）</td><td>技术方案+运维团队+智慧化装备 ≈400万</td><td>净利润 × 20%</td><td>运营达标风险</td></tr>
+    <tr><td>预留</td><td>—</td><td>净利润 × 10%</td><td>激励基金/再投入</td></tr>
+  </table>
+</div>
+
+<!-- ═══════════ 4. FINANCE ═══════════ -->
+<div class="section" id="finance">
+  <div class="section-label">04 · 财务测算</div>
+  <h2 class="section-title">投资构成与年运营收支</h2>
+
+  <div class="grid2">
+    <div class="chart-wrap">
+      <h4>投资构成（万元）</h4>
+      <div class="chart-container"><canvas id="chartInvest" role="img" aria-label="投资构成饼图"></canvas></div>
+    </div>
+    <div class="chart-wrap">
+      <h4>年收入结构（万元）</h4>
+      <div class="chart-container"><canvas id="chartRevenue" role="img" aria-label="收入结构饼图"></canvas></div>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>项目</th><th class="num">金额（万元/年）</th><th>占比</th></tr>
+    <tr><td>建筑垃圾接收处置费</td><td class="num">1,000</td><td>37%</td></tr>
+    <tr><td>再生骨料销售</td><td class="num">800</td><td>30%</td></tr>
+    <tr><td>再生砖/砌块销售</td><td class="num">575</td><td>21%</td></tr>
+    <tr><td>砂土销售</td><td class="num">250</td><td>9%</td></tr>
+    <tr><td>废铁回收</td><td class="num">65</td><td>3%</td></tr>
+    <tr style="font-weight:700;border-top:2px solid var(--ink)"><td>年收入合计</td><td class="num">2,690</td><td>100%</td></tr>
+    <tr><td style="color:#e11d48">年运营成本（含税）</td><td class="num" style="color:#e11d48">1,482</td><td></td></tr>
+    <tr><td>年折旧摊销</td><td class="num">190</td><td></td></tr>
+    <tr style="font-weight:700;border-top:2px solid var(--green)"><td style="color:var(--green)">年净利润</td><td class="num" style="color:var(--green);font-size:16px">1,018</td><td></td></tr>
+  </table>
+</div>
+
+<!-- ═══════════ 5. COMPARE ═══════════ -->
+<div class="section" id="compare">
+  <div class="section-label">05 · 双模式对比</div>
+  <h2 class="section-title">全自有资金 vs 银行贷款70%</h2>
+
+  <div class="chart-wrap">
+    <h4>双模式核心指标雷达对比</h4>
+    <div class="chart-container"><canvas id="chartRadar" role="img" aria-label="雷达图对比两种模式"></canvas></div>
+  </div>
+
+  <table>
+    <tr><th>指标</th><th class="num" style="color:var(--green)">全自有资金</th><th class="num" style="color:var(--blue)">贷款70%</th><th>评价</th></tr>
+    <tr><td>我方初始出资</td><td class="num">889万</td><td class="num" style="color:var(--blue);font-weight:700">267万</td><td><span class="tag tag-green">-70%</span></td></tr>
+    <tr><td>国企出资</td><td class="num">3,556万</td><td class="num" style="color:var(--blue)">1,067万</td><td><span class="tag tag-green">-70%</span></td></tr>
+    <tr><td>我方年分成</td><td class="num">204万</td><td class="num">170万</td><td><span class="tag tag-amber">-17%</span></td></tr>
+    <tr><td>我方回收期</td><td class="num">4.4年</td><td class="num" style="color:var(--blue);font-weight:700">1.6年</td><td><span class="tag tag-green">快2.8年</span></td></tr>
+    <tr><td style="font-weight:700">自有资金IRR</td><td class="num">18.5%</td><td class="num" style="color:var(--blue);font-weight:700">45.8%</td><td><span class="tag tag-green">+27.3%</span></td></tr>
+    <tr><td>偿债覆盖率</td><td class="num">—</td><td class="num" style="font-weight:700">3.6x</td><td><span class="tag tag-green">安全</span></td></tr>
+  </table>
+
+  <div class="chart-wrap">
+    <h4>两种模式下我方10年累计净收益对比</h4>
+    <div class="chart-container"><canvas id="chartCompare10yr" role="img" aria-label="10年累计收益对比"></canvas></div>
+  </div>
+
+  <div class="highlight">贷款模式是最优解。我方仅出资267万，IRR 45.8%，1.6年回本。释放出的622万可快速复制第二个项目。国企同样受益：出资1,067万，IRR 38.6%。</div>
+</div>
+
+<!-- ═══════════ 6. REPAYMENT ═══════════ -->
+<div class="section" id="repayment">
+  <div class="section-label">06 · 还款能力</div>
+  <h2 class="section-title">10年贷款偿还分析</h2>
+  <p class="section-desc">贷款2,611万，10年期，利率3.95%，建设期1-2年宽限期。偿债覆盖率3.6x，远超银行安全线1.3x。</p>
+
+  <div class="chart-wrap">
+    <h4>10年本息偿还与现金流覆盖</h4>
+    <div class="chart-container"><canvas id="chartRepayment" role="img" aria-label="还款能力图表"></canvas></div>
+  </div>
+
+  <div class="highlight-blue">
+    <strong>银行视角评估：</strong>偿债覆盖率3.6x（银行要求≥1.3x）✅ | LTV≤70% ✅ | 资本金30% ✅ | 国企担保主体 ✅ | 绿色信贷鼓励类 ✅<br>
+    五大数据全部达标，银行审批通过率极高。
+  </div>
+</div>
+
+<!-- ═══════════ 7. ROADMAP ═══════════ -->
+<div class="section" id="roadmap">
+  <div class="section-label">07 · 推进路径</div>
+  <h2 class="section-title">项目落地的关键步骤</h2>
+
+  <div class="flow">
+    <div class="step"><div class="sn">STEP 01</div><div class="st">确认试点</div><div class="sd">锁定唐河县，确认环锋特许范围不覆盖县域</div></div>
+    <div class="step"><div class="sn">STEP 02</div><div class="st">国企对接</div><div class="sd">与南阳投资集团/唐河城投谈合作框架</div></div>
+    <div class="step"><div class="sn">STEP 03</div><div class="st">立项备案</div><div class="sd">发改委立项+用地预审+环评批复+规划许可</div></div>
+    <div class="step"><div class="sn">STEP 04</div><div class="st">银行贷款</div><div class="sd">对接国开行/农发行绿色信贷，利率2.5-3%</div></div>
+    <div class="step"><div class="sn">STEP 05</div><div class="st">建设运营</div><div class="sd">18个月建设期 → 投产 → 第2年盈利</div></div>
+    <div class="step"><div class="sn">STEP 06</div><div class="st">复制推广</div><div class="sd">唐河模式复制至邓州→新野→桐柏</div></div>
+  </div>
+
+  <div class="conclusion">
+    <h3>🎯 汇报结论</h3>
+    <p>
+      <strong>南阳渣土资源化项目是一个"低风险、稳收益、可复制"的优质标的。</strong><br><br>
+      <strong>市场端：</strong> 全省最激进目标（85%资源化率）+ 最大人口地级市 + 县域设施几乎空白 → 需求确定性强。<br><br>
+      <strong>模式端：</strong> 国企投资 + 民企运维 + 银行贷款70% → 各方风险共担、利益共享。<br><br>
+      <strong>财务端：</strong> 我方出资仅267万，IRR 45.8%，1.6年回收期。国企出资1,067万，IRR 38.6%。偿债覆盖率3.6x。<br><br>
+      <strong>战略价值：</strong> 一个点跑通后可快速复制3-5个县区，年度总收益可达600-1,000万元。符合"十五五"固废资源化政策方向，绿色金融支持明确。<br><br>
+      <strong>建议：</strong> ① 启动唐河县前期调研 ② 对接南阳国资本地平台 ③ 同步接触国开行/农发行了解贷款条件。
+    </p>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  EnvLab · 渣土资源化项目投资决策简报 | 基准100万方/年 | 2026年7月<br>
+  数据为行业估算，实际需尽调后调整
+</div>
+
+<script>
+function chartRender(id, config) {
+  const ctx = document.getElementById(id).getContext('2d');
+  new Chart(ctx, config);
+}
+
+// 南阳各县渣土量柱状图
+chartRender('chartCounty', {
+  type:'bar',
+  data:{
+    labels:['宛城区','卧龙区','邓州市','唐河县','镇平县','淅川县','方城县','新野县','西峡县','内乡县','桐柏县','社旗县','南召县'],
+    datasets:[{
+      label:'渣土估算量(万吨/年)',
+      data:[240,200,205,160,105,90,75,90,75,60,65,55,50],
+      backgroundColor:['#166534','#1e40af','#166534','#166534','#d2991d','#d2991d','#d2991d','#166534','#8b949e','#8b949e','#8b949e','#8b949e','#8b949e'],
+      borderRadius:4
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.06)'}}}
+  }
+});
+
+// 敏感性分析
+chartRender('chartSensitivity', {
+  type:'line',
+  data:{
+    labels:['30万','50万','80万','100万','120万','150万','200万'],
+    datasets:[
+      {label:'8元/方(保守)',data:[240,400,640,800,960,1200,1600],borderColor:'#d2991d',tension:.3},
+      {label:'10元/方(基准)',data:[300,500,800,1000,1200,1500,2000],borderColor:'#166534',borderWidth:3,tension:.3},
+      {label:'12元/方(乐观)',data:[360,600,960,1200,1440,1800,2400],borderColor:'#1e40af',borderDash:[5,5],tension:.3}
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}}},
+    scales:{y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.06)'},title:{display:true,text:'年净利润(万元)',font:{size:11}}},
+           x:{title:{display:true,text:'年处理规模(万方)',font:{size:11}}}}
+  }
+});
+
+// 投资构成饼图
+chartRender('chartInvest', {
+  type:'doughnut',
+  data:{
+    labels:['土地费用','厂房车间','生产线设备','环保设施','智慧化系统','办公生活','道路硬化','流动资金'],
+    datasets:[{
+      data:[750,600,1300,500,200,125,175,715],
+      backgroundColor:['#166534','#1e40af','#d2991d','#e11d48','#7c3aed','#0891b2','#65a30d','#78716c']
+    }]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{size:10}}}}}
+});
+
+// 收入结构饼图
+chartRender('chartRevenue', {
+  type:'doughnut',
+  data:{
+    labels:['处置费','再生骨料','再生砖','砂土','废铁'],
+    datasets:[{
+      data:[1000,800,575,250,65],
+      backgroundColor:['#166534','#1e40af','#d2991d','#0891b2','#78716c']
+    }]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{size:10}}}}}
+});
+
+// 雷达对比图
+chartRender('chartRadar', {
+  type:'radar',
+  data:{
+    labels:['出资效率','IRR','回收速度','年度收益','杠杆倍数','安全性'],
+    datasets:[
+      {label:'全自有资金',data:[30,40,30,80,10,100],borderColor:'#166534',backgroundColor:'rgba(22,101,52,.15)',pointBackgroundColor:'#166534'},
+      {label:'贷款70%',data:[85,90,85,70,95,95],borderColor:'#1e40af',backgroundColor:'rgba(30,64,175,.15)',pointBackgroundColor:'#1e40af'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}}},
+    scales:{r:{min:0,max:100,ticks:{stepSize:20,font:{size:9}},pointLabels:{font:{size:11}}}}}
+});
+
+// 10年累计收益对比
+chartRender('chartCompare10yr', {
+  type:'bar',
+  data:{
+    labels:['1年','2年','3年','4年','5年','6年','7年','8年','9年','10年'],
+    datasets:[
+      {label:'全自有资金(累计)',data:[204,408,612,816,1020,1224,1428,1632,1836,2040],backgroundColor:'rgba(22,101,52,.7)',borderRadius:3},
+      {label:'贷款70%(累计)',data:[170,340,510,680,850,1020,1190,1360,1530,1700],backgroundColor:'rgba(30,64,175,.7)',borderRadius:3}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}}},
+    scales:{y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.06)'},title:{display:true,text:'累计收益(万元)',font:{size:11}}}}
+  }
+});
+
+// 还款分析
+chartRender('chartRepayment', {
+  type:'bar',
+  data:{
+    labels:['第1年','第2年','第3年','第4年','第5年','第6年','第7年','第8年','第9年','第10年'],
+    datasets:[
+      {label:'还本',data:[0,218,227,235,245,255,265,275,286,298],backgroundColor:'rgba(30,64,175,.6)'},
+      {label:'付息',data:[103,103,95,86,77,67,57,46,35,24],backgroundColor:'rgba(212,153,29,.6)'},
+      {label:'净现金流',data:[0,1150,1150,1150,1150,1150,1150,1150,1150,1150],type:'line',borderColor:'#166534',borderWidth:3,pointBackgroundColor:'#166534',fill:false}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}},
+      annotation:{/*not needed*/}
+    },
+    scales:{
+      y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.06)'}},
+      x:{grid:{display:false}}
+    }
+  }
+});
+</script>
+
+</body>
+</html>

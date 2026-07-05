@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>保障性安居工程（中央预算内投资） · 叙事法</title>
+<style>
+:root{--ink:#1a1f36;--paper:#fafaf8;--card:#fff;--muted:#6b7280;--line:#e5e5e0;--accent:#f5c518;--accent-dim:#f5c51820;--warn:#c2410c;--warn-light:#fff7ed}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Times New Roman","Songti SC","Noto Serif SC","PingFang SC","Microsoft YaHei",serif;background:var(--paper);color:var(--ink);line-height:1.8;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.topbar{position:sticky;top:0;z-index:50;background:var(--card);border-bottom:1px solid var(--line);padding:0 32px;display:flex;align-items:center;height:52px;gap:20px;font-family:"PingFang SC","Microsoft YaHei",sans-serif;backdrop-filter:blur(8px)}
+.topbar a{text-decoration:none;font-size:.8rem;font-weight:600;color:var(--muted);letter-spacing:.02em;transition:color .2s}
+.topbar a:hover{color:var(--ink)}
+.topbar .crumb{color:var(--line);font-size:.8rem;user-select:none}
+.topbar .page-id{margin-left:auto;font-size:.75rem;font-weight:700;color:var(--muted);letter-spacing:.06em}
+.wrapper{max-width:720px;margin:0 auto;padding:56px 24px 80px}
+.article-header{margin-bottom:56px;border-bottom:2px solid var(--ink);padding-bottom:36px}
+.article-header .meta-row{font-size:.75rem;font-weight:600;color:var(--muted);letter-spacing:.06em;margin-bottom:12px;font-family:"PingFang SC","Microsoft YaHei",sans-serif;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.article-header .meta-row .m-sep{width:1px;height:14px;background:var(--line);flex-shrink:0}
+.article-header .meta-row .m-bar{flex:1;height:1px;background:var(--line)}
+.article-header h1{font-size:2.1rem;font-weight:900;letter-spacing:-.02em;line-height:1.2;margin-bottom:14px}
+.article-header .subtitle{font-size:.85rem;color:var(--muted);font-family:"PingFang SC","Microsoft YaHei",sans-serif;display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+.article-header .stars{color:var(--accent);letter-spacing:4px;font-size:.95rem}
+.article-header .income-tag{font-size:.75rem;padding:2px 12px;border:1px solid var(--line);letter-spacing:.03em;color:var(--muted)}
+.act{margin-bottom:48px;position:relative;padding-left:48px}
+.act::before{content:'';position:absolute;left:13px;top:42px;bottom:-48px;width:1px;background:var(--line)}
+.act:last-child::before{display:none}
+.act-label{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.12em;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:12px}
+.act-label::before{content:'';width:28px;height:28px;border:2px solid var(--ink);border-radius:50%;position:absolute;left:0;background:var(--paper)}
+.act-label .label-line{flex:1;height:1px;background:var(--line)}
+.act-title{font-size:1.15rem;font-weight:700;margin-bottom:18px;letter-spacing:-.01em;line-height:1.35}
+.act-body{font-size:.92rem;color:#374151;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.act-body h4{font-size:.88rem;font-weight:700;color:var(--ink);margin:20px 0 8px;letter-spacing:-.01em}
+.act-body blockquote{border-left:3px solid var(--accent);padding:12px 0 12px 20px;margin:16px 0;font-style:italic;color:#4b5563;font-size:.88rem;line-height:1.8;background:var(--accent-dim);border-radius:0 4px 4px 0}
+.act-body table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.82rem;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.act-body th{text-align:left;padding:10px 16px;background:#fafaf8;font-weight:600;font-size:.73rem;color:var(--muted);border-bottom:2px solid var(--ink);letter-spacing:.04em;text-transform:uppercase;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.act-body td{padding:10px 16px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.65}
+.act-body tr:last-child td{border-bottom:none}
+.act-body p{margin:8px 0}
+.act-body ul,.act-body ol{padding-left:22px;margin:8px 0}
+.act-body li{margin:6px 0;line-height:1.65}
+.act-body code{font-family:"JetBrains Mono","Fira Code",monospace;font-size:.78rem;background:var(--paper);padding:1px 6px;border-radius:3px;border:1px solid var(--line)}
+.act-body strong{color:var(--ink);font-weight:700}
+.act-body hr{border:none;border-top:1px solid var(--line);margin:20px 0}
+.tag-bar{display:flex;flex-wrap:wrap;gap:8px;border-top:1px solid var(--line);padding-top:28px;margin-top:12px}
+.tag{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:.73rem;padding:3px 14px;border:1px solid var(--line);letter-spacing:.02em;color:var(--muted);transition:all .2s}
+.tag:hover{border-color:var(--ink);color:var(--ink);cursor:default}
+.footnote{text-align:center;padding:48px 20px;color:var(--muted);font-size:.72rem;font-family:"PingFang SC","Microsoft YaHei",sans-serif;letter-spacing:.04em;border-top:1px solid var(--line)}
+@media(max-width:640px){.wrapper{padding:32px 16px 48px}.article-header h1{font-size:1.5rem}.act{padding-left:36px}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="index.html">← 总览</a>
+  <span class="crumb">/</span>
+  <a href="index.html#板块七">板块七</a>
+  <span class="page-id">NO.7.3</span>
+</div>
+<div class="wrapper">
+  <div class="article-header">
+    <div class="meta-row"><span>7.3</span><span class="m-sep"></span><span>板块七 · 住建口资金</span><span class="m-bar"></span></div>
+    <h1>保障性安居工程（中央预算内投资）</h1>
+    <div class="subtitle">
+      <span class="stars">★★☆☆☆</span>
+      <span class="income-tag">中央预算内投资</span>
+    </div>
+  </div>
+  
+      <section class="act" id="act-1">
+        <div class="act-label">场景 SCENE</div>
+        <h3 class="act-title">场景</h3>
+        <div class="act-body"><blockquote>全国仍有约**300万户**城镇住房困难家庭等待保障性住房覆盖，而"十四五"期间国家计划筹集保障性租赁住房**870万套（间）**。对于地级市住建局而言，保障性安居工程是一个"不干不行、干了也难"的硬骨头——任务指标是上面压下来的，但钱从哪里来，从来没有人给你打包票。</blockquote>
+<p><strong>谁在焦虑？</strong></p>
+<p>- <strong>住建局住房保障科科长</strong>：省里年初下发了2000套保障性租赁住房的年度任务，但落实到的项目地块还在扯皮，建设资金缺口超过3个亿。中央预算内投资是重要的资金来源，但申报窗口来得快去得也快——一年1-2批，错过就是错过。</p>
+<p>- <strong>城投公司项目负责人</strong>：保障房项目本身不赚钱，租金收益勉强覆盖运营成本。如果没有中央补助资金，项目投融资方案根本过不了银行审批。</p>
+<p>- <strong>棚改/旧改片区居民</strong>：住在D级危房里的居民每天都在问——什么时候轮到我们？但地方政府推进速度受制于资金到位进度，一个片区拖上三五年是常态。</p>
+<hr></div>
+      </section>
+      <section class="act" id="act-2">
+        <div class="act-label">痛点 PAIN</div>
+        <h3 class="act-title">痛点</h3>
+        <div class="act-body"><blockquote>保障性安居工程不缺任务，缺的是"钱和项目精准匹配"的专业能力。任务指标和资金申报是两套不同的体系，很多地方只会接任务、不会找钱。</blockquote>
+<table><tr><th>利益相关方</th><th>核心痛点</th><th>深层原因</th></tr><tr><td>住建局住房保障科</td><td>任务重、资金紧</td><td>国家任务指标层层分解，但中央资金申报是独立通道，不主动对接就没钱</td></tr><tr><td>城投/项目单位</td><td>项目融资困难</td><td>保障房租金低、回报周期长，没有中央补助撬动，银行不愿放贷</td></tr><tr><td>发改委投资科</td><td>项目储备不足</td><td>申报时才发现"成熟可报"的项目不够，准备仓促导致材料质量差</td></tr><tr><td>咨询公司机会</td><td>—</td><td>**870万套保障性租赁住房目标意味着持续的咨询需求**</td></tr></table>
+<p><strong>致命细节</strong>：保障性安居工程的中央预算内投资申报，最容易被忽略的要求是——项目必须已纳入<strong>国家年度建设任务计划</strong>。如果年初没有及时对接省级住建部门争取纳入计划，全年都不具备申报资格。</p>
+<hr></div>
+      </section>
+      <section class="act" id="act-3">
+        <div class="act-label">方案 SOLUTION</div>
+        <h3 class="act-title">方案</h3>
+        <div class="act-body"><blockquote>我们帮助客户打通"任务争取—项目包装—资金申报"的完整链条，让保障房建设从"等米下锅"变成"有米有锅"。</blockquote>
+<h4>我们的打法（五步保障安居申报法）</h4>
+<p>```</p>
+<p>① 需求梳理     →  根据城市住房保障规划，理清保障性租赁住房/公租房/棚改等各类型需求</p>
+<p>② 任务计划争取 →  协助对接省级住建部门，争取纳入下一年度国家任务计划</p>
+<p>③ 项目包装     →  完成项目立项、用地预审、可研报告等前置手续</p>
+<p>④ 资金方案编制 →  设计"中央补助+地方配套+社会资本"三级资金拼盘</p>
+<p>⑤ 申报材料报送 →  对标发改委/住建部最新申报指南，完成全套材料准备</p>
+<p>```</p>
+<h4>关键数据锚点</h4>
+<p>- <strong>"十四五"目标</strong>：全国筹集保障性租赁住房870万套（间）</p>
+<p>- <strong>中央预算内投资</strong>：因素法+项目法分配，单个项目数百万至数千万</p>
+<p>- <strong>申报窗口</strong>：视国家发改委通知（通常上下半年各一批）</p>
+<p>- <strong>核心门槛</strong>：项目必须纳入国家年度建设任务计划</p>
+<p>- <strong>⚠️ 2026年变化</strong>：中央预算内投资对保障性安居工程的支持重点从"量"转向"质"，公建配套权重提升</p>
+<hr></div>
+      </section>
+      <section class="act" id="act-4">
+        <div class="act-label">价值 VALUE</div>
+        <h3 class="act-title">价值</h3>
+        <div class="act-body"><h4>对客户的三重价值</h4>
+<table><tr><th>价值维度</th><th>具体收益</th><th>量化预期</th></tr><tr><td>资金到账</td><td>中央预算内投资补充项目建设资金</td><td>单个项目争取500万-5000万元</td></tr><tr><td>任务完成</td><td>保障年度保障房建设任务达标</td><td>避免被上级约谈或扣减次年指标</td></tr><tr><td>民生改善</td><td>住房困难家庭实现"住有所居"</td><td>惠及数百至数千户居民</td></tr></table>
+<h4>对我们的商业价值</h4>
+<p>- <strong>单项目收入</strong>：50-80万元（任务争取对接+项目包装+资金申报）</p>
+<p>- <strong>复购率高</strong>：保障房建设是持续多年的常规任务，可形成年度咨询服务合同</p>
+<p>- <strong>延伸机会</strong>：保障房运营管理咨询、REITs发行辅导</p>
+<hr></div>
+      </section>
+      <section class="act" id="act-5">
+        <div class="act-label">行动 ACTION</div>
+        <h3 class="act-title">行动</h3>
+        <div class="act-body"><h4>现在就该做的事</h4>
+<table><tr><th>时间节点</th><th>行动项</th><th>责任人</th></tr><tr><td>**现在-8月（关键窗口）**</td><td>对接省级住建部门，争取将项目纳入下一年度国家任务计划</td><td>商务+专家团队</td></tr><tr><td>**9月-10月**</td><td>协助完成项目立项、用地预审、可研等前置手续</td><td>技术团队</td></tr><tr><td>**11月-12月**</td><td>编制资金申报方案，完成发改系统项目储备库入库</td><td>技术团队</td></tr><tr><td>**次年1-3月**</td><td>根据国家发改委通知，正式报送申报材料</td><td>专家团队</td></tr></table>
+<blockquote>⚠️ **紧急度提示**：纳入国家任务计划是前置条件，每年7-9月是省级层面对接的关键窗口。错过这个窗口，即使项目再成熟，下一年度也不具备申报资格。</blockquote>
+<hr>
+<p>## 叙事标签</p>
+<p><code>政策性资金</code> <code>保障性安居工程</code> <code>中央预算内投资</code> <code>保障性租赁住房</code> <code>国家任务计划</code> <code>住建口</code> <code>民生底线</code> <code>870万套目标</code></p></div>
+      </section>
+  <div class="tag-bar"></div>
+</div>
+<div class="footnote">54项核心业务叙事法 · 2026年更新版</div>
+</body>
+</html>

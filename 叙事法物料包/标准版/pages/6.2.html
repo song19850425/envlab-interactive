@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>历史遗留废弃工矿土地整治 · 叙事法</title>
+<style>
+:root{--ink:#1a1f36;--paper:#fafaf8;--card:#fff;--muted:#6b7280;--line:#e5e5e0;--accent:#f5c518;--accent-dim:#f5c51820;--warn:#c2410c;--warn-light:#fff7ed}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Times New Roman","Songti SC","Noto Serif SC","PingFang SC","Microsoft YaHei",serif;background:var(--paper);color:var(--ink);line-height:1.8;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.topbar{position:sticky;top:0;z-index:50;background:var(--card);border-bottom:1px solid var(--line);padding:0 32px;display:flex;align-items:center;height:52px;gap:20px;font-family:"PingFang SC","Microsoft YaHei",sans-serif;backdrop-filter:blur(8px)}
+.topbar a{text-decoration:none;font-size:.8rem;font-weight:600;color:var(--muted);letter-spacing:.02em;transition:color .2s}
+.topbar a:hover{color:var(--ink)}
+.topbar .crumb{color:var(--line);font-size:.8rem;user-select:none}
+.topbar .page-id{margin-left:auto;font-size:.75rem;font-weight:700;color:var(--muted);letter-spacing:.06em}
+.wrapper{max-width:720px;margin:0 auto;padding:56px 24px 80px}
+.article-header{margin-bottom:56px;border-bottom:2px solid var(--ink);padding-bottom:36px}
+.article-header .meta-row{font-size:.75rem;font-weight:600;color:var(--muted);letter-spacing:.06em;margin-bottom:12px;font-family:"PingFang SC","Microsoft YaHei",sans-serif;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.article-header .meta-row .m-sep{width:1px;height:14px;background:var(--line);flex-shrink:0}
+.article-header .meta-row .m-bar{flex:1;height:1px;background:var(--line)}
+.article-header h1{font-size:2.1rem;font-weight:900;letter-spacing:-.02em;line-height:1.2;margin-bottom:14px}
+.article-header .subtitle{font-size:.85rem;color:var(--muted);font-family:"PingFang SC","Microsoft YaHei",sans-serif;display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+.article-header .stars{color:var(--accent);letter-spacing:4px;font-size:.95rem}
+.article-header .income-tag{font-size:.75rem;padding:2px 12px;border:1px solid var(--line);letter-spacing:.03em;color:var(--muted)}
+.act{margin-bottom:48px;position:relative;padding-left:48px}
+.act::before{content:'';position:absolute;left:13px;top:42px;bottom:-48px;width:1px;background:var(--line)}
+.act:last-child::before{display:none}
+.act-label{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.12em;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:12px}
+.act-label::before{content:'';width:28px;height:28px;border:2px solid var(--ink);border-radius:50%;position:absolute;left:0;background:var(--paper)}
+.act-label .label-line{flex:1;height:1px;background:var(--line)}
+.act-title{font-size:1.15rem;font-weight:700;margin-bottom:18px;letter-spacing:-.01em;line-height:1.35}
+.act-body{font-size:.92rem;color:#374151;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.act-body h4{font-size:.88rem;font-weight:700;color:var(--ink);margin:20px 0 8px;letter-spacing:-.01em}
+.act-body blockquote{border-left:3px solid var(--accent);padding:12px 0 12px 20px;margin:16px 0;font-style:italic;color:#4b5563;font-size:.88rem;line-height:1.8;background:var(--accent-dim);border-radius:0 4px 4px 0}
+.act-body table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.82rem;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.act-body th{text-align:left;padding:10px 16px;background:#fafaf8;font-weight:600;font-size:.73rem;color:var(--muted);border-bottom:2px solid var(--ink);letter-spacing:.04em;text-transform:uppercase;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.act-body td{padding:10px 16px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.65}
+.act-body tr:last-child td{border-bottom:none}
+.act-body p{margin:8px 0}
+.act-body ul,.act-body ol{padding-left:22px;margin:8px 0}
+.act-body li{margin:6px 0;line-height:1.65}
+.act-body code{font-family:"JetBrains Mono","Fira Code",monospace;font-size:.78rem;background:var(--paper);padding:1px 6px;border-radius:3px;border:1px solid var(--line)}
+.act-body strong{color:var(--ink);font-weight:700}
+.act-body hr{border:none;border-top:1px solid var(--line);margin:20px 0}
+.tag-bar{display:flex;flex-wrap:wrap;gap:8px;border-top:1px solid var(--line);padding-top:28px;margin-top:12px}
+.tag{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:.73rem;padding:3px 14px;border:1px solid var(--line);letter-spacing:.02em;color:var(--muted);transition:all .2s}
+.tag:hover{border-color:var(--ink);color:var(--ink);cursor:default}
+.footnote{text-align:center;padding:48px 20px;color:var(--muted);font-size:.72rem;font-family:"PingFang SC","Microsoft YaHei",sans-serif;letter-spacing:.04em;border-top:1px solid var(--line)}
+@media(max-width:640px){.wrapper{padding:32px 16px 48px}.article-header h1{font-size:1.5rem}.act{padding-left:36px}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="index.html">← 总览</a>
+  <span class="crumb">/</span>
+  <a href="index.html#板块六">板块六</a>
+  <span class="page-id">NO.6.2</span>
+</div>
+<div class="wrapper">
+  <div class="article-header">
+    <div class="meta-row"><span>6.2</span><span class="m-sep"></span><span>板块六 · 自然资源口资金</span><span class="m-bar"></span></div>
+    <h1>历史遗留废弃工矿土地整治</h1>
+    <div class="subtitle">
+      <span class="stars">★★★☆☆</span>
+      <span class="income-tag">80-150万</span>
+    </div>
+  </div>
+  
+      <section class="act" id="act-1">
+        <div class="act-label">场景 SCENE</div>
+        <h3 class="act-title">场景</h3>
+        <div class="act-body"><blockquote>在山西某资源枯竭型城市，一片12平方公里的废弃工矿区像一张生锈的铁皮扣在大地上。这里曾年产煤炭300万吨，养活了三万矿工家庭。但现在，地面塌陷、矸石自燃、地下水被抽空——周边的村子从2000人锐减到不足200人。市长说："这块地，不治是定时炸弹，治又拿不出5个亿。"</blockquote>
+<p><strong>谁在焦虑？</strong></p>
+<p>- <strong>资源型城市市长</strong>：产业转型已经耗尽了市财政的腾挪空间，但废弃工矿区的污染问题像滚雪球一样越滚越大。群众举报信每周都寄到中央环保督察组。</p>
+<p>- <strong>自然资源局局长</strong>：国家确实有专项资金——但你知道今年有多少个省在抢吗？每省只给2个名额，你在本省能排第几？</p>
+<p>- <strong>乡镇党委书记</strong>：年轻人全跑了，留下的都是老人。矿区边上还有800亩基本农田，重金属超标，种出来的粮食自己都不敢吃。这已经不是发展问题，是生存问题。</p>
+<hr></div>
+      </section>
+      <section class="act" id="act-2">
+        <div class="act-label">痛点 PAIN</div>
+        <h3 class="act-title">痛点</h3>
+        <div class="act-body"><blockquote>废弃工矿地块的治理竞赛，比的是**谁更早拿到入场券**，不是谁的问题更严重。</blockquote>
+<table><tr><th>利益相关方</th><th>核心痛点</th><th>深层原因</th></tr><tr><td>资源型城市政府</td><td>转型资金捉襟见肘，环境欠账滚雪球</td><td>历史遗留问题、责任主体灭失、地方财力单薄三重叠加</td></tr><tr><td>自然资源局</td><td>方案做了半年，初筛没过</td><td>不了解评审专家评判尺度，方案"面面俱到"但不"击中要害"</td></tr><tr><td>省级自然资源厅</td><td>每省限2个名额，选谁都是得罪人</td><td>需要在政治平衡与项目质量之间走钢丝</td></tr><tr><td>矿区居民</td><td>健康受损、耕地荒废、搬迁无望</td><td>个体维权无力，缺乏组织化表达渠道</td></tr><tr><td>咨询公司机会</td><td>—</td><td>**竞争局势研判 + 方案叙事包装 = 核心竞争力**</td></tr></table>
+<p><strong>致命细节</strong>：一个资源大省的某个地级市，花了600万请高校做工矿区整治方案，结论是"生态修复需8.7亿元"。结果省厅一看——你这是做科研还是搞申报？评审专家要的是<strong>可落地的工程方案</strong>，不是SCI论文。</p>
+<hr></div>
+      </section>
+      <section class="act" id="act-3">
+        <div class="act-label">方案 SOLUTION</div>
+        <h3 class="act-title">方案</h3>
+        <div class="act-body"><blockquote>废弃工矿地的申报，本质上是一场"比惨+比方案+比准备度"的综合竞赛。我们的任务是——让你在起跑线上就领先对手三个身位。</blockquote>
+<h4>我们的打法（五步竞赛突围法）</h4>
+<p>```</p>
+<p>① 矿区排查     →  全省范围筛查面积≥10km²、投资≥5亿的工矿地块，建立"种子项目库"</p>
+<p>② 竞争定位     →  研判本省竞争格局——你的对手是谁？他们的项目有什么硬伤？</p>
+<p>③ 方案策划     →  不是写修复方案，是写"修复+产业导入"一体化方案——治理完了这块地干什么？谁出钱？</p>
+<p>④ 材料决战     →  从省级初筛到部级答辩，每一轮材料的叙事重点完全不同，逐级定制</p>
+<p>⑤ 答辩模拟     →  组织"红蓝对抗"模拟答辩，专家团扮演评审委员，提前消灭所有软肋</p>
+<p>```</p>
+<h4>关键数据锚点</h4>
+<p>- <strong>奖补规模</strong>：中央财政 ≤ 3亿元/项目</p>
+<p>- <strong>硬性门槛</strong>：治理面积 ≥ 10km²，项目总投资 ≥ 5亿元</p>
+<p>- <strong>申报窗口</strong>：每年 3 月下旬（提前 8-10 个月启动）</p>
+<p>- <strong>2026年关键变化</strong>：⚠️ 每省限额2个（从3个缩减），竞争烈度直接翻倍</p>
+<p>- <strong>配套要求</strong>：地方配套资金不低于总投资的 50%</p>
+<hr></div>
+      </section>
+      <section class="act" id="act-4">
+        <div class="act-label">价值 VALUE</div>
+        <h3 class="act-title">价值</h3>
+        <div class="act-body"><h4>对客户的三重价值</h4>
+<table><tr><th>价值维度</th><th>具体收益</th><th>量化预期</th></tr><tr><td>直接资金</td><td>中央奖补资金到位</td><td>2-3亿元无偿资金，撬动地方配套5亿+</td></tr><tr><td>土地释放</td><td>治理后土地用途转换</td><td>10+km² 用地指标，可出让、可复垦、可纳入增减挂钩</td></tr><tr><td>社会风险化解</td><td>环保督察销号+群众信访清零</td><td>社会稳定风险评级从"高风险"降至"低风险"</td></tr></table>
+<h4>对我们的商业价值</h4>
+<p>- <strong>单项目收入</strong>：80-150万元（矿区排查+方案编制+竞争策略+答辩辅导）</p>
+<p>- <strong>成功率</strong>：高（拥有全国竞合格案例数据库，精准对标评审偏好）</p>
+<p>- <strong>延伸机会</strong>：治理后的产业策划（光伏+矿区、文旅+矿区）、土地指标交易撮合</p>
+<hr></div>
+      </section>
+      <section class="act" id="act-5">
+        <div class="act-label">行动 ACTION</div>
+        <h3 class="act-title">行动</h3>
+        <div class="act-body"><h4>现在就该做的事</h4>
+<table><tr><th>时间节点</th><th>行动项</th><th>责任人</th></tr><tr><td>**现在-7月**</td><td>全国资源型城市工矿地块筛查，锁定面积≥10km²的项目种子</td><td>市场团队</td></tr><tr><td>**8-9月**</td><td>开展预可研评估，确定5-8个"首推项目"</td><td>技术团队</td></tr><tr><td>**10月**</td><td>与合作城市签署咨询服务协议，正式进场</td><td>合伙人</td></tr><tr><td>**11-12月**</td><td>编制实施方案，同步完成地灾评估和环评前置</td><td>技术+外部专家</td></tr><tr><td>**次年1-2月**</td><td>省级沟通+材料精修+模拟答辩</td><td>全员</td></tr><tr><td>**次年3月**</td><td>正式申报+答辩</td><td>专家团队</td></tr></table>
+<blockquote>⚠️ **紧急度提示**：2026年每省限额从3个缩减为2个。如果你所在省份有超过3个地市在准备同类项目，现在不进场，明年的名额基本跟你没关系了。</blockquote>
+<hr>
+<p>## 叙事标签</p>
+<p><code>政策性资金</code> <code>废弃工矿地</code> <code>矿山修复</code> <code>每省限2个</code> <code>面积≥10km²</code> <code>投资≥5亿</code> <code>3月窗口</code> <code>2026年收紧</code> <code>竞争烈度翻倍</code> <code>修复+产业一体化</code></p></div>
+      </section>
+  <div class="tag-bar"></div>
+</div>
+<div class="footnote">54项核心业务叙事法 · 2026年更新版</div>
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>EnvLab · 交互实验系列 · 整体开发框架</title>
+<style>
+:root{--ink:#1a1f36;--gray:#6b7280;--line:#e5e0d8;--gold:#c8a951;--teal:#0f766e;--teal-l:#f0fdfa;--blue:#1e40af;--blue-l:#eff6ff;--green:#166534;--green-l:#f0fdf4;--amber:#b45309;--amber-l:#fffbeb;--red:#b91c1c;--red-l:#fef2f2;--purple:#5b21b6;--purple-l:#f5f3ff;--rose:#be185d}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:#f5f3ed;color:var(--ink);line-height:1.7;padding:0}
+.top-bar{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:28px 24px;position:sticky;top:0;z-index:100}
+.top-bar h1{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.top-bar .sub{font-size:12px;color:#94a3b8;margin-top:4px}
+.top-bar .meta{font-size:11px;color:#64748b;margin-top:6px}
+.container{max-width:960px;margin:0 auto;padding:20px 24px 60px}
+.section{margin-bottom:32px}
+.section-title{font-size:15px;font-weight:700;padding:8px 14px;border-radius:8px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.st-gray{background:#f1f0ec;color:var(--ink);border-left:4px solid var(--ink)}
+.st-blue{background:var(--blue-l);color:var(--blue);border-left:4px solid var(--blue)}
+.st-green{background:var(--green-l);color:var(--green);border-left:4px solid var(--green)}
+.st-amber{background:var(--amber-l);color:var(--amber);border-left:4px solid var(--amber)}
+.st-teal{background:var(--teal-l);color:var(--teal);border-left:4px solid var(--teal)}
+.st-purple{background:var(--purple-l);color:var(--purple);border-left:4px solid var(--purple)}
+.st-red{background:var(--red-l);color:var(--red);border-left:4px solid var(--red)}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin:14px 0}
+.stat-card{text-align:center;padding:12px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.stat-card .n{font-size:22px;font-weight:800}
+.stat-card .l{font-size:11px;color:var(--gray);margin-top:2px}
+table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
+table th{background:var(--ink);color:#fff;padding:6px 8px;text-align:left;font-weight:600}
+table td{padding:5px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.pill{display:inline-block;padding:1px 8px;border-radius:10px;font-size:10px;font-weight:600}
+.pill-green{background:var(--green-l);color:var(--green)}
+.pill-blue{background:var(--blue-l);color:var(--blue)}
+.pill-amber{background:var(--amber-l);color:var(--amber)}
+.pill-red{background:var(--red-l);color:var(--red)}
+.pill-gray{background:#f1f0ec;color:var(--gray)}
+.roadmap-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.roadmap-item:last-child{border-bottom:none}
+.roadmap-item .rm-phase{flex-shrink:0;width:60px;font-size:11px;font-weight:700;text-align:center;padding:2px 0}
+.rm-p1{color:var(--red)}.rm-p2{color:var(--amber)}.rm-p3{color:var(--blue)}.rm-p4{color:var(--green)}.rm-p5{color:var(--purple)}
+.roadmap-item .rm-content{flex:1}
+.roadmap-item .rm-title{font-size:13px;font-weight:600}
+.roadmap-item .rm-desc{font-size:11px;color:var(--gray);line-height:1.5;margin-top:2px}
+.strategy-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+@media(max-width:640px){.strategy-grid{grid-template-columns:1fr}}
+.strategy-card{border:1px solid var(--line);border-radius:8px;padding:14px;background:#fff}
+.strategy-card .sc-title{font-size:13px;font-weight:700;margin-bottom:4px}
+.strategy-card .sc-desc{font-size:11px;color:var(--gray);line-height:1.5}
+.nav-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0;position:sticky;top:80px;background:#f5f3ed;padding:8px 0;z-index:99}
+.nav-tabs a{display:inline-block;padding:5px 12px;border-radius:16px;font-size:11px;font-weight:600;text-decoration:none;border:1px solid var(--line);color:var(--gray);background:#fff}
+.nav-tabs a:hover{border-color:var(--ink);color:var(--ink)}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>🧪 EnvLab · 交互实验系列整体开发框架</h1>
+  <div class="sub">叙事式教学 · PhET级交互 · 全版本物料</div>
+  <div class="meta">版本: 2026.7.2 | 实验总数: 37个 | PhET级: 9个 | 待升级: 7个</div>
+</div>
+
+<div class="container">
+
+<!-- ════════════════════════════════════ -->
+<!-- 总览 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title st-gray">📊 总览统计</div>
+  <div class="stat-row">
+    <div class="stat-card"><div class="n" style="color:var(--green)">37</div><div class="l">已完成页面</div></div>
+    <div class="stat-card"><div class="n" style="color:var(--teal)">9</div><div class="l">PhET级交互</div></div>
+    <div class="stat-card"><div class="n" style="color:var(--amber)">7</div><div class="l">待升级PhET</div></div>
+    <div class="stat-card"><div class="n" style="color:var(--blue)">5</div><div class="l">工具/报告类</div></div>
+    <div class="stat-card"><div class="n" style="color:var(--purple)">10</div><div class="l">公众号草稿</div></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 已完成的实验库 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title st-blue">📦 一、已完成的交互实验库（37个）</div>
+
+  <table>
+    <tr><th style="width:36px">#</th><th>类别</th><th>实验名称</th><th style="width:60px">等级</th><th style="width:80px">交互类型</th></tr>
+    <tr><td>1</td><td rowspan="5" style="font-weight:600;color:var(--blue)">🧪<br>水质<br>检测</td><td>pH测定 · 电极法</td><td><span class="pill pill-green">PhET级</span></td><td>拖拽电极+赛博朋克</td></tr>
+    <tr><td>2</td><td>COD检测 · 重铬酸盐法</td><td><span class="pill pill-green">PhET级</span></td><td>滴定消解+随机终点</td></tr>
+    <tr><td>3</td><td>浊度测定 · 浊度计法</td><td><span class="pill pill-amber">基础叙事</span></td><td>点击式向导</td></tr>
+    <tr><td>4</td><td>总氮测定 · 碱性过硫酸钾法</td><td><span class="pill pill-amber">基础叙事</span></td><td>点击式向导</td></tr>
+    <tr><td>5</td><td>读懂一条河 · 水质评价</td><td><span class="pill pill-blue">交互Demo</span></td><td>5断面×6指标</td></tr>
+    <tr><td>6</td><td rowspan="3" style="font-weight:600;color:var(--teal)">🌬️<br>大气/<br>尾气</td><td>读一片天 · AQI空气质量评价</td><td><span class="pill pill-blue">交互Demo</span></td><td>6参数IAQI+8城市</td></tr>
+    <tr><td>7</td><td>读懂一场雨 · 酸雨评价</td><td><span class="pill pill-blue">交互Demo</span></td><td>6城市+pH可视化</td></tr>
+    <tr><td>8</td><td>五气分析仪 · 汽车尾气</td><td><span class="pill pill-green">PhET级</span></td><td>5气体+RPM+λ+催化器</td></tr>
+    <tr><td>9</td><td rowspan="3" style="font-weight:600;color:var(--green)">🌱<br>土壤<br>评价</td><td>读懂一块地 · 土壤质量评价</td><td><span class="pill pill-blue">交互Demo</span></td><td>内梅罗综合指数</td></tr>
+    <tr><td>10</td><td>读懂一个厂 · 环保合规审计</td><td><span class="pill pill-blue">交互Demo</span></td><td>7维度25项检查点</td></tr>
+    <tr><td>11</td><td>读懂一个湖 · 富营养化评价</td><td><span class="pill pill-blue">交互Demo</span></td><td>TLI综合营养状态</td></tr>
+    <tr><td>12</td><td rowspan="10" style="font-weight:600;color:var(--amber)">🛠️<br>土壤<br>修复</td><td>土壤环境监测技术规范</td><td><span class="pill pill-amber">基础叙事</span></td><td>布点+钻探模拟</td></tr>
+    <tr><td>13</td><td>可渗透反应墙 PRB</td><td><span class="pill pill-green">PhET级</span></td><td>粒子系统+3口监测井</td></tr>
+    <tr><td>14</td><td>土壤气提技术 SVE</td><td><span class="pill pill-amber">基础叙事</span></td><td>待升级</td></tr>
+    <tr><td>15</td><td>土壤淋洗/洗脱技术</td><td><span class="pill pill-amber">基础叙事</span></td><td>待升级</td></tr>
+    <tr><td>16</td><td>抽水处理法 P&T</td><td><span class="pill pill-amber">基础叙事</span></td><td>待升级</td></tr>
+    <tr><td>17</td><td>水力截获槽/暗管</td><td><span class="pill pill-amber">基础叙事</span></td><td>待升级</td></tr>
+    <tr><td>18</td><td>原位化学氧化/还原 ISCO-ISCR</td><td><span class="pill pill-green">PhET级</span></td><td>4种药剂+5口监测井</td></tr>
+    <tr><td>19</td><td>原位微生物修复</td><td><span class="pill pill-amber">基础叙事</span></td><td>待升级</td></tr>
+    <tr><td>20</td><td>原位热处理 ISTT</td><td><span class="pill pill-amber">基础叙事</span></td><td>待升级</td></tr>
+    <tr><td>21</td><td>监测自然衰减法 MNA</td><td><span class="pill pill-amber">基础叙事</span></td><td>待升级</td></tr>
+    <tr><td>22</td><td rowspan="3" style="font-weight:600;color:var(--purple)">🔬<br>仪器<br>分析</td><td>电子天平 · 十万分之一称重</td><td><span class="pill pill-green">PhET级</span></td><td>防风罩/振动模拟+TARE</td></tr>
+    <tr><td>23</td><td>气相色谱法 · 非甲烷总烃</td><td><span class="pill pill-green">PhET级</span></td><td>实时色谱图+峰分析</td></tr>
+    <tr><td>24</td><td>论文解读 · I/SVOCs排放特征</td><td><span class="pill pill-blue">交互Demo</span></td><td>交互柱图</td></tr>
+    <tr><td>25</td><td rowspan="2" style="font-weight:600;color:var(--ink)">⚡<br>综合<br>综合</td><td>环境质量综合体检中心</td><td><span class="pill pill-blue">交互Demo</span></td><td>5介质集成+Tab</td></tr>
+    <tr><td>26</td><td>环境质量空间关联分析</td><td><span class="pill pill-blue">交互Demo</span></td><td>SVG地图+跨介质分析</td></tr>
+    <tr><td>27</td><td rowspan="5" style="font-weight:600;color:var(--rose)">📐<br>工具/<br>报告</td><td>监测方案智能生成器 v1</td><td><span class="pill pill-green">工具型</span></td><td>3步生成</td></tr>
+    <tr><td>28</td><td>监测方案智能生成器 v2</td><td><span class="pill pill-green">工具型</span></td><td>5章节+PDF导出</td></tr>
+    <tr><td>29</td><td>监测方案智能生成器 · 多类型</td><td><span class="pill pill-green">工具型</span></td><td>4类方案一键生成</td></tr>
+    <tr><td>30</td><td>环保检测效率工具集</td><td><span class="pill pill-green">工具型</span></td><td>9个在线工具</td></tr>
+    <tr><td>31</td><td>竞赛品分析 · 全景/深度拆解</td><td><span class="pill pill-gray">研究报告</span></td><td>2份报告</td></tr>
+  </table>
+
+  <div style="font-size:11px;color:var(--gray);margin-top:6px;">
+    其他：pH计独立迭代版 v1/v2/v3（赛博朋克主题）+ pH测定叙事式教学（旧版）——共4个非标准版页面，合计37个。
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 交互等级标准 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title st-gray">🏆 交互等级标准</div>
+  <table>
+    <tr><th style="width:80px">等级</th><th>定义</th><th>特征</th></tr>
+    <tr>
+      <td><span class="pill pill-green">PhET级</span></td>
+      <td>自由探索、实时反馈、视觉驱动</td>
+      <td>可拖拽/滑块/实时参数联动/颜色/动画/多点交互/数据记录</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-blue">交互Demo</span></td>
+      <td>有交互但非全自由探索</td>
+      <td>点击切换/柱图对比/表单填写/简单模拟</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-amber">基础叙事</span></td>
+      <td>叙事式教学 + 有限交互</td>
+      <td>卡片展示/流程引导/少量动画/参数预设</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-green">工具型</span></td>
+      <td>实用工具，非教学页面</td>
+      <td>表单输入/自动生成/PDF导出/效率工具</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 公众号内容矩阵 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title st-green">📖 二、公众号内容矩阵（10篇草稿箱）</div>
+
+  <table>
+    <tr><th style="width:28px">#</th><th>标题</th><th>类型</th><th style="width:50px">状态</th><th>关键词钩子</th></tr>
+    <tr><td>1</td><td>十万分之一天平有多敏感？打开防风罩+拍桌子，读数跳15mg</td><td>仪器科普</td><td><span class="pill pill-green">草稿箱</span></td><td>回复「天平」</td></tr>
+    <tr><td>2</td><td>2026中央环保督察重点变了——这5个方向将有大动作</td><td>政策解读</td><td><span class="pill pill-green">草稿箱</span></td><td>回复「督察」</td></tr>
+    <tr><td>3</td><td>一条河的健康状况怎么量化？5个断面×6个指标</td><td>数据科学</td><td><span class="pill pill-green">草稿箱</span></td><td>回复「水质」</td></tr>
+    <tr><td>4</td><td>从进样到报告：一篇文章看懂气相色谱的"读心术"</td><td>仪器分析</td><td><span class="pill pill-green">草稿箱</span></td><td>回复「色谱」</td></tr>
+    <tr><td>5</td><td>河南环保人看微塑料Nature论文</td><td>论文解读</td><td><span class="pill pill-green">草稿箱</span></td><td>—</td></tr>
+    <tr><td>6</td><td>一图看懂生态环境领域7大资金渠道</td><td>政策指南</td><td><span class="pill pill-green">草稿箱</span></td><td>回复「资金」</td></tr>
+    <tr><td>7</td><td>69元传感器vs国控站，差距有多大？</td><td>硬核对比</td><td><span class="pill pill-green">草稿箱</span></td><td>回复「传感器」</td></tr>
+    <tr><td>8</td><td>倒酒到底用哪个量最准？烧杯、量筒、分酒器、注射器</td><td>实验室日常</td><td><span class="pill pill-green">草稿箱</span></td><td>回复「量具」</td></tr>
+    <tr><td>9</td><td>啤酒VS白酒，到底怎么喝才算对等？</td><td>实验室日常</td><td><span class="pill pill-green">草稿箱</span></td><td>回复「酒」</td></tr>
+    <tr><td>10</td><td>用pH试纸测了8种饮料，最酸的不是柠檬茶</td><td>实验室日常</td><td><span class="pill pill-green">草稿箱</span></td><td>回复「pH」</td></tr>
+  </table>
+
+  <div style="margin:10px 0;font-size:11px;color:var(--gray)">
+    已发布：6月初①54项业务推广文 ②世界杯×环保3篇 ③跨界脑洞3篇 ④Prompt工程3篇 ⑤土壤调查指南 等~14篇。
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 未来路线图 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title st-amber">🗺️ 三、四层扩张路径</div>
+  <div style="font-size:12px;color:var(--gray);margin-bottom:10px;">
+    基于"横向/纵向/渠道/内容"四维度框架
+  </div>
+
+  <div class="strategy-grid">
+    <div class="strategy-card" style="border-left:3px solid var(--teal)">
+      <div class="sc-title" style="color:var(--teal)">横向扩张 · 新内容</div>
+      <div class="sc-desc">同样的形式×不同的检测对象<br><br>
+        🥇 食品检测（首选，在校生2.5倍）<br>
+        🥈 水处理工艺操作（高职第二大专业群）<br>
+        🥉 职业卫生检测（安全工程专业）<br>
+        远期：药品质量控制
+      </div>
+    </div>
+    <div class="strategy-card" style="border-left:3px solid var(--purple)">
+      <div class="sc-title" style="color:var(--purple)">纵向扩张 · 深内容</div>
+      <div class="sc-desc">同样的用户×更深的教学层<br><br>
+        ① 事故案例复盘（质量溯源）<br>
+        ② 方法对比教学（同指标多方法）<br>
+        ③ 质控判断训练（异常数据分析）<br>
+        ④ 从"会操作"升级到"会判断"
+      </div>
+    </div>
+    <div class="strategy-card" style="border-left:3px solid var(--blue)">
+      <div class="sc-title" style="color:var(--blue)">渠道扩张 · 新分发</div>
+      <div class="sc-desc">同样的内容×不同的路径<br><br>
+        ① 教材配套数字资源（出版社合作）<br>
+        ② 在线教育平台上架（学银/智慧树）<br>
+        ③ CNAS内审培训（B2B付费课程）<br>
+        ④ 公务员/执业资格考试备考（C端）
+      </div>
+    </div>
+    <div class="strategy-card" style="border-left:3px solid var(--amber)">
+      <div class="sc-title" style="color:var(--amber)">内容营销 · 被发现</div>
+      <div class="sc-desc">页面即内容×SEO流量<br><br>
+        ① 知乎技术科普文嵌入交互链接<br>
+        ② 公众号文章关联实验页面<br>
+        ③ 技术社群分发（微信群/LinkedIn）<br>
+        ④ 成本接近零，现在就能做
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 开发批次 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title st-amber">📅 四、批次路线图</div>
+
+  <div class="roadmap-item">
+    <div class="rm-phase rm-p1">📌 当前</div>
+    <div class="rm-content">
+      <div class="rm-title">公众号内容批量生产（10篇草稿箱存量）</div>
+      <div class="rm-desc">已推送10篇草稿箱，待选择发布排期。每天关注回复关键词引流矩阵（资金/传感器/量具/酒/pH/水质/天平/督察/色谱）。</div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="rm-phase rm-p1">📌 当前</div>
+    <div class="rm-content">
+      <div class="rm-title">渣土投资可行性 · 南阳方向</div>
+      <div class="rm-desc">已完成精算财务模型/双模式对比/汇报稿/南阳专版/宛城卧龙专版/EPC竞品摸底。下一步：10项实地核查。</div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="rm-phase rm-p2">批次一</div>
+    <div class="rm-content">
+      <div class="rm-title">Phet级升级 · 剩余7个基础叙事页</div>
+      <div class="rm-desc">浊度测定 / 总氮测定 / SVE / 淋洗 / P&T / 截获槽 / 微生物修复 / 热处理ISTT / MNA —— 共9个，按COD/pH计模板批量升级。</div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="rm-phase rm-p3">批次二</div>
+    <div class="rm-content">
+      <div class="rm-title">纵向扩张 · 深内容开发</div>
+      <div class="rm-desc">①事故案例复盘模块（选1-2个页面嵌入）②方法对比教学（COD重铬酸盐vs快速消解法）③质控判断训练（异常数据+溯源逻辑）<br><span style="color:var(--teal)">一致判断：这是当下最值得投入的方向</span></div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="rm-phase rm-p4">批次三</div>
+    <div class="rm-content">
+      <div class="rm-title">横向扩张 · 食品检测起步</div>
+      <div class="rm-desc">第一批实验：①饮料中苯甲酸/山梨酸(HPLC) ②食品中亚硝酸盐（分光光度法）③蛋白质（凯氏定氮）④食品中铅/砷（AA/ICP-MS）<br><span style="color:var(--amber)">等院校验证完成后再启动</span></div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="rm-phase rm-p4">批次三</div>
+    <div class="rm-content">
+      <div class="rm-title">横向扩张 · 水处理工艺</div>
+      <div class="rm-desc">设计"控制逻辑"类交互（调参数→观察系统响应），可复用SVE/PRB中的滑块联动技术。面向给排水专业。</div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="rm-phase rm-p5">远期</div>
+    <div class="rm-content">
+      <div class="rm-title">药品质量控制 / 化工工艺控制 / 教材配套</div>
+      <div class="rm-desc">市场规模极大但需新建客户渠道和内容体系，等前序批次验证完成后再评估。</div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="rm-phase rm-p1" style="color:var(--green)">🔄 持续</div>
+    <div class="rm-content">
+      <div class="rm-title">内容营销（成本为零，现在就能做）</div>
+      <div class="rm-desc">公众号+知乎+社群分发技术科普文，嵌入交互页面链接。已有37个页面可做内容源，不需要额外生产。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 平台/技术栈 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title st-teal">⚙️ 五、技术底座</div>
+
+  <table>
+    <tr><th style="width:110px">模块</th><th>内容</th></tr>
+    <tr><td>PWA</td><td>manifest.json + service-worker + 离线缓存 — 已部署跨平台</td></tr>
+    <tr><td>部署</td><td>CodeBuddy CloudStudio — 演示链接可用</td></tr>
+    <tr><td>封装Skill</td><td>env-full-process-ai / soil-investigation-sampling / wechat-auto-publisher / narrative-54</td></tr>
+    <tr><td>发布脚本</td><td>push_to_wechat.py — 公众号草稿箱自动推送（单篇）</td></tr>
+    <tr><td>设计规范</td><td>叙事式教学框架(Hero→原理→流程→模拟→总结) / 赛博朋克配色 / 大字号≥13px</td></tr>
+    <tr><td>人设（脱敏）</td><td>第三方实验室主任→咨询公司副总 / 6岁女儿爸 / 吉他手 / 篮球足球骑行 / 不测评不说教</td></tr>
+  </table>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 关键数据 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title st-teal">📈 六、行业关键数据（决策支撑）</div>
+
+  <table>
+    <tr><th>对比项</th><th>环境检测</th><th>食品检测</th></tr>
+    <tr><td>检验检测行业营收（2023）</td><td><strong>456.68亿</strong>（细分第2）</td><td><strong>~320-380亿</strong>（细分第5）</td></tr>
+    <tr><td>年增速</td><td>约4-6%</td><td>约7-10%</td></tr>
+    <tr><td>开设院校数</td><td>~450所</td><td>~650所</td></tr>
+    <tr><td>在校生规模</td><td>~8-10万人</td><td>~20-25万人</td></tr>
+    <tr><td>方法重合度</td><td>—</td><td>HPLC/UV/滴定/AA 高度重合</td></tr>
+    <tr><td>客户重叠度</td><td>—</td><td>同一院校/同一机构</td></tr>
+    <tr><td><strong>迁移成本</strong></td><td>—</td><td><strong>极低 ⭐⭐⭐⭐⭐</strong></td></tr>
+  </table>
+
+  <div style="margin-top:12px;padding:10px;background:var(--green-l);border-radius:6px;font-size:12px;color:var(--green);">
+    <strong>结论：</strong>食品检测是唯一同时满足"市场大+迁移成本低+客户不用重新找"三个条件的方向。
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 内容/运营现状 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title st-purple">🔑 七、运营现状与下一步</div>
+
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <div class="sc-title">公众号</div>
+      <div class="sc-desc">草稿箱10篇待发<br>关键词矩阵：7个钩子<br>已封装wechat-auto-publisher Skill<br>建议：每2-3天发1篇，轮流发策+科普+日常</div>
+    </div>
+    <div class="strategy-card">
+      <div class="sc-title">小红书</div>
+      <div class="sc-desc">人设已定稿 + 赛博朋克方向<br>"揭秘"类曝光2539（断层第一）<br>已生成珊瑚Nature配图3张<br>建议：先用"实验室×日常"系列启动</div>
+    </div>
+    <div class="strategy-card">
+      <div class="sc-title">渣土投资</div>
+      <div class="sc-desc">3种合作模式已定<br>精算财务模型完成<br>南阳专版+宛城卧龙专版完成<br>下一步：10项实地核查清单</div>
+    </div>
+    <div class="strategy-card">
+      <div class="sc-title">内容营销</div>
+      <div class="sc-desc">尚未启动<br>37个页面可直接作为内容源<br>知乎/公众号/社群可分发<br>成本为零，建议立即启动</div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

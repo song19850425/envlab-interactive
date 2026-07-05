@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>54项业务叙事法——让每个项目都讲出好故事</title>
+<style>
+:root {
+  --ink: #1a1f36;
+  --gray: #6b7280;
+  --line: #e5e5e0;
+  --gold: #c8a951;
+  --gold-light: #faf5e9;
+  --red: #c2410c;
+  --blue: #1e40af;
+  --green: #166534;
+  --paper: #fafaf8;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body {
+  font-family: -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;
+  background: #f0efe8;
+  color: var(--ink);
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+}
+
+.article {
+  max-width: 680px;
+  margin: 0 auto;
+  background: #fff;
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+.cover {
+  background: linear-gradient(170deg, #1a1f36 0%, #2d3348 40%, #3d4560 100%);
+  color: #fff;
+  padding: 64px 32px 56px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 30% 60%, rgba(200,169,81,.12) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 30%, rgba(255,255,255,.04) 0%, transparent 50%);
+}
+.cover .eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  color: rgba(255,255,255,.35);
+  margin-bottom: 18px;
+  position: relative;
+}
+.cover h1 {
+  font-family: "Times New Roman","Songti SC","Noto Serif SC",serif;
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: -.03em;
+  line-height: 1.2;
+  position: relative;
+}
+.cover h1 .hl {
+  color: var(--gold);
+  display: inline-block;
+  position: relative;
+}
+.cover h1 .hl::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: rgba(200,169,81,.2);
+  border-radius: 2px;
+}
+.cover .tagline {
+  font-size: 15px;
+  color: rgba(255,255,255,.45);
+  margin-top: 16px;
+  position: relative;
+  line-height: 1.6;
+}
+.cover .stats {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  margin-top: 40px;
+  position: relative;
+}
+.cover .stat {
+  text-align: center;
+}
+.cover .stat-num {
+  font-family: "Times New Roman","Songti SC",serif;
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+}
+.cover .stat-lbl {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  color: rgba(255,255,255,.25);
+  margin-top: 6px;
+}
+
+/* ── Section ── */
+.sec {
+  padding: 48px 28px;
+}
+.sec-dark {
+  background: #fafaf8;
+}
+.sec-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.sec-title {
+  font-family: "Times New Roman","Songti SC","Noto Serif SC",serif;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -.02em;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+.sec-desc {
+  font-size: 15px;
+  color: var(--gray);
+  line-height: 1.8;
+}
+
+/* ── Problem Card ── */
+.problem-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+}
+.problem-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 20px 22px;
+  border-radius: 8px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.problem-card .p-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: #fef2f2;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.problem-card .p-body strong {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+.problem-card .p-body {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+/* ── Flow Diagram ── */
+.flow-strip {
+  display: flex;
+  gap: 6px;
+  margin-top: 28px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+.flow-node {
+  flex: 1;
+  min-width: 80px;
+  text-align: center;
+  padding: 18px 10px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.flow-node .fn-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--gold);
+}
+.flow-node .fn-label {
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+.flow-node .fn-sub {
+  font-size: 11px;
+  color: var(--gray);
+  margin-top: 2px;
+}
+.flow-node.active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+.flow-node.active .fn-label { color: #fff; }
+.flow-node.active .fn-sub { color: rgba(255,255,255,.5); }
+.flow-arrow {
+  font-size: 18px;
+  color: var(--line);
+  align-self: center;
+  flex-shrink: 0;
+}
+
+/* ── Block Cards ── */
+.block-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 28px;
+}
+.block-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 20px 22px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition: all .2s;
+}
+.block-card .bc-num {
+  font-family: "Times New Roman","Songti SC",serif;
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+  min-width: 44px;
+}
+.block-card .bc-info h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.block-card .bc-info p {
+  font-size: 12px;
+  color: var(--gray);
+  line-height: 1.5;
+}
+.block-card .bc-count {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold);
+  background: var(--gold-light);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-top: 2px;
+}
+
+/* ── Preview Card ── */
+.preview {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin-top: 24px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0,0,0,.04);
+}
+.preview-header {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.preview-header .ph-num {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gray);
+  letter-spacing: .06em;
+}
+.preview-header h4 {
+  font-size: 16px;
+  font-weight: 700;
+  flex: 1;
+  line-height: 1.3;
+}
+.preview-header .ph-stars {
+  color: var(--gold);
+  font-size: 13px;
+  letter-spacing: 3px;
+  flex-shrink: 0;
+}
+.preview-act {
+  padding: 16px 22px;
+  border-bottom: 1px solid #f5f3ed;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.preview-act:last-child { border-bottom: none; }
+.preview-act .pa-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--gold);
+  min-width: 50px;
+  padding-top: 2px;
+}
+.preview-act .pa-text {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+.preview-footer {
+  padding: 14px 22px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.preview-footer .pf-tag {
+  font-size: 11px;
+  padding: 3px 12px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--gray);
+}
+.preview-footer .pf-price {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 3px 14px;
+  border-radius: 4px;
+}
+
+/* ── Pricing ── */
+.pricing-strip {
+  display: flex;
+  gap: 10px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+.price-card {
+  flex: 1;
+  min-width: 130px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 24px 18px;
+  text-align: center;
+}
+.price-card.featured {
+  border: 2px solid var(--ink);
+  position: relative;
+}
+.price-card .pc-badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 16px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+.price-card .pc-name {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.price-card .pc-price {
+  font-family: "Times New Roman","Songti SC",serif;
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-bottom: 2px;
+}
+.price-card .pc-note {
+  font-size: 12px;
+  color: var(--gray);
+  margin-bottom: 12px;
+}
+.price-card .pc-desc {
+  font-size: 12px;
+  color: var(--gray);
+  line-height: 1.6;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+.price-card .pc-tag {
+  display: inline-block;
+  font-size: 10px;
+  padding: 2px 10px;
+  background: var(--gold-light);
+  color: #8b7a3e;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+/* ── Value Props ── */
+.value-row {
+  display: grid;
+  gap: 14px;
+  margin-top: 28px;
+}
+.value-card {
+  text-align: center;
+  padding: 28px 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.value-card .vc-icon {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+.value-card .vc-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.value-card .vc-desc {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+/* ── Data Showcase ── */
+.data-strip {
+  display: flex;
+  gap: 2px;
+  margin-top: 28px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.data-card {
+  text-align: center;
+  padding: 20px 24px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  min-width: 100px;
+}
+.data-card .dc-num {
+  font-family: "Times New Roman","Songti SC",serif;
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+}
+.data-card .dc-lbl {
+  font-size: 11px;
+  color: var(--gray);
+  letter-spacing: .06em;
+  margin-top: 4px;
+}
+
+/* ── CTA ── */
+.cta {
+  background: var(--ink);
+  color: #fff;
+  text-align: center;
+  padding: 52px 28px;
+}
+.cta h2 {
+  font-family: "Times New Roman","Songti SC","Noto Serif SC",serif;
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 12px;
+  letter-spacing: -.02em;
+}
+.cta p {
+  font-size: 14px;
+  color: rgba(255,255,255,.45);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+.cta .btn {
+  display: inline-block;
+  padding: 14px 40px;
+  background: var(--gold);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: .2s;
+  border: none;
+  text-decoration: none;
+}
+.cta .cta-note {
+  margin-top: 16px;
+  font-size: 11px;
+  color: rgba(255,255,255,.2);
+}
+
+/* ── Footer ── */
+.article-footer {
+  text-align: center;
+  padding: 32px;
+  color: var(--gray);
+  font-size: 12px;
+  border-top: 1px solid var(--line);
+}
+
+@media(max-width:480px) {
+  .cover { padding: 48px 20px 40px; }
+  .cover h1 { font-size: 32px; }
+  .cover .stats { gap: 24px; }
+  .cover .stat-num { font-size: 36px; }
+  .sec { padding: 36px 18px; }
+  .sec-title { font-size: 24px; }
+  .flow-strip { gap: 4px; }
+  .flow-node { min-width: 64px; padding: 14px 6px; }
+  .flow-node .fn-label { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<div class="article">
+
+<!-- ═════ COVER ═════ -->
+<div class="cover">
+  <div class="eyebrow">SOM · NARRATIVE BUSINESS SYSTEM</div>
+  <h1>54项业务<br><span class="hl">叙事法</span></h1>
+  <p class="tagline">从数据条目到商业故事。<br>每一个项目都经过五幕叙事重构——<br>场景 · 痛点 · 方案 · 价值 · 行动。</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num">54</div><div class="stat-lbl">项业务</div></div>
+    <div class="stat"><div class="stat-num">7</div><div class="stat-lbl">大板块</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-lbl">幕叙事</div></div>
+    <div class="stat"><div class="stat-num">2026</div><div class="stat-lbl">版本</div></div>
+  </div>
+</div>
+
+<!-- ═════ PROBLEM ═════ -->
+<div class="sec">
+  <div class="sec-label">WHY</div>
+  <h2 class="sec-title">为什么你的方案<br>总是打动不了客户？</h2>
+  <p class="sec-desc">不是方案不够好，是客户没听懂。一份 80 页的技术方案，决策者平均只看 3 分钟。他们在找什么？找故事——一个能说服自己、说服上级、说服财政的故事。</p>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="p-icon">📄</div>
+      <div class="p-body">
+        <strong>方案像说明书，不像提案</strong>
+        堆砌技术参数和资质列表，却没回答"为什么是我们""为什么是现在"。
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="p-icon">🔀</div>
+      <div class="p-body">
+        <strong>每个项目从头写起，效率极低</strong>
+        54 项业务没有标准化模板。一个人离职，整个领域的经验归零。
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="p-icon">🎯</div>
+      <div class="p-body">
+        <strong>评审专家到底想看什么？</strong>
+        不是你的技术路线，是他能用什么理由在评审会上给你投票。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════ METHOD ═════ -->
+<div class="sec sec-dark">
+  <div class="sec-label">HOW</div>
+  <h2 class="sec-title">五幕叙事法：<br>一个模板，54种用法</h2>
+  <p class="sec-desc">我们为每一项业务设计了统一的叙事框架——不是生硬的模板填空，而是引导你从客户心理出发，讲出为什么「非你不可」的故事。</p>
+
+  <div class="flow-strip">
+    <div class="flow-node active">
+      <div class="fn-num">ACT 1</div>
+      <div class="fn-label">场景</div>
+      <div class="fn-sub">谁在焦虑？</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">
+      <div class="fn-num">ACT 2</div>
+      <div class="fn-label">痛点</div>
+      <div class="fn-sub">为什么难受？</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">
+      <div class="fn-num">ACT 3</div>
+      <div class="fn-label">方案</div>
+      <div class="fn-sub">怎么解决？</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">
+      <div class="fn-num">ACT 4</div>
+      <div class="fn-label">价值</div>
+      <div class="fn-sub">凭什么选你？</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">
+      <div class="fn-num">ACT 5</div>
+      <div class="fn-label">行动</div>
+      <div class="fn-sub">下一步？</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════ 7 BLOCKS ═════ -->
+<div class="sec">
+  <div class="sec-label">WHAT</div>
+  <h2 class="sec-title">七大赛道 · 54项核心业务<br>全覆盖</h2>
+  <p class="sec-desc">从中央奖补资金到地方试点申报，从产业基金到数据资产，七大板块覆盖生态环境咨询公司最核心的业务线。</p>
+
+  <div class="block-grid">
+    <div class="block-card">
+      <div class="bc-num">01</div>
+      <div class="bc-info">
+        <h3>政策性资金申报</h3>
+        <p>中央奖补、国债、国际贷款。矿山修复、水污染防治、农村环境整治——钱在哪，怎么拿。</p>
+      </div>
+      <div class="bc-count">9 项</div>
+    </div>
+    <div class="block-card">
+      <div class="bc-num">02</div>
+      <div class="bc-info">
+        <h3>产业基金与融资</h3>
+        <p>EOD模式、绿色债券、生态补偿——不依赖财政的第三种路径。</p>
+      </div>
+      <div class="bc-count">5 项</div>
+    </div>
+    <div class="block-card">
+      <div class="bc-num">03</div>
+      <div class="bc-info">
+        <h3>数据资产与平台转型</h3>
+        <p>环保数据入表、智慧环保平台、碳资产管理——数字化转型的硬通货。</p>
+      </div>
+      <div class="bc-count">4 项</div>
+    </div>
+    <div class="block-card">
+      <div class="bc-num">04</div>
+      <div class="bc-info">
+        <h3>全过程咨询配套</h3>
+        <p>可研、环评、稳评、水土保持、防洪评价——项目落地的全套"通行证"。</p>
+      </div>
+      <div class="bc-count">10 项</div>
+    </div>
+    <div class="block-card">
+      <div class="bc-num">05</div>
+      <div class="bc-info">
+        <h3>农业农村资金</h3>
+        <p>高标准农田、乡村振兴、农村人居环境——万亿级市场的入场券。</p>
+      </div>
+      <div class="bc-count">8 项</div>
+    </div>
+    <div class="block-card">
+      <div class="bc-num">06</div>
+      <div class="bc-info">
+        <h3>自然资源口资金</h3>
+        <p>生态修复、地质灾害、国土整治——自然资源体系的资金密码。</p>
+      </div>
+      <div class="bc-count">10 项</div>
+    </div>
+    <div class="block-card">
+      <div class="bc-num">07</div>
+      <div class="bc-info">
+        <h3>住建口资金</h3>
+        <p>城市更新、海绵城市、管网改造——住建体系的叙事逻辑。</p>
+      </div>
+      <div class="bc-count">8 项</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════ PREVIEW ═════ -->
+<div class="sec sec-dark">
+  <div class="sec-label">LOOK INSIDE</div>
+  <h2 class="sec-title">每一页都是<br>一个完整的提案剧本</h2>
+  <p class="sec-desc">打开任意一项业务，你看到的不是冰冷的表格，而是一个精心编排的五幕叙事——从场景到行动，环环相扣。</p>
+
+  <div class="preview">
+    <div class="preview-header">
+      <div class="ph-num">NO.1.1</div>
+      <h4>历史遗留废弃矿山<br>生态修复示范工程</h4>
+      <div class="ph-stars">★★★★★</div>
+    </div>
+    <div class="preview-act">
+      <div class="pa-label">场景</div>
+      <div class="pa-text">中国有超过 30 万公顷历史遗留废弃矿山。企业已注销，"谁破坏谁治理"成了一纸空文。县级政府、自然资源局局长、县委书记——三方焦虑，各有痛点。</div>
+    </div>
+    <div class="preview-act">
+      <div class="pa-label">痛点</div>
+      <div class="pa-text">不是缺技术，是缺"找得到的钱"。治理一平方公里矿山至少 5000 万，但县财政全年可用财力不过几个亿。每省限报 2 个名额，选错项目等于浪费机会。</div>
+    </div>
+    <div class="preview-act">
+      <div class="pa-label">方案</div>
+      <div class="pa-text">六步叙事申报法：矿山画像 → 问题诊断 → 技术方案 → 效益包装 → 竞争定位 → 答辩演练。用"不可拒绝的故事"拿下评审。</div>
+    </div>
+    <div class="preview-act">
+      <div class="pa-label">价值</div>
+      <div class="pa-text">不只为客户写申报书，更是帮客户在评审会上赢得投票。15 分钟讲清楚为什么"非你不可"。</div>
+    </div>
+    <div class="preview-act">
+      <div class="pa-label">行动</div>
+      <div class="pa-text">锁定目标矿山 → 启动航测 → 编制申报方案 → 省级评审答辩。明确的时间节点、交付物、对接人。</div>
+    </div>
+    <div class="preview-footer">
+      <span class="pf-tag">中央奖补</span>
+      <span class="pf-tag">矿山修复</span>
+      <span class="pf-tag">竞争性评审</span>
+      <span class="pf-price">100-150万</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═════ FREE ═════ -->
+<div class="sec sec-dark">
+  <div class="sec-label">FREE</div>
+  <h2 class="sec-title">全部免费 · 关注即得</h2>
+  <p class="sec-desc">想了一下，不卖钱了。54套业务叙事卡，全部免费开放。你关注公众号，我帮你省下到处搜政策的时间，就这么简单。</p>
+
+  <div style="margin-top: 28px; text-align: center;">
+    <div style="display: inline-block; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 32px 40px; max-width: 320px;">
+      <div style="font-size: 40px; margin-bottom: 8px;">📱</div>
+      <p style="font-size: 15px; font-weight: 700; margin: 0 0 4px;">关注公众号免费获取</p>
+      <p style="font-size: 13px; color: var(--gray); margin: 0 0 16px; line-height: 1.6;">
+        54项业务完整索引<br>
+        五幕叙事全文阅读<br>
+        每项业务定价参考<br>
+        Excel速览表一键下载
+      </p>
+      <div style="background: var(--ink); color: #fff; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 700; letter-spacing: .05em;">
+        回复「叙事法」免费领
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size: 13px; color: var(--gray); text-align: center; margin-top: 20px; line-height: 1.7;">
+    不设付费墙，不搞限时免费。<br>
+    你觉得有用，转发给同事就是最好的支持。
+  </p>
+</div>
+
+<!-- ═════ VALUE ═════ -->
+<div class="sec">
+  <div class="sec-label">VALUE</div>
+  <h2 class="sec-title">不只一套模板<br>更是一个业务操作系统</h2>
+
+  <div class="value-row">
+    <div class="value-card">
+      <div class="vc-icon">🗂️</div>
+      <div class="vc-title">知识沉淀</div>
+      <div class="vc-desc">54 项业务的申报逻辑、评审要点、定价区间全部结构化沉淀。人走，知识不走。</div>
+    </div>
+    <div class="value-card">
+      <div class="vc-icon">🔄</div>
+      <div class="vc-title">新人速成</div>
+      <div class="vc-desc">新人入职，对着叙事卡就能理解业务全貌。从"不知道问什么"到"知道客户在想什么"。</div>
+    </div>
+    <div class="value-card">
+      <div class="vc-icon">🎯</div>
+      <div class="vc-title">提案即战力</div>
+      <div class="vc-desc">见客户前打开对应叙事卡，15 分钟准备好一套有逻辑、有数据、有情感的提案框架。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════ DATA ═════ -->
+<div class="sec sec-dark">
+  <div class="sec-label">NUMBERS</div>
+  <h2 class="sec-title">一图看懂</h2>
+  <div class="data-strip">
+    <div class="data-card">
+      <div class="dc-num">54</div>
+      <div class="dc-lbl">项业务全覆盖</div>
+    </div>
+    <div class="data-card">
+      <div class="dc-num">7</div>
+      <div class="dc-lbl">大板块</div>
+    </div>
+    <div class="data-card">
+      <div class="dc-num">5</div>
+      <div class="dc-lbl">幕叙事框架</div>
+    </div>
+    <div class="data-card">
+      <div class="dc-num">270+</div>
+      <div class="dc-lbl">个叙事维度</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════ CTA ═════ -->
+<div class="cta">
+  <h2>全部免费 · 关注即得<br>54项核心业务叙事法</h2>
+  <p>不设付费墙，不搞限时免费。<br>回复关键词，拿走全套知识库。</p>
+  <div class="btn">📩 关注公众号 · 回复「叙事法」</div>
+  <div class="cta-note">你觉得有用，转发给同事就是最好的支持</div>
+</div>
+
+<div class="article-footer">
+  EnvLab 交互实验系列 · 业务叙事子系统<br>
+  全免费 · 关注公众号回复「叙事法」获取
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可渗透反应墙 · 叙事式教学</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap');
+        * { margin:0; padding:0; box-sizing: border-box; }
+        :root {
+            --ink: #1a1a2e; --ink-light: #555; --paper: #faf9f6; --paper-warm: #f5f0e8;
+            --soil: #92400e; --soil-light: #fef3c7; --soil-bg: #fdf6e3;
+            --water: #0ea5e9; --water-light: #e0f2fe;
+            --contam: #dc2626; --contam-light: #fef2f2;
+            --clean: #16a34a; --clean-light: #f0fdf4;
+            --iron: #78716c; --iron-light: #f5f5f4;
+            --border: #e8e0d4;
+            --serif: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', serif;
+            --sans: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--sans); color: var(--ink); background: var(--paper); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+        #scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, var(--soil), var(--water)); z-index: 1000; transition: width 0.1s linear; }
+
+        #section-nav { position: fixed; right: 24px; top: 50%; transform: translateY(-50%); z-index: 999; display: flex; flex-direction: column; gap: 14px; }
+        .nav-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); cursor: pointer; transition: 0.3s; border: 2px solid transparent; position: relative; }
+        .nav-dot.active { background: var(--soil); transform: scale(1.5); }
+        .nav-dot:hover { border-color: var(--soil); }
+        .nav-dot .nav-label { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 11px; white-space: nowrap; color: var(--ink-light); background: #fff; padding: 3px 10px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+        .nav-dot:hover .nav-label { opacity: 1; }
+
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 24px; position: relative; background: linear-gradient(180deg, var(--soil-bg) 0%, var(--paper) 100%); }
+        .hero-badge { display: inline-block; padding: 6px 18px; border-radius: 20px; background: var(--soil-light); color: var(--soil); font-size: 12px; font-weight: 600; letter-spacing: 1px; margin-bottom: 24px; border: 1px solid rgba(146,64,14,0.15); }
+        .hero h1 { font-family: var(--serif); font-size: clamp(36px, 6vw, 72px); font-weight: 900; line-height: 1.1; color: var(--ink); max-width: 700px; }
+        .hero h1 em { font-style: normal; color: var(--soil); }
+        .hero-sub { margin-top: 20px; font-size: clamp(14px, 2vw, 18px); color: var(--ink-light); max-width: 560px; line-height: 1.7; }
+        .hero-stats { display: flex; gap: 32px; margin-top: 48px; flex-wrap: wrap; justify-content: center; }
+        .hero-stat { text-align: center; }
+        .hero-stat .num { font-family: var(--serif); font-size: 36px; font-weight: 900; color: var(--soil); display: block; line-height: 1; }
+        .hero-stat .lbl { font-size: 12px; color: var(--ink-light); margin-top: 4px; }
+        .scroll-hint { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--ink-light); font-size: 12px; letter-spacing: 1px; animation: float 2s ease-in-out infinite; }
+        .scroll-hint .arrow { font-size: 18px; }
+        @keyframes float { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+
+        .section { max-width: 900px; margin: 0 auto; padding: 100px 24px; opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .section.visible { opacity: 1; transform: translateY(0); }
+        .section-num { font-size: 11px; font-weight: 600; letter-spacing: 3px; color: var(--soil); text-transform: uppercase; margin-bottom: 8px; }
+        .section-title { font-family: var(--serif); font-size: clamp(28px, 4vw, 48px); font-weight: 700; line-height: 1.2; color: var(--ink); margin-bottom: 12px; }
+        .section-desc { font-size: 16px; color: var(--ink-light); line-height: 1.8; max-width: 600px; margin-bottom: 48px; }
+
+        .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 32px; }
+        .media-card { background: #fff; border-radius: 12px; padding: 24px; border: 1px solid var(--border); cursor: pointer; transition: 0.35s ease; position: relative; overflow: hidden; }
+        .media-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--soil); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+        .media-card:hover::before { transform: scaleX(1); }
+        .media-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+        .media-card.revealed { background: var(--soil-light); border-color: rgba(146,64,14,0.2); }
+        .media-icon { width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 14px; }
+        .media-name { font-weight: 700; font-size: 15px; margin-bottom: 2px; }
+        .media-formula { font-size: 12px; color: var(--ink-light); }
+        .media-role { font-size: 13px; color: var(--ink-light); line-height: 1.6; margin-top: 10px; max-height: 0; overflow: hidden; transition: max-height 0.5s ease, margin-top 0.5s ease; }
+        .media-card.revealed .media-role { max-height: 200px; margin-top: 10px; }
+        .media-tag { display: inline-block; margin-top: 8px; padding: 3px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+
+        .instrument-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-bottom: 32px; }
+        .instrument-card { background: #fff; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); transition: 0.35s ease; }
+        .instrument-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.1); }
+        .instrument-visual { height: 120px; display: flex; align-items: center; justify-content: center; font-size: 56px; position: relative; overflow: hidden; }
+        .instrument-visual::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.03) 100%); }
+        .instrument-info { padding: 20px; }
+        .instrument-name { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+        .instrument-name-en { font-size: 11px; color: var(--ink-light); font-weight: 400; }
+        .instrument-desc { font-size: 13px; color: var(--ink-light); line-height: 1.7; }
+        .instrument-spec { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+        .instrument-spec span { padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+
+        .procedure-timeline { position: relative; padding-left: 40px; }
+        .procedure-timeline::before { content: ''; position: absolute; left: 15px; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
+        .proc-step { position: relative; margin-bottom: 40px; opacity: 0; transform: translateX(-20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .proc-step.visible { opacity: 1; transform: translateX(0); }
+        .proc-step::before { content: ''; position: absolute; left: -33px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--paper); border: 2px solid var(--border); transition: 0.3s; }
+        .proc-step.visible::before { background: var(--soil); border-color: var(--soil); }
+        .proc-step-num { font-size: 11px; font-weight: 700; color: var(--soil); letter-spacing: 1px; margin-bottom: 4px; }
+        .proc-step-title { font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+        .proc-step-desc { font-size: 14px; color: var(--ink-light); line-height: 1.7; }
+        .proc-step-note { display: inline-block; margin-top: 8px; padding: 4px 12px; background: var(--soil-light); color: var(--soil); border-radius: 6px; font-size: 12px; }
+
+        .experiment-section { background: linear-gradient(180deg, var(--soil-bg) 0%, var(--paper) 100%); padding: 80px 24px 100px; }
+        .experiment-section .section { padding-top: 0; }
+        .exp-container { background: #fff; border-radius: 20px; box-shadow: 0 4px 32px rgba(0,0,0,0.06); border: 1px solid var(--border); overflow: hidden; }
+
+        .exp-header { padding: 24px 28px; border-bottom: 1px solid var(--border); }
+        .exp-header h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; font-family: var(--serif); }
+        .exp-header p { font-size: 13px; color: var(--ink-light); }
+
+        /* PRB Simulation */
+        .prb-sim-container { padding: 28px; position: relative; }
+        .prb-canvas-wrap {
+            background: #faf6ee; border-radius: 14px; padding: 20px;
+            border: 1px solid var(--border); margin-bottom: 20px; position: relative; overflow: hidden; min-height: 300px;
+        }
+        .prb-canvas-wrap svg { width: 100%; height: auto; display: block; }
+
+        .prb-controls { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 16px 0; }
+        .prb-btn {
+            padding: 10px 24px; border: none; border-radius: 10px; font-size: 14px;
+            font-weight: 600; cursor: pointer; transition: 0.3s ease; font-family: var(--sans);
+        }
+        .prb-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+        .prb-btn-primary { background: linear-gradient(135deg, var(--soil), #78350f); color: #fff; }
+        .prb-btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(146,64,14,0.3); }
+        .prb-btn-secondary { background: linear-gradient(135deg, var(--water), #0284c7); color: #fff; }
+        .prb-btn-secondary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(14,165,233,0.3); }
+
+        .prb-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 16px; }
+        .prb-stat { padding: 14px; border-radius: 10px; text-align: center; }
+        .prb-stat .val { font-family: var(--serif); font-size: 28px; font-weight: 900; line-height: 1; }
+        .prb-stat .lbl { font-size: 11px; margin-top: 4px; }
+
+        .footer { text-align: center; padding: 60px 24px; color: var(--ink-light); font-size: 13px; border-top: 1px solid var(--border); background: var(--paper-warm); }
+
+        /* Slider thumb styling */
+        .prb-sim-container input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+            background: #fff; border: 2px solid #92400e; cursor: pointer;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.15); transition: 0.15s;
+        }
+        .prb-sim-container input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.15); box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .prb-sim-container input[type=range] { accent-color: #92400e; }
+
+        @media (max-width: 600px) {
+            .hero-stats { gap: 24px; }
+            .prb-stats { grid-template-columns: 1fr; }
+            #section-nav { right: 12px; }
+            .procedure-timeline { padding-left: 32px; }
+            .media-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+
+<div id="section-nav">
+    <div class="nav-dot active" onclick="scrollToSection(0)"><span class="nav-label">开篇</span></div>
+    <div class="nav-dot" onclick="scrollToSection(1)"><span class="nav-label">反应介质</span></div>
+    <div class="nav-dot" onclick="scrollToSection(2)"><span class="nav-label">工程结构</span></div>
+    <div class="nav-dot" onclick="scrollToSection(3)"><span class="nav-label">工艺流程</span></div>
+    <div class="nav-dot" onclick="scrollToSection(4)"><span class="nav-label">交互模拟</span></div>
+    <div class="nav-dot" onclick="scrollToSection(5)"><span class="nav-label">总结</span></div>
+</div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+    <div class="hero-badge">环境检测 · 交互式教学</div>
+    <h1>可渗透<em>反应墙</em></h1>
+    <p class="hero-sub">Permeable Reactive Barrier · PRB<br>地下水的天然净化器——让污染在流动中被拦截和降解。</p>
+    <div class="hero-stats">
+        <div class="hero-stat"><span class="num">4</span><span class="lbl">种反应介质</span></div>
+        <div class="hero-stat"><span class="num">3</span><span class="lbl">种结构类型</span></div>
+        <div class="hero-stat"><span class="num">5</span><span class="lbl">步标准流程</span></div>
+        <div class="hero-stat"><span class="num">>90</span><span class="lbl">% 去除率</span></div>
+    </div>
+    <div class="scroll-hint"><span>向下滚动开始</span><span class="arrow">↓</span></div>
+</section>
+
+<!-- ═══════════ SEC 01 · 反应介质 ═══════════ -->
+<section class="section" id="sec-01">
+    <div class="section-num">Section 01 · 反应介质</div>
+    <h2 class="section-title">认识你的「弹药」</h2>
+    <p class="section-desc">PRB 的核心是填充在墙体中的反应介质，不同介质针对不同污染物。点击卡片查看详细信息。</p>
+    <div class="media-grid">
+        <div class="media-card" onclick="revealCard(this)">
+            <div class="media-icon" style="background:var(--iron-light);">⚙️</div>
+            <div class="media-name">零价铁 <span class="media-formula">Fe⁰</span></div>
+            <div class="media-role"><strong>最常用的反应介质。</strong>通过还原反应将氯化烃（如三氯乙烯TCE）脱氯降解，同时可吸附重金属离子。零价铁比表面积越大，反应活性越高。</div>
+            <span class="media-tag" style="background:var(--iron-light);color:#444;">脱氯 · 还原</span>
+        </div>
+        <div class="media-card" onclick="revealCard(this)">
+            <div class="media-icon" style="background:#eff6ff;">🪨</div>
+            <div class="media-name">活性炭 <span class="media-formula">GAC</span></div>
+            <div class="media-role"><strong>高效吸附介质。</strong>巨大比表面积（500~1500 m²/g）可高效吸附有机污染物。缺点是吸附饱和后需更换或再生，使用寿命有限。</div>
+            <span class="media-tag" style="background:#eff6ff;color:#1e40af;">吸附 · 有机物</span>
+        </div>
+        <div class="media-card" onclick="revealCard(this)">
+            <div class="media-icon" style="background:#f0fdf4;">🧪</div>
+            <div class="media-name">沸石 <span class="media-formula">Zeolite</span></div>
+            <div class="media-role"><strong>天然离子交换介质。</strong>对氨氮、重金属离子有良好的选择吸附性。沸石来源广泛，成本较低，适合大面积应用。</div>
+            <span class="media-tag" style="background:#f0fdf4;color:#166534;">离子交换 · 氨氮</span>
+        </div>
+        <div class="media-card" onclick="revealCard(this)">
+            <div class="media-icon" style="background:#fef2f2;">🧫</div>
+            <div class="media-name">生物填料 <span class="media-formula">Bio-media</span></div>
+            <div class="media-role"><strong>生物反应介质。</strong>负载微生物的填料，通过微生物代谢作用降解有机污染物。适用于石油烃、BTEX等可生物降解的污染物。</div>
+            <span class="media-tag" style="background:#fef2f2;color:#991b1b;">微生物降解</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════ SEC 02 · 工程结构 ═══════════ -->
+<section class="section" id="sec-02">
+    <div class="section-num">Section 02 · 工程结构</div>
+    <h2 class="section-title">认识你的「阵地」</h2>
+    <p class="section-desc">PRB 的结构类型取决于水文地质条件和污染羽范围。三种主流结构各有适用场景。</p>
+    <div class="instrument-grid">
+        <div class="instrument-card">
+            <div class="instrument-visual" style="background:linear-gradient(135deg,#fef3c7,#fde68a);">🧱</div>
+            <div class="instrument-info">
+                <div class="instrument-name">连续墙式 <span class="instrument-name-en">Continuous Wall</span></div>
+                <div class="instrument-desc">垂直于地下水流向开挖一条连续沟槽，填充反应介质。适用于污染羽宽度小、深度浅的场景（< 20 m）。典型厚度 0.6~1.5 m。</div>
+                <div class="instrument-spec"><span style="background:#fef3c7;color:#92400e;">浅层</span><span style="background:#e0f2fe;color:#0c4a6e;">< 20 m</span><span style="background:#f0fdf4;color:#166534;">连续式</span></div>
+            </div>
+        </div>
+        <div class="instrument-card">
+            <div class="instrument-visual" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);">⛲</div>
+            <div class="instrument-info">
+                <div class="instrument-name">漏斗-导门式 <span class="instrument-name-en">Funnel-and-Gate</span></div>
+                <div class="instrument-desc">用不透水挡墙（漏斗）将地下水引导至反应单元（导门）处理。适用于污染羽较宽的场景，可设多个导门分区处理。</div>
+                <div class="instrument-spec"><span style="background:#dbeafe;color:#1e40af;">宽污染羽</span><span style="background:#fef3c7;color:#92400e;">分区处理</span><span style="background:#f0fdf4;color:#166534;">灵活</span></div>
+            </div>
+        </div>
+        <div class="instrument-card">
+            <div class="instrument-visual" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);">🥏</div>
+            <div class="instrument-info">
+                <div class="instrument-name">注射式 <span class="instrument-name-en">Injection Zone</span></div>
+                <div class="instrument-desc">通过钻孔向含水层中注入反应浆液（如胶体零价铁），在含水层中形成反应带。适用于深层污染（> 30 m），无需开挖。</div>
+                <div class="instrument-spec"><span style="background:#f0fdf4;color:#166534;">深层</span><span style="background:#dbeafe;color:#1e40af;">> 30 m</span><span style="background:#fef3c7;color:#92400e;">免开挖</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════ SEC 03 · 工艺流程 ═══════════ -->
+<section class="section" id="sec-03">
+    <div class="section-num">Section 03 · 工艺流程</div>
+    <h2 class="section-title">从场地调查到长期运维</h2>
+    <p class="section-desc">PRB 工程全生命周期分为五个阶段。滚动查看每一步，然后进入交互模拟环节。</p>
+    <div class="procedure-timeline">
+        <div class="proc-step">
+            <div class="proc-step-num">STEP 01</div>
+            <div class="proc-step-title">场地调查与污染羽刻画</div>
+            <div class="proc-step-desc">开展水文地质调查（含水层厚度/渗透系数/地下水流向），布设监测井，刻画污染羽三维分布，确定污染物种类、浓度和迁移趋势。</div>
+            <span class="proc-step-note">📋 污染羽刻画是 PRB 设计的基础</span>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">STEP 02</div>
+            <div class="proc-step-title">介质筛选与批量试验</div>
+            <div class="proc-step-desc">根据污染物类型筛选反应介质，开展批次试验（摇瓶试验）和柱试验，确定介质配比、反应动力学参数和使用寿命。</div>
+            <span class="proc-step-note">🧪 柱试验需模拟实际地下水流速</span>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">STEP 03</div>
+            <div class="proc-step-title">工程设计与施工</div>
+            <div class="proc-step-desc">根据场地条件确定 PRB 结构类型（连续墙/漏斗-导门/注射式），设计墙体厚度、深度、渗透系数，完成施工。</div>
+            <span class="proc-step-note">🚧 墙体渗透系数需大于含水层 10 倍以上</span>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">STEP 04</div>
+            <div class="proc-step-title">运行与定期监测</div>
+            <div class="proc-step-desc">建立长期监测方案，定期采集上游、墙体内、下游监测井水样，分析污染物浓度变化。监测频率初期每月，后期可降为每季度。</div>
+            <span class="proc-step-note">📊 监测井至少布设 3 排（上/中/下游）</span>
+        </div>
+        <div class="proc-step">
+            <div class="proc-step-num">STEP 05</div>
+            <div class="proc-step-title">效果评估与维护更换</div>
+            <div class="proc-step-desc">当监测数据显示污染物去除率下降或穿透，需对反应介质进行再生或更换。零价铁平均使用寿命 5~10 年，活性炭 2~5 年。</div>
+            <span class="proc-step-note">🔧 介质更换周期由柱试验预测</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════ SEC 04 · 交互模拟 ═══════════ -->
+<section class="experiment-section" id="sec-04">
+    <div class="section" style="padding-bottom:0;">
+        <div class="section-num">Section 04 · 交互模拟</div>
+        <h2 class="section-title">模拟污染地下水流经 PRB</h2>
+        <p class="section-desc">选择反应介质类型，观察污染物在地下水中迁移时被 PRB 拦截和降解的过程。</p>
+    </div>
+    <div style="max-width:920px;margin:0 auto;padding:0 24px 100px;">
+    <div class="exp-container">
+        <div class="exp-header">
+            <h3>🌊 PRB 运行模拟器</h3>
+            <p>地下水流向：从左至右 · 污染羽穿过反应墙后被净化</p>
+        </div>
+        <div class="prb-sim-container">
+            <!-- Media selector -->
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;justify-content:center;">
+                <button class="prb-btn prb-btn-primary" onclick="setMedia('ZVI')" style="background:linear-gradient(135deg,#78716c,#444);">⚙️ 零价铁</button>
+                <button class="prb-btn prb-btn-primary" onclick="setMedia('GAC')" style="background:linear-gradient(135deg,#1e40af,#0f172a);">🪨 活性炭</button>
+                <button class="prb-btn prb-btn-primary" onclick="setMedia('ZEOLITE')" style="background:linear-gradient(135deg,#166534,#064e3b);">🧪 沸石</button>
+                <button class="prb-btn prb-btn-primary" onclick="setMedia('BIO')" style="background:linear-gradient(135deg,#991b1b,#450a0a);">🧫 生物填料</button>
+            </div>
+            <!-- Canvas -->
+            <div class="prb-canvas-wrap">
+                <svg viewBox="0 0 800 320" id="prbSvg" style="max-width:100%;">
+                    <!-- Ground surface -->
+                    <rect x="0" y="0" width="800" height="40" fill="#a8784a" opacity="0.15"/>
+                    <text x="400" y="26" text-anchor="middle" font-size="12" fill="#92400e" font-family="Inter">地表</text>
+
+                    <!-- Aquifer background -->
+                    <rect x="0" y="40" width="800" height="240" fill="#fdf6e3"/>
+                    <!-- Soil dots -->
+                    <g opacity="0.15">
+                        <circle cx="30" cy="80" r="2" fill="#92400e"/><circle cx="70" cy="120" r="3" fill="#92400e"/>
+                        <circle cx="120" cy="70" r="2" fill="#92400e"/><circle cx="160" cy="150" r="2" fill="#92400e"/>
+                        <circle cx="200" cy="90" r="3" fill="#92400e"/><circle cx="250" cy="130" r="2" fill="#92400e"/>
+                        <circle cx="50" cy="200" r="2" fill="#92400e"/><circle cx="100" cy="250" r="3" fill="#92400e"/>
+                        <circle cx="600" cy="80" r="2" fill="#92400e"/><circle cx="650" cy="150" r="3" fill="#92400e"/>
+                        <circle cx="700" cy="100" r="2" fill="#92400e"/><circle cx="750" cy="200" r="2" fill="#92400e"/>
+                        <circle cx="680" cy="250" r="3" fill="#92400e"/><circle cx="550" cy="260" r="2" fill="#92400e"/>
+                        <circle cx="450" cy="70" r="2" fill="#92400e"/><circle cx="500" cy="130" r="2" fill="#92400e"/>
+                    </g>
+
+                    <!-- Groundwater flow arrow -->
+                    <text x="25" y="170" font-size="10" fill="#888" font-family="Inter">地下水流向 →</text>
+
+                    <!-- PRB Wall -->
+                    <g id="prbWall">
+                        <rect x="340" y="60" width="80" height="200" rx="4" fill="#78716c" opacity="0.7"/>
+                        <rect x="345" y="60" width="70" height="200" rx="3" fill="#a8a29e" opacity="0.5"/>
+                        <!-- Media texture indicators -->
+                        <text x="380" y="170" text-anchor="middle" font-size="11" fill="#fff" font-family="Inter" id="mediaLabel">Fe⁰</text>
+                        <line x1="350" y1="85" x2="410" y2="85" stroke="#d6d3d1" stroke-width="0.5"/>
+                        <line x1="350" y1="105" x2="410" y2="105" stroke="#d6d3d1" stroke-width="0.5"/>
+                        <line x1="350" y1="125" x2="410" y2="125" stroke="#d6d3d1" stroke-width="0.5"/>
+                        <line x1="350" y1="145" x2="410" y2="145" stroke="#d6d3d1" stroke-width="0.5"/>
+                        <line x1="350" y1="165" x2="410" y2="165" stroke="#d6d3d1" stroke-width="0.5"/>
+                        <line x1="350" y1="185" x2="410" y2="185" stroke="#d6d3d1" stroke-width="0.5"/>
+                        <line x1="350" y1="205" x2="410" y2="205" stroke="#d6d3d1" stroke-width="0.5"/>
+                        <line x1="350" y1="225" x2="410" y2="225" stroke="#d6d3d1" stroke-width="0.5"/>
+                        <line x1="350" y1="245" x2="410" y2="245" stroke="#d6d3d1" stroke-width="0.5"/>
+                    </g>
+
+                    <!-- PRB Label -->
+                    <text x="380" y="285" text-anchor="middle" font-size="11" fill="#444" font-family="Inter" font-weight="700">可渗透反应墙 (PRB)</text>
+
+                    <!-- Contaminated zone label -->
+                    <text x="180" y="55" text-anchor="middle" font-size="11" fill="#dc2626" font-family="Inter" id="upstreamLabel">⚠️ 污染区</text>
+                    <!-- Clean zone label -->
+                    <text x="620" y="55" text-anchor="middle" font-size="11" fill="#16a34a" font-family="Inter" id="downstreamLabel">✅ 净化区</text>
+
+                    <!-- Contaminant particles (rendered by JS) -->
+                    <g id="particles"></g>
+
+                    <!-- Clean particles (rendered by JS) -->
+                    <g id="cleanParticles" style="display:none;"></g>
+
+                    <!-- In-wall particles -->
+                    <g id="wallParticles"></g>
+
+                    <!-- Monitoring wells -->
+                    <rect x="200" y="60" width="6" height="200" rx="2" fill="#475569" opacity="0.4"/>
+                    <text x="203" y="290" text-anchor="middle" font-size="9" fill="#888" font-family="Inter">MW1</text>
+                    <rect x="350" y="60" width="6" height="200" rx="2" fill="#475569" opacity="0.4"/>
+                    <text x="353" y="290" text-anchor="middle" font-size="9" fill="#888" font-family="Inter">MW2</text>
+                    <rect x="560" y="60" width="6" height="200" rx="2" fill="#475569" opacity="0.4"/>
+                    <text x="563" y="290" text-anchor="middle" font-size="9" fill="#888" font-family="Inter">MW3</text>
+                </svg>
+            </div>
+
+            <!-- Monitoring well readouts -->
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;">
+                <div style="padding:12px;border-radius:10px;background:#fef2f2;border:1px solid rgba(220,38,38,.15);text-align:center;">
+                    <div style="font-size:10px;color:#991b1b;font-weight:600;">MW1 · 上游</div>
+                    <div style="font-size:22px;font-weight:800;color:#dc2626;" id="mw1Conc">150</div>
+                    <div style="font-size:9px;color:#888;">μg/L</div>
+                </div>
+                <div style="padding:12px;border-radius:10px;background:var(--soil-light);border:1px solid rgba(146,64,14,.15);text-align:center;">
+                    <div style="font-size:10px;color:#92400e;font-weight:600;">MW2 · 墙内</div>
+                    <div style="font-size:22px;font-weight:800;color:#92400e;" id="mw2Conc">—</div>
+                    <div style="font-size:9px;color:#888;">μg/L</div>
+                </div>
+                <div style="padding:12px;border-radius:10px;background:#f0fdf4;border:1px solid rgba(22,163,74,.15);text-align:center;">
+                    <div style="font-size:10px;color:#166534;font-weight:600;">MW3 · 下游</div>
+                    <div style="font-size:22px;font-weight:800;color:#16a34a;" id="mw3Conc">—</div>
+                    <div style="font-size:9px;color:#888;">μg/L</div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="prb-controls">
+                <button class="prb-btn prb-btn-primary" id="simBtn" onclick="toggleSim()">▶ 启动模拟</button>
+                <button class="prb-btn prb-btn-secondary" onclick="resetSim()">🔄 重置</button>
+            </div>
+
+            <!-- Sliders -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+                <div>
+                    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-light);margin-bottom:4px;">
+                        <span>🌊 地下水流速</span>
+                        <span><b id="flowVal" style="color:var(--ink);">1.0</b> m/d</span>
+                    </div>
+                    <input type="range" id="flowSlider" min="0.3" max="3.0" value="1.0" step="0.1"
+                           style="width:100%;height:4px;-webkit-appearance:none;appearance:none;background:#dde1e6;border-radius:2px;outline:none;accent-color:#0ea5e9;">
+                </div>
+                <div>
+                    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-light);margin-bottom:4px;">
+                        <span>🧱 墙厚</span>
+                        <span><b id="wallVal" style="color:var(--ink);">1.0</b> m</span>
+                    </div>
+                    <input type="range" id="wallSlider" min="0.5" max="2.0" value="1.0" step="0.1"
+                           style="width:100%;height:4px;-webkit-appearance:none;appearance:none;background:#dde1e6;border-radius:2px;outline:none;accent-color:#92400e;">
+                </div>
+            </div>
+
+            <!-- Elapsed time -->
+            <div style="text-align:center;font-size:12px;color:var(--ink-light);margin-top:12px;">
+                ⏱️ 模拟运行：<b id="simTime" style="color:var(--ink);font-family:monospace;">0</b> 天
+            </div>
+
+            <!-- Stats -->
+            <div class="prb-stats">
+                <div class="prb-stat" style="background:var(--contam-light);">
+                    <div class="val" style="color:var(--contam);" id="inConc">150</div>
+                    <div class="lbl">进水浓度 [μg/L]</div>
+                </div>
+                <div class="prb-stat" style="background:var(--soil-light);">
+                    <div class="val" style="color:var(--soil);" id="reduction">0</div>
+                    <div class="lbl">去除率 [%]</div>
+                </div>
+                <div class="prb-stat" style="background:var(--clean-light);">
+                    <div class="val" style="color:var(--clean);" id="outConc">150</div>
+                    <div class="lbl">出水浓度 [μg/L]</div>
+                </div>
+            </div>
+
+            <!-- Captured particles counter -->
+            <div style="text-align:center;font-size:12px;color:var(--ink-light);margin-top:8px;">
+                🎯 颗粒捕获：<b id="capturedCount" style="color:var(--soil);font-family:monospace;">0</b> 个 · 
+                穿透：<b id="breakthroughCount" style="color:var(--contam);font-family:monospace;">0</b> 个
+            </div>
+
+            <!-- Media info -->
+            <div style="margin-top:16px;padding:16px;border-radius:10px;background:#fafaf8;border:1px solid var(--border);font-size:13px;color:var(--ink-light);line-height:1.8;" id="mediaInfo">
+                <strong style="color:var(--ink);">当前介质：零价铁 (Fe⁰)</strong><br>
+                适用污染物：氯化烃（TCE、PCE）、重金属（Cr⁶⁺、As）、硝酸盐<br>
+                去除机制：还原脱氯 + 吸附共沉淀 · 典型去除率 85~99%
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<!-- ═══════════ SEC 05 · 总结 ═══════════ -->
+<section class="section" id="sec-05">
+    <div class="section-num">Section 05 · 总结</div>
+    <h2 class="section-title">关键要点回顾</h2>
+    <p class="section-desc">掌握以下核心要点，有助于准确理解可渗透反应墙技术。</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">
+        <div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--border);">
+            <div style="font-size:28px;margin-bottom:8px;">⚙️</div>
+            <div style="font-weight:700;font-size:14px;margin-bottom:4px;">介质选择是关键</div>
+            <div style="font-size:12px;color:var(--ink-light);line-height:1.6;">零价铁最常用，活性炭吸附广谱，沸石成本低，生物填料可自修复</div>
+        </div>
+        <div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--border);">
+            <div style="font-size:28px;margin-bottom:8px;">🌊</div>
+            <div style="font-weight:700;font-size:14px;margin-bottom:4px;">水力传导是前提</div>
+            <div style="font-size:12px;color:var(--ink-light);line-height:1.6;">墙体渗透系数需为含水层的 10 倍以上，确保地下水优先流经反应墙</div>
+        </div>
+        <div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--border);">
+            <div style="font-size:28px;margin-bottom:8px;">📊</div>
+            <div style="font-weight:700;font-size:14px;margin-bottom:4px;">长期监测不可少</div>
+            <div style="font-size:12px;color:var(--ink-light);line-height:1.6;">上/中/下游三排监测井，定期分析污染物浓度变化趋势</div>
+        </div>
+        <div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--border);">
+            <div style="font-size:28px;margin-bottom:8px;">⏳</div>
+            <div style="font-weight:700;font-size:14px;margin-bottom:4px;">介质有使用寿命</div>
+            <div style="font-size:12px;color:var(--ink-light);line-height:1.6;">零价铁 5~10 年，活性炭 2~5 年，需根据柱试验预测更换周期</div>
+        </div>
+    </div>
+</section>
+
+<div class="footer">
+    <p>EnvLab · 环境检测交互式教学实验平台</p>
+    <p style="margin-top:4px;">联系方式：jinghao.song@gmail.com</p>
+</div>
+
+<script>
+// ═══════════ SCROLL ═══════════
+window.addEventListener('scroll', () => {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = (window.scrollY / h) * 100;
+    document.getElementById('scroll-progress').style.width = pct + '%';
+});
+
+const sections = document.querySelectorAll('.section, .experiment-section');
+const dots = document.querySelectorAll('.nav-dot');
+
+const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+sections.forEach(s => sectionObserver.observe(s));
+
+const procObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.2 });
+document.querySelectorAll('.proc-step').forEach(s => procObserver.observe(s));
+
+window.addEventListener('scroll', () => {
+    let current = 0;
+    sections.forEach((s, i) => { if (window.scrollY >= s.offsetTop - 300) current = i; });
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+});
+
+function scrollToSection(i) { if (sections[i]) sections[i].scrollIntoView({ behavior: 'smooth' }); }
+
+function revealCard(card) {
+    if (!card.classList.contains('revealed')) {
+        card.classList.add('revealed');
+    }
+}
+
+// ═══════════ PRB SIMULATOR ═══════════
+let simRunning = false;
+let simInterval = null;
+let currentMedia = 'ZVI';
+let captured = 0, breakthrough = 0, simDays = 0;
+
+const mediaData = {
+    ZVI: {
+        name: '零价铁 (Fe\u2070)',
+        label: 'Fe\u2070',
+        color: '#78716c',
+        removal: 0.92,
+        desc: '\u9002\u7528\u6C61\u67D3\u7269\uFF1A\u6C2F\u5316\u70F3\uFF08TCE\u3001PCE\uFF09\u3001\u91CD\u91D1\u5C5E\uFF08Cr\u2076\u207A\u3001As\uFF09\u3001\u785D\u9178\u76D0<br>\u53BB\u9664\u673A\u5236\uFF1A\u8FD8\u539F\u8131\u6C2F + \u5438\u9644\u5171\u6C89\u6DC0 \u00B7 \u5178\u578B\u53BB\u9664\u7387 85~99%'
+    },
+    GAC: {
+        name: '\u6D3B\u6027\u70AD (GAC)',
+        label: 'GAC',
+        color: '#1e40af',
+        removal: 0.95,
+        desc: '\u9002\u7528\u6C61\u67D3\u7269\uFF1A\u6709\u673A\u6C61\u67D3\u7269\uFF08\u82EF\u7CFB\u7269\u3001\u519C\u836F\u3001\u77F3\u6CB9\u70F3\uFF09<br>\u53BB\u9664\u673A\u5236\uFF1A\u7269\u7406\u5438\u9644 \u00B7 \u5178\u578B\u53BB\u9664\u7387 90~99% \u00B7 \u4F7F\u7528\u5BFF\u547D 2~5\u5E74'
+    },
+    ZEOLITE: {
+        name: '\u6CB8\u77F3 (Zeolite)',
+        label: 'Ze',
+        color: '#166534',
+        removal: 0.78,
+        desc: '\u9002\u7528\u6C61\u67D3\u7269\uFF1A\u6C28\u6C2E\u3001\u91CD\u91D1\u5C5E\u79BB\u5B50\uFF08Pb\u00B2\u207A\u3001Cd\u00B2\u207A\u3001Cu\u00B2\u207A\uFF09<br>\u53BB\u9664\u673A\u5236\uFF1A\u79BB\u5B50\u4EA4\u6362 + \u9009\u62E9\u6027\u5438\u9644 \u00B7 \u5178\u578B\u53BB\u9664\u7387 60~85%'
+    },
+    BIO: {
+        name: '\u751F\u7269\u586B\u6599 (Bio-media)',
+        label: 'Bio',
+        color: '#991b1b',
+        removal: 0.88,
+        desc: '\u9002\u7528\u6C61\u67D3\u7269\uFF1A\u77F3\u6CB9\u70F3\u3001BTEX\u3001\u53EF\u751F\u7269\u964D\u89E3\u6709\u673A\u7269<br>\u53BB\u9664\u673A\u5236\uFF1A\u5FAE\u751F\u7269\u4EE3\u8C22\u964D\u89E3 \u00B7 \u5178\u578B\u53BB\u9664\u7387 80~95% \u00B7 \u53EF\u81EA\u4FEE\u590D'
+    }
+};
+
+// Contaminant particles data
+let contamParticles = [];
+function initParticles() {
+    contamParticles = [];
+    const positions = [
+        {cx:80,cy:130},{cx:120,cy:170},{cx:150,cy:110},
+        {cx:180,cy:200},{cx:210,cy:150},{cx:250,cy:180},
+        {cx:280,cy:120},{cx:300,cy:220},{cx:130,cy:240},
+        {cx:230,cy:85},{cx:170,cy:260},{cx:270,cy:100}
+    ];
+    positions.forEach((p,i) => {
+        contamParticles.push({
+            cx: p.cx, cy: p.cy, state: 'active', speed: 0.6 + Math.random() * 0.8,
+            id: 'p'+i, el: null, wallTime: 0
+        });
+    });
+    renderParticles();
+}
+function renderParticles() {
+    const g = document.getElementById('particles');
+    g.innerHTML = contamParticles.map(p => {
+        let color = p.state === 'active' ? '#dc2626' : p.state === 'trapped' ? '#92400e' : '#16a34a';
+        let opacity = p.state === 'trapped' ? '0.3' : '0.7';
+        let r = p.state === 'trapped' ? '3' : '4';
+        return `<circle cx="${p.cx.toFixed(0)}" cy="${p.cy.toFixed(0)}" r="${r}" fill="${color}" opacity="${opacity}"/>`;
+    }).join('');
+}
+
+function getRemovalRate() {
+    const media = mediaData[currentMedia].removal;
+    const wallThick = parseFloat(document.getElementById('wallSlider').value);
+    const flowRate = parseFloat(document.getElementById('flowSlider').value);
+    // Thicker wall = more removal, slower flow = more contact time = more removal
+    const thicknessFactor = Math.min(1, wallThick / 0.5 * 0.3 + 0.7);
+    const flowFactor = Math.max(0.7, Math.min(1, 1.2 - (flowRate - 0.3) / 2.7 * 0.3));
+    return Math.min(0.995, media * thicknessFactor * flowFactor);
+}
+
+function setMedia(type) {
+    if (simRunning) stopSim();
+    currentMedia = type;
+    const data = mediaData[type];
+    document.getElementById('mediaLabel').textContent = data.label;
+    document.getElementById('inConc').textContent = '150';
+    document.getElementById('outConc').textContent = '150';
+    document.getElementById('reduction').textContent = '0';
+    document.getElementById('mediaInfo').innerHTML = `<strong style="color:var(--ink);">当前介质：${data.name}</strong><br>${data.desc}`;
+    resetSim();
+    document.querySelectorAll('.prb-btn-primary').forEach(b => b.style.transform = '');
+    event.target.style.transform = 'scale(1.05)';
+}
+
+function toggleSim() {
+    if (simRunning) { stopSim(); }
+    else { startSim(); }
+}
+
+function startSim() {
+    simRunning = true;
+    document.getElementById('simBtn').textContent = '\u23F8 \u6682\u505C';
+    document.getElementById('cleanParticles').style.display = 'block';
+
+    let timeAccum = 0;
+    simInterval = setInterval(() => {
+        const flowRate = parseFloat(document.getElementById('flowSlider').value);
+        const speed = (flowRate / 3.0) * 2.0 + 0.3;
+        const removal = getRemovalRate();
+        const wallThick = parseFloat(document.getElementById('wallSlider').value);
+        const wallLeft = 340, wallRight = 340 + wallThick * 40;
+
+        // Update wall visual
+        document.querySelector('#prbWall rect:first-child').setAttribute('width', wallThick * 40);
+        document.querySelector('#prbWall rect:nth-child(2)').setAttribute('width', wallThick * 40 - 10);
+
+        // Move particles
+        contamParticles.forEach(p => {
+            if (p.state === 'trapped') return;
+            p.cx += speed * p.speed;
+
+            // Check if entering wall
+            if (p.cx >= wallLeft && p.cx <= wallRight && p.state === 'active') {
+                p.wallTime += 1;
+                // Capture probability based on removal rate and time in wall
+                const captureProb = removal * (p.wallTime / 10);
+                if (Math.random() < captureProb) {
+                    p.state = 'trapped';
+                    captured++;
+                    p.cx = wallLeft + (wallRight - wallLeft) * Math.random();
+                    document.getElementById('capturedCount').textContent = captured;
+                    return;
+                }
+            }
+
+            // Exited wall - now clean
+            if (p.cx > wallRight && p.state === 'active') {
+                p.state = 'cleaned';
+                breakthrough++;
+                document.getElementById('breakthroughCount').textContent = breakthrough;
+            }
+
+            // Reset if off screen right
+            if (p.cx > 790) {
+                p.cx = 20 + Math.random() * 80;
+                p.cy = 70 + Math.random() * 190;
+                p.state = 'active';
+                p.wallTime = 0;
+                p.speed = 0.6 + Math.random() * 0.8;
+            }
+        });
+
+        renderParticles();
+
+        // Update monitoring wells
+        timeAccum++;
+        if (timeAccum % 3 === 0) {
+            const inVal = 150;
+            // Count active particles upstream vs downstream
+            const upCount = contamParticles.filter(p => p.cx < wallLeft && p.state === 'active').length;
+            const downCount = contamParticles.filter(p => p.cx > wallRight && (p.state === 'cleaned' || p.state === 'active')).length;
+            const totalActive = contamParticles.filter(p => p.state === 'active').length;
+            const totalCleaned = contamParticles.filter(p => p.state === 'cleaned').length;
+            const total = upCount + downCount + contamParticles.filter(p => p.state === 'trapped').length;
+
+            // MW1: upstream concentration (slightly fluctuates)
+            const mw1 = Math.round(inVal * (0.85 + Math.random() * 0.3));
+            document.getElementById('mw1Conc').textContent = mw1;
+
+            // MW2: inside wall - decreasing
+            const trapped = contamParticles.filter(p => p.state === 'trapped').length;
+            const mw2 = total > 0 ? Math.round(inVal * (1 - trapped / total * 0.8) * (0.8 + Math.random() * 0.4)) : inVal;
+            document.getElementById('mw2Conc').textContent = Math.max(0, Math.min(inVal, mw2));
+
+            // MW3: downstream - cleaned
+            const cleaned = contamParticles.filter(p => p.state === 'cleaned').length + contamParticles.filter(p => p.state === 'active' && p.cx > wallRight).length;
+            const removalEst = total > 0 ? (trapped / total) : 0;
+            const mw3 = Math.round(inVal * (1 - removalEst) * (0.85 + Math.random() * 0.3));
+            document.getElementById('mw3Conc').textContent = Math.max(0, Math.min(inVal, mw3));
+
+            // Stats
+            const outVal = inVal * (1 - removal) * (0.9 + Math.random() * 0.2);
+            const redPct = ((inVal - outVal) / inVal * 100);
+            document.getElementById('outConc').textContent = Math.round(outVal);
+            document.getElementById('reduction').textContent = redPct.toFixed(1);
+            document.getElementById('inConc').textContent = inVal;
+        }
+
+        // Time
+        simDays++;
+        document.getElementById('simTime').textContent = simDays;
+    }, 120);
+}
+
+function stopSim() {
+    simRunning = false;
+    if (simInterval) { clearInterval(simInterval); simInterval = null; }
+    document.getElementById('simBtn').textContent = '\u25B6 \u7EE7\u7EED';
+}
+
+function resetSim() {
+    if (simRunning) stopSim();
+    if (simInterval) { clearInterval(simInterval); simInterval = null; }
+    document.getElementById('simBtn').textContent = '\u25B6 \u542F\u52A8\u6A21\u62DF';
+    captured = 0; breakthrough = 0; simDays = 0;
+
+    const wallThick = parseFloat(document.getElementById('wallSlider').value);
+    document.querySelector('#prbWall rect:first-child').setAttribute('width', wallThick * 40);
+    document.querySelector('#prbWall rect:nth-child(2)').setAttribute('width', wallThick * 40 - 10);
+
+    document.getElementById('cleanParticles').style.display = 'none';
+    document.getElementById('inConc').textContent = '150';
+    document.getElementById('outConc').textContent = '150';
+    document.getElementById('reduction').textContent = '0';
+    document.getElementById('mw1Conc').textContent = '150';
+    document.getElementById('mw2Conc').textContent = '\u2014';
+    document.getElementById('mw3Conc').textContent = '\u2014';
+    document.getElementById('capturedCount').textContent = '0';
+    document.getElementById('breakthroughCount').textContent = '0';
+    document.getElementById('simTime').textContent = '0';
+    initParticles();
+}
+
+// Wall slider update
+document.getElementById('wallSlider').addEventListener('input', function() {
+    const val = parseFloat(this.value);
+    document.getElementById('wallVal').textContent = val.toFixed(1);
+    const w = val * 40;
+    document.querySelector('#prbWall rect:first-child').setAttribute('width', w);
+    document.querySelector('#prbWall rect:nth-child(2)').setAttribute('width', w - 10);
+    if (!simRunning) {
+        // Ensure media label stays centered
+        document.getElementById('mediaLabel').setAttribute('x', 340 + w/2);
+    }
+});
+document.getElementById('flowSlider').addEventListener('input', function() {
+    document.getElementById('flowVal').textContent = this.value;
+});
+
+// Also update media label position when wall changes
+document.getElementById('wallSlider').addEventListener('input', function() {
+    const w = parseFloat(this.value) * 40;
+    document.getElementById('mediaLabel').setAttribute('x', 340 + w/2);
+});
+
+// Init
+initParticles();
+</script>
+</body>
+</html>

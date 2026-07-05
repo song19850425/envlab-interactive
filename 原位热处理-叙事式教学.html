@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>原位热处理 · 叙事式教学</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}:root{--a:#dc2626;--al:#fef2f2;--b:#e8e0d4;--sr:'Noto Serif SC','Source Han Serif SC','Songti SC',serif;--sn:'Inter',-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth}body{font-family:var(--sn);color:#1a1a2e;background:#faf9f6;overflow-x:hidden}
+#sp{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--a),#b45309);z-index:1000}
+#nv{position:fixed;right:24px;top:50%;z-index:999;display:flex;flex-direction:column;gap:14px}
+.nd{width:10px;height:10px;border-radius:50%;background:var(--b);cursor:pointer;border:2px solid transparent}.nd.ac{background:var(--a);transform:scale(1.5)}.nd:hover{border-color:var(--a)}
+.he{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 24px;background:linear-gradient(180deg,var(--al),#faf9f6)}
+.he h1{font-family:var(--sr);font-size:clamp(36px,6vw,72px);font-weight:900;color:#1a1a2e}.he h1 em{color:var(--a);font-style:normal}
+.hb{display:inline-block;padding:6px 18px;border-radius:20px;background:var(--al);color:var(--a);font-size:12px;font-weight:600;margin-bottom:24px}
+.he p{margin-top:20px;font-size:clamp(14px,2vw,18px);color:#555;max-width:560px;line-height:1.7}
+.hs{display:flex;gap:32px;margin-top:48px;flex-wrap:wrap;justify-content:center}.hs div{text-align:center}.hs .n{font-family:var(--sr);font-size:36px;font-weight:900;color:var(--a);display:block}
+.sh{position:absolute;bottom:32px;left:50%;color:#555;font-size:12px;animation:fl 2s infinite}@keyframes fl{0%,100%{transform:translateX(-50%)}50%{transform:translateX(-50%) translateY(8px)}}
+.sc{max-width:900px;margin:0 auto;padding:100px 24px;opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}.sc.vi{opacity:1;transform:translateY(0)}
+.sn{font-size:11px;font-weight:600;letter-spacing:3px;color:var(--a);margin-bottom:8px}
+.st{font-family:var(--sr);font-size:clamp(28px,4vw,48px);font-weight:700;margin-bottom:12px}
+.sd{font-size:16px;color:#555;line-height:1.8;max-width:600px;margin-bottom:48px}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-bottom:32px}
+.ic{background:#fff;border-radius:12px;padding:24px;border:1px solid var(--b);cursor:pointer;transition:.35s ease}.ic:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.08)}.ic.rv{background:var(--al)}
+.ii{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
+.in{font-weight:700;font-size:15px}.is{font-size:12px;color:#555}
+.ib{font-size:13px;color:#555;line-height:1.6;margin-top:10px;max-height:0;overflow:hidden;transition:.5s}.ic.rv .ib{max-height:300px;margin-top:10px}.it{display:inline-block;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600}
+.tl{position:relative;padding-left:40px}.tl::before{content:'';position:absolute;left:15px;top:8px;bottom:8px;width:2px;background:var(--b)}
+.ps{position:relative;margin-bottom:40px;opacity:0;transform:translateX(-20px);transition:.6s}.ps.vi{opacity:1;transform:translateX(0)}
+.ps::before{content:'';position:absolute;left:-33px;top:6px;width:12px;height:12px;border-radius:50%;background:#faf9f6;border:2px solid var(--b);transition:.3s}
+.ps.vi::before{background:var(--a);border-color:var(--a)}.pn{font-size:11px;font-weight:700;color:var(--a);margin-bottom:4px}
+.pt{font-weight:700;font-size:16px;margin-bottom:6px}.pd{font-size:14px;color:#555;line-height:1.7}
+.po{display:inline-block;padding:4px 12px;background:var(--al);color:var(--a);border-radius:6px;font-size:12px;margin-top:8px}
+.es{background:linear-gradient(180deg,var(--al),#faf9f6);padding:80px 24px 100px}
+.ec{background:#fff;border-radius:20px;border:1px solid var(--b);overflow:hidden;max-width:920px;margin:0 auto}
+.eh{padding:24px 28px;border-bottom:1px solid var(--b)}.eh h3{font-size:18px;font-weight:700;font-family:var(--sr)}
+.eb{padding:28px}.sw{background:#faf6ee;border-radius:14px;padding:16px;border:1px solid var(--b);margin-bottom:16px;text-align:center;min-height:150px;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.sb{padding:10px 24px;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;margin:4px;font-family:var(--sn)}
+.s1{background:linear-gradient(135deg,var(--a),#991b1b);color:#fff}.s1:hover{transform:translateY(-2px)}
+.s2{background:linear-gradient(135deg,#78716c,#444);color:#fff}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:16px}
+.sg div{padding:14px;border-radius:10px;text-align:center}.sg .v{font-family:var(--sr);font-size:28px;font-weight:900;line-height:1}
+.ft{text-align:center;padding:60px 24px;color:#555;font-size:13px;border-top:1px solid var(--b);background:#f5f0e8}</style></head><body>
+<div id="sp"></div><div id="nv"><div class="nd ac" onclick="gs(0)"><span class="nl">开篇</span></div><div class="nd" onclick="gs(1)"><span class="nl">加热</span></div><div class="nd" onclick="gs(2)"><span class="nl">条件</span></div><div class="nd" onclick="gs(3)"><span class="nl">流程</span></div><div class="nd" onclick="gs(4)"><span class="nl">模拟</span></div><div class="nd" onclick="gs(5)"><span class="nl">总结</span></div></div><div class="nd" onclick="gs(1)"></div><div class="nd" onclick="gs(2)"></div><div class="nd" onclick="gs(3)"></div><div class="nd" onclick="gs(4)"></div><div class="nd" onclick="gs(5)"></div></div>
+<div class="he"><div class="hb">土壤修复 · 交互式教学</div><h1>原位<em>热</em>处理</h1><p>In Situ Thermal Treatment · ISTT<br>通过加热土壤使污染物挥发或热解，再收集处理气相污染物。</p><div class="hs"><div><span class="n">3</span><span>种加热方式</span></div><div><span class="n">>99</span><span>% 去除率</span></div><div><span class="n">5</span><span>步流程</span></div><div><span class="n">快</span><span>见效速度</span></div></div><div class="sh">↓ 向下滚动</div></div>
+<div class="sc vi" id="s1"><div class="sn">Section 01 · 加热方式</div><h2 class="st">三种加热技术</h2><p class="sd">点击查看不同加热方式的原理和特点。</p><div class="cg">
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#fef3c7;">🔥</div><div class="in">电阻加热 (ERH)</div><div class="is">Electrical Resistance</div><div class="ib">电极通电使土壤中水分和污染物发热，温度可达100°C。适用于低渗透性土壤，成本较低。三相电加热均匀。</div><span class="it" style="background:#fef3c7;color:#92400e;">100°C</span></div>
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#fef2f2;">☄️</div><div class="in">热传导加热 (TCH)</div><div class="is">Thermal Conduction</div><div class="ib">加热棒插入土壤，通过热传导升温（可达300~800°C）。适用于高浓度污染物，加热速度快，但能耗高。</div><span class="it" style="background:#fef2f2;color:#991b1b;">300~800°C</span></div>
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#e0f2fe;">♨️</div><div class="in">蒸汽加热</div><div class="is">Steam Injection</div><div class="ib">向地下注入高温蒸汽（150~200°C），蒸汽前沿推动污染物向抽提井迁移。适用于中高渗透性土壤。</div><span class="it" style="background:#e0f2fe;color:#0c4a6e;">150~200°C</span></div></div></div>
+<div class="sc" id="s2"><div class="sn">Section 02 · 适用条件</div><h2 class="st">适用范围</h2><p class="sd">点击查看。</p><div class="cg">
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#e0f2fe;">🧪</div><div class="in">污染物</div><div class="is">Contaminant</div><div class="ib">各类挥发性/半挥发性有机物（VOCs/SVOCs）、重质非水相液体（DNAPL）、焦油、PCB等。对重金属无效。</div><span class="it" style="background:#e0f2fe;color:#0c4a6e;">VOCs/SVOCs</span></div>
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#fef3c7;">🏞️</div><div class="in">土壤条件</div><div class="is">Soil</div><div class="ib">各种土壤类型均可（加热过程不受渗透性限制）。含水率影响加热效率（水份蒸发耗能）。</div><span class="it" style="background:#fef3c7;color:#92400e;">不限</span></div>
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#f0fdf4;">💰</div><div class="in">经济考量</div><div class="is">Cost</div><div class="ib">能耗大，运行成本高。但速度快（数月），适合场地移交时间紧迫的项目。高浓度源区去除效果极佳。</div><span class="it" style="background:#f0fdf4;color:#166534;">高成本·快速</span></div></div></div>
+<div class="sc" id="s3"><div class="sn">Section 03 · 工艺流程</div><h2 class="st">标准流程</h2><p class="sd">从加热井布设到尾气处理。</p><div class="tl">
+<div class="ps"><div class="pn">STEP 01</div><div class="pt">加热井布设</div><div class="pd">根据场地确定加热方式和井间距。ERH井间距3~6m，TCH井间距2~4m。</div><span class="po">🕳️ 井间距决定加热均匀性</span></div>
+<div class="ps"><div class="pn">STEP 02</div><div class="pt">加热启动</div><div class="pd">逐步升温至目标温度（根据污染物沸点确定）。监测土壤温度和真空度。</div><span class="po">🌡️ 升温速度不宜过快</span></div>
+<div class="ps"><div class="pn">STEP 03</div><div class="pt">气相抽提</div><div class="pd">加热产生的蒸汽和污染物蒸汽经抽提井收集至地表。</div><span class="po">💨 气密性至关重要</span></div>
+<div class="ps"><div class="pn">STEP 04</div><div class="pt">尾气处理</div><div class="pd">蒸汽冷凝+气液分离+活性炭吸附/催化氧化。</div><span class="po">🧪 冷凝水需处理</span></div>
+<div class="ps"><div class="pn">STEP 05</div><div class="pt">冷却与评估</div><div class="pd">停热后自然冷却，采集土壤样品验证修复效果。</div><span class="po">✅ 冷却后采样</span></div></div></div>
+<div class="es" id="s4"><div class="sc" style="padding-bottom:0;"><div class="sn">Section 04 · 交互模拟</div><h2 class="st">模拟热处理过程</h2><p class="sd">观察温度上升和污染物去除过程。</p></div>
+<div style="max-width:920px;margin:0 auto;padding:0 24px 100px;"><div class="ec"><div class="eh"><h3>🔥 热处理模拟器</h3></div><div class="eb">
+<div class="sw"><div style="font-size:48px;">🔥🌡️💨</div><p style="color:#555;font-size:14px;">加热 → 挥发 → 抽提 → 处理</p></div>
+<div style="text-align:center;"><button class="sb s1" id="sb" onclick="ts()">▶ 启动</button><button class="sb s2" onclick="rs()">🔄 重置</button></div>
+<div class="sg" id="stBox"><div style="background:#fef2f2;"><div class="v" id="v1" style="color:#dc2626;">25</div><div>温度 [°C]</div></div><div style="background:#fef3c7;"><div class="v" id="v2" style="color:#b45309;">100</div><div>初始浓度 [%]</div></div><div style="background:#f0fdf4;"><div class="v" id="v3" style="color:#16a34a;">—</div><div>去除率 [%]</div></div></div>
+<div id="info" style="margin-top:12px;padding:14px;border-radius:10px;background:#fafaf8;border:1px solid var(--b);font-size:12px;color:#555;line-height:1.7;"><strong>状态：</strong><span id="st">未启动</span></div>
+</div></div></div></div>
+<div class="sc" id="s5"><div class="sn">Section 05 · 总结</div><h2 class="st">要点回顾</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">
+<div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--b);"><div style="font-size:28px;margin-bottom:8px;">🔥</div><div style="font-weight:700;font-size:14px;margin-bottom:4px;">去除率高</div><div style="font-size:12px;color:#555;line-height:1.6;">可达99%以上</div></div>
+<div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--b);"><div style="font-size:28px;margin-bottom:8px;">⚡</div><div style="font-weight:700;font-size:14px;margin-bottom:4px;">速度快</div><div style="font-size:12px;color:#555;line-height:1.6;">数月即可完成</div></div>
+<div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--b);"><div style="font-size:28px;margin-bottom:8px;">💰</div><div style="font-weight:700;font-size:14px;margin-bottom:4px;">成本高</div><div style="font-size:12px;color:#555;line-height:1.6;">能耗大，但适于紧迫项目</div></div>
+<div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--b);"><div style="font-size:28px;margin-bottom:8px;">🧪</div><div style="font-weight:700;font-size:14px;margin-bottom:4px;">尾气要处理</div><div style="font-size:12px;color:#555;line-height:1.6;">挥发污染物必须收集处理</div></div></div></div>
+<div class="ft"><p>EnvLab · 环境检测交互式教学平台</p><p style="margin-top:4px;">联系方式：jinghao.song@gmail.com</p></div>
+<script>
+window.addEventListener('scroll',()=>{let h=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('sp').style.width=(window.scrollY/h*100)+'%'})
+let ss=document.querySelectorAll('.sc,.es'),dd=document.querySelectorAll('.nd')
+new IntersectionObserver(e=>e.forEach(n=>n.isIntersecting&&n.target.classList.add('vi')),{threshold:.1}).observe(ss)
+new IntersectionObserver(e=>e.forEach(n=>n.isIntersecting&&n.target.classList.add('vi')),{threshold:.2}).observe(document.querySelectorAll('.ps'))
+window.addEventListener('scroll',()=>{let c=0;ss.forEach((s,i)=>{if(window.scrollY>=s.offsetTop-300)c=i});dd.forEach((d,i)=>d.classList.toggle('ac',i===c))})
+function gs(i){if(ss[i])ss[i].scrollIntoView({behavior:'smooth'})}
+function rc(c){if(!c.classList.contains('rv'))c.classList.add('rv')}
+let r=0,t=null,d=0;function ts(){if(r){r=0;clearInterval(t);t=null;document.getElementById('sb').textContent='▶ 启动'}else{r=1;t=setInterval(()=>{d+=2;let e=Math.min(500,25+250*(1-Math.exp(-.04*d)));let c=Math.max(1,100*Math.exp(-.03*d));document.getElementById('v1').textContent=Math.round(e);document.getElementById('v2').textContent=Math.round(c);document.getElementById('v3').textContent=(100-c).toFixed(1);document.getElementById('info').innerHTML='<strong>状态：</strong><span style=\"color:green;\">温度 '+Math.round(e)+'°C ↵ 去除率 '+(100-c).toFixed(1)+'%</span>';if(c<2){clearInterval(t);r=0;document.getElementById('sb').textContent='▶ 启动';document.getElementById('info').innerHTML='<strong>状态：</strong><span style=\"color:green;\">✅ 热处理完成</span>'}},500);document.getElementById('sb').textContent='⏸ 暂停'}}
+function rs(){r=0;clearInterval(t);t=null;d=0;document.getElementById('sb').textContent='▶ 启动';document.getElementById('v1').textContent='25';document.getElementById('v2').textContent='100';document.getElementById('v3').textContent='—';document.getElementById('info').innerHTML='<strong>状态：</strong><span>已重置</span>'}
+</script></body></html>

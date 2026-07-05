@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>农村人居环境整治资金 · 叙事法</title>
+<style>
+:root{--ink:#1a1f36;--paper:#fafaf8;--card:#fff;--muted:#6b7280;--line:#e5e5e0;--accent:#f5c518;--accent-dim:#f5c51820;--warn:#c2410c;--warn-light:#fff7ed}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Times New Roman","Songti SC","Noto Serif SC","PingFang SC","Microsoft YaHei",serif;background:var(--paper);color:var(--ink);line-height:1.8;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.topbar{position:sticky;top:0;z-index:50;background:var(--card);border-bottom:1px solid var(--line);padding:0 32px;display:flex;align-items:center;height:52px;gap:20px;font-family:"PingFang SC","Microsoft YaHei",sans-serif;backdrop-filter:blur(8px)}
+.topbar a{text-decoration:none;font-size:.8rem;font-weight:600;color:var(--muted);letter-spacing:.02em;transition:color .2s}
+.topbar a:hover{color:var(--ink)}
+.topbar .crumb{color:var(--line);font-size:.8rem;user-select:none}
+.topbar .page-id{margin-left:auto;font-size:.75rem;font-weight:700;color:var(--muted);letter-spacing:.06em}
+.wrapper{max-width:720px;margin:0 auto;padding:56px 24px 80px}
+.article-header{margin-bottom:56px;border-bottom:2px solid var(--ink);padding-bottom:36px}
+.article-header .meta-row{font-size:.75rem;font-weight:600;color:var(--muted);letter-spacing:.06em;margin-bottom:12px;font-family:"PingFang SC","Microsoft YaHei",sans-serif;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.article-header .meta-row .m-sep{width:1px;height:14px;background:var(--line);flex-shrink:0}
+.article-header .meta-row .m-bar{flex:1;height:1px;background:var(--line)}
+.article-header h1{font-size:2.1rem;font-weight:900;letter-spacing:-.02em;line-height:1.2;margin-bottom:14px}
+.article-header .subtitle{font-size:.85rem;color:var(--muted);font-family:"PingFang SC","Microsoft YaHei",sans-serif;display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+.article-header .stars{color:var(--accent);letter-spacing:4px;font-size:.95rem}
+.article-header .income-tag{font-size:.75rem;padding:2px 12px;border:1px solid var(--line);letter-spacing:.03em;color:var(--muted)}
+.act{margin-bottom:48px;position:relative;padding-left:48px}
+.act::before{content:'';position:absolute;left:13px;top:42px;bottom:-48px;width:1px;background:var(--line)}
+.act:last-child::before{display:none}
+.act-label{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.12em;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:12px}
+.act-label::before{content:'';width:28px;height:28px;border:2px solid var(--ink);border-radius:50%;position:absolute;left:0;background:var(--paper)}
+.act-label .label-line{flex:1;height:1px;background:var(--line)}
+.act-title{font-size:1.15rem;font-weight:700;margin-bottom:18px;letter-spacing:-.01em;line-height:1.35}
+.act-body{font-size:.92rem;color:#374151;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.act-body h4{font-size:.88rem;font-weight:700;color:var(--ink);margin:20px 0 8px;letter-spacing:-.01em}
+.act-body blockquote{border-left:3px solid var(--accent);padding:12px 0 12px 20px;margin:16px 0;font-style:italic;color:#4b5563;font-size:.88rem;line-height:1.8;background:var(--accent-dim);border-radius:0 4px 4px 0}
+.act-body table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.82rem;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.act-body th{text-align:left;padding:10px 16px;background:#fafaf8;font-weight:600;font-size:.73rem;color:var(--muted);border-bottom:2px solid var(--ink);letter-spacing:.04em;text-transform:uppercase;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.act-body td{padding:10px 16px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.65}
+.act-body tr:last-child td{border-bottom:none}
+.act-body p{margin:8px 0}
+.act-body ul,.act-body ol{padding-left:22px;margin:8px 0}
+.act-body li{margin:6px 0;line-height:1.65}
+.act-body code{font-family:"JetBrains Mono","Fira Code",monospace;font-size:.78rem;background:var(--paper);padding:1px 6px;border-radius:3px;border:1px solid var(--line)}
+.act-body strong{color:var(--ink);font-weight:700}
+.act-body hr{border:none;border-top:1px solid var(--line);margin:20px 0}
+.tag-bar{display:flex;flex-wrap:wrap;gap:8px;border-top:1px solid var(--line);padding-top:28px;margin-top:12px}
+.tag{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:.73rem;padding:3px 14px;border:1px solid var(--line);letter-spacing:.02em;color:var(--muted);transition:all .2s}
+.tag:hover{border-color:var(--ink);color:var(--ink);cursor:default}
+.footnote{text-align:center;padding:48px 20px;color:var(--muted);font-size:.72rem;font-family:"PingFang SC","Microsoft YaHei",sans-serif;letter-spacing:.04em;border-top:1px solid var(--line)}
+@media(max-width:640px){.wrapper{padding:32px 16px 48px}.article-header h1{font-size:1.5rem}.act{padding-left:36px}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="index.html">← 总览</a>
+  <span class="crumb">/</span>
+  <a href="index.html#板块五">板块五</a>
+  <span class="page-id">NO.5.8</span>
+</div>
+<div class="wrapper">
+  <div class="article-header">
+    <div class="meta-row"><span>5.8</span><span class="m-sep"></span><span>板块五 · 农业农村资金</span><span class="m-bar"></span></div>
+    <h1>农村人居环境整治资金</h1>
+    <div class="subtitle">
+      <span class="stars">★★☆☆☆</span>
+      <span class="income-tag">40-70万</span>
+    </div>
+  </div>
+  
+      <section class="act" id="act-1">
+        <div class="act-label">场景 SCENE</div>
+        <h3 class="act-title">场景</h3>
+        <div class="act-body"><blockquote>"污水靠蒸发、垃圾靠风刮"——这句话描绘的是许多中国农村的日常。农村人居环境整治是乡村振兴的"第一场硬仗"，由农业农村部牵头，多部委协同，资金重点投向**污水处理、垃圾治理、厕所革命、村容村貌提升**四个方向。政策力度大、覆盖面广，但资金分配"视通知而定"，申报节奏不固定，基层常常措手不及。</blockquote>
+<p><strong>谁在焦虑？</strong></p>
+<p>- <strong>县农业农村局分管副局长</strong>：县里去年被省里点名了——农村生活污水治理率只有38%，全省倒数第三。县长急了，让我今年必须把治理率拉到60%。但污水处理项目是系统工程——要选技术路线、要算管网造价、要确定运维模式。一个镇搞一套系统，县里15个镇，我哪懂这么多技术？</p>
+<p>- <strong>乡镇分管领导</strong>：上面说今年每个行政村要配齐垃圾收集点，还要建农村污水处理站。听起来是好事——但钱呢？镇里一年的运转经费就那么多，污水处理站建好了谁管？电费谁出？坏了谁修？上面只管建、不管运维，最后烂摊子全是镇上的。</p>
+<p>- <strong>村党支部书记</strong>：村里厕所改造两年了——300多户改了水厕，但化粪池满了没人清掏、污水管道接不上处理站、改好的厕所现在比旱厕还臭。老百姓问我：改了图啥？我无言以对。</p>
+<p>- <strong>生态环境局污防科科长</strong>：农业农村局分管农村生活污水，但我们才是排污口的法定监管部门。他们建的处理站在我们的日常监测里，有将近一半出水不达标。我给他们发过三次整改函了——没人理我。跨部门协调，太难了。</p>
+<hr></div>
+      </section>
+      <section class="act" id="act-2">
+        <div class="act-label">痛点 PAIN</div>
+        <h3 class="act-title">痛点</h3>
+        <div class="act-body"><blockquote>人居环境整治最深的坑不是"没钱建"，是"建了用不了、管不好"。</blockquote>
+<table><tr><th>利益相关方</th><th>核心痛点</th><th>深层原因</th></tr><tr><td>县农业农村局</td><td>考核指标重、技术能力缺口大</td><td>污水垃圾涉及环境工程专业，基层农口干部不掌握</td></tr><tr><td>乡镇政府</td><td>建管脱节、运维资金无着落</td><td>项目经费只管"建"不管"管"，运维成本没有制度性保障</td></tr><tr><td>村委会</td><td>设施建成即闲置</td><td>老百姓不会用、没人管，厕所革命的"后半篇文章"没人做</td></tr><tr><td>生态环境局</td><td>跨部门监管失灵</td><td>农口管建设、环保管达标——两个系统数据不互通、标准不统一</td></tr><tr><td>咨询公司机会</td><td>—</td><td>**技术方案+运维机制+迎检过关 = 三方难题的系统解法**</td></tr></table>
+<p><strong>致命细节</strong>：很多县的花钱逻辑是"先把设施建起来，检查通过了再说"，导致大量处理设施"晒太阳"。审计和督察回头看的时候，出水不达标、设施闲置的证据一抓一大把。到时候问责的板子打下来，比当初不建更疼。</p>
+<hr></div>
+      </section>
+      <section class="act" id="act-3">
+        <div class="act-label">方案 SOLUTION</div>
+        <h3 class="act-title">方案</h3>
+        <div class="act-body"><blockquote>我们做的是"建管一体"的整治方案——不只让设施建起来，更让设施转起来、管起来。</blockquote>
+<h4>我们的打法（六步建管一体整治法）</h4>
+<p>```</p>
+<p>① 现状摸底     →  全县污水治理率、垃圾收集覆盖率、改厕完成率逐村摸底</p>
+<p>② 对标诊断     →  对标省定考核目标，输出"差距清单"——哪些村欠账最大、投入性价比最高</p>
+<p>③ 技术选型     →  因地制宜选技术：集中式or分散式？管网or小型一体化？比选经济性+可运维性</p>
+<p>④ 资金方案     →  编制项目可研+资金申报方案，同步设计"建设+运维"全周期预算</p>
+<p>⑤ 模式设计     →  设计"政府补一点+村集体出一点+农户缴一点"的运维收费机制</p>
+<p>⑥ 迎检突击     →  为省级考核验收做准备：现场点位包装+档案材料整理+汇报PPT制作</p>
+<p>```</p>
+<h4>关键数据锚点</h4>
+<p>- <strong>主管部门</strong>：农业农村部牵头，生态环境部、住建部、卫健委等多部委协同</p>
+<p>- <strong>资金投向</strong>：污水处理、垃圾治理、厕所革命、村容村貌提升</p>
+<p>- <strong>窗口</strong>：视通知（✅ 2026年可申报）</p>
+<p>- <strong>资金体量</strong>：视县域大小和欠账程度，一般1000万-5000万/年</p>
+<p>- <strong>核心痛点</strong>：建管脱节——"建得起、用不起、管不好"</p>
+<p>- <strong>2026年变化</strong>：中央环保督察"回头看"频率加大，设施闲置将被严肃追责</p>
+<hr></div>
+      </section>
+      <section class="act" id="act-4">
+        <div class="act-label">价值 VALUE</div>
+        <h3 class="act-title">价值</h3>
+        <div class="act-body"><h4>对客户的三重价值</h4>
+<table><tr><th>价值维度</th><th>具体收益</th><th>量化预期</th></tr><tr><td>考核达标</td><td>污水治理率、垃圾覆盖率等指标跃升</td><td>全省排名提升10-20个位次，摘掉"后进"帽子</td></tr><tr><td>运维可持续</td><td>设施真正转起来，不白花钱</td><td>设施正常运行率从50%提升至90%+</td></tr><tr><td>治理合力</td><td>打破部门壁垒，形成跨部门协同方案</td><td>农业农村局+生态环境局+乡镇三方责任厘清</td></tr></table>
+<h4>对我们的商业价值</h4>
+<p>- <strong>单项目收入</strong>：40-70万元（摸底诊断+技术方案+申报+运维机制设计+迎检辅导）</p>
+<p>- <strong>成功率</strong>：高（刚需服务——排名倒数的县有最强烈的出钱意愿）</p>
+<p>- <strong>延伸机会</strong>：运维绩效监测年度服务、后续美丽乡村建设申报、农村改厕整村推进资金申报</p>
+<hr></div>
+      </section>
+      <section class="act" id="act-5">
+        <div class="act-label">行动 ACTION</div>
+        <h3 class="act-title">行动</h3>
+        <div class="act-body"><h4>✅ 现在就要启动。人居环境考核一般在下半年——但上半年不做完摸底和方案，下半年只能"赶作业"</h4>
+<table><tr><th>时间节点</th><th>行动项</th><th>责任人</th></tr><tr><td>**现在-8月**</td><td>对接全省排名后20%或被通报批评的县，锁定目标客户</td><td>商务团队</td></tr><tr><td>**9月-10月**</td><td>逐村现状摸底+技术路线比选</td><td>技术团队</td></tr><tr><td>**11月**</td><td>输出建设方案+运维机制设计+资金申报方案</td><td>技术团队</td></tr><tr><td>**12月-次年1月**</td><td>协助项目招标+施工启动</td><td>项目负责人</td></tr><tr><td>**次年考核前1个月**</td><td>迎检点位包装+材料整理+汇报演练</td><td>全员</td></tr></table>
+<blockquote>⚠️ **紧急度提示**：被人居环境考核"点名"的县，比任何客户都焦虑——因为他们面临的是"问责"而不是"考核"。排名倒数的县，局长和分管县长都在"等一个能真正解决问题的人"。去早了，你是救星；去晚了，他们有更多人敲门。</blockquote>
+<h4>销售话术锚点</h4>
+<p>- "用2000万修了15个处理站，半年后一半不达标——这2000万不只是白花了，是给自己挖了一个问责的大坑。"</p>
+<p>- "考核排名倒数第三，不是因为您不重视，是因为缺一套从建设到运维的系统方案。这套方案，我们来出。"</p>
+<p>- "督察回头看的时候，他们不看您建了多少，看您有多少在用、用得好不好。我们帮您把每一个处理站都转起来。"</p>
+<hr>
+<p>## 叙事标签</p>
+<p><code>农村人居环境整治</code> <code>污水垃圾厕所</code> <code>视通知申报</code> <code>建管脱节</code> <code>2026年可申报</code> <code>环保督察回头看</code> <code>运维可持续</code> <code>考核排名</code></p></div>
+      </section>
+  <div class="tag-bar"></div>
+</div>
+<div class="footnote">54项核心业务叙事法 · 2026年更新版</div>
+</body>
+</html>

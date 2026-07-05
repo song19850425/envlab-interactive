@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>采样标准汇编 · PhET可行性评估 · 标准更新核查</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:#0a0e17;color:#e2e8f0;line-height:1.7;font-size:14px}
+.container{max-width:960px;margin:0 auto;padding:20px 24px 60px}
+.section{margin-bottom:32px}
+.section-title{font-size:14px;font-weight:700;padding:8px 14px;border-radius:8px;margin-bottom:14px;display:flex;align-items:center;gap:8px;border-left:4px solid}
+.st-gray{background:#1e293b;border-left-color:#64748b;color:#94a3b8}
+.st-green{background:rgba(22,163,74,.08);border-left-color:#16a34a;color:#4ade80}
+.st-amber{background:rgba(217,119,6,.08);border-left-color:#d97706;color:#fbbf24}
+.st-blue{background:rgba(2,132,199,.08);border-left-color:#0284c7;color:#38bdf8}
+.st-red{background:rgba(239,68,68,.08);border-left-color:#ef4444;color:#fca5a5}
+.top-bar{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:28px 24px;text-align:center}
+.top-bar h1{font-size:20px;font-weight:800}
+.top-bar .sub{font-size:12px;color:#94a3b8;margin-top:4px}
+
+table{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0}
+table th{background:#1e293b;color:#94a3b8;padding:7px 10px;text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:1px;border-bottom:2px solid var(--border,rgba(255,255,255,.06))}
+table td{padding:6px 10px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top}
+table tr:hover{background:rgba(255,255,255,.02)}
+
+.pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:600}
+.pill-green{background:rgba(22,163,74,.12);color:#4ade80}
+.pill-blue{background:rgba(2,132,199,.12);color:#38bdf8}
+.pill-amber{background:rgba(217,119,6,.12);color:#fbbf24}
+.pill-red{background:rgba(239,68,68,.12);color:#fca5a5}
+.pill-gray{background:rgba(255,255,255,.04);color:#64748b}
+.pill-purple{background:rgba(124,58,237,.12);color:#a78bfa}
+
+.verdict{display:inline-block;padding:1px 8px;border-radius:6px;font-size:10px;font-weight:700}
+.v-go{background:rgba(22,163,74,.15);color:#4ade80}
+.v-hold{background:rgba(217,119,6,.12);color:#fbbf24}
+.v-skip{background:rgba(239,68,68,.1);color:#fca5a5}
+
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+@media(max-width:640px){.card-grid{grid-template-columns:1fr}}
+.card{background:#131a2e;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:16px 18px;transition:.3s}
+.card:hover{transform:translateY(-2px)}
+.card .c-stars{font-size:12px;letter-spacing:1px;margin-bottom:4px}
+.card .c-title{font-size:14px;font-weight:700;margin-bottom:4px}
+.card .c-score{font-size:24px;font-weight:800;margin:6px 0}
+.card .c-desc{font-size:11px;color:#64748b;line-height:1.6}
+.card .c-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+.card .c-tags span{padding:1px 6px;border-radius:4px;font-size:9px;font-weight:600}
+
+.highlight{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.12);border-radius:8px;padding:14px 16px;margin:14px 0;font-size:12px;line-height:1.6}
+.highlight strong{color:#4ade80}
+.highlight-red{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.12);border-radius:8px;padding:14px 16px;margin:14px 0;font-size:12px;line-height:1.6}
+.highlight-red strong{color:#fca5a5}
+
+.no-list{list-style:none;padding:0;margin:0}
+.no-list li{position:relative;padding:4px 0 4px 18px;font-size:12px;color:#94a3b8;line-height:1.5}
+.no-list li::before{content:"▸";position:absolute;left:0;color:#475569}
+
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+@media(max-width:480px){.stats-row{grid-template-columns:1fr 1fr}}
+.stat-card{background:#131a2e;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:14px;text-align:center}
+.stat-card .n{font-size:24px;font-weight:800}
+.stat-card .l{font-size:10px;color:#64748b;margin-top:2px}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>📋 采样标准汇编 · PhET可行性评估报告</h1>
+  <div class="sub">基于751页采样标准汇编PDF · 标准更新核查 + 交互模拟可行性分析</div>
+</div>
+
+<div class="container">
+
+<!-- ═══ 总览 ═══ -->
+<div class="section">
+  <div class="section-title st-gray">📊 总览</div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="n" style="color:#4ade80">41</div><div class="l">收录标准</div></div>
+    <div class="stat-card"><div class="n" style="color:#38bdf8">6</div><div class="l">类别</div></div>
+    <div class="stat-card"><div class="n" style="color:#fbbf24">6</div><div class="l">标准已更新</div></div>
+    <div class="stat-card"><div class="n" style="color:#a78bfa">8</div><div class="l">可做PhET</div></div>
+  </div>
+  <div class="highlight">
+    <strong>核心发现：</strong>PDF 汇编基于 2015 年版本，共 751 页 41 个标准。经核查，至少有 <strong>6 个标准已被新版本替代</strong>。采样类内容非常适合制作 PhET 级交互页面——采样涉及大量"空间布设、设备操作、流程规范"等可视化内容，比实验室检测更适合用交互模拟教学。
+  </div>
+</div>
+
+<!-- ═══ 标准更新核查 ═══ -->
+<div class="section">
+  <div class="section-title st-red">🔄 标准更新核查（PDF vs 现行标准）</div>
+
+  <table>
+    <tr><th style="width:100px">类别</th><th style="width:160px">PDF中旧标准</th><th style="width:160px">现行标准</th><th>状态</th><th>主要变化</th></tr>
+    <tr>
+      <td><span class="pill pill-blue">空气</span></td>
+      <td>HJ/T 194-2005</td>
+      <td><strong>HJ 194-2017</strong></td>
+      <td><span class="verdict v-go">已更新</span></td>
+      <td>2018年实施。细化了PM2.5采样要求、增加了苏玛罐采样、修改了点位布设要求</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-blue">空气</span></td>
+      <td>HJ/T 55-2000</td>
+      <td><strong>HJ 55-2024</strong></td>
+      <td><span class="verdict v-go">已更新</span></td>
+      <td>2024年新标准，大幅更新无组织排放监测技术</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-teal" style="background:rgba(5,150,105,.12);color:#34d399">水</span></td>
+      <td>HJ/T 91-2002</td>
+      <td><strong>HJ 91.1-2019</strong> + <strong>HJ 91.2-2022</strong></td>
+      <td><span class="verdict v-go">已更新/拆分</span></td>
+      <td>2019年拆分为污水(HJ 91.1)和地表水(HJ 91.2)两个独立规范</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-teal" style="background:rgba(5,150,105,.12);color:#34d399">水</span></td>
+      <td>HJ/T 164-2004</td>
+      <td><strong>HJ 164-2020</strong></td>
+      <td><span class="verdict v-go">已更新</span></td>
+      <td>2021年实施。增加地下水监测井建设规范、洗井要求、采样设备要求</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-green" style="background:rgba(5,150,105,.12);color:#4ade80">土壤</span></td>
+      <td>HJ 25.2-2014</td>
+      <td><strong>HJ 25.2-2019</strong></td>
+      <td><span class="verdict v-go">已更新</span></td>
+      <td>2019年发布。名称改为"建设用地"，增加了风险评估阶段监测要求</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-amber" style="background:rgba(217,119,6,.12);color:#fbbf24">固废</span></td>
+      <td>HJ/T 298-2007</td>
+      <td><strong>HJ 298-2019</strong></td>
+      <td><span class="verdict v-go">已更新</span></td>
+      <td>2019年修订，更新危险废物鉴别采样要求</td>
+    </tr>
+  </table>
+
+  <div class="highlight-red">
+    <strong>⚠️ 注意：</strong>汇编中引用的标准多为 2015 年前版本。实际工作中应以生态环境部官网最新发布为准。以上 6 个标准需替换为现行版本后再作为交互页面的技术依据。
+  </div>
+</div>
+
+<!-- ═══ 各标准现行状态 ═══ -->
+<div class="section">
+  <div class="section-title st-green">✅ 各标准现行状态（仍有效）</div>
+
+  <table>
+    <tr><th>类别</th><th>标准号</th><th>名称</th><th>状态</th></tr>
+    <tr><td><span class="pill pill-blue">空气</span></td><td>HJ 691-2014</td><td>环境空气半挥发性有机物采样技术导则</td><td><span class="verdict v-go">现行</span></td></tr>
+    <tr><td><span class="pill pill-blue">空气</span></td><td>HJ 656-2013</td><td>PM2.5手工监测方法技术规范</td><td><span class="verdict v-go">现行</span></td></tr>
+    <tr><td><span class="pill pill-blue">空气</span></td><td>HJ 732-2014</td><td>废气VOCs采样气袋法</td><td><span class="verdict v-go">现行</span></td></tr>
+    <tr><td><span class="pill pill-blue">空气</span></td><td>GB/T 16157-1996</td><td>固定源颗粒物采样方法</td><td><span class="verdict v-go">现行（部分修订单）</span></td></tr>
+    <tr><td><span class="pill pill-teal" style="background:rgba(5,150,105,.12);color:#34d399">水</span></td><td>HJ 493-2009</td><td>水质样品的保存和管理技术规定</td><td><span class="verdict v-go">现行（参考 HJ 91.1）</span></td></tr>
+    <tr><td><span class="pill pill-teal" style="background:rgba(5,150,105,.12);color:#34d399">水</span></td><td>HJ 494-2009</td><td>水质采样技术指导</td><td><span class="verdict v-go">现行</span></td></tr>
+    <tr><td><span class="pill pill-teal" style="background:rgba(5,150,105,.12);color:#34d399">水</span></td><td>HJ 495-2009</td><td>水质采样设计技术规定</td><td><span class="verdict v-go">现行</span></td></tr>
+    <tr><td><span class="pill pill-green" style="background:rgba(5,150,105,.12);color:#4ade80">土壤</span></td><td>HJ/T 166-2004</td><td>土壤环境监测技术规范</td><td><span class="verdict v-go">现行（建议关注修订动态）</span></td></tr>
+    <tr><td><span class="pill pill-amber" style="background:rgba(217,119,6,.12);color:#fbbf24">固废</span></td><td>HJ/T 20-1998</td><td>工业固体废物采样制样技术规范</td><td><span class="verdict v-go">现行（已超25年，建议关注修订）</span></td></tr>
+    <tr><td><span class="pill pill-gray">噪声</span></td><td>GB 3096-2008</td><td>声环境质量标准</td><td><span class="verdict v-go">现行</span></td></tr>
+    <tr><td><span class="pill pill-gray">噪声</span></td><td>HJ 640-2012</td><td>环境噪声监测技术规范 城市声环境常规监测</td><td><span class="verdict v-go">现行</span></td></tr>
+    <tr><td><span class="pill pill-gray">噪声</span></td><td>HJ 706-2014</td><td>噪声测量值修正</td><td><span class="verdict v-go">现行</span></td></tr>
+  </table>
+</div>
+
+<!-- ═══ PhET可行性评估（8个候选人） ═══ -->
+<div class="section">
+  <div class="section-title st-amber">🎯 PhET级交互模拟 · 可行性评估（按优先级排序）</div>
+
+  <div class="card-grid">
+
+    <!-- 1 -->
+    <div class="card">
+      <div class="c-stars" style="color:#4ade80">★★★★★</div>
+      <div class="c-title">地表水采样布点</div>
+      <div class="c-score" style="color:#4ade80">9.2/10</div>
+      <div class="c-desc">
+        <strong>依据：</strong>HJ 91.2-2022 / HJ 494-2009<br>
+        <strong>预研：</strong>已有「读懂一条河」Demo + pH页面底层可用<br>
+        <strong>核心交互：</strong>3D河流断面图 → 拖拽采样点 → 水位/流速调节 → 表层/中层/底层采样器切换 → 样品瓶标签生成
+      </div>
+      <div class="c-tags">
+        <span style="background:rgba(22,163,74,.12);color:#4ade80">高可行性</span>
+        <span style="background:rgba(2,132,199,.12);color:#38bdf8">3-4h开发</span>
+        <span style="background:rgba(124,58,237,.12);color:#a78bfa">复用率高</span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card">
+      <div class="c-stars" style="color:#4ade80">★★★★★</div>
+      <div class="c-title">土壤采样布点</div>
+      <div class="c-score" style="color:#4ade80">9.0/10</div>
+      <div class="c-desc">
+        <strong>依据：</strong>HJ/T 166-2004 / HJ 25.2-2019<br>
+        <strong>预研：</strong>已有「土壤环境监测技术规范」页面 + 布点钻探模拟<br>
+        <strong>核心交互：</strong>网格/对角线/系统布点法切换 → 地块绘制 → 自动计算份样数 → 采样深度选择 → 分层取样动画
+      </div>
+      <div class="c-tags">
+        <span style="background:rgba(22,163,74,.12);color:#4ade80">高可行性</span>
+        <span style="background:rgba(2,132,199,.12);color:#38bdf8">已有基础页面</span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card">
+      <div class="c-stars" style="color:#4ade80">★★★★☆</div>
+      <div class="c-title">地下水采样（洗井+采样）</div>
+      <div class="c-score" style="color:#4ade80">8.5/10</div>
+      <div class="c-desc">
+        <strong>依据：</strong>HJ 164-2020（已更新）<br>
+        <strong>预研：</strong>可复用P&T/PRB页面中的地下水SVG<br>
+        <strong>核心交互：</strong>监测井结构剖面 → 贝勒管/潜水泵选择 → 洗井（水位/水温/pH稳定判定）→ 采样顺序 → 样品保存
+      </div>
+      <div class="c-tags">
+        <span style="background:rgba(22,163,74,.12);color:#4ade80">高可行性</span>
+        <span style="background:rgba(2,132,199,.12);color:#38bdf8">3-4h</span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card">
+      <div class="c-stars" style="color:#4ade80">★★★★☆</div>
+      <div class="c-title">环境空气采样（PM2.5）</div>
+      <div class="c-score" style="color:#4ade80">8.3/10</div>
+      <div class="c-desc">
+        <strong>依据：</strong>HJ 194-2017 / HJ 656-2013<br>
+        <strong>预研：</strong>可复用五气分析仪中的风机/流量模块<br>
+        <strong>核心交互：</strong>中流量/大流量采样器选择 → 滤膜安装 → 流量校准 → 24h采样 → 滤膜称重条件模拟（温湿度控制）
+      </div>
+      <div class="c-tags">
+        <span style="background:rgba(22,163,74,.12);color:#4ade80">高可行性</span>
+        <span style="background:rgba(217,119,6,.12);color:#fbbf24">需学习滤膜称重</span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card">
+      <div class="c-stars" style="color:#38bdf8">★★★★☆</div>
+      <div class="c-title">固定源废气采样</div>
+      <div class="c-score" style="color:#38bdf8">7.8/10</div>
+      <div class="c-desc">
+        <strong>依据：</strong>GB/T 16157-1996 / HJ/T 397-2007 / HJ 55-2024<br>
+        <strong>预研：</strong>五气分析仪已有烟道检测概念<br>
+        <strong>核心交互：</strong>烟道截面网格布点 → 等速采样调节 → 采样枪插入深度 → 含湿量/温度/流速测量 → 颗粒物+气态污染物分别采集
+      </div>
+      <div class="c-tags">
+        <span style="background:rgba(2,132,199,.12);color:#38bdf8">中等</span>
+        <span style="background:rgba(217,119,6,.12);color:#fbbf24">交互复杂度高</span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card">
+      <div class="c-stars" style="color:#38bdf8">★★★☆☆</div>
+      <div class="c-title">噪声监测布点</div>
+      <div class="c-score" style="color:#38bdf8">7.5/10</div>
+      <div class="c-desc">
+        <strong>依据：</strong>GB 3096-2008 / HJ 640-2012 / HJ 706-2014<br>
+        <strong>预研：</strong>已有EnvLab物理参数-噪声页面<br>
+        <strong>核心交互：</strong>城市地图噪声点位布设 → 昼/夜间模式切换 → 声级计模拟 → Leq/Lmax/Ln统计 → 功能区判定
+      </div>
+      <div class="c-tags">
+        <span style="background:rgba(2,132,199,.12);color:#38bdf8">中等</span>
+        <span style="background:rgba(22,163,74,.12);color:#4ade80">已有基础</span>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="card">
+      <div class="c-stars" style="color:#fbbf24">★★★☆☆</div>
+      <div class="c-title">工业固废采样</div>
+      <div class="c-score" style="color:#fbbf24">6.5/10</div>
+      <div class="c-desc">
+        <strong>依据：</strong>HJ/T 20-1998 / HJ 298-2019<br>
+        <strong>核心交互：</strong>堆积形态识别 → 布点方案计算（份样数/间距）→ 采样器选择 → 分层/表层/深层采样 → 样品标签 → 送检流程
+      </div>
+      <div class="c-tags">
+        <span style="background:rgba(217,119,6,.12);color:#fbbf24">中等</span>
+        <span style="background:rgba(239,68,68,.1);color:#fca5a5">视觉表现力有限</span>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="card">
+      <div class="c-stars" style="color:#fbbf24">★★★☆☆</div>
+      <div class="c-title">无组织排放监测</div>
+      <div class="c-score" style="color:#fbbf24">6.0/10</div>
+      <div class="c-desc">
+        <strong>依据：</strong>HJ 55-2024 / HJ/T 55-2000<br>
+        <strong>核心交互：</strong>下风向扇形布点 → 参照点/监控点设置 → 气象参数（风速/风向/稳定度）→ 采样时间控制 → 背景值扣除计算
+      </div>
+      <div class="c-tags">
+        <span style="background:rgba(217,119,6,.12);color:#fbbf24">低优先级</span>
+        <span style="background:rgba(239,68,68,.1);color:#fca5a5">依赖气象</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ 开发建议 ═══ -->
+<div class="section">
+  <div class="section-title st-blue">📋 开发优先级建议</div>
+
+  <div class="highlight">
+    <strong>首批开发（建议3个）：</strong>
+  </div>
+
+  <table>
+    <tr><th style="width:36px">#</th><th>主题</th><th>复用基础</th><th>预计工时</th><th>理由</th></tr>
+    <tr>
+      <td>1</td><td><strong>地表水采样布点</strong></td><td>「读懂一条河」Demo</td><td>3-4h</td><td>已有河流断面基础+采样过程视觉丰富+教学价值最高</td>
+    </tr>
+    <tr>
+      <td>2</td><td><strong>土壤采样布点升级</strong></td><td>土壤环境监测技术规范</td><td>3h</td><td>已有页面但交互不够PhET级，网格布点+采样动画可升级</td>
+    </tr>
+    <tr>
+      <td>3</td><td><strong>地下水洗井+采样</strong></td><td>P&T/P&T已有地下水SVG</td><td>3-4h</td><td>HJ 164-2020新标准刚出，教学需求大</td>
+    </tr>
+  </table>
+
+  <div class="highlight" style="margin-top:14px">
+    <strong>三个采样主题的共同优势：</strong><br>
+    ① 空间可视化效果好——采样本质是"在哪里采、怎么采"，天然适合SVG/Canvas动画<br>
+    ② 操作步骤明确——从准备→布点→采样→保存有完整流程，适合分步交互教学<br>
+    ③ 专业门槛低——采样比仪器分析更容易理解，受众更广（检测员、学生、管理人员都适用）
+  </div>
+</div>
+
+<!-- ═══ 与已有EnvLab的关系 ═══ -->
+<div class="section">
+  <div class="section-title st-gray">🔗 与已有EnvLab实验库的关系</div>
+
+  <table>
+    <tr><th>已有EnvLab页面</th><th>可复用技术</th><th>对应采样方向</th></tr>
+    <tr><td>「读懂一条河」5断面×6指标</td><td>河流SVG断面、水质评价逻辑</td><td>地表水采样布点</td></tr>
+    <tr><td>土壤环境监测技术规范</td><td>布点方法、钻探模拟</td><td>土壤采样布点升级</td></tr>
+    <tr><td>P&T抽水处理 + PRB可渗透反应墙</td><td>地下水SVG、监测井示意图</td><td>地下水洗井+采样</td></tr>
+    <tr><td>五气分析仪-汽车尾气</td><td>气体流量控制、浓度读数</td><td>环境空气采样、固定源废气</td></tr>
+    <tr><td>浊度测定-PhET级升级</td><td>采样瓶/比色皿的视觉元素</td><td>样品保存与运输</td></tr>
+    <tr><td>噪声/振动/照度（物理参数）</td><td>声级计模拟、功能区分类</td><td>噪声监测布点</td></tr>
+  </table>
+</div>
+
+<!-- ═══ 结论 ═══ -->
+<div class="section">
+  <div class="section-title st-green">✅ 结论</div>
+  <div class="highlight">
+    <strong>采样类比实验检测更适合做PhET级交互教学。</strong><br><br>
+    原因在于：采样教学的核心是<strong>"空间判断 + 流程操作"</strong>，这恰恰是交互模拟的优势领域。实验中涉及的仪器检测（如COD、pH）更多是"数据读取"，而采样更多是"现场判断"——<strong>看环境、选位置、用设备、辨时机</strong>，每一步都有可视化的交互潜力。<br><br>
+    建议先做<strong>地表水采样、土壤采样、地下水采样</strong>三个方向，各约3-4小时开发量，完成后EnvLab将从"实验室检测"扩展到"现场采样"全链条。
+  </div>
+</div>
+
+</div>
+</body>
+</html>

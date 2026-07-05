@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>渣土资源化项目 · 财务测算模型</title>
+<style>
+:root{--ink:#1a1f36;--gray:#6b7280;--line:#e5e5e0;--green:#166534;--green-l:#f0fdf4;--amber:#b45309;--amber-l:#fffbeb;--blue:#1e40af;--blue-l:#eff6ff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:#fafaf8;color:var(--ink);line-height:1.7;padding:20px;max-width:800px;margin:auto}
+h1{font-size:20px;font-weight:900;letter-spacing:-.02em;margin-bottom:4px}
+.sub{font-size:12px;color:var(--gray);margin-bottom:20px}
+.card{border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:12px}
+.card h3{font-size:14px;font-weight:700;margin-bottom:6px}
+.card p{font-size:12px;color:var(--gray);line-height:1.6}
+.card .big{font-size:28px;font-weight:900;line-height:1;margin:4px 0}
+.card .big .unit{font-size:13px;font-weight:400;color:var(--gray)}
+table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
+th{background:var(--ink);color:#fff;padding:8px 10px;text-align:left;font-weight:600}
+td{padding:8px 10px;border-bottom:0.5px solid var(--line)}
+tr:nth-child(even) td{background:#fafaf8}
+.hl{background:var(--green-l);border-left:3px solid var(--green);padding:10px 14px;font-size:12px;color:var(--green);margin:10px 0}
+.hl-amber{background:var(--amber-l);border-left:3px solid var(--amber);color:var(--amber)}
+.hl-blue{background:var(--blue-l);border-left:3px solid var(--blue);color:var(--blue)}
+input[type=range]{width:100%;margin:6px 0}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row .col{flex:1;min-width:150px}
+@media(max-width:480px){body{padding:12px}}
+</style>
+</head>
+<body>
+
+<h1>南阳渣土资源化项目 · 财务测算模型</h1>
+<p class="sub">基于"国企主导投资 + 民企技术运维"合作模式 · 基准净利润10元/方<br>南阳目标85%资源化率 · 现状40% · 全域年产生量约800-1200万吨</p>
+
+<div class="card hl">
+  <strong>核心假设：</strong>渣土处置净利润 ≈ 10元/方（含接收费+处理费-运营成本-税费）
+</div>
+
+<div class="row">
+  <div class="col card" style="text-align:center">
+    <div style="font-size:12px;color:var(--gray)">起步规模（保本点）</div>
+    <div class="big">50<span class="unit">万方/年</span></div>
+    <div style="font-size:11px;color:var(--gray)">年利润 ≈ 500万</div>
+  </div>
+  <div class="col card" style="text-align:center;border-color:var(--green)">
+    <div style="font-size:12px;color:var(--green);font-weight:700">推荐门槛</div>
+    <div class="big" style="color:var(--green)">100<span class="unit">万方/年</span></div>
+    <div style="font-size:11px;color:var(--green);font-weight:600">年利润 ≈ 1000万 ✅</div>
+  </div>
+  <div class="col card" style="text-align:center">
+    <div style="font-size:12px;color:var(--gray)">扩产理想</div>
+    <div class="big">200<span class="unit">万方/年</span></div>
+    <div style="font-size:11px;color:var(--gray)">年利润 ≈ 2000万</div>
+  </div>
+</div>
+
+<h2 style="font-size:15px;font-weight:700;margin:16px 0 8px">一、不同模式的利润对比</h2>
+
+<table>
+  <tr><th>方案</th><th style="text-align:right">年处理量</th><th style="text-align:right">年收入</th><th style="text-align:right">年成本</th><th style="text-align:right">年净利润</th><th>投资回收期</th></tr>
+  <tr>
+    <td><strong>模式A 民企全资</strong></td>
+    <td style="text-align:right">100万方</td>
+    <td style="text-align:right">2500万</td>
+    <td style="text-align:right">1500万</td>
+    <td style="text-align:right;color:var(--green);font-weight:700">1000万</td>
+    <td>2.5年</td>
+  </tr>
+  <tr>
+    <td><strong>模式B 国企主导（推荐）</strong></td>
+    <td style="text-align:right">100万方</td>
+    <td style="text-align:right">2500万</td>
+    <td style="text-align:right">1700万</td>
+    <td style="text-align:right;color:var(--amber);font-weight:700">800万</td>
+    <td>国企出资，<br>我方无投资压力</td>
+  </tr>
+  <tr>
+    <td><strong>模式C 合资公司（50:50）</strong></td>
+    <td style="text-align:right">100万方</td>
+    <td style="text-align:right">2500万</td>
+    <td style="text-align:right">1600万</td>
+    <td style="text-align:right;color:var(--amber);font-weight:700">900万</td>
+    <td>双方共担</td>
+  </tr>
+</table>
+
+<div class="hl-amber" style="padding:10px 14px;font-size:12px;margin:10px 0">
+  <strong>说明：</strong>模式B（国企主导）成本比民企高约10-15%，但审批/土地/消纳场景的效率提升远大于成本差异。
+</div>
+
+<h2 style="font-size:15px;font-weight:700;margin:16px 0 8px">二、投资估算（100万方/年规模）</h2>
+
+<table>
+  <tr><th>项目</th><th style="text-align:right">金额（万元）</th><th>说明</th></tr>
+  <tr><td>土地 & 场地建设</td><td style="text-align:right">1500-2000</td><td>约30-50亩，含硬化/围挡/地磅</td></tr>
+  <tr><td>生产线设备</td><td style="text-align:right">800-1200</td><td>破碎/筛分/水洗/脱水系统</td></tr>
+  <tr><td>环保设施</td><td style="text-align:right">300-500</td><td>粉尘治理/废水处理/噪音控制</td></tr>
+  <tr><td>智慧化系统</td><td style="text-align:right">200-300</td><td>地磅系统/ERP/监控/车辆管理</td></tr>
+  <tr><td>流动资金</td><td style="text-align:right">500-800</td><td>3个月运营周转</td></tr>
+  <tr style="font-weight:700"><td>总投资</td><td style="text-align:right">3300-4800</td><td>平均约4000万</td></tr>
+</table>
+
+<div class="hl-blue" style="padding:10px 14px;font-size:12px;margin:10px 0">
+  <strong>模式B下，投资由国企承担，我方投入主要在技术方案+运维团队+智慧化系统（约300-500万）。</strong>
+</div>
+
+<h2 style="font-size:15px;font-weight:700;margin:16px 0 8px">三、合作分成方案（推荐模式B）</h2>
+
+<table>
+  <tr><th>参与方</th><th>投入</th><th>收益分配</th><th>风险承担</th></tr>
+  <tr>
+    <td><strong>国企方</strong></td>
+    <td>土地+厂房+设备 约3500万<br>审批协调资源</td>
+    <td>净利润 × 70%</td>
+    <td>投资风险（土地/设备）</td>
+  </tr>
+  <tr>
+    <td><strong>我方（民企）</strong></td>
+    <td>技术方案+运维团队<br>智慧化装备 约400万</td>
+    <td>净利润 × 20%</td>
+    <td>运营风险（达标率）</td>
+  </tr>
+  <tr>
+    <td><strong>预留</strong></td>
+    <td>—</td>
+    <td>净利润 × 10%</td>
+    <td>激励基金/再投入</td>
+  </tr>
+</table>
+
+<h2 style="font-size:15px;font-weight:700;margin:16px 0 8px">四、收益敏感性分析</h2>
+
+<table>
+  <tr><th>净利润/方</th><th>50万方</th><th>100万方</th><th>200万方</th></tr>
+  <tr><td>8元</td><td style="text-align:right">400万</td><td style="text-align:right">800万</td><td style="text-align:right">1600万</td></tr>
+  <tr><td><strong>10元（基准）</strong></td><td style="text-align:right"><strong>500万</strong></td><td style="text-align:right"><strong>1000万</strong></td><td style="text-align:right"><strong>2000万</strong></td></tr>
+  <tr><td>12元</td><td style="text-align:right">600万</td><td style="text-align:right">1200万</td><td style="text-align:right">2400万</td></tr>
+  <tr><td>15元（乐观）</td><td style="text-align:right">750万</td><td style="text-align:right">1500万</td><td style="text-align:right">3000万</td></tr>
+</table>
+
+<h2 style="font-size:15px;font-weight:700;margin:16px 0 8px">五、我方收益测算（模式B，占20%）</h2>
+
+<table>
+  <tr><th>项目总规模</th><th>总净利润</th><th style="color:var(--green);font-weight:700">我方分成（20%）</th><th>备注</th></tr>
+  <tr><td>50万方/年</td><td style="text-align:right">500万</td><td style="text-align:right;color:var(--green);font-weight:700">100万</td><td>起步，刚好覆盖团队</td></tr>
+  <tr><td><strong>100万方/年</strong></td><td style="text-align:right"><strong>1000万</strong></td><td style="text-align:right;color:var(--green);font-weight:700"><strong>200万</strong></td><td><strong>一个点，健康利润</strong></td></tr>
+  <tr><td>200万方/年</td><td style="text-align:right">2000万</td><td style="text-align:right;color:var(--green);font-weight:700">400万</td><td>扩产状态</td></tr>
+  <tr><td>复制到3个点</td><td style="text-align:right">3000万</td><td style="text-align:right;color:var(--green);font-weight:700">600万</td><td>外地复制扩张</td></tr>
+</table>
+
+<div class="hl" style="margin-top:16px">
+  <strong>结论：</strong>先干1个100万方/年的点，我方年收益≈200万。<br>
+  模式跑通后复制到2-3个点，年收益可达500-600万。<br>
+  不需要铺太大，1-2个点踏踏实实干就能挣钱。
+</div>
+
+<div style="margin-top:20px;padding:14px;background:#f5f0e8;border-radius:8px;font-size:11px;color:var(--gray);line-height:1.6">
+  <strong>免责说明：</strong>以上数据基于行业估算和安南项目经验参考，实际利润受区域政策、处置费定价、消纳渠道、运营效率等多因素影响，建议在做投资决策前完成实地尽职调查。
+</div>
+
+</body>
+</html>

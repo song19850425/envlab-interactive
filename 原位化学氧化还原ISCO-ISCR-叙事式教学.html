@@ -1,0 +1,380 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>原位化学氧化/还原 · 叙事式教学</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}:root{--a:#9333ea;--al:#f3e8ff;--b:#e8e0d4;--sr:'Noto Serif SC','Source Han Serif SC','Songti SC',serif;--sn:'Inter',-apple-system,'PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth}body{font-family:var(--sn);color:#1a1a2e;background:#faf9f6;overflow-x:hidden}
+#sp{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--a),#16a34a);z-index:1000}
+#nv{position:fixed;right:24px;top:50%;z-index:999;display:flex;flex-direction:column;gap:14px}
+.nd{width:10px;height:10px;border-radius:50%;background:var(--b);cursor:pointer;border:2px solid transparent;position:relative}.nd.ac{background:var(--a);transform:scale(1.5)}.nd:hover{border-color:var(--a)}
+.nl{position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:11px;white-space:nowrap;color:#555;background:#fff;padding:3px 10px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.1);opacity:0;pointer-events:none;transition:opacity .2s}.nd:hover .nl{opacity:1}
+.he{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 24px;background:linear-gradient(180deg,var(--al),#faf9f6)}
+.he h1{font-family:var(--sr);font-size:clamp(36px,6vw,72px);font-weight:900;color:#1a1a2e}.he h1 em{color:var(--a);font-style:normal}
+.hb{display:inline-block;padding:6px 18px;border-radius:20px;background:var(--al);color:var(--a);font-size:12px;font-weight:600;margin-bottom:24px}
+.he p{margin-top:20px;font-size:clamp(14px,2vw,18px);color:#555;max-width:560px;line-height:1.7}
+.hs{display:flex;gap:32px;margin-top:48px;flex-wrap:wrap;justify-content:center}.hs div{text-align:center}.hs .n{font-family:var(--sr);font-size:36px;font-weight:900;color:var(--a);display:block}
+.sh{position:absolute;bottom:32px;left:50%;color:#555;font-size:12px;animation:fl 2s infinite}@keyframes fl{0%,100%{transform:translateX(-50%)}50%{transform:translateX(-50%) translateY(8px)}}
+.sc{max-width:900px;margin:0 auto;padding:100px 24px;opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}.sc.vi{opacity:1;transform:translateY(0)}
+.sn{font-size:11px;font-weight:600;letter-spacing:3px;color:var(--a);margin-bottom:8px}
+.st{font-family:var(--sr);font-size:clamp(28px,4vw,48px);font-weight:700;margin-bottom:12px}
+.sd{font-size:16px;color:#555;line-height:1.8;max-width:600px;margin-bottom:48px}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-bottom:32px}
+.ic{background:#fff;border-radius:12px;padding:24px;border:1px solid var(--b);cursor:pointer;transition:.35s ease}.ic:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.08)}.ic.rv{background:var(--al)}
+.ii{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
+.in{font-weight:700;font-size:15px}.is{font-size:12px;color:#555}
+.ib{font-size:13px;color:#555;line-height:1.6;margin-top:10px;max-height:0;overflow:hidden;transition:.5s}.ic.rv .ib{max-height:300px;margin-top:10px}.it{display:inline-block;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600}
+.tl{position:relative;padding-left:40px}.tl::before{content:'';position:absolute;left:15px;top:8px;bottom:8px;width:2px;background:var(--b)}
+.ps{position:relative;margin-bottom:40px;opacity:0;transform:translateX(-20px);transition:.6s}.ps.vi{opacity:1;transform:translateX(0)}
+.ps::before{content:'';position:absolute;left:-33px;top:6px;width:12px;height:12px;border-radius:50%;background:#faf9f6;border:2px solid var(--b);transition:.3s}
+.ps.vi::before{background:var(--a);border-color:var(--a)}.pn{font-size:11px;font-weight:700;color:var(--a);margin-bottom:4px}
+.pt{font-weight:700;font-size:16px;margin-bottom:6px}.pd{font-size:14px;color:#555;line-height:1.7}
+.po{display:inline-block;padding:4px 12px;background:var(--al);color:var(--a);border-radius:6px;font-size:12px;margin-top:8px}
+.es{background:linear-gradient(180deg,var(--al),#faf9f6);padding:80px 24px 100px}
+.ec{background:#fff;border-radius:20px;border:1px solid var(--b);overflow:hidden;max-width:920px;margin:0 auto}
+.eh{padding:24px 28px;border-bottom:1px solid var(--b)}.eh h3{font-size:18px;font-weight:700;font-family:var(--sr)}
+.eb{padding:28px}.sw{background:#faf6ee;border-radius:14px;padding:16px;border:1px solid var(--b);margin-bottom:16px;text-align:center;min-height:150px;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.sb{padding:10px 24px;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;margin:4px;font-family:var(--sn)}
+.s1{background:linear-gradient(135deg,var(--a),#6b21a8);color:#fff}.s1:hover{transform:translateY(-2px)}
+.s2{background:linear-gradient(135deg,#78716c,#444);color:#fff}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:16px}
+.sg div{padding:14px;border-radius:10px;text-align:center}.sg .v{font-family:var(--sr);font-size:28px;font-weight:900;line-height:1}
+.ft{text-align:center;padding:60px 24px;color:#555;font-size:13px;border-top:1px solid var(--b);background:#f5f0e8}
+.eb input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#fff;border:2px solid #9333ea;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.1)}</style></head><body>
+<div id="sp"></div><div id="nv"><div class="nd ac" onclick="gs(0)"><span class="nl">开篇</span></div><div class="nd" onclick="gs(1)"><span class="nl">药剂</span></div><div class="nd" onclick="gs(2)"><span class="nl">条件</span></div><div class="nd" onclick="gs(3)"><span class="nl">流程</span></div><div class="nd" onclick="gs(4)"><span class="nl">模拟</span></div><div class="nd" onclick="gs(5)"><span class="nl">总结</span></div></div>
+<div class="he"><div class="hb">土壤修复 · 交互式教学</div><h1>原位化学<em>氧化/还原</em></h1><p>ISCO / ISCR · In Situ Chemical Oxidation/Reduction<br>通过向地下注入化学氧化剂或还原剂，原位降解或固定污染物。</p><div class="hs"><div><span class="n">6</span><span>种药剂</span></div><div><span class="n">>90</span><span>% 去除率</span></div><div><span class="n">4</span><span>步流程</span></div><div><span class="n">快速</span><span>见效时间</span></div></div><div class="sh">↓ 向下滚动</div></div>
+<div class="sc vi" id="s1"><div class="sn">Section 01 · 药剂类型</div><h2 class="st">氧化剂与还原剂</h2><p class="sd">ISCO（氧化）和ISCR（还原）使用不同药剂，针对不同污染物。点击查看。</p><div class="cg">
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#fef2f2;">⚡</div><div class="in">过硫酸盐</div><div class="is">Persulfate · ISCO</div><div class="ib">强氧化剂（E⁰=2.01V），可活化产生硫酸根自由基，降解氯化烃、石油烃、PAHs等。需亚铁或热活化。pH适用范围宽。</div><span class="it" style="background:#fef2f2;color:#991b1b;">氧化·广谱</span></div>
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#fef3c7;">💧</div><div class="in">高锰酸盐</div><div class="is">Permanganate · ISCO</div><div class="ib">中等强度氧化剂，对氯化烃（TCE、PCE）效果极佳。在酸性到中性条件下稳定，反应过程产生MnO₂沉淀。</div><span class="it" style="background:#fef3c7;color:#92400e;">氧化·氯烃</span></div>
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#e0f2fe;">☀️</div><div class="in">Fenton试剂</div><div class="is">Fenton's Reagent · ISCO</div><div class="ib">H₂O₂+Fe²⁺产生羟基自由基（E⁰=2.80V），氧化能力最强的AOP。对几乎所有有机物有效，但需酸性条件（pH2~4）。</div><span class="it" style="background:#e0f2fe;color:#0c4a6e;">氧化·最强</span></div>
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#f0fdf4;">🛡️</div><div class="in">零价铁</div><div class="is">ZVI · ISCR</div><div class="ib">还原脱氯+吸附共沉淀。将TCE脱氯为乙烷，Cr⁶⁺还原为Cr³⁺。可制成纳米级零价铁（nZVI）注入深层。</div><span class="it" style="background:#f0fdf4;color:#166534;">还原·脱氯</span></div></div></div>
+<div class="sc" id="s2"><div class="sn">Section 02 · 适用条件</div><h2 class="st">ISCO/ISCR 适用条件</h2><p class="sd">ISCO 和 ISCR 技术的效果取决于场地水文地质条件和污染物特征。选择前需综合评估以下因素。</p><div class="cg">
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#e0f2fe;">🏞️</div><div class="in">土壤与水文条件</div><div class="is">Site Conditions</div><div class="ib"><strong>渗透性是关键。</strong>中高渗透性土壤（渗透系数 >10⁻⁴ cm/s）最适合药剂传输。<br><br>低渗透性土壤需注压或结合水力压裂。天然有机质含量高会消耗氧化剂，增加用量。地下水流向影响药剂扩散路径，注入井需布设在污染羽上游。</div><span class="it" style="background:#e0f2fe;color:#0c4a6e;">中高渗透优先</span></div>
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#fef3c7;">🧪</div><div class="in">目标污染物</div><div class="is">Target Contaminants</div><div class="ib"><strong>ISCO（氧化）适用：</strong>氯化烃（TCE、PCE、TCA）、石油烃（BTEX、TPH）、多环芳烃（PAHs）、酚类、农药。<br><br><strong>ISCR（还原）适用：</strong>氯化烃（还原脱氯）、六价铬 Cr⁶⁺（还原为 Cr³⁺）、硝酸盐、高氯酸盐。<br><br>DNAPL 源区去除效果显著，但需多次注入。</div><span class="it" style="background:#fef3c7;color:#92400e;">污染物决定药剂</span></div>
+<div class="ic" onclick="rc(this)"><div class="ii" style="background:#f0fdf4;">⚠️</div><div class="in">注意事项</div><div class="is">Caution</div><div class="ib"><strong>安全与二次污染：</strong>氧化反应放热明显，可能引起地下水温升高。高浓度氧化剂可能杀死土著微生物，破坏生态平衡。<br><br>Fenton 试剂需 pH 2~4 条件，需预先酸化。高锰酸盐反应产生 MnO₂ 沉淀可能堵塞孔隙。需建立长期监测方案评估效果。</div><span class="it" style="background:#f0fdf4;color:#166534;">安全评估不可少</span></div></div></div></div>
+<div class="sc" id="s3"><div class="sn">Section 03 · 工艺流程</div><h2 class="st">标准实施流程</h2><p class="sd">从场地调查到效果评估，ISCO/ISCR 工程实施分为四个关键阶段。滚动查看各步骤要点，然后进入交互模拟。</p><div class="tl">
+<div class="ps"><div class="pn">STEP 01</div><div class="pt">场地调查与药剂筛选</div><div class="pd">开展水文地质调查，测定渗透系数、地下水流向、有机质含量。通过批次试验（摇瓶试验）筛选最佳氧化剂/还原剂类型和浓度。</div><span class="po">🧪 柱试验模拟原位条件</span></div>
+<div class="ps"><div class="pn">STEP 02</div><div class="pt">注入方案设计与布井</div><div class="pd">根据污染羽分布和影响半径确定注入井位置、间距和数量。计算药剂总量、注入浓度、注入压力和流量。分层注入避免反应短路。</div><span class="po">📐 影响半径决定井间距</span></div>
+<div class="ps"><div class="pn">STEP 03</div><div class="pt">现场实施与药剂注入</div><div class="pd">通过注入井或直推式 Geoprobe 将药剂输送至目标污染层。控制注入压力避免地表冒浆。可分段注入确保分布均匀。</div><span class="po">💉 分层注入均匀覆盖</span></div>
+<div class="ps"><div class="pn">STEP 04</div><div class="pt">效果监测与补充注入</div><div class="pd">定期采集监测井水样，分析污染物浓度、氧化还原电位、pH、溶解氧等指标。如出现浓度反弹，需安排补充注入。</div><span class="po">📊 反弹后需补充注入</span></div></div></div>
+
+<div class="es" id="s4"><div class="sc" style="padding-bottom:0;opacity:1;transform:none;"><div class="sn">Section 04 · 交互模拟</div><h2 class="st">模拟 ISCO 注入与降解</h2><p class="sd">选择氧化剂，调节注入参数，观察污染物浓度动态变化。</p></div>
+<div style="max-width:960px;margin:0 auto;padding:0 24px 100px;"><div class="ec" style="overflow:visible;"><div class="eh"><h3>⚡ ISCO 注入模拟器</h3></div><div class="eb">
+<!-- SVG Cross-section -->
+<div class="sw" style="min-height:0;padding:0;background:#faf6ee;overflow:hidden;">
+<svg viewBox="0 0 800 400" id="iscoSvg" style="width:100%;height:auto;display:block;">
+    <!-- Ground surface -->
+    <rect x="0" y="0" width="800" height="30" fill="#a8784a" opacity="0.2"/>
+    <text x="400" y="20" text-anchor="middle" font-size="11" fill="#92400e">地表</text>
+
+    <!-- Vadose zone -->
+    <rect x="0" y="30" width="800" height="100" fill="#fdf6e3" opacity="0.5"/>
+    <g opacity="0.1">
+        <circle cx="40" cy="60" r="3" fill="#92400e"/><circle cx="100" cy="80" r="2" fill="#92400e"/>
+        <circle cx="160" cy="50" r="3" fill="#92400e"/><circle cx="220" cy="100" r="2" fill="#92400e"/>
+        <circle cx="300" cy="65" r="3" fill="#92400e"/><circle cx="380" cy="90" r="2" fill="#92400e"/>
+        <circle cx="500" cy="55" r="3" fill="#92400e"/><circle cx="600" cy="85" r="2" fill="#92400e"/>
+        <circle cx="700" cy="70" r="3" fill="#92400e"/>
+    </g>
+    <text x="400" y="85" text-anchor="middle" font-size="10" fill="#888">包气带 (Vadose Zone)</text>
+
+    <!-- Water table -->
+    <line x1="0" y1="130" x2="800" y2="130" stroke="#0ea5e9" stroke-width="1.5" stroke-dasharray="6,3" opacity="0.5"/>
+    <text x="785" y="126" font-size="9" fill="#0ea5e9">地下水位</text>
+
+    <!-- Aquifer -->
+    <rect x="0" y="130" width="800" height="240" fill="#e0f2fe" opacity="0.15"/>
+    <g opacity="0.08">
+        <circle cx="50" cy="200" r="4" fill="#0c4a6e"/><circle cx="120" cy="280" r="3" fill="#0c4a6e"/>
+        <circle cx="200" cy="180" r="4" fill="#0c4a6e"/><circle cx="280" cy="300" r="3" fill="#0c4a6e"/>
+        <circle cx="350" cy="240" r="4" fill="#0c4a6e"/><circle cx="450" cy="320" r="3" fill="#0c4a6e"/>
+        <circle cx="550" cy="200" r="4" fill="#0c4a6e"/><circle cx="650" cy="280" r="3" fill="#0c4a6e"/>
+        <circle cx="750" cy="250" r="4" fill="#0c4a6e"/><circle cx="480" cy="180" r="3" fill="#0c4a6e"/>
+    </g>
+
+    <!-- Contaminant plume (initial) -->
+    <ellipse id="plume" cx="420" cy="280" rx="200" ry="80" fill="#dc2626" opacity="0.08"/>
+    <ellipse id="plumeCore" cx="420" cy="280" rx="120" ry="50" fill="#dc2626" opacity="0.15"/>
+
+    <!-- Contaminant label -->
+    <text x="420" y="350" text-anchor="middle" font-size="11" fill="#dc2626" id="plumeLabel">⚠️ 污染羽 · TCE 120 μg/L</text>
+
+    <!-- Injection well -->
+    <rect x="140" y="0" width="14" height="240" rx="3" fill="#475569" opacity="0.5"/>
+    <rect x="144" y="0" width="6" height="240" fill="#94a3b8" opacity="0.3"/>
+    <rect x="140" y="0" width="14" height="12" rx="2" fill="#1e293b"/>
+    <text x="147" y="16" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">I1</text>
+    <!-- Screen zone -->
+    <rect x="138" y="200" width="18" height="40" rx="2" fill="#64748b" opacity="0.3" stroke="#475569" stroke-width="0.5"/>
+    <line x1="140" y1="210" x2="152" y2="210" stroke="#475569" stroke-width="0.5"/>
+    <line x1="140" y1="220" x2="152" y2="220" stroke="#475569" stroke-width="0.5"/>
+    <line x1="140" y1="230" x2="152" y2="230" stroke="#475569" stroke-width="0.5"/>
+
+    <!-- Oxidant injection zone (grows with injection) -->
+    <g id="oxidantZone" opacity="0">
+        <ellipse cx="180" cy="250" rx="30" ry="20" fill="#9333ea" opacity="0.12"/>
+        <ellipse cx="180" cy="250" rx="20" ry="14" fill="#9333ea" opacity="0.12"/>
+    </g>
+
+    <!-- Injection front text -->
+    <text x="180" y="305" text-anchor="middle" font-size="10" fill="#9333ea" id="frontLabel" opacity="0">🏳️ 氧化前沿</text>
+
+    <!-- Monitoring wells -->
+    <rect x="310" y="130" width="4" height="130" rx="1" fill="#475569" opacity="0.3"/>
+    <text x="312" y="268" text-anchor="middle" font-size="9" fill="#888">MW1</text>
+    <rect x="440" y="130" width="4" height="130" rx="1" fill="#475569" opacity="0.3"/>
+    <text x="442" y="268" text-anchor="middle" font-size="9" fill="#888">MW2</text>
+    <rect x="580" y="130" width="4" height="130" rx="1" fill="#475569" opacity="0.3"/>
+    <text x="582" y="268" text-anchor="middle" font-size="9" fill="#888">MW3</text>
+</svg>
+</div>
+
+<!-- Monitoring readouts -->
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:12px 0;">
+    <div style="padding:10px;border-radius:8px;background:#fef2f2;text-align:center;">
+        <div style="font-size:10px;color:#991b1b;font-weight:600;">MW1 · 源头</div>
+        <div style="font-size:20px;font-weight:800;color:#dc2626;" id="mw1Read">120</div>
+        <div style="font-size:9px;color:#888;">μg/L</div>
+    </div>
+    <div style="padding:10px;border-radius:8px;background:#f3e8ff;text-align:center;">
+        <div style="font-size:10px;color:#6b21a8;font-weight:600;">MW2 · 反应区</div>
+        <div style="font-size:20px;font-weight:800;color:#9333ea;" id="mw2Read">—</div>
+        <div style="font-size:9px;color:#888;">μg/L</div>
+    </div>
+    <div style="padding:10px;border-radius:8px;background:#f0fdf4;text-align:center;">
+        <div style="font-size:10px;color:#166534;font-weight:600;">MW3 · 下游</div>
+        <div style="font-size:20px;font-weight:800;color:#16a34a;" id="mw3Read">—</div>
+        <div style="font-size:9px;color:#888;">μg/L</div>
+    </div>
+</div>
+
+<!-- Reagent selector -->
+<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;">
+    <button class="sb s1" onclick="selRx(event,'PERS')" style="background:linear-gradient(135deg,#dc2626,#991b1b);font-size:12px;padding:6px 14px;">⚡ 过硫酸盐</button>
+    <button class="sb s1" onclick="selRx(event,'PERM')" style="background:linear-gradient(135deg,#d97706,#92400e);font-size:12px;padding:6px 14px;">💧 高锰酸盐</button>
+    <button class="sb s1" onclick="selRx(event,'FENTON')" style="background:linear-gradient(135deg,#2563eb,#1e3a8a);font-size:12px;padding:6px 14px;">☀️ Fenton</button>
+    <button class="sb s1" onclick="selRx(event,'ZVI')" style="background:linear-gradient(135deg,#16a34a,#064e3b);font-size:12px;padding:6px 14px;">🛡️ 零价铁</button>
+</div>
+
+<!-- Sliders -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+    <div><div style="display:flex;justify-content:space-between;font-size:11px;color:#555;"><span>💉 注压</span><span><b id="pressVal">0.5</b> MPa</span></div>
+        <input type="range" id="pressSlider" min="0.2" max="2.0" value="0.5" step="0.1" style="width:100%;height:4px;-webkit-appearance:none;appearance:none;background:#dde1e6;border-radius:2px;accent-color:#9333ea;"></div>
+    <div><div style="display:flex;justify-content:space-between;font-size:11px;color:#555;"><span>🧪 药剂浓度</span><span><b id="doseVal">5</b>%</span></div>
+        <input type="range" id="doseSlider" min="1" max="20" value="5" step="1" style="width:100%;height:4px;-webkit-appearance:none;appearance:none;background:#dde1e6;border-radius:2px;accent-color:#9333ea;"></div>
+</div>
+
+<!-- Buttons -->
+<div style="text-align:center;margin-bottom:12px;">
+    <button class="sb s1" id="injBtn" onclick="toggleInj()" style="padding:10px 32px;">💉 开始注入</button>
+    <button class="sb s2" onclick="resetSim()" style="padding:10px 24px;">🔄 重置</button>
+</div>
+
+<!-- Stats + Mini Chart -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="padding:10px;border-radius:8px;background:#fef2f2;text-align:center;">
+            <div class="v" style="font-size:24px;color:#dc2626;" id="curConc">120</div>
+            <div style="font-size:10px;color:#888;">当前浓度 [μg/L]</div>
+        </div>
+        <div style="padding:10px;border-radius:8px;background:#f0fdf4;text-align:center;">
+            <div class="v" style="font-size:24px;color:#16a34a;" id="removalPct">0</div>
+            <div style="font-size:10px;color:#888;">去除率 [%]</div>
+        </div>
+        <div style="padding:10px;border-radius:8px;background:#f3e8ff;text-align:center;">
+            <div class="v" style="font-size:24px;color:#9333ea;" id="injVol">0</div>
+            <div style="font-size:10px;color:#888;">注入量 [L]</div>
+        </div>
+        <div style="padding:10px;border-radius:8px;background:#fef3c7;text-align:center;">
+            <div class="v" style="font-size:24px;color:#92400e;" id="elapsedTime">0</div>
+            <div style="font-size:10px;color:#888;">反应时间 [h]</div>
+        </div>
+    </div>
+    <!-- Mini chart -->
+    <div style="border:1px solid var(--b);border-radius:10px;padding:10px;background:#fafaf8;">
+        <div style="font-size:10px;color:#888;margin-bottom:4px;">📈 浓度衰减曲线</div>
+        <svg viewBox="0 0 200 80" style="width:100%;height:60px;">
+            <line x1="0" y1="70" x2="200" y2="70" stroke="#dde1e6" stroke-width="0.5"/>
+            <line x1="0" y1="70" x2="0" y2="0" stroke="#dde1e6" stroke-width="0.5"/>
+            <polyline id="chartLine" points="0,10" fill="none" stroke="#9333ea" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="5" y="64" font-size="7" fill="#888">120</text>
+            <text x="185" y="64" font-size="7" fill="#888">0</text>
+        </svg>
+    </div>
+</div>
+
+<div id="statusBar" style="margin-top:12px;padding:12px;border-radius:8px;background:#fafaf8;border:1px solid var(--b);font-size:12px;color:#555;text-align:center;">
+    <span id="statusText">选择氧化剂，点击「开始注入」</span>
+</div>
+
+</div></div></div></div>
+
+<div class="sc" id="s5"><div class="sn">Section 05 · 总结</div><h2 class="st">要点回顾</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">
+<div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--b);"><div style="font-size:28px;margin-bottom:8px;">⚡</div><div style="font-weight:700;font-size:14px;margin-bottom:4px;">快速见效</div><div style="font-size:12px;color:#555;line-height:1.6;">数天至数周即可见效</div></div>
+<div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--b);"><div style="font-size:28px;margin-bottom:8px;">&#x1f9ea;</div><div style="font-weight:700;font-size:14px;margin-bottom:4px;">药剂选择</div><div style="font-size:12px;color:#555;line-height:1.6;">根据污染物和场地条件选择</div></div>
+<div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--b);"><div style="font-size:28px;margin-bottom:8px;">⚠️</div><div style="font-weight:700;font-size:14px;margin-bottom:4px;">安全关注</div><div style="font-size:12px;color:#555;line-height:1.6;">放热反应，评估微生物影响</div></div>
+<div style="padding:20px;background:#fff;border-radius:12px;border:1px solid var(--b);"><div style="font-size:28px;margin-bottom:8px;">🔄</div><div style="font-weight:700;font-size:14px;margin-bottom:4px;">可能反弹</div><div style="font-size:12px;color:#555;line-height:1.6;">需多次补充注入</div></div></div></div>
+<div class="ft"><p>EnvLab · 环境检测交互式教学平台</p><p style="margin-top:4px;">联系方式：jinghao.song@gmail.com</p></div>
+<script>
+function gs(i){let ss=document.querySelectorAll('.sc,.es');if(ss[i])ss[i].scrollIntoView({behavior:'smooth'})}
+function rc(c){if(!c.classList.contains('rv'))c.classList.add('rv')}
+
+// Scroll & Intersection
+window.addEventListener('scroll',()=>{let h=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('sp').style.width=(window.scrollY/h*100)+'%'})
+let ss=document.querySelectorAll('.sc,.es'),dd=document.querySelectorAll('.nd')
+new IntersectionObserver(e=>e.forEach(n=>n.isIntersecting&&n.target.classList.add('vi')),{threshold:.1}).observe(ss)
+new IntersectionObserver(e=>e.forEach(n=>n.isIntersecting&&n.target.classList.add('vi')),{threshold:.2}).observe(document.querySelectorAll('.ps'))
+window.addEventListener('scroll',()=>{let c=0;ss.forEach((s,i)=>{if(window.scrollY>=s.offsetTop-300)c=i});dd.forEach((d,i)=>d.classList.toggle('ac',i===c))})
+
+// ═══════════ ISCO SIMULATOR ═══════════
+let rxData = {
+    PERS: {name:'过硫酸盐',rate:.035,color:'#dc2626',label:'⚡',desc:'强氧化剂 · 需活化 · 广谱'},
+    PERM: {name:'高锰酸盐',rate:.025,color:'#d97706',label:'💧',desc:'氯烃特效 · 产生MnO₂'},
+    FENTON: {name:'Fenton试剂',rate:.055,color:'#2563eb',label:'☀️',desc:'羟基自由基 · 最强氧化 · pH2~4'},
+    ZVI: {name:'零价铁',rate:.03,color:'#16a34a',label:'🛡️',desc:'还原脱氯 · 吸附 · 长效'}
+};
+let currentRx = 'PERS';
+let injecting = false, injTimer = null, chartData = [];
+let sim = {time:0,vol:0,conc:120,initial:120};
+
+function selRx(e,t) {
+    if(injecting) return;
+    currentRx = t;
+    document.querySelectorAll('.sb.s1').forEach(b=>{b.style.transform='';b.style.boxShadow='';});
+    e.target.style.transform='scale(1.05)';e.target.style.boxShadow='0 0 16px rgba(147,51,234,.4)';
+    document.getElementById('statusText').textContent = rxData[t].label+' '+rxData[t].name+' · '+rxData[t].desc;
+}
+
+function toggleInj() {
+    if(injecting) { stopInj(); }
+    else { startInj(); }
+}
+
+function startInj() {
+    injecting = true;
+    document.getElementById('injBtn').textContent = '⏸ 暂停注入';
+    sim.time = 0; sim.vol = 0; sim.conc = 120;
+    chartData = [{t:0,c:120}];
+    document.getElementById('oxidantZone').setAttribute('opacity','0.6');
+    document.getElementById('frontLabel').setAttribute('opacity','1');
+
+    const press = parseFloat(document.getElementById('pressSlider').value);
+    const dose = parseFloat(document.getElementById('doseSlider').value);
+    const rx = rxData[currentRx];
+    const rate = rx.rate * (dose/5) * (press/0.5);
+
+    // Set initial plume opacity
+    document.getElementById('plume').setAttribute('opacity','0.12');
+    document.getElementById('plumeCore').setAttribute('opacity','0.2');
+
+    injTimer = setInterval(() => {
+        sim.time += 0.5;
+        sim.vol += press * dose * 0.8;
+
+        // Concentration decay (exponential + parameter dependent)
+        const decay = Math.exp(-rate * sim.time);
+        sim.conc = Math.max(1, sim.initial * decay);
+
+        // Update plume visual
+        const plumeOpacity = 0.08 + 0.04 * (sim.conc / sim.initial);
+        document.getElementById('plume').setAttribute('opacity', plumeOpacity);
+        document.getElementById('plumeCore').setAttribute('opacity', plumeOpacity * 1.5);
+
+        // Oxidant zone grows
+        const rxRadius = 30 + sim.vol * 0.15;
+        document.querySelector('#oxidantZone ellipse:first-child').setAttribute('rx', Math.min(rxRadius, 200));
+        document.querySelector('#oxidantZone ellipse:first-child').setAttribute('cx', 180 + sim.vol * 0.05);
+        document.querySelector('#oxidantZone ellipse:nth-child(2)').setAttribute('rx', Math.min(rxRadius * 0.7, 140));
+        document.querySelector('#oxidantZone ellipse:nth-child(2)').setAttribute('cx', 180 + sim.vol * 0.05);
+
+        // Update MW readouts
+        const mw1 = Math.round(sim.conc * (0.9 + Math.random() * 0.2));
+        const mw2 = Math.round(sim.conc * (0.3 + Math.random() * 0.3));
+        const mw3 = Math.round(sim.conc * (0.05 + Math.random() * 0.1));
+        document.getElementById('mw1Read').textContent = Math.min(120, Math.max(0, mw1));
+        document.getElementById('mw2Read').textContent = Math.max(0, Math.min(120, mw2));
+        document.getElementById('mw3Read').textContent = Math.max(0, Math.min(120, mw3));
+
+        // Update stats
+        const removal = ((sim.initial - sim.conc) / sim.initial * 100);
+        document.getElementById('curConc').textContent = Math.round(sim.conc);
+        document.getElementById('removalPct').textContent = removal.toFixed(1);
+        document.getElementById('injVol').textContent = Math.round(sim.vol);
+        document.getElementById('elapsedTime').textContent = sim.time.toFixed(1);
+
+        // Chart
+        if (sim.time % 1 === 0) {
+            chartData.push({t:sim.time, c:sim.conc});
+            updateChart();
+        }
+
+        // Plume label
+        document.getElementById('plumeLabel').textContent = `⚠️ 污染羽 · TCE ${Math.round(sim.conc)} μg/L`;
+
+        // Status
+        document.getElementById('statusText').innerHTML = `⏳ 反应中 · ${rx.name} · 去除率 ${removal.toFixed(1)}%`;
+
+        // Check if complete
+        if (sim.conc < 2) {
+            stopInj();
+            document.getElementById('statusText').innerHTML = '✅ 反应完成！污染物浓度已降至安全水平';
+            document.getElementById('injBtn').textContent = '✅ 已完成';
+            document.getElementById('injBtn').disabled = true;
+        }
+
+        // Concentrations for chart gradient
+        document.getElementById('plumeLabel').setAttribute('fill', sim.conc < 10 ? '#16a34a' : sim.conc < 50 ? '#92400e' : '#dc2626');
+    }, 400);
+}
+
+function stopInj() {
+    if (injTimer) { clearInterval(injTimer); injTimer = null; }
+    injecting = false;
+    document.getElementById('injBtn').textContent = '▶ 继续注入';
+}
+
+function updateChart() {
+    const pts = chartData.map((p,i) => {
+        if (i === 0) return `0,10`;
+        const x = (p.t / Math.max(sim.time, 1)) * 195;
+        const y = 70 - (p.c / 120) * 65;
+        return `${x.toFixed(0)},${y.toFixed(0)}`;
+    }).join(' ');
+    document.getElementById('chartLine').setAttribute('points', pts);
+}
+
+function resetSim() {
+    if (injTimer) { clearInterval(injTimer); injTimer = null; }
+    injecting = false;
+    document.getElementById('injBtn').textContent = '💉 开始注入';
+    document.getElementById('injBtn').disabled = false;
+
+    sim = {time:0,vol:0,conc:120,initial:120};
+    chartData = [];
+
+    // Reset visual
+    document.getElementById('plume').setAttribute('opacity','0.08');
+    document.getElementById('plumeCore').setAttribute('opacity','0.15');
+    document.getElementById('oxidantZone').setAttribute('opacity','0');
+    document.getElementById('frontLabel').setAttribute('opacity','0');
+    document.getElementById('plumeLabel').textContent = '⚠️ 污染羽 · TCE 120 μg/L';
+    document.getElementById('plumeLabel').setAttribute('fill','#dc2626');
+
+    // Reset stats
+    document.getElementById('mw1Read').textContent = '120';
+    document.getElementById('mw2Read').textContent = '—';
+    document.getElementById('mw3Read').textContent = '—';
+    document.getElementById('curConc').textContent = '120';
+    document.getElementById('removalPct').textContent = '0';
+    document.getElementById('injVol').textContent = '0';
+    document.getElementById('elapsedTime').textContent = '0';
+    document.getElementById('chartLine').setAttribute('points','0,10');
+
+    document.getElementById('statusText').textContent = '已重置 · 选择氧化剂，点击「开始注入」';
+}
+
+// Sliders
+document.getElementById('pressSlider').addEventListener('input', function() {
+    document.getElementById('pressVal').textContent = this.value;
+});
+document.getElementById('doseSlider').addEventListener('input', function() {
+    document.getElementById('doseVal').textContent = this.value;
+});
+</script></body></html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>一篇文章看懂气相色谱的"读心术"</title>
+<style>
+:root {
+  --ink: #1a1a2e; --gray: #6b7280; --line: #e5e5e0;
+  --purple: #7c3aed; --purple-light: #f5f3ff;
+  --blue: #1d4ed8; --blue-light: #eff6ff;
+  --amber: #b45309; --amber-light: #fffbeb;
+  --green: #16a34a; --green-light: #f0fdf4;
+  --red: #dc2626;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body {
+  font-family: -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;
+  background: #f0efe8; color: var(--ink); line-height: 1.9; -webkit-font-smoothing: antialiased;
+}
+.article { max-width: 680px; margin: 0 auto; background: #fff; min-height: 100vh; }
+
+.cover {
+  background: linear-gradient(170deg, #1e1b4b 0%, #4c1d95 40%, #0f172a 100%);
+  color: #fff; padding: 60px 28px 48px; text-align: center; position: relative; overflow: hidden;
+}
+.cover::before {
+  content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(ellipse at 30% 20%, rgba(124,58,237,.12) 0%, transparent 60%);
+}
+.cover .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .2em; color: rgba(255,255,255,.3); margin-bottom: 16px; position: relative; }
+.cover h1 { font-size: 34px; font-weight: 900; letter-spacing: -.03em; line-height: 1.2; position: relative; }
+.cover h1 .hl { color: #c4b5fd; }
+.cover .tagline { font-size: 14px; color: rgba(255,255,255,.45); margin-top: 14px; position: relative; line-height: 1.6; }
+.cover .stat-strip {
+  display: flex; gap: 20px; justify-content: center; margin-top: 24px; position: relative; flex-wrap: wrap;
+}
+.cover .stat-item .sn { font-size: 28px; font-weight: 900; color: #c4b5fd; line-height: 1; }
+.cover .stat-item .sl { font-size: 10px; color: rgba(255,255,255,.25); margin-top: 2px; }
+
+.sec { padding: 44px 28px; }
+.sec-gray { background: #fafaf8; }
+.sec-purple { background: var(--purple-light); }
+.sec-label { font-size: 11px; font-weight: 700; letter-spacing: .15em; color: var(--purple); margin-bottom: 6px; }
+.sec-title { font-size: 26px; font-weight: 900; letter-spacing: -.02em; line-height: 1.25; margin-bottom: 10px; }
+.sec-desc { font-size: 14px; color: var(--gray); line-height: 1.8; }
+
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
+.data-table th { background: #1e1b4b; color: #fff; padding: 10px 14px; text-align: left; font-size: 12px; font-weight: 600; }
+.data-table td { padding: 10px 14px; border-bottom: 0.5px solid var(--line); }
+.data-table tr:nth-child(even) td { background: #fafaf8; }
+
+.callout {
+  border-left: 3px solid var(--purple); padding: 14px 18px; margin: 16px 0;
+  border-radius: 0 6px 6px 0; font-size: 13px; line-height: 1.7;
+}
+.callout-purple { background: var(--purple-light); color: #4c1d95; }
+.callout-amber { background: var(--amber-light); color: #713f12; border-left-color: var(--amber); }
+.callout-green { background: var(--green-light); color: #14532d; border-left-color: var(--green); }
+
+.dir-card {
+  background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 20px; margin-top: 14px;
+}
+.dir-card .dc-num { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 10px; border-radius: 4px; margin-bottom: 6px; }
+.dir-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.dir-card p { font-size: 13px; color: var(--gray); line-height: 1.7; }
+
+.embed-card {
+  background: linear-gradient(135deg, var(--purple-light) 0%, #fff 100%);
+  border: 1px solid rgba(124,58,237,.15); border-radius: 12px;
+  padding: 28px 24px; text-align: center; margin-top: 20px;
+}
+.embed-card .ec-icon { font-size: 40px; margin-bottom: 8px; }
+.embed-card .ec-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.embed-card .ec-desc { font-size: 13px; color: var(--gray); line-height: 1.6; }
+.embed-card .ec-btn {
+  display: inline-block; margin-top: 12px; padding: 10px 28px;
+  background: var(--purple); color: #fff; font-size: 14px; font-weight: 700;
+  border-radius: 6px; text-decoration: none;
+}
+
+.cta {
+  background: #1e1b4b; color: #fff; text-align: center; padding: 44px 28px;
+}
+.cta h2 { font-size: 24px; font-weight: 900; margin-bottom: 10px; }
+.cta p { font-size: 13px; color: rgba(255,255,255,.4); line-height: 1.7; margin-bottom: 20px; }
+.cta .btn { display: inline-block; padding: 12px 36px; background: var(--purple); color: #fff; font-size: 14px; font-weight: 700; border-radius: 6px; }
+.footer { text-align: center; padding: 28px; color: var(--gray); font-size: 11px; border-top: 1px solid var(--line); }
+.tag { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+.tag-purple { background: var(--purple-light); color: var(--purple); }
+.tag-blue { background: var(--blue-light); color: var(--blue); }
+.tag-amber { background: var(--amber-light); color: var(--amber); }
+.tag-green { background: var(--green-light); color: var(--green); }
+
+@media(max-width:480px) {
+  .cover { padding: 44px 20px 36px; }
+  .cover h1 { font-size: 26px; }
+  .sec { padding: 32px 18px; }
+  .sec-title { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+<div class="article">
+
+<div class="cover">
+  <div class="eyebrow">ENVLAB · 仪器分析 · 气相色谱</div>
+  <h1>一篇文章看懂<br>气相色谱的<span class="hl">"读心术"</span></h1>
+  <p class="tagline">色谱柱在"分离"什么？FID在"烧"什么？<br>峰面积怎么变成浓度？<br>调一调温度和流速，峰形就变了。</p>
+  <div class="stat-strip">
+    <div class="stat-item"><div class="sn">6</div><div class="sl">大核心模块</div></div>
+    <div class="stat-item"><div class="sn">300°C+</div><div class="sl">FID工作温度</div></div>
+    <div class="stat-item"><div class="sn">0.1 ppm</div><div class="sl">检测下限</div></div>
+    <div class="stat-item"><div class="sn">2</div><div class="sl">通道同步</div></div>
+  </div>
+</div>
+
+<div class="sec">
+  <p class="sec-desc" style="font-size:15px;color:var(--ink);">
+    如果你在环境检测实验室待过，一定见过这台设备——一个银灰色的金属箱子，前面挂着气瓶，里面盘着密密麻麻的管线。操作员在电脑前点几下，打印机吐出一张带几个"小山包"的图纸。
+  </p>
+  <p class="sec-desc" style="margin-top:12px;">
+    那个图纸叫<strong>色谱图</strong>。那些"小山包"叫<strong>色谱峰</strong>。每个峰对应一种化合物，峰面积对应它的浓度。
+  </p>
+  <p class="sec-desc" style="margin-top:12px;">
+    原理听起来很简单——把混合物"拆开"，一个个数出来。但真正让它工作的物理化学机制，比"拆开"两个字复杂得多。
+  </p>
+</div>
+
+<div class="sec sec-purple">
+  <div class="sec-label">PRINCIPLE 01</div>
+  <h2 class="sec-title">色谱柱：<br>一个"赛跑"的管子</h2>
+  <p class="sec-desc">
+    色谱柱是一根细长的毛细管（内径 0.25~0.53 mm，长度 15~60 m），内壁涂有一层固定相。当样品被载气（N₂/He/H₂）推入色谱柱时，不同化合物<strong>"跑"的速度不一样</strong>。
+  </p>
+
+  <div class="dir-card">
+    <h4>为什么跑得不一样？</h4>
+    <p>每个化合物分子在固定相上的"吸附力"不同。吸附力强的分子，走一段就会被"拉住"一会儿，跑得慢；吸附力弱的分子几乎不减速，跑得快。<br><br>
+    这就像一群人跑步穿过一片泥潭——体重轻的人陷得浅跑得快，体重重的人陷得深跑得慢。色谱柱就是这片"泥潭"。</p>
+  </div>
+
+  <div class="callout callout-purple">
+    <strong>保留时间：</strong>每个化合物从进样到出峰的时间称为"保留时间"。在固定的色谱条件下（固定相+柱温+流速），每个化合物的保留时间是恒定的——这是定性的依据。看到 3.5 分钟出一个峰，就知道它是苯，而不是甲苯。
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-label">PRINCIPLE 02</div>
+  <h2 class="sec-title">FID 检测器：<br>一个"烧"出信号的火焰</h2>
+  <p class="sec-desc">
+    化合物从色谱柱末端出来，进入 FID（火焰离子化检测器）——<strong>它本质上是一个微型火焰喷嘴</strong>。
+  </p>
+
+  <div class="dir-card">
+    <h4>FID 的内部发生了什么？</h4>
+    <p>
+      ① H₂ + 空气 → 点燃形成氢火焰（约 300°C）<br>
+      ② 有机化合物进入火焰 → 高温裂解 → 产生 CH·自由基<br>
+      ③ CH· + O → CHO⁺ + e⁻（化学电离）<br>
+      ④ 电场收集离子 → 形成微电流 → 信号放大 → 色谱峰
+    </p>
+    <div class="callout callout-amber" style="margin:8px 0 0;">
+      <strong>关键：</strong>FID 只对<strong>含碳有机物</strong>有响应。CO、CO₂、CS₂ 等不含碳-氢键的化合物，FID 几乎"看不见"。这实际上是个优点——空气峰、溶剂峰不会干扰样品分析。
+    </div>
+  </div>
+</div>
+
+<div class="sec sec-gray">
+  <div class="sec-label">PARAMETERS</div>
+  <h2 class="sec-title">两个最关键的参数<br>温度 · 流速</h2>
+  <p class="sec-desc">色谱分析的方法开发，本质上是找<strong>温度+流速</strong>的最佳组合。这不是理论问题，是实验问题——</p>
+
+  <table class="data-table">
+    <tr><th>参数</th><th>调高</th><th>调低</th></tr>
+    <tr>
+      <td><strong>柱温 ↑</strong></td>
+      <td>峰变窄变高，分离度↓，保留时间缩短</td>
+      <td>峰展宽变矮，分离度↑，保留时间延长</td>
+    </tr>
+    <tr>
+      <td><strong>载气流速 ↑</strong></td>
+      <td>峰变高，保留时间缩短，但分离度可能↓</td>
+      <td>峰变矮，保留时间延长，分离度可能↑</td>
+    </tr>
+  </table>
+
+  <p class="sec-desc" style="margin-top:12px;">
+    这就是为什么方法开发往往需要反复实验——找到一个温度和流速的"甜点区"，让目标组分既能完全分离（两个峰不重叠），又能在合理时间内出完。
+  </p>
+</div>
+
+<div class="sec">
+  <div class="sec-label">QUANTIFICATION</div>
+  <h2 class="sec-title">峰面积 → 浓度：<br>三步走</h2>
+
+  <div class="dir-card">
+    <div class="dc-num tag-purple">STEP 1</div>
+    <h4>峰面积积分</h4>
+    <p>色谱工作站自动识别色谱峰，计算峰面积（或峰高）。峰面积 = 基线到峰顶的积分值，单位 pA·s 或 μV·s。</p>
+  </div>
+  <div class="dir-card">
+    <div class="dc-num tag-blue">STEP 2</div>
+    <h4>标准曲线校准</h4>
+    <p>配制一系列已知浓度的标准溶液，按相同条件进样。记录每个浓度对应的峰面积，拟合出线性方程：<strong>A = k × C + b</strong>。</p>
+  </div>
+  <div class="dir-card">
+    <div class="dc-num tag-purple">STEP 3</div>
+    <h4>反算样品浓度</h4>
+    <p>样品进样后测得峰面积 Aₓ，代入标准曲线方程：Cₓ = (Aₓ - b) / k。得到的是进样浓度，再乘以稀释倍数即为原始浓度。</p>
+  </div>
+
+  <div class="callout callout-green">
+    <strong>标准曲线的 R²：</strong>正常应该在 0.999 以上。低于 0.995 需要重新配制标液或检查仪器状态。曲线的截距 b 反映系统本底，斜率 k 反映灵敏度。
+  </div>
+</div>
+
+<div class="sec sec-gray">
+  <div class="sec-label">NMHC METHOD</div>
+  <h2 class="sec-title">非甲烷总烃分析：<br>双通道的数学游戏</h2>
+  <p class="sec-desc">HJ 38-2017 标准分析非甲烷总烃（NMHC），用的是一台<strong>双色谱柱双FID</strong>的气相色谱：</p>
+
+  <table class="data-table">
+    <tr><th>通道</th><th>色谱柱</th><th>检测物</th></tr>
+    <tr><td>总烃通道</td><td>空柱（或脱活石英管）</td><td>总烃 THC（所有碳氢化合物总和）</td></tr>
+    <tr><td>甲烷通道</td><td>GDX-502 填充柱</td><td>甲烷 CH₄（唯一通过柱子到达FID的烃）</td></tr>
+  </table>
+
+  <div class="dir-card">
+    <h4>NMHC = THC − CH₄</h4>
+    <p>样品同时进入两根柱子。总烃柱测出的是"所有碳氢的总和"，甲烷柱只有甲烷能通过，其他烃类被柱内填料吸附。两者之差就是<strong>非甲烷总烃</strong>。——这就是为什么它叫"非甲烷总烃"，不是"直接测出来的"，而是"算出来的"。</p>
+  </div>
+
+  <div class="callout callout-amber">
+    <strong>⚠️ 常见问题：</strong>如果 THC < CH₄，说明数据无效——通常是色谱柱或检测器出现异常。这就是为什么色谱工作站里需要做<strong>数据有效性校验</strong>。
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-label">TRY IT</div>
+  <h2 class="sec-title">调一调参数<br>峰形就变了</h2>
+  <p class="sec-desc">
+    下面这个交互 Demo 模拟了非甲烷总烃分析的色谱工作站。拖动柱温和流速滑块，实时观察 THC 和 CH₄ 两个色谱峰的<strong>保留时间、峰高、分离度</strong>如何变化。
+  </p>
+
+  <div class="embed-card">
+    <div class="ec-icon">📈</div>
+    <div class="ec-title">气相色谱 · 非甲烷总烃模拟</div>
+    <div class="ec-desc">
+      双通道实时色谱图 · 柱温/流速双滑块<br>
+      NMHC 差值实时计算 · 数据有效性校验
+    </div>
+    <div class="ec-btn" onclick="alert('完整交互页：EnvLab-叙事升级版/气相色谱法-非甲烷总烃-叙事式教学.html\n关注公众号后回复「色谱」获取链接');return false;">🎮 打开色谱工作站</div>
+  </div>
+</div>
+
+<div class="sec sec-gray">
+  <div class="sec-label">QUICK REFERENCE</div>
+  <h2 class="sec-title">方法开发速查</h2>
+
+  <div class="dir-card" style="padding:14px;">
+    <p style="font-size:13px;color:var(--gray);">🔹 <strong>初始柱温</strong>：比溶剂沸点低 20°C<br>
+    🔹 <strong>升温速率</strong>：5~15°C/min（宽沸程样品用程序升温）<br>
+    🔹 <strong>载气流速</strong>：1~3 mL/min（毛细管柱）<br>
+    🔹 <strong>进样口温度</strong>：高于最高沸点组分 20°C<br>
+    🔹 <strong>FID 温度</strong>：通常 250~300°C<br>
+    🔹 <strong>进样量</strong>：1~2 μL（分流比 10:1~50:1）<br>
+    🔹 <strong>R² 要求</strong>：≥0.999（标准曲线线性）<br>
+    🔹 <strong>保留时间 RSD</strong>：≤1%（连续进样 6 次）</p>
+  </div>
+</div>
+
+<div class="cta">
+  <h2>想亲手调一调<br>色谱参数？</h2>
+  <p>
+    关注公众号，回复「色谱」领取：<br>
+    ① 气相色谱方法开发速查表（PDF）<br>
+    ② 交互色谱工作站链接（调参数看峰形变化）
+  </p>
+  <div class="btn">📩 回复「色谱」免费领</div>
+</div>
+
+<div class="footer">
+  EnvLab · 仪器分析 · 气相色谱法<br>
+  参考标准：HJ 38-2017 · GB/T 13610-2020
+</div>
+
+</div>
+</body>
+</html>

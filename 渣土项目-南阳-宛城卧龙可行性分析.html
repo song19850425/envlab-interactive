@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>南阳市辖区 · 渣土资源化 · 宛城/卧龙可行性分析</title>
+<style>
+:root{--ink:#1a1f36;--gray:#6b7280;--line:#e5e5e0;--green:#166534;--green-l:#f0fdf4;--amber:#b45309;--amber-l:#fffbeb;--blue:#1e40af;--blue-l:#eff6ff;--red:#b91c1c;--red-l:#fef2f2;--purple:#5b21b6;--purple-l:#f5f3ff;--teal:#0f766e;--teal-l:#f0fdfa;--rose:#be185d;--rose-l:#fdf2f8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:#f8faf8;color:var(--ink);line-height:1.7;padding:0}
+.top-bar{background:linear-gradient(135deg,#be185d,#1a1f36);color:#fff;padding:28px 24px;text-align:center}
+.top-bar h1{font-size:23px;font-weight:800;letter-spacing:-.3px}
+.top-bar .sub{font-size:13px;color:#94a3b8;margin-top:4px}
+.top-bar .tagline{font-size:12px;color:#f9a8d4;margin-top:8px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.top-bar .tagline span{padding:2px 10px;background:rgba(255,255,255,.06);border-radius:12px}
+.container{max-width:960px;margin:0 auto;padding:24px}
+.section{margin-bottom:28px}
+.st-title{font-size:16px;font-weight:700;padding:8px 14px;border-radius:8px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.st0{background:var(--red-l);color:var(--red);border-left:4px solid var(--red)}
+.st1{background:var(--amber-l);color:var(--amber);border-left:4px solid var(--amber)}
+.st2{background:var(--blue-l);color:var(--blue);border-left:4px solid var(--blue)}
+.st3{background:var(--purple-l);color:var(--purple);border-left:4px solid var(--purple)}
+.st4{background:var(--rose-l);color:var(--rose);border-left:4px solid var(--rose)}
+.st5{background:var(--green-l);color:var(--green);border-left:4px solid var(--green)}
+.st6{background:var(--teal-l);color:var(--teal);border-left:4px solid var(--teal)}
+.rc{border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:12px;transition:box-shadow .2s;background:#fff}
+.rc:hover{box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.rc-h{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
+.rc-i{font-size:20px;flex-shrink:0;width:28px;text-align:center}
+.rc-t{font-size:14px;font-weight:700;flex:1}
+.rc-b{font-size:11px;font-weight:600;padding:2px 10px;border-radius:20px;flex-shrink:0}
+.t-red{background:var(--red-l);color:var(--red)}
+.t-amber{background:var(--amber-l);color:var(--amber)}
+.t-blue{background:var(--blue-l);color:var(--blue)}
+.t-green{background:var(--green-l);color:var(--green)}
+.t-teal{background:var(--teal-l);color:var(--teal)}
+.t-rose{background:var(--rose-l);color:var(--rose)}
+.rc-d{font-size:13px;color:var(--gray);line-height:1.7;margin-bottom:6px}
+.rc-dt{font-size:12px;color:#94a3b8;line-height:1.6;padding:8px 12px;background:#f8faf8;border-radius:6px;margin-top:6px}
+.rc-dt strong{color:var(--ink)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:640px){.g2{grid-template-columns:1fr}}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}@media(max-width:640px){.g3{grid-template-columns:1fr}}
+.sc{text-align:center;padding:16px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.sc .n{font-size:28px;font-weight:800}
+.sc .l{font-size:12px;color:var(--gray);margin-top:4px}
+.sc .n.rose{color:var(--rose)}.sc .n.amber{color:var(--amber)}.sc .n.blue{color:var(--blue)}.sc .n.green{color:var(--green)}.sc .n.teal{color:var(--teal)}.sc .n.red{color:var(--red)}
+table{width:100%;border-collapse:collapse;font-size:12px;margin:0 0 14px}
+table th{background:var(--ink);color:#fff;padding:8px 10px;text-align:left}
+table td{padding:6px 10px;border-bottom:1px solid var(--line)}
+.cb{background:linear-gradient(135deg,#1a1f36,#be185d);color:#fff;border-radius:12px;padding:24px;margin-top:20px}
+.cb h3{font-size:15px;margin-bottom:12px;color:#f9a8d4}
+.cb p{font-size:13px;line-height:1.8;color:#cbd5e1;margin-bottom:8px}
+.cb .hl{color:#f9a8d4;font-weight:600}
+.cb .pill{display:inline-block;padding:1px 6px;border-radius:3px;font-weight:700;font-size:11px}
+.cb .pill-green{background:var(--green);color:#fff}
+.cb .pill-amber{background:var(--amber);color:#fff}
+.alert-box{font-size:12px;margin-bottom:12px;padding:10px 14px;border-radius:6px;border-left:3px solid}
+.alert-box.amber{background:var(--amber-l);border-color:var(--amber);color:var(--gray)}
+.alert-box.green{background:var(--green-l);border-color:var(--green);color:var(--gray)}
+.alert-box.rose{background:var(--rose-l);border-color:var(--rose);color:var(--gray)}
+.ts{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.ts:last-child{border-bottom:none}
+.ts .no{font-size:12px;font-weight:700;background:var(--ink);color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.ts .tc{flex:1}
+.ts .tt{font-size:13px;font-weight:600}
+.ts .td{font-size:12px;color:var(--gray);line-height:1.6}
+.note-box{font-size:12px;color:var(--gray);padding:10px 14px;background:#f8faf8;border-radius:6px;margin-top:8px}
+.vs-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:14px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.vs-col{padding:14px}
+.vs-col:first-child{background:#fff;border-right:1px solid var(--line)}
+.vs-col:last-child{background:var(--teal-l)}
+.vs-col h4{font-size:13px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.vs-col ul{list-style:none;padding:0}
+.vs-col li{font-size:12px;color:var(--gray);padding:4px 0;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;gap:6px}
+.vs-col li:last-child{border-bottom:none}
+@media(max-width:640px){.vs-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>🏙️ 南阳市辖区 · 宛城区 + 卧龙区 · 渣土可行性分析</h1>
+  <div class="sub">两个市辖区（中心城区）深度拆解 · 与县域模式完全不同</div>
+  <div class="tagline">
+    <span>宛城 GDP ~430亿</span>
+    <span>卧龙 GDP ~360亿</span>
+    <span>中心城区合计 330-550万吨/年</span>
+    <span>已有示范区EPC项目</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ════════════════════════════════════ -->
+<!-- 概览 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="st-title st0">📊 两区概览 · 与县域完全不同</div>
+  <div class="g3">
+    <div class="sc"><div class="n rose">宛城区</div><div class="l">市委市政府所在地  · GDP~430亿</div><div style="font-size:11px;color:var(--gray);margin-top:4px;">建成区60km² · 高铁片区建设正热</div></div>
+    <div class="sc"><div class="n rose">卧龙区</div><div class="l">旧城改造+工业转型  · GDP~360亿</div><div style="font-size:11px;color:var(--gray);margin-top:4px;">建成区50km² · 违规倾倒重灾区</div></div>
+    <div class="sc"><div class="n rose">合計</div><div class="l">330-550万吨/年  · 全市最集中</div><div style="font-size:11px;color:var(--gray);margin-top:4px;">等于3个唐河县的渣土量</div></div>
+  </div>
+
+  <div class="alert-box rose">
+    🚨 <strong>提醒：</strong>宛城区和卧龙区的分析逻辑<strong>与县域完全不同</strong>。这里已经有市场主体（示范区EPC项目）、有3家运输特许经营企业、2026年1月市级项目已发布用地预审。不是蓝海，是<strong>浅红海</strong>。机会在于：市场够大、现有产能严重不足、政府正在主动推进。
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 与县域模式的关键区别 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="st-title st0">🆚 市辖区 vs 县域：模式完全不同</div>
+
+  <div class="vs-grid">
+    <div class="vs-col">
+      <h4>🏘️ 县域模式（唐河/邓州）</h4>
+      <ul>
+        <li>✅ 竞争空白，无人争抢</li>
+        <li>✅ 国企合作空间大</li>
+        <li>✅ 政府配合度高</li>
+        <li>✅ 拿地相对容易</li>
+        <li>✅ 环评压力较小</li>
+        <li>⚠️ 渣土量可能不够100万方</li>
+        <li>⚠️ 运输半径大、成本高</li>
+        <li>⚠️ 再生料市场小</li>
+      </ul>
+    </div>
+    <div class="vs-col">
+      <h4>🏙️ 市辖区模式（宛城/卧龙）</h4>
+      <ul>
+        <li>⚠️ <strong>已有竞争者</strong>（EPC项目）</li>
+        <li>⚠️ 3家运输企业已拿特许经营</li>
+        <li>✅ 中心城区渣土量 <strong>极大</strong></li>
+        <li>✅ 旧城改造+高铁=持续产渣</li>
+        <li>⚠️ 在市区选址渣土场极难</li>
+        <li>⚠️ 邻避效应+环保要求更高</li>
+        <li>✅ 再生料市场大（市区消耗快）</li>
+        <li>⚠️ 政府层级多、决策链长</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="font-size:12px;color:var(--gray);padding:8px 14px;background:var(--amber-l);border-radius:6px;">
+    <strong>结论：</strong>市辖区不是"没法做"，而是要换一套打法。不能像在唐河那样"选个空地建厂等渣土来"，要充分利用已有市场主体、运输特许经营资源，走<strong>"收运处一体化+合作联盟"</strong>的路子。
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 两区各自的特点 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="st-title st0">🏘️ 宛城区 vs 卧龙区：各自特点</div>
+
+  <div class="rc" style="border-left:3px solid var(--amber);">
+    <div class="rc-h">
+      <div class="rc-i">🏛️</div>
+      <div class="rc-t">宛城区 · 180-300万吨/年</div>
+      <span class="rc-b t-amber">市委市政府所在地</span>
+    </div>
+    <div class="rc-d" style="color:var(--ink);font-size:13px;">
+      <strong>渣土特点：</strong>新城区开发（南阳新区+高铁片区）产生大量<strong>工程渣土</strong>为主，土质相对干净，适合直接制再生骨料。商业综合体、住宅小区的深基坑出土量大且集中。
+    </div>
+    <div class="rc-dt">
+      <strong>特别注意：</strong>宛城区已有<strong>示范区建筑垃圾资源化再生利用EPC项目</strong>（2020年招标，已进入建设/运营阶段）。需要注意以下几点：<br>
+      · 这个EPC项目的处置能力是多少？是否还能容纳新的社会资本项目？<br>
+      · 示范区范围到底覆盖宛城区多大面积？有没有区域排他性？<br>
+      · 如果示范区EPC已基本覆盖宛城区需求 → 只能走卧龙区路线<br>
+      · 如果示范区EPC只覆盖很小一部分 → 宛城区的市场空间仍然巨大（180-300万吨/年的缺口）<br>
+      <strong>验证方法：</strong>去示范区城市管理服务中心问清楚：EPC项目规模+覆盖范围+运营状态。
+    </div>
+  </div>
+
+  <div class="rc" style="border-left:3px solid var(--rose);">
+    <div class="rc-h">
+      <div class="rc-i">🏭</div>
+      <div class="rc-t">卧龙区 · 150-250万吨/年</div>
+      <span class="rc-b t-rose">旧城改造+工业转型</span>
+    </div>
+    <div class="rc-d" style="color:var(--ink);font-size:13px;">
+      <strong>渣土特点：</strong>旧城改造产生大量<strong>拆迁垃圾+装修垃圾</strong>，成分复杂（含砖瓦、混凝土、木材、金属、塑料），分拣要求高但<strong>再生价值也高</strong>。工业区转型产生部分工程渣土和一般工业固废。
+    </div>
+    <div class="rc-dt">
+      <strong>卧龙区的特殊价值：</strong><br>
+      ① 2024年底违规倾倒事件被媒体曝光 → 政府压力最大、<strong>解决问题的意愿最强</strong><br>
+      ② 老旧小区改造+工业区转型 → 未来5年渣土产出持续稳定<br>
+      ③ 区政府已公开表态"引导社会资本参与" → 政策绿灯已亮<br>
+      ④ <strong>没有示范区EPC项目挡路</strong> → 这是相比宛城区最大的优势<br>
+      ⑤ 装修垃圾精细化分拣的附加值高于混泥土渣土（废铁回收+再生砖溢价）<br>
+      <strong>难点：</strong>卧龙区是人口密集区，消纳场选址更难。可能需要选择距离建成区边缘较远的位置。
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 核心难点分析 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="st-title st0">🔥 市辖区特有的核心难点</div>
+  <div class="alert-box amber">
+    以下难点在市辖区比在县域<strong>严重得多</strong>，因为这些问题是"城市中心"特有的。
+  </div>
+
+  <div class="rc">
+    <div class="rc-h">
+      <div class="rc-i">🏗️</div>
+      <div class="rc-t">难点1：消纳场选址——市区周边几乎找不到地</div>
+      <span class="rc-b t-red">⚡可能致命</span>
+    </div>
+    <div class="rc-d">
+      在唐河县找30-50亩工业用地不算太难，在<strong>南阳市区周边</strong>找同等规模的地块，难度是指数级上升。
+    </div>
+    <div class="rc-dt">
+      <strong>为什么是市辖区特有的难点：</strong><br>
+      · 宛城和卧龙区核心区土地单价在80-150万/亩（对比唐河可能20-40万/亩），30-50亩光拿地成本就2,400-7,500万，还不一定有可用地块<br>
+      · 南阳市级项目2026年1月的用地预审公告上也没明确具体地块——说明政府自己也在找地<br>
+      · 距离建成区太近→居民强烈反对距离建成区太远→运输成本急剧上升<br>
+      · 如果选址在卧龙区西部/北部边缘地带（接近潦河/王村），距离核心建设区15-20公里，每方运输成本增加5-8元<br>
+      <strong>应对思路：</strong>① 走"就近临时消纳+集中处置"的分散式模式——在几个大型施工项目周边设临时破碎点，减少远距离运输 ② 考虑利用现有工业废弃地（卧龙区有工业转型腾退的地块）③ 最关键的是：<strong>让政府出面协调用地</strong>——市政公用设施用地政府有优先权
+    </div>
+  </div>
+
+  <div class="rc">
+    <div class="rc-h">
+      <div class="rc-i">🏢</div>
+      <div class="rc-t">难点2：已有市场主体（EPC项目）的"挡路"效应</div>
+      <span class="rc-b t-amber">高难度</span>
+    </div>
+    <div class="rc-d">
+      示范区EPC项目虽然"仅覆盖示范区"，但谁是"示范区"范围没有明确边界，可能挡住宛城区大部分市场。
+    </div>
+    <div class="rc-dt">
+      <strong>需要搞清楚的几个问题：</strong><br>
+      · 示范区（城乡一体化示范区）的行政边界到底怎么划的？是宛城区的一部分还是独立片区？<br>
+      · EPC项目的年处置能力多大？是刚投产还是快满了？<br>
+      · 当初签订的合同/特许经营协议是否有<strong>区域排他条款</strong>？<br>
+      · 如果有排他性 → 宛城区这条路基本堵死；如果没有 → 可以竞争<br>
+      · 3家运输特许经营企业是否可以作为合作对象而非竞争对手？<br>
+      <strong>应对思路：</strong>① 把EPC项目研究清楚之前，不要贸然推进宛城方向 ② 如果宛城区被堵，<strong>全力转向卧龙区</strong>（卧龙没有EPC项目）③ 3家运输企业反而是资源——他们手上有渣土来源信息，可以合作"收运处一体化"
+    </div>
+  </div>
+
+  <div class="rc">
+    <div class="rc-h">
+      <div class="rc-i">👥</div>
+      <div class="rc-t">难点3：邻避效应——市区居民反对力度大10倍</div>
+      <span class="rc-b t-amber">高难度</span>
+    </div>
+    <div class="rc-d">
+      "渣土场"在大众认知里≈"垃圾场"，市区居民有组织的反对比县域大得多，可能成为环评被卡的关键原因。
+    </div>
+    <div class="rc-dt">
+      <strong>真实案例：</strong>2025年南阳多个地方"渣土山"被省媒曝光，说明民众对渣土问题很敏感。如果你在市区周边建一个渣土处置场，居民第一反应是"噪音+粉尘+大车"。要解决邻避效应，需要:① 选址离居民区至少500米以上 ② 全封闭车间（粉尘不外溢）+在线监测数据公开 ③ 给周边社区一些"好处"（优先用工、道路修缮）④ 最好以"市政公用设施"名义立项，不要叫"渣土场"
+    </div>
+  </div>
+
+  <div class="rc">
+    <div class="rc-h">
+      <div class="rc-i">📋</div>
+      <div class="rc-t">难点4：政府决策链更长（区级→市级多层级）</div>
+      <span class="rc-b t-blue">中等难度</span>
+    </div>
+    <div class="rc-d">
+      市辖区项目可能需要同时过区级政府和市级政府两关，决策周期比县域长50%以上。
+    </div>
+    <div class="rc-dt">
+      <strong>影响：</strong>同样一个项目，在唐河决策链是"唐河县政府→住建局→城管局→自然资源局"4-5个节点。在卧龙区可能变成"卧龙区政府→宛城区规划局→南阳市自然资源局→南阳市住建局→南阳市城管局"8-10个节点。多一层审批≈多3-6个月。<br>
+      <strong>应对思路：</strong>① 尽量走"区级项目"不升级到市级 ② 如果必须经过市级，提前搞清楚最近分管副市长是谁、他/她的重心在哪 ③ 找有国企背景的主体出面（国企对国企好说话）
+    </div>
+  </div>
+
+  <div class="rc">
+    <div class="rc-h">
+      <div class="rc-i">🚚</div>
+      <div class="rc-t">难点5：市区运输限制（白天禁行+环保限行）</div>
+      <span class="rc-b t-blue">中等难度</span>
+    </div>
+    <div class="rc-d">
+      南阳中心城区对大型货车有通行限制（白天禁行、环保管控期全禁），直接影响渣土运输效率。
+    </div>
+    <div class="rc-dt">
+      <strong>实际影响：</strong>① 渣土车只能在夜间22:00-次日6:00进城，有效作业时间被压缩 ② 南阳有大气污染管控期（秋冬季），可能每周停运2-3天 ③ 运输成本比县城高30-50%（夜班工资+绕路）<br>
+      <strong>应对思路：</strong>① 选择靠近建成区边缘的选址（减少市区通行距离）② 搭配"短驳转运"模式——渣土在工地就被初步处理（移动破碎机），只运成品出厂 ③ 办理市政工程车辆通行证（渣土处置属市政公用）
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 卧龙区vs宛城区 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="st-title st0">⚖️ 两区对比：选哪个？</div>
+
+  <table>
+    <tr><th style="width:120px;">对比维度</th><th style="width:140px;">宛城区</th><th style="width:140px;">卧龙区</th><th style="width:80px;">推荐</th></tr>
+    <tr><td>渣土量</td><td><strong>180-300万吨/年</strong></td><td>150-250万吨/年</td><td style="text-align:center">持平</td></tr>
+    <tr><td>已有竞争者</td><td>⚠️ 有示范区EPC项目</td><td>✅ 无已知竞争者</td><td style="text-align:center"><span class="pill" style="background:var(--green);color:#fff;padding:1px 6px;border-radius:3px;">卧龙胜</span></td></tr>
+    <tr><td>渣土类型</td><td>工程渣土为主（干净）</td><td>拆迁+装修垃圾（复杂但附加值高）</td><td style="text-align:center">各有利弊</td></tr>
+    <tr><td>政府态度</td><td>一般（已有EPC项目在推进）</td><td>✅ <strong>主动招商表态</strong></td><td style="text-align:center"><span class="pill" style="background:var(--green);color:#fff;padding:1px 6px;border-radius:3px;">卧龙胜</span></td></tr>
+    <tr><td>选址难度</td><td>⚠️ 新区开发，用地紧张</td><td>✅ 西侧有空地+工业退地</td><td style="text-align:center"><span class="pill" style="background:var(--green);color:#fff;padding:1px 6px;border-radius:3px;">卧龙胜</span></td></tr>
+    <tr><td>政策触发点</td><td>高铁片区建设（5年窗口）</td><td>🔥 违规倾倒曝光（政府必须行动）</td><td style="text-align:center"><span class="pill" style="background:var(--amber);color:#fff;padding:1px 6px;border-radius:3px;">卧龙胜</span></td></tr>
+    <tr><td>决策链条</td><td>区级+市级（示范区问题）</td><td>区级为主（省一关）</td><td style="text-align:center"><span class="pill" style="background:var(--green);color:#fff;padding:1px 6px;border-radius:3px;">卧龙胜</span></td></tr>
+    <tr><td>工业固废协同</td><td>较少</td><td>✅ 有工业基础</td><td style="text-align:center"><span class="pill" style="background:var(--green);color:#fff;padding:1px 6px;border-radius:3px;">卧龙胜</span></td></tr>
+  </table>
+
+  <div style="font-size:13px;padding:12px;background:var(--rose-l);border-radius:8px;margin-top:8px;">
+    <strong>🏆 推荐：优先卧龙区，暂缓宛城区</strong><br>
+    卧龙区"没有已知竞争者+政府主动招商+违规曝光后压力最大+工业转型有用地腾退"四个条件叠加，是目前市辖区最好的切入点。宛城区需要先搞清楚示范区EPC项目的真实覆盖情况，再决定是否进入。
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 财务调整 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="st-title st0">💰 针对卧龙区的财务模型调整</div>
+  <div class="note-box" style="margin-bottom:12px;">
+    市辖区场景与县域场景有显著差异，核心变量需调整。
+  </div>
+
+  <table>
+    <tr><th>变量</th><th>县域模型</th><th>卧龙区调整</th><th>原因</th></tr>
+    <tr><td>处置费</td><td>8-12元/方</td><td><strong>10-15元/方</strong></td><td>市区处置费更高（政府财力+运输成本更高）</td></tr>
+    <tr><td>再生骨料售价</td><td>15-25元/吨</td><td><strong>20-30元/吨</strong></td><td>市区建筑市场大，砂石需求更旺，价格更高</td></tr>
+    <tr><td>拿地成本</td><td>20-40万/亩</td><td><strong>50-80万/亩</strong></td><td>市区周边地块价格高2-3倍</td></tr>
+    <tr><td>运输成本</td><td>100-150万/年</td><td><strong>180-250万/年</strong></td><td>市区限行+夜班+绕路</td></tr>
+    <tr><td>环保投入</td><td>400-600万</td><td><strong>600-800万</strong></td><td>市区环保标准更严，全封闭车间要求更高</td></tr>
+    <tr><td>收入端</td><td>处置费+骨料+砖+砂土</td><td><strong>+装修垃圾分拣品</strong></td><td>卧龙区拆迁量大，废铁/木材/塑料回收增加收入</td></tr>
+  </table>
+
+  <div class="rc" style="border-left:3px solid var(--rose);">
+    <div class="rc-h">
+      <div class="rc-i">🧮</div>
+      <div class="rc-t">卧龙区年利润估算（100万方/年规模）</div>
+    </div>
+    <div class="rc-d" style="color:var(--ink);line-height:2;">
+      <strong>收入端提升：</strong>处置费均价12元/方×100万=1,200万 + 骨料25元/吨×40万吨=1,000万 + 砖800万 + 装修垃圾分拣附加值约200-300万 = 约<strong>3,200-3,500万</strong>（对比县域2,690万）<br>
+      <strong>成本端增加：</strong>人力290万 + 电费220万 + 折旧200万 + 运费200万 + 环保运维60万 + 财务费用... = 约<strong>1,200-1,400万</strong><br>
+      <strong>年税负：</strong>约<strong>450-500万</strong><br>
+      <strong>基准净利润估算：</strong><strong style="color:var(--rose);font-size:16px;">~1,300-1,500万</strong>（对比县域1,018万，高出30-50%）<br>
+      <strong>我方分成（20%）：</strong>约<strong>260-300万/年</strong>（对比县域204万）
+    </div>
+    <div class="rc-dt">
+      ⚠️ 但注意：拿地成本高3倍+环保投入高30%+政府审批链更长。虽然单点利润更高，但<strong>前期投入更大、周期更长</strong>。如果算IRR（内部回报率），可能和县域项目相差不大。
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 操作建议 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="st-title st6">🎯 实际操作建议</div>
+
+  <div class="g2">
+    <div class="rc" style="border-left:3px solid var(--rose);">
+      <div class="rc-h"><div class="rc-i">1️⃣</div><div class="rc-t">先去卧龙区住建局/城管局</div></div>
+      <div class="rc-d">
+        直接问：你们"引导社会资本参与"的通道在哪？有没有具体的招商方案或联系人？
+      </div>
+    </div>
+    <div class="rc" style="border-left:3px solid var(--teal);">
+      <div class="rc-h"><div class="rc-i">2️⃣</div><div class="rc-t">再去示范区城市管理服务中心</div></div>
+      <div class="rc-d">
+        问清楚：EPC项目覆盖哪些区域？年处置能力多少？有没有区域排他条款？
+      </div>
+    </div>
+    <div class="rc" style="border-left:3px solid var(--amber);">
+      <div class="rc-h"><div class="rc-i">3️⃣</div><div class="rc-t">接触3家运输特许经营企业</div></div>
+      <div class="rc-d">
+        通过城管局引荐或工商信息查到联系方式——他们手上有渣土来源信息，是天然的合作伙伴。
+      </div>
+    </div>
+    <div class="rc" style="border-left:3px solid var(--green);">
+      <div class="rc-h"><div class="rc-i">4️⃣</div><div class="rc-t">卧龙区西部/南部实地踏勘选址</div></div>
+      <div class="rc-d">
+        重点看王村、潦河方向有无工业废弃地或规划建设用地。同时看2026年1月市级用地预审公告的具体地块位置。
+      </div>
+    </div>
+  </div>
+
+  <div style="font-size:12px;color:var(--gray);padding:8px 14px;background:var(--rose-l);border-radius:6px;margin-top:8px;">
+    <strong>组合策略建议：</strong>如果卧龙区路径顺利，<strong>最优方案</strong>是"卧龙区建处置中心+宛城区建前端收运站"的<strong>跨区协同模式</strong>——卧龙区的厂负责处理加工，宛城区通过收运站集中转运。两区距离仅10-15公里，运输成本可控。但这个需要更高层级的政府协调。
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 最终判断 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="cb">
+    <h3>🧠 最终判断——宛城/卧龙区</h3>
+    <p>
+      <span class="hl">市辖区有更高的天花板（利润1,300-1,500万/年），但前期复杂度和不确定性也更高。</span>
+    </p>
+    <p>
+      与县域项目相比，市辖区不是一个"谁都能做"的项目——需要有政府关系能力、竞争应对能力、邻避效应处理经验。但如果你或团队有这些资源，市辖区的<strong>回报上限远高于县域</strong>。
+    </p>
+    <p>
+      <strong style="color:#f9a8d4;">两条路线对比</strong>
+    </p>
+    <p>
+      🏘️ <strong>县域路线（唐河/邓州）：</strong>确定性高、门槛低、利润1,000万/级<br>
+      <span style="color:#94a3b8;">适合——第一次做渣土项目、需要跑通模式、保守稳健</span>
+    </p>
+    <p>
+      🏙️ <strong>市辖区路线（卧龙区优先）：</strong>天花板高、复杂度高、利润1,300-1,500万/年<br>
+      <span style="color:#94a3b8;">适合——有政府关系、有竞争应对能力、追求更高回报</span>
+    </p>
+    <p style="margin-top:12px;border-top:1px solid rgba(255,255,255,.1);padding-top:12px;">
+      ⚠️ <strong>红线警示：</strong>在确认示范区EPC项目没有覆盖卧龙区之前，不要往卧龙区投任何资金。这一步2周就能搞清。
+    </p>
+    <p style="margin-top:6px;">
+      <span class="hl">如果两条路线都要走：卧龙区作为利润中心（高利润）+ 邓州/唐河作为规模中心（稳收），两者形成互补。</span>
+    </p>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

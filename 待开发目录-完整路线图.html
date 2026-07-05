@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EnvLab · 待开发目录 | 完整路线图</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:#0a0e17;color:#e2e8f0;font-size:13px;padding:20px;max-width:960px;margin:0 auto}
+h1{font-size:22px;font-weight:800;margin-bottom:2px;color:#fff}
+.sub{font-size:12px;color:#64748b;margin-bottom:20px}
+h2{font-size:15px;font-weight:700;margin:24px 0 10px;padding:8px 12px;border-radius:6px;display:flex;align-items:center;gap:6px}
+h3{font-size:13px;font-weight:700;margin:14px 0 6px;color:#e2e8f0}
+.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:9px;font-weight:700;letter-spacing:.5px}
+.b-p0{background:#dc2626;color:#fff}
+.b-p1{background:#d97706;color:#fff}
+.b-p2{background:#2563eb;color:#fff}
+.b-p3{background:#16a34a;color:#fff}
+.b-wait{background:#475569;color:#94a3b8}
+.b-easy{background:rgba(34,197,94,.15);color:#4ade80}
+.b-med{background:rgba(251,191,36,.12);color:#fcd34d}
+.b-hard{background:rgba(239,68,68,.1);color:#fca5a5}
+table{width:100%;border-collapse:collapse;font-size:11px;margin:8px 0}
+th{background:#1e293b;color:#94a3b8;padding:6px 8px;text-align:left;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:1px}
+td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;color:#cbd5e1}
+td .desc{font-size:10px;color:#64748b;display:block;margin-top:1px}
+.section-card{background:#131a2e;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:16px 18px;margin-bottom:12px}
+.section-card .sc-h{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.section-card .sc-t{font-size:14px;font-weight:700}
+.section-card .sc-sub{font-size:11px;color:#64748b;line-height:1.6}
+.item-list{margin:6px 0 0;padding:0;list-style:none}
+.item-list li{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.03);font-size:11px;line-height:1.5}
+.item-list li:last-child{border-bottom:none}
+.item-list .il-icon{flex-shrink:0;font-size:12px;width:18px;text-align:center}
+.item-list .il-name{font-weight:600;color:#e2e8f0}
+.item-list .il-desc{color:#64748b;font-size:10px}
+.item-list .il-tags{display:flex;gap:3px;flex-wrap:wrap;margin-top:2px}
+.summary-bar{display:flex;gap:6px;height:20px;border-radius:4px;overflow:hidden;margin:12px 0;font-size:9px;font-weight:600}
+.summary-bar div{display:flex;align-items:center;justify-content:center;color:#fff}
+</style>
+</head>
+<body>
+
+<h1>📋 EnvLab · 完整待开发目录</h1>
+<div class="sub">按Decision Dashboard v2.0优先级排序 · 总计 55 个立项</div>
+
+<!-- Summary bar -->
+<div class="summary-bar">
+  <div style="width:14%;background:#dc2626">P0 8个</div>
+  <div style="width:26%;background:#d97706">P1 14个</div>
+  <div style="width:30%;background:#2563eb">P2 16个</div>
+  <div style="width:30%;background:#16a34a">P3 17个</div>
+</div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- P0 → 现在就该做的事 -->
+<!-- ════════════════════════════════════════ -->
+<h2 style="background:rgba(220,38,38,.1);color:#fca5a5;border-left:3px solid #dc2626">🔴 P0 · 立即执行（8项）</h2>
+<div class="section-card">
+  <div class="sc-h"><span class="badge b-p0">立即</span><span class="sc-t">内容发布</span></div>
+  <div class="sc-sub">公众号草稿箱有10篇+2篇新推文章，一篇都还没发出去。</div>
+  <ul class="item-list">
+    <li><span class="il-icon">📝</span><div><span class="il-name">公众号排期发布</span><span class="il-desc">草稿箱10篇排期发送，选政策类（资金/督察）→科普类（天平/传感器）→日常类（倒酒/pH饮料）轮流</span>
+      <div class="il-tags"><span class="badge b-easy">0.5h排期</span><span class="badge b-p0">今日可做</span></div>
+    </div></li>
+    <li><span class="il-icon">📕</span><div><span class="il-name">小红书发布天平爆款文</span><span class="il-desc">十万分之一天平HTML已就绪，配图后发小红书</span>
+      <div class="il-tags"><span class="badge b-easy">0.5h</span></div>
+    </div></li>
+    <li><span class="il-icon">🔑</span><div><span class="il-name">关键词回复素材准备</span><span class="il-desc">7个钩子的回复内容就绪：资金/传感器/pH/水质/天平/量具/酒</span>
+      <div class="il-tags"><span class="badge b-easy">1h</span></div>
+    </div></li>
+    <li><span class="il-icon">📊</span><div><span class="il-name">更新EnvLab整体开发框架</span><span class="il-desc">从37个→~50个，加入采样系列5个页面</span>
+      <div class="il-tags"><span class="badge b-easy">0.5h</span></div>
+    </div></li>
+  </ul>
+</div>
+
+<div class="section-card">
+  <div class="sc-h"><span class="badge b-p0">尽快</span><span class="sc-t">用户反馈与迭代</span></div>
+  <ul class="item-list">
+    <li><span class="il-icon">🐛</span><div><span class="il-name">已做页面Bug逐项验收</span><span class="il-desc">13个PhET页面逐项点击测试，修复交互异常</span>
+      <div class="il-tags"><span class="badge b-med">2h</span></div>
+    </div></li>
+    <li><span class="il-icon">📱</span><div><span class="il-name">移动端适配检查</span><span class="il-desc">所有PhET页面对手机端显示做响应式适配</span>
+      <div class="il-tags"><span class="badge b-med">2h</span></div>
+    </div></li>
+    <li><span class="il-icon">🧪</span><div><span class="il-name">首单免费咨询试探</span><span class="il-desc">公众号发1篇带"免费诊断"钩子的文章，测试转化</span>
+      <div class="il-tags"><span class="badge b-easy">1h</span></div>
+    </div></li>
+    <li><span class="il-icon">🤖</span><div><span class="il-name">知乎入驻（3个回答）</span><span class="il-desc">在环保/检测话题回答专业问题，锚点EnvLab链接</span>
+      <div class="il-tags"><span class="badge b-easy">1h</span></div>
+    </div></li>
+  </ul>
+</div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- P1 → 7月内启动 -->
+<!-- ════════════════════════════════════════ -->
+<h2 style="background:rgba(217,119,6,.1);color:#fcd34d;border-left:3px solid #d97706">🟡 P1 · 7月内启动（14项）</h2>
+
+<div class="section-card">
+  <div class="sc-h"><span class="badge b-p1">批次二</span><span class="sc-t">深内容开发（3个模块）</span></div>
+  <div class="sc-sub">在已有页面上追加深度功能，不新建页面</div>
+  <ul class="item-list">
+    <li><span class="il-icon">⚡</span><div><span class="il-name">质控判断训练模块</span><span class="il-desc">在COD页面加"异常数据识别"：给一组检测数据，让你判断哪出了问题（加错试剂/消解不够/滴定过量）</span>
+      <div class="il-tags"><span class="badge b-med">3h</span><span class="badge b-p2">复用COD页面</span></div>
+    </div></li>
+    <li><span class="il-icon">⚡</span><div><span class="il-name">方法对比教学模块</span><span class="il-desc">COD重铬酸盐法vs快速消解法对比交互，同指标不同方法的结果差异</span>
+      <div class="il-tags"><span class="badge b-med">3h</span></div>
+    </div></li>
+    <li><span class="il-icon">⚡</span><div><span class="il-name">事故案例复盘模块</span><span class="il-desc">选1-2个真实检测质量事故案例，还原从采样到报告出错的链条</span>
+      <div class="il-tags"><span class="badge b-hard">4h</span><span class="badge b-wait">需收集案例</span></div>
+    </div></li>
+  </ul>
+</div>
+
+<div class="section-card">
+  <div class="sc-h"><span class="badge b-p1">课程</span><span class="sc-t">环保×AI课程（首门7节）</span></div>
+  <div class="sc-sub">7节课大纲已定，用公众号先验证热度再投入录制</div>
+  <ul class="item-list">
+    <li><span class="il-icon">🎬</span><div><span class="il-name">前2节课程录制验证</span><span class="il-desc">录"AI写公众号"和"AI做交互实验"两节，验证录播流程和效果</span>
+      <div class="il-tags"><span class="badge b-med">4h</span></div>
+    </div></li>
+    <li><span class="il-icon">📢</span><div><span class="il-name">公众号发2篇"环保AI"话题文看热度</span><span class="il-desc">测试环保AI方向的搜索量和关注度，决定是否全力投入课程</span>
+      <div class="il-tags"><span class="badge b-easy">1.5h</span></div>
+    </div></li>
+    <li><span class="il-icon">💻</span><div><span class="il-name">课程上架（小鹅通/ima）</span><span class="il-desc">首门¥199早鸟，验证付费意愿</span>
+      <div class="il-tags"><span class="badge b-med">2h</span></div>
+    </div></li>
+  </ul>
+</div>
+
+<div class="section-card">
+  <div class="sc-h"><span class="badge b-p1">新实验</span><span class="sc-t">全新交互实验（5个）</span></div>
+  <ul class="item-list">
+    <li><span class="il-icon">🧪</span><div><span class="il-name">甲醛检测仪vs国控站</span><span class="il-desc">消费级甲醛仪、专业级仪器、国标方法三步对比，延续69元传感器风格</span>
+      <div class="il-tags"><span class="badge b-med">3h</span><span class="badge b-p2">复用69元传感器思路</span></div>
+    </div></li>
+    <li><span class="il-icon">🔊</span><div><span class="il-name">噪声地图·城市声环境监测</span><span class="il-desc">城市地图点位布设/昼夜间切换/声级计模拟/Lmax/Ln统计</span>
+      <div class="il-tags"><span class="badge b-med">3h</span><span class="badge b-p2">复用物理参数页面</span></div>
+    </div></li>
+    <li><span class="il-icon">💧</span><div><span class="il-name">水质快速检测包模拟</span><span class="il-desc">试纸/比色管/便携多参数仪，家庭可用的水质检测对比</span>
+      <div class="il-tags"><span class="badge b-med">3h</span></div>
+    </div></li>
+    <li><span class="il-icon">🌡️</span><div><span class="il-name">室内空气质量综合体检</span><span class="il-desc">甲醛/TVOC/CO₂/PM2.5/温湿度五项联动检测模拟</span>
+      <div class="il-tags"><span class="badge b-hard">4h</span></div>
+    </div></li>
+    <li><span class="il-icon">🧴</span><div><span class="il-name">化妆品中重金属检测（ICP-MS）</span><span class="il-desc">口红/粉底等化妆品铅/砷/汞检测趣味科普</span>
+      <div class="il-tags"><span class="badge b-hard">4h</span><span class="badge b-p2">泛生活化方向</span></div>
+    </div></li>
+  </ul>
+</div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- P2 → 8月后评估 -->
+<!-- ════════════════════════════════════════ -->
+<h2 style="background:rgba(37,99,235,.1);color:#93c5fd;border-left:3px solid #2563eb">🔵 P2 · 8月后评估（16项）</h2>
+
+<div class="section-card">
+  <div class="sc-h"><span class="badge b-p2">采样系列</span><span class="sc-t">剩余采样方向（3个）</span></div>
+  <div class="sc-sub">采样标准汇编评估中有8个方向，已完成5个</div>
+  <ul class="item-list">
+    <li><span class="il-icon">🏭</span><div><span class="il-name">无组织排放监测布点</span><span class="il-desc">HJ 55-2024，参照点/监控点/气象参数，依赖气象条件</span>
+      <div class="il-tags"><span class="badge b-hard">4h</span><span class="badge b-wait">优先级低</span></div>
+    </div></li>
+    <li><span class="il-icon">🗑️</span><div><span class="il-name">工业固废采样</span><span class="il-desc">HJ/T 20-1998，堆积形态识别/份样数/采样器选择</span>
+      <div class="il-tags"><span class="badge b-med">3h</span><span class="badge b-wait">视觉表现力有限</span></div>
+    </div></li>
+    <li><span class="il-icon">📊</span><div><span class="il-name">现场采样记录表生成器</span><span class="il-desc">工具型页面，输入参数自动生成标准化采样记录表（可打印）</span>
+      <div class="il-tags"><span class="badge b-med">2h</span></div>
+    </div></li>
+  </ul>
+</div>
+
+<div class="section-card">
+  <div class="sc-h"><span class="badge b-p2">内容扩线</span><span class="sc-t">生活化方向扩展（6个）</span></div>
+  <div class="sc-sub">方案已在「生活化方向扩展HTML」中详细列出</div>
+  <ul class="item-list">
+    <li><span class="il-icon">👨‍👧</span><div><span class="il-name">亲子科学实验系列</span><span class="il-desc">厨房pH试纸/简易层析/声级计/细菌培养皿 等8个实验创意</span>
+      <div class="il-tags"><span class="badge b-easy">1h/篇</span><span class="badge b-p0">6岁女儿爸人设</span></div>
+    </div></li>
+    <li><span class="il-icon">🎸</span><div><span class="il-name">音乐×科学跨界系列</span><span class="il-desc">用声级计测吉他/频谱看音色/排练室噪音 等7个选题</span>
+      <div class="il-tags"><span class="badge b-easy">1h/篇</span><span class="badge b-p2">差异化最高</span></div>
+    </div></li>
+    <li><span class="il-icon">🏠</span><div><span class="il-name">家的环境体检系列</span><span class="il-desc">甲醛/自来水/空调滤网/厨房油烟/卧室CO₂ 等7个实测</span>
+      <div class="il-tags"><span class="badge b-med">需耗材</span></div>
+    </div></li>
+    <li><span class="il-icon">🛒</span><div><span class="il-name">消费避坑·实验室视角</span><span class="il-desc">净水器/空气净化器/甲醛治理/保温杯/儿童专用 等7个实测</span>
+      <div class="il-tags"><span class="badge b-med">需耗材</span><span class="badge b-p0">变现潜力最大</span></div>
+    </div></li>
+    <li><span class="il-icon">🏀</span><div><span class="il-name">运动健康科学系列</span><span class="il-desc">骑行尾气/篮球场噪声/运动饮料实测 等7个选题</span>
+      <div class="il-tags"><span class="badge b-easy">1h/篇</span></div>
+    </div></li>
+    <li><span class="il-icon">💼</span><div><span class="il-name">实验室职场吐槽系列</span><span class="il-desc">检测人职业病/甲方奇葩要求/采样历险记 等8个选题</span>
+      <div class="il-tags"><span class="badge b-easy">0.5h/篇</span><span class="badge b-p0">小红书已验证</span></div>
+    </div></li>
+  </ul>
+</div>
+
+<div class="section-card">
+  <div class="sc-h"><span class="badge b-p2">生态</span><span class="sc-t">平台与渠道建设（3项）</span></div>
+  <ul class="item-list">
+    <li><span class="il-icon">🌐</span><div><span class="il-name">EnvLab PWA部署优化</span><span class="il-desc">manifest.json + service-worker 离线缓存，已部分部署需完善</span>
+      <div class="il-tags"><span class="badge b-med">2h</span></div>
+    </div></li>
+    <li><span class="il-icon">📚</span><div><span class="il-name">教材配套数字资源提案</span><span class="il-desc">把EnvLab打包为出版社教材数字资源包，接触出版社</span>
+      <div class="il-tags"><span class="badge b-med">3h</span><span class="badge b-p2">B2B方向</span></div>
+    </div></li>
+    <li><span class="il-icon">🏗️</span><div><span class="il-name">CloudStudio部署+演示链接</span><span class="il-desc">把关键页面部署到可公开访问的演示环境</span>
+      <div class="il-tags"><span class="badge b-med">2h</span></div>
+    </div></li>
+  </ul>
+</div>
+
+<div class="section-card">
+  <div class="sc-h"><span class="badge b-p2">技能</span><span class="sc-t">Skill生态完善（4个）</span></div>
+  <ul class="item-list">
+    <li><span class="il-icon">🤖</span><div><span class="il-name">封装"EnvLab自动生成"Skill</span><span class="il-desc">将整个PhET页面生成管线封装成Skill：一句话生成交互实验页面</span>
+      <div class="il-tags"><span class="badge b-hard">6h</span><span class="badge b-p0">效率最高</span></div>
+    </div></li>
+    <li><span class="il-icon">🤖</span><div><span class="il-name">封装"采样方案生成"Skill</span><span class="il-desc">输入地块信息→自动生成采样方案（布点+检测项+质控）</span>
+      <div class="il-tags"><span class="badge b-med">3h</span></div>
+    </div></li>
+    <li><span class="il-icon">🤖</span><div><span class="il-name">已发Skill更新版本</span><span class="il-desc">wechat-auto-publisher / env-full-process-ai 更新到v1.1</span>
+      <div class="il-tags"><span class="badge b-easy">1h</span></div>
+    </div></li>
+    <li><span class="il-icon">🤖</span><div><span class="il-name">SkillHub上架更多Skill</span><span class="il-desc">narrative-54 / soil-investigation-sampling 等发布到skillhub</span>
+      <div class="il-tags"><span class="badge b-easy">1h</span></div>
+    </div></li>
+  </ul>
+</div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- P3 → Q4评估 -->
+<!-- ════════════════════════════════════════ -->
+<h2 style="background:rgba(22,163,74,.1);color:#86efac;border-left:3px solid #16a34a">🟢 P3 · 季度评估后启动（17项）</h2>
+
+<div class="section-card">
+  <div class="sc-h"><span class="badge b-p3">食品检测</span><span class="sc-t">食品检测交互实验（4个起步）</span></div>
+  <div class="sc-sub">前提条件：环境方向月收入稳定 > ¥10,000 且 环境实验总数 > 44个</div>
+  <ul class="item-list">
+    <li><span class="il-icon">🥩</span><div><span class="il-name">食品中亚硝酸盐测定</span><span class="il-desc">格里斯试剂显色→分光光度法(538nm)→标准曲线→GB 5009.33</span>
+      <div class="il-tags"><span class="badge b-med">3h</span><span class="badge b-p2">复用COD分光模板</span></div>
+    </div></li>
+    <li><span class="il-icon">🥤</span><div><span class="il-name">饮料中苯甲酸/山梨酸测定</span><span class="il-desc">HPLC分离→紫外检测→保留时间+峰面积定量→GB 5009.28</span>
+      <div class="il-tags"><span class="badge b-med">3h</span><span class="badge b-p2">复用GC色谱模板</span></div>
+    </div></li>
+    <li><span class="il-icon">🥚</span><div><span class="il-name">食品中蛋白质测定（凯氏定氮）</span><span class="il-desc">消化→蒸馏→滴定→计算，与COD滴定技术高度重合</span>
+      <div class="il-tags"><span class="badge b-med">3h</span><span class="badge b-p2">复用COD滴定</span></div>
+    </div></li>
+    <li><span class="il-icon">🍚</span><div><span class="il-name">食品中铅/砷测定（AA/ICP-MS）</span><span class="il-desc">湿法消解→上机→谱图→定量→超标判定</span>
+      <div class="il-tags"><span class="badge b-hard">4h</span></div>
+    </div></li>
+  </ul>
+</div>
+
+<div class="section-card">
+  <div class="sc-h"><span class="badge b-p3">工具型</span><span class="sc-t">实用工具型页面（4个）</span></div>
+  <ul class="item-list">
+    <li><span class="il-icon">📐</span><div><span class="il-name">环保税计算器</span><span class="il-desc">大气/水/固废/噪声四类环保税自动计算，基于税法</span>
+      <div class="il-tags"><span class="badge b-med">3h</span></div>
+    </div></li>
+    <li><span class="il-icon">📏</span><div><span class="il-name">排放量换算工具集</span><span class="il-desc">浓度→排放量/ppm↔mg/m³/标准态→实际态互换</span>
+      <div class="il-tags"><span class="badge b-med">2h</span></div>
+    </div></li>
+    <li><span class="il-icon">📊</span><div><span class="il-name">水质类别自动判定工具</span><span class="il-desc">输入6项指标→自动按GB 3838-2002判定水质类别</span>
+      <div class="il-tags"><span class="badge b-easy">1.5h</span></div>
+    </div></li>
+    <li><span class="il-icon">📋</span><div><span class="il-name">采样方案智能生成器（升级）</span><span class="il-desc">在现有v2基础上增加地下水/废气/噪声方案模板</span>
+      <div class="il-tags"><span class="badge b-med">3h</span></div>
+    </div></li>
+  </ul>
+</div>
+
+<div class="section-card">
+  <div class="sc-h"><span class="badge b-p3">企业服务</span><span class="sc-t">B2B培训与咨询产品化（5项）</span></div>
+  <ul class="item-list">
+    <li><span class="il-icon">🏢</span><div><span class="il-name">企业AI内训标准产品</span><span class="il-desc">环保行业AI实战内训，¥10,000-30,000/场，含定制内容</span>
+      <div class="il-tags"><span class="badge b-med">准备期</span></div>
+    </div></li>
+    <li><span class="il-icon">🧾</span><div><span class="il-name">资金申报AI助手（SaaS MVP）</span><span class="il-desc">Web工具：输入项目→匹配资金渠道→生成申报建议</span>
+      <div class="il-tags"><span class="badge b-hard">8h</span></div>
+    </div></li>
+    <li><span class="il-icon">📑</span><div><span class="il-name">土壤调查自动报告生成器</span><span class="il-desc">复用env-full-process-ai Skill，封装为Web端</span>
+      <div class="il-tags"><span class="badge b-hard">6h</span></div>
+    </div></li>
+    <li><span class="il-icon">🏅</span><div><span class="il-name">创A创B自评工具</span><span class="il-desc">39个行业绩效分级自评，差距分析+整改建议</span>
+      <div class="il-tags"><span class="badge b-hard">6h</span></div>
+    </div></li>
+    <li><span class="il-icon">✅</span><div><span class="il-name">环保合规自查工具</span><span class="il-desc">7维度25项检查点，一键生成自查报告</span>
+      <div class="il-tags"><span class="badge b-med">4h</span></div>
+    </div></li>
+  </ul>
+</div>
+
+<div class="section-card">
+  <div class="sc-h"><span class="badge b-p3">远期</span><span class="sc-t">远期储备（4个）</span></div>
+  <ul class="item-list">
+    <li><span class="il-icon">💊</span><div><span class="il-name">药品质量控制实验</span><span class="il-desc">全新客户渠道和内容体系，待前序验证</span>
+      <div class="il-tags"><span class="badge b-wait">待评估</span></div>
+    </div></li>
+    <li><span class="il-icon">🏭</span><div><span class="il-name">化工工艺控制模拟</span><span class="il-desc">化工过程参数控制交互，面向化工专业</span>
+      <div class="il-tags"><span class="badge b-wait">待评估</span></div>
+    </div></li>
+    <li><span class="il-icon">🌍</span><div><span class="il-name">EnvLab英文版</span><span class="il-desc">关键页面翻译为英文，面向海外用户/LinkedIn</span>
+      <div class="il-tags"><span class="badge b-wait">长期</span></div>
+    </div></li>
+    <li><span class="il-icon">💤</span><div><span class="il-name">渣土投资（储备状态）</span><span class="il-desc">财务模型/报告全套已完成，等政策信号或合作方再启动</span>
+      <div class="il-tags"><span class="badge b-wait">Kill List</span></div>
+    </div></li>
+  </ul>
+</div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- ═══ 已完成的对照 ═══ -->
+<h2 style="background:rgba(34,197,94,.1);color:#86efac;border-left:3px solid #22c55e">✅ 已完成对照（20个PhET级）</h2>
+
+<table>
+<tr><th style="width:30px">#</th><th>页面</th><th>优先级</th></tr>
+<tr><td>1-7</td><td>pH/COD/PRB/ISCO/五气/天平/GC</td><td><span class="badge b-p0">初始PhET</span></td></tr>
+<tr><td>8-14</td><td>浊度/总氮/SVE/淋洗/P&T/截获槽/微生物</td><td><span class="badge b-p0">批次一</span></td></tr>
+<tr><td>15-19</td><td>地表水/土壤/地下水/空气PM2.5/固定源废气</td><td><span class="badge b-p0">采样系列</span></td></tr>
+</table>
+
+<div style="margin-top:16px;padding:12px;background:rgba(255,255,255,.02);border-radius:8px;text-align:center;font-size:11px;color:#64748b;line-height:1.6">
+  <strong style="color:#94a3b8">总计立项：55个 | 已完成：19个 | 待开发：36个</strong><br>
+  P0（立即）8项 · P1（7月）14项 · P2（8月后评估）16项 · P3（季度评估）17项
+</div>
+
+</body>
+</html>

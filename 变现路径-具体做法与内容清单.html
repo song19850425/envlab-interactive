@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4条变现路径 · 具体做法与内容清单</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f3ed;color:#1a1f36;line-height:1.7;font-size:15px}
+.top-bar{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:28px 24px}
+.top-bar h1{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.top-bar .sub{font-size:13px;color:#94a3b8;margin-top:4px}
+.container{max-width:900px;margin:0 auto;padding:20px 24px 60px}
+.section{margin-bottom:36px}
+.section-title{font-size:16px;font-weight:700;padding:10px 16px;border-radius:8px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.st-p0{background:#fef2f2;color:#b91c1c;border-left:4px solid #b91c1c}
+.st-p1{background:#fffbeb;color:#b45309;border-left:4px solid #b45309}
+.st-p2{background:#eff6ff;color:#1e40af;border-left:4px solid #1e40af}
+.st-p3{background:#f0fdf4;color:#166534;border-left:4px solid #166534}
+
+.p-header{display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:16px 20px;border-radius:10px;color:#fff}
+.p0-header{background:linear-gradient(135deg,#b91c1c,#dc2626)}
+.p1-header{background:linear-gradient(135deg,#b45309,#d97706)}
+.p2-header{background:linear-gradient(135deg,#1e40af,#2563eb)}
+.p3-header{background:linear-gradient(135deg,#166534,#22c55e)}
+.p-header .p-num{font-size:36px;font-weight:800;opacity:.9}
+.p-header .p-info{flex:1}
+.p-header .p-name{font-size:18px;font-weight:700}
+.p-header .p-metrics{font-size:12px;opacity:.85;margin-top:4px}
+.p-header .p-metrics span{margin-right:16px}
+
+.phase-box{background:#fff;border:1px solid #e5e0d8;border-radius:10px;padding:18px 20px;margin-bottom:16px}
+.phase-box h3{font-size:14px;font-weight:700;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #f0f0ec}
+.phase-box h4{font-size:13px;font-weight:600;color:#444;margin:12px 0 6px}
+.phase-actions{margin:0;padding:0;list-style:none}
+.phase-actions li{position:relative;padding:6px 0 6px 20px;font-size:13px;line-height:1.6;border-bottom:1px dashed #f5f5f0}
+.phase-actions li:last-child{border-bottom:none}
+.phase-actions li::before{content:"▸";position:absolute;left:0;color:#666;font-weight:700}
+
+.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+@media(max-width:640px){.content-grid{grid-template-columns:1fr}}
+.content-card{border:1px solid #e5e0d8;border-radius:8px;padding:14px;background:#fafaf8}
+.content-card .cc-title{font-size:13px;font-weight:700;margin-bottom:4px}
+.content-card .cc-desc{font-size:12px;color:#6b7280;line-height:1.5}
+.content-card .cc-tag{display:inline-block;padding:1px 8px;border-radius:8px;font-size:10px;font-weight:600;margin-top:6px}
+
+.tag-cost{background:#f1f0ec;color:#6b7280}
+.tag-easy{background:#f0fdf4;color:#166534}
+.tag-hard{background:#fef2f2;color:#b91c1c}
+.tag-blue{background:#eff6ff;color:#1e40af}
+.tag-amber{background:#fffbeb;color:#b45309}
+.tag-purple{background:#f5f3ff;color:#5b21b6}
+
+table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
+table th{background:#1a1f36;color:#fff;padding:7px 10px;text-align:left;font-weight:600}
+table td{padding:6px 10px;border-bottom:1px solid #e5e0d8;vertical-align:top}
+
+.price-card{display:inline-block;padding:4px 12px;border-radius:6px;font-size:13px;font-weight:700}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:12px 0}
+@media(max-width:640px){.two-col{grid-template-columns:1fr}}
+
+.highlight{background:linear-gradient(135deg,#f0fdf4,#f0fdfa);border-left:4px solid #166534;padding:14px 18px;margin:12px 0;border-radius:0 8px 8px 0;font-size:13px}
+.highlight strong{color:#166534}
+.highlight-p0{background:linear-gradient(135deg,#fef2f2,#fff1f2);border-left:4px solid #b91c1c;padding:14px 18px;margin:12px 0;border-radius:0 8px 8px 0;font-size:13px}
+.highlight-p0 strong{color:#b91c1c}
+
+.nav-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0;position:sticky;top:0;background:#f5f3ed;padding:8px 0;z-index:99}
+.nav-tabs a{display:inline-block;padding:6px 14px;border-radius:16px;font-size:12px;font-weight:600;text-decoration:none;border:1px solid #e5e0d8;color:#6b7280;background:#fff}
+.nav-tabs a:hover{border-color:#1a1f36;color:#1a1f36}
+.nav-tabs .active{border-color:#b91c1c;color:#b91c1c;background:#fef2f2}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>💰 4条变现路径 · 具体做法与核心内容清单</h1>
+  <div class="sub">从内容到课程到SaaS到横向扩张 · 逐条拆解落地步骤</div>
+</div>
+
+<div class="container">
+
+<div class="nav-tabs">
+  <a href="#p0" class="active">P0 内容导流</a>
+  <a href="#p1">P1 AI课程</a>
+  <a href="#p2">P2 咨询SaaS</a>
+  <a href="#p3">P3 食品检测</a>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- P0 -->
+<!-- ════════════════════════════════════ -->
+<div class="section" id="p0">
+  <div class="p-header p0-header">
+    <div class="p-num">P0</div>
+    <div class="p-info">
+      <div class="p-name">内容导流 → 咨询变现</div>
+      <div class="p-metrics">
+        <span>💰 启动成本：近乎零</span>
+        <span>🎯 天花板：¥5-15万/年</span>
+        <span>⏱ 见效周期：2-3个月</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 具体做法 -->
+  <div class="section-title st-p0">📋 一、具体做法（4阶段）</div>
+
+  <div class="phase-box">
+    <h3>阶段一：内容矩阵启动（第1-2周）</h3>
+    <ul class="phase-actions">
+      <li>公众号排期发布：草稿箱10篇，每2-3天发1篇，先发政策类（资金/督察）→科普类（天平/传感器）→日常类（倒酒/pH饮料）</li>
+      <li>每篇文章挂关键词回复钩子：「回复XX领取XX资料」，7个钩子就绪</li>
+      <li>小红书启动「实验室×日常」系列：赛博朋克风封面，每周3篇，先发「天坑专业日常」「实验室vs厨房」等反差内容</li>
+      <li>知乎入驻：在「环保」「检测」「水质」「环评」等话题下回答5-10个问题，锚点EnvLab交互链接</li>
+      <li>环保社群分发：加入3-5个环保/检测行业微信群，不发广告，发干货（政策解读、速查表）</li>
+    </ul>
+    <div class="metric" style="font-size:11px;color:#6b7280;margin-top:8px">
+      每日投入：约1-2小时
+    </div>
+  </div>
+
+  <div class="phase-box">
+    <h3>阶段二：流量验证与选品（第3-4周）</h3>
+    <ul class="phase-actions">
+      <li>观察数据：哪类选题打开率高（政策类vs科普类vs日常类），锁定1-2个高ROI方向</li>
+      <li>关键词素材就绪：7个钩子的回复内容全部准备好（速查表/指南/PDF）</li>
+      <li>首次尝试发互动型内容：投票、问答、征集（如"你最想看我测什么"）</li>
+      <li>小红书评论区主动互动：每篇笔记回复所有评论，引导关注</li>
+      <li>知乎持续回答：每3天1个新回答，积累专业度权重</li>
+    </ul>
+  </div>
+
+  <div class="phase-box">
+    <h3>阶段三：首次变现试探（第5-8周）</h3>
+    <ul class="phase-actions">
+      <li>公众号粉丝破1000后，在菜单栏/文末放「咨询入口」</li>
+      <li>推出「免费诊断」钩子：回复关键词即可获得1次免费资金申报诊断</li>
+      <li>接3-5单轻咨询：标准化的「资金申报可行性评估」或「土壤调查方案诊断」，客单价¥5,000-8,000</li>
+      <li>跑通咨询SOP：首次沟通→资料收集→分析→产出→交付→跟进</li>
+      <li>沉淀2-3个标杆案例，用于后续推广</li>
+    </ul>
+  </div>
+
+  <div class="phase-box">
+    <h3>阶段四：咨询规模化（第9-12周）</h3>
+    <ul class="phase-actions">
+      <li>标准化咨询产品：3档定价（轻诊断¥3,000 / 深度方案¥8,000 / 年度顾问¥30,000-80,000）</li>
+      <li>推出「回复关键词送XX」升级版：增加关键词数量，扩大引流入口</li>
+      <li>尝试第一篇付费文章：深度政策解读或行业报告</li>
+      <li>建立客户见证墙：把咨询成功案例（脱敏）做成内容二次传播</li>
+      <li>评估是否启动「AI课程」（P1）— 咨询客户中如果有高频需求，就值得做课程</li>
+    </ul>
+  </div>
+
+  <!-- 核心内容清单 -->
+  <div class="section-title st-p0">📦 二、核心内容清单（需要生产）</div>
+
+  <table>
+    <tr><th style="width:150px">内容类型</th><th>具体内容</th><th style="width:80px">数量</th><th style="width:60px">优先级</th></tr>
+    <tr>
+      <td><strong>公众号文章</strong></td>
+      <td>政策解读类：资金申报指南 / 督察重点解读 / 创A创B指南<br>科普类：传感器对比 / 水质评价 / COD秘密 / pH试纸<br>日常类：倒酒 / 啤酒白酒 / 天平故事<br>论文类：Nature微塑料翻译 / ES&T解读</td>
+      <td>10篇草稿箱+持续</td>
+      <td><span class="tag-cost" style="background:#fef2f2;color:#b91c1c">🔥 立即</span></td>
+    </tr>
+    <tr>
+      <td><strong>关键词回复素材</strong></td>
+      <td>
+        回复「资金」→ 7大资金渠道速查表<br>
+        回复「传感器」→ 3级仪器选购指南<br>
+        回复「pH」→ 8种饮料pH实测数据表<br>
+        回复「水质」→ 水质评价标准速查表<br>
+        回复「天平」→ 交互模拟器链接<br>
+        回复「督察」→ 2026环保政策汇编<br>
+        回复「量具」→ 容量器具精度排名表
+      </td>
+      <td>7套</td>
+      <td><span class="tag-cost" style="background:#fffbeb;color:#b45309">本周完成</span></td>
+    </tr>
+    <tr>
+      <td><strong>小红书笔记</strong></td>
+      <td>
+        「天坑专业」系列：实验室日常 / 同学转行故事 / 仪器吐槽<br>
+        「实验室×日常」系列：厨房vs实验室 / 传感器vs人体感官<br>
+        「揭秘」系列：69块传感器vs国控站 / 一瓶水的检测成本<br>
+        「赛博朋克」系列：科技感实验图 + 一句话知识点
+      </td>
+      <td>每周3篇</td>
+      <td><span class="tag-cost" style="background:#fffbeb;color:#b45309">本周启动</span></td>
+    </tr>
+    <tr>
+      <td><strong>知乎回答</strong></td>
+      <td>
+        "环境检测行业前景怎么样" / "第三方实验室好干吗"<br>
+        "水质检测要测哪些指标" / "环保行业怎么搞副业"<br>
+        "环保资金怎么申报" / "创A难不难"<br>
+        "环境工程师的出路"
+      </td>
+      <td>10+个</td>
+      <td><span class="tag-cost" style="background:#eff6ff;color:#1e40af">3周内</span></td>
+    </tr>
+    <tr>
+      <td><strong>咨询SOP文档</strong></td>
+      <td>
+        ① 咨询接单流程（首次沟通模板）<br>
+        ② 资料收集清单（标准化模板）<br>
+        ③ 产出模板（资金申报可行性报告 / 土壤调查方案审查）<br>
+        ④ 交付清单与跟进话术<br>
+        ⑤ 客户见证模板
+      </td>
+      <td>5份</td>
+      <td><span class="tag-cost" style="background:#eff6ff;color:#1e40af">第5周</span></td>
+    </tr>
+  </table>
+
+  <div class="highlight-p0">
+    <strong>关键指标：</strong>公众号粉丝破1000 / 小红书破500 / 每周咨询≥5条 / 月咨询收入¥5,000-15,000
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- P1 -->
+<!-- ════════════════════════════════════ -->
+<div class="section" id="p1">
+  <div class="p-header p1-header">
+    <div class="p-num">P1</div>
+    <div class="p-info">
+      <div class="p-name">环保×AI 课程</div>
+      <div class="p-metrics">
+        <span>💰 启动成本：2周集中产出</span>
+        <span>🎯 天花板：¥10-30万/年</span>
+        <span>⏱ 见效周期：4-6周</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 具体做法 -->
+  <div class="section-title st-p1">📋 一、具体做法（4阶段）</div>
+
+  <div class="phase-box">
+    <h3>阶段一：课程产品设计（第1周）</h3>
+    <ul class="phase-actions">
+      <li>确定首门课主题《环保人AI实战：从报告到交互的7个拿手活》</li>
+      <li>拆解为7节课（详见核心内容清单）</li>
+      <li>每节课结构：痛点引入 → 实操演示（屏幕录制） → 产出展示 → 课后作业</li>
+      <li>选择平台：小鹅通（推荐，公众号生态好）或 ima知识库（免费，已有素材）</li>
+      <li>定价策略：早鸟价¥199（限量30份）→ 正式价¥299 → 企业团购价¥999/5人</li>
+    </ul>
+  </div>
+
+  <div class="phase-box">
+    <h3>阶段二：课程录制与交付（第2-3周）</h3>
+    <ul class="phase-actions">
+      <li>每天录制1节课（含实操），每节课15-25分钟</li>
+      <li>配套素材：每节课配1份实操模板 + 1份课后练习</li>
+      <li>制作课程封面图（赛博朋克风，统一视觉）</li>
+      <li>搭建课程社群（微信群），早鸟学员入群</li>
+      <li>试讲验证：邀请2-3个行业朋友免费观看，收集反馈后优化</li>
+    </ul>
+  </div>
+
+  <div class="phase-box">
+    <h3>阶段三：推广与销售（第4-6周）</h3>
+    <ul class="phase-actions">
+      <li>公众号发文推广：结合关键词回复赠送课程试看章节</li>
+      <li>朋友圈裂变：转发海报 + 推荐语，朋友购买返佣¥50</li>
+      <li>行业社群推广：在3-5个环保检测微信群做限时折扣</li>
+      <li>企业内询价：联系1-2家环评机构/检测公司推企业内训版</li>
+      <li>政企内训专场：¥10,000-30,000/场（含定制内容）</li>
+    </ul>
+  </div>
+
+  <div class="phase-box">
+    <h3>阶段四：课程矩阵扩张（第7周起）</h3>
+    <ul class="phase-actions">
+      <li>第二门课：《环保资金申报全流程实操》（政策解读+材料模板+申报技巧）</li>
+      <li>第三门课：《水环境检测106项指标速通》（以EnvLab为教学工具）</li>
+      <li>推出「课程+咨询」套餐：买课送1次免费诊断</li>
+      <li>企业内训标准化：50人内训¥20,000/场（含教材+实操+考核）</li>
+      <li>把课程内容反向输出为公众号文章：一课多用的内容杠杆</li>
+    </ul>
+  </div>
+
+  <!-- 核心内容清单 -->
+  <div class="section-title st-p1">📦 二、核心内容清单（需要生产）</div>
+
+  <table>
+    <tr><th style="width:50px">课次</th><th>课程名称</th><th>核心内容</th><th style="width:70px">配套素材</th></tr>
+    <tr>
+      <td>第1课</td>
+      <td><strong>AI帮我写公众号：3分钟从选题到草稿箱</strong></td>
+      <td>选题设计 → AI生成文章 → HTML排版 → 封面图生成 → push_to_wechat推送<br>带你看完一篇公众号文章从0到草稿箱的全流程</td>
+      <td>push_to_wechat脚本 + 文章模板</td>
+    </tr>
+    <tr>
+      <td>第2课</td>
+      <td><strong>AI做交互实验：用对话造一个PhET级教学工具</strong></td>
+      <td>叙事式教学框架(Hero→原理→流程→模拟→总结) → AI生成交互HTML → 迭代优化<br>以COD检测为例，30分钟从概念到可运行的交互页面</td>
+      <td>叙事式教学模板 + COD示例源码</td>
+    </tr>
+    <tr>
+      <td>第3课</td>
+      <td><strong>AI处理数据：从检测数据到可视化报告</strong></td>
+      <td>批量数据处理 → 自动图表生成 → 数据解读 → 生成报告HTML<br>适合实验室主任/咨询公司项目经理</td>
+      <td>数据可视化模板 + Python脚本</td>
+    </tr>
+    <tr>
+      <td>第4课</td>
+      <td><strong>AI做咨询：如何让AI帮你写技术方案</strong></td>
+      <td>环境监测方案自动生成 → 土壤调查报告结构化输出 → 资金申报材料制作<br>现场演示监测方案智能生成器全流程</td>
+      <td>env-full-process-ai Skill + 方案模板</td>
+    </tr>
+    <tr>
+      <td>第5课</td>
+      <td><strong>AI封装Skill：把你的专业经验变成可复用的AI工具</strong></td>
+      <td>SKILL.md编写规范 → 触发词设计 → 测试与迭代 → 发布到SkillHub<br>以narrative-54为例，把10年行业经验封装成Skill</td>
+      <td>SKILL.md模板 + 发布指南</td>
+    </tr>
+    <tr>
+      <td>第6课</td>
+      <td><strong>AI×政策解读：第一时间抓住环保政策红利</strong></td>
+      <td>政策文件AI速读 → 关键信息提取 → 影响分析 → 生成行动建议<br>以刚刚发布的253.65亿水污染防治资金通知为例</td>
+      <td>政策解读模板 + 信息提取Prompt</td>
+    </tr>
+    <tr>
+      <td>第7课</td>
+      <td><strong>AI个人品牌：一人公司的内容生产流水线</strong></td>
+      <td>人设设计 → 内容矩阵规划 → AI辅助选题 → 多平台分发 → 粉丝沉淀 → 变现闭环<br>从0到1搭建「环保×AI」个人品牌</td>
+      <td>内容规划表 + 人设模板 + 变现路径图</td>
+    </tr>
+  </table>
+
+  <div class="two-col">
+    <div style="background:#fff;border:1px solid #e5e0d8;border-radius:8px;padding:14px">
+      <h4 style="font-size:13px;font-weight:700;color:#b45309;margin-bottom:6px">扩展课程包（第二门课后）</h4>
+      <ul class="phase-actions" style="font-size:12px">
+        <li>《环保资金申报全流程实操》— 政策+材料+技巧</li>
+        <li>《水环境检测106项指标速通》— 以EnvLab为工具</li>
+        <li>《土壤修复技术全景解读》— 10种修复技术交互教学</li>
+        <li>《创A创B申报实战》— 39个行业绩效分级指南</li>
+      </ul>
+    </div>
+    <div style="background:#fff;border:1px solid #e5e0d8;border-radius:8px;padding:14px">
+      <h4 style="font-size:13px;font-weight:700;color:#b45309;margin-bottom:6px">企业内训包</h4>
+      <ul class="phase-actions" style="font-size:12px">
+        <li>AI辅助检测数据审核（实验室版）</li>
+        <li>AI辅助环保咨询方案撰写（咨询公司版）</li>
+        <li>AI辅助环评报告编制（环评机构版）</li>
+        <li>AI辅助企业环保合规自查（企业版）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight" style="border-left-color:#b45309">
+    <strong>核心卖点：</strong>不是通用的AI课，是真在环境行业用AI的人输出的一手经验。你已经在用AI做交互实验、写公众号、封装Skill、写咨询方案——全国能把「环保×AI」讲透的人不超过50个。
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- P2 -->
+<!-- ════════════════════════════════════ -->
+<div class="section" id="p2">
+  <div class="p-header p2-header">
+    <div class="p-num">P2</div>
+    <div class="p-info">
+      <div class="p-name">咨询产品化（SaaS工具）</div>
+      <div class="p-metrics">
+        <span>💰 启动成本：4-8周开发</span>
+        <span>🎯 天花板：¥20-50万/年</span>
+        <span>⏱ 见效周期：3-6个月</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 具体做法 -->
+  <div class="section-title st-p2">📋 一、具体做法（5阶段）</div>
+
+  <div class="phase-box">
+    <h3>阶段一：验证与选型（第1-2周）</h3>
+    <ul class="phase-actions">
+      <li>先通过P0的咨询交付验证：哪些需求是高频率、高付费意愿的</li>
+      <li>锁定1个核心场景：资金申报辅助（频次高、刚需、可标准化）</li>
+      <li>梳理产品功能清单：用户输入项目信息 → AI自动匹配资金渠道 → 生成申报建议 → 材料清单</li>
+      <li>确定技术方案：Python Flask + SQLite轻量化方案（复用LIMS系统技术栈）</li>
+    </ul>
+  </div>
+
+  <div class="phase-box">
+    <h3>阶段二：MVP开发（第3-6周）</h3>
+    <ul class="phase-actions">
+      <li>核心功能1：项目信息录入表单（项目类型/投资额/污染类型/地理位置）</li>
+      <li>核心功能2：资金渠道智能匹配（7大类54细分，规则引擎实时推荐）</li>
+      <li>核心功能3：申报建议生成（AI分析项目匹配度+给出申报策略+材料清单）</li>
+      <li>核心功能4：申报日历（省级+中央资金申报时间线，自动提醒）</li>
+      <li>部署方式：CloudStudio演示版 + 本地Flask服务（先不急着做SaaS）</li>
+    </ul>
+  </div>
+
+  <div class="phase-box">
+    <h3>阶段三：内部验证（第7-8周）</h3>
+    <ul class="phase-actions">
+      <li>邀请3-5个P0咨询客户免费试用，收集反馈</li>
+      <li>重点验证：匹配准确率、使用流畅度、用户是否愿意付费</li>
+      <li>根据反馈迭代功能，修复Bug，优化UI/UX</li>
+      <li>沉淀用户案例和效果数据</li>
+    </ul>
+  </div>
+
+  <div class="phase-box">
+    <h3>阶段四：定价与上线（第9-10周）</h3>
+    <ul class="phase-actions">
+      <li>定价：个人月付¥99 / 年付¥999 / 企业版¥9,800/年</li>
+      <li>公众号+社群推广，前50名用户免费试用1个月</li>
+      <li>搭建支付+用户管理系统（参考已有LIMS系统架构）</li>
+      <li>上线用户反馈通道和客服入口</li>
+    </ul>
+  </div>
+
+  <div class="phase-box">
+    <h3>阶段五：产品矩阵扩张（第11周起）</h3>
+    <ul class="phase-actions">
+      <li>工具2：土壤调查报告自动生成器（基于env-full-process-ai Skill）</li>
+      <li>工具3：创A创B自评工具（基于env-performance-a-guide Skill）</li>
+      <li>工具4：环保合规审计工具（基于「读懂一个厂」交互Demo）</li>
+      <li>企业版：支持团队协作+批量生成+历史记录</li>
+      <li>API开放：供环评机构/检测公司集成到自有系统</li>
+    </ul>
+  </div>
+
+  <!-- 核心内容清单 -->
+  <div class="section-title st-p2">📦 二、核心内容清单（需要生产）</div>
+
+  <table>
+    <tr><th style="width:50px">工具</th><th style="width:120px">功能</th><th>核心内容</th><th style="width:70px">技术方案</th></tr>
+    <tr>
+      <td><span class="tag-blue">MVP</span></td>
+      <td><strong>资金申报AI助手</strong></td>
+      <td>
+        ① 项目信息录入（类型/投资/地点/污染类型）<br>
+        ② 7大资金渠道54细分自动匹配（水/大气/土壤/农村/能力建设等）<br>
+        ③ 匹配度评分+申报策略建议+材料清单生成<br>
+        ④ 省级+中央申报日历+到期提醒
+      </td>
+      <td>Flask + AI Prompt</td>
+    </tr>
+    <tr>
+      <td><span class="tag-amber">扩张1</span></td>
+      <td><strong>土壤报告生成器</strong></td>
+      <td>
+        ① 用户输入地块信息（面积/用途/历史）<br>
+        ② 自动生成采样方案（布点+检测项+质控）<br>
+        ③ 自动生成调查记录表/实验方案/PPT脚本<br>
+        ④ 一键导出Word/PDF
+      </td>
+      <td>复用env-full-process-ai</td>
+    </tr>
+    <tr>
+      <td><span class="tag-amber">扩张2</span></td>
+      <td><strong>创A创B自评工具</strong></td>
+      <td>
+        ① 用户选择行业（39个行业之一）<br>
+        ② 逐项自评（8个维度：治理/监测/管理/运输等）<br>
+        ③ 自动生成差距分析报告+整改建议<br>
+        ④ 对标省内同类企业水平
+      </td>
+      <td>复用env-performance-a-guide</td>
+    </tr>
+    <tr>
+      <td><span class="tag-amber">扩张3</span></td>
+      <td><strong>环保合规自查工具</strong></td>
+      <td>
+        ① 7维度25项检查点（废气/废水/固废/噪声/土壤/环评/应急）<br>
+        ② 一键生成自查报告+整改优先级排序<br>
+        ③ 引用最新国标/地标，自动更新
+      </td>
+      <td>复用「读懂一个厂」Demo</td>
+    </tr>
+  </table>
+
+  <div class="highlight" style="border-left-color:#1e40af">
+    <strong>关键原则：</strong>先验证再开发。P2启动的前提是P0的咨询已经验证了付费意愿。如果付费咨询做不起来，SaaS化了也没人买单。
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- P3 -->
+<!-- ════════════════════════════════════ -->
+<div class="section" id="p3">
+  <div class="p-header p3-header">
+    <div class="p-num">P3</div>
+    <div class="p-info">
+      <div class="p-name">食品检测横向扩张</div>
+      <div class="p-metrics">
+        <span>💰 启动成本：6-8周</span>
+        <span>🎯 天花板：¥15-40万/年</span>
+        <span>⏱ 见效周期：3-4个月</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 具体做法 -->
+  <div class="section-title st-p3">📋 一、具体做法（4阶段）</div>
+
+  <div class="phase-box">
+    <h3>阶段一：环境方向验证完成后再启动（前提条件）</h3>
+    <ul class="phase-actions">
+      <li>环境方向（P0/P1）已验证：公众号有稳定流量，课程有第一批付费用户</li>
+      <li>EnvLab环境方向实验总数已达44个以上（批次一升级完成）</li>
+      <li>确认扩张方向：食品检测（唯一满足市场大+迁移成本低+客户重叠三条件）</li>
+      <li>储备食品检测标准方法库（清单见核心内容）</li>
+    </ul>
+    <div class="highlight" style="margin:8px 0;font-size:12px;border-left-color:#166534">
+      💡 为什么是食品检测：行业规模~320-380亿(环境456亿的70%) / 增速7-10%(环境4-6%) / 开设院校650所(环境的1.4倍) / 在校生20-25万人(环境的2.5倍) / 方法高度重合(HPLC/UV/滴定/AA) / 客户群体一致(院校/检测机构)
+    </div>
+  </div>
+
+  <div class="phase-box">
+    <h3>阶段二：首批食品检测交互实验（第1-3周）</h3>
+    <ul class="phase-actions">
+      <li>复用EnvLab叙事式教学框架，模板化批量生产</li>
+      <li>第一批实验（详见核心内容清单）：亚硝酸盐、苯甲酸山梨酸、蛋白质、铅砷4个</li>
+      <li>同步建立食品检测方法库：国标方法+检测流程+关键参数</li>
+      <li>延续赛博朋克风UI，保持品牌一致性</li>
+    </ul>
+  </div>
+
+  <div class="phase-box">
+    <h3>阶段三：食品检测配套内容矩阵（第4-6周）</h3>
+    <ul class="phase-actions">
+      <li>公众号扩线：食品检测科普（火锅亚硝酸盐、奶茶添加剂、酱油中重金属）</li>
+      <li>小红书扩线：食品检测×实验室日常（测测你喝的奶茶、街边摊的油合格吗）</li>
+      <li>食品检测关键词钩子：回复「亚硝酸盐」领速查表</li>
+      <li>联系食品检测/食品安全类公众号做互推</li>
+    </ul>
+  </div>
+
+  <div class="phase-box">
+    <h3>阶段四：院校合作与变现（第7周起）</h3>
+    <ul class="phase-actions">
+      <li>定向推广：食品检测/食品安全/农产品检测相关院校教师</li>
+      <li>教材配套：联系出版社，把交互实验作为教材数字资源</li>
+      <li>food检测B2B培训：为食品检测机构提供AI+检测培训</li>
+      <li>考虑第二扩张方向：水处理工艺（给排水/环境工程专业，另一大高职群体）</li>
+    </ul>
+  </div>
+
+  <!-- 核心内容清单 -->
+  <div class="section-title st-p3">📦 二、核心内容清单（需要生产）</div>
+
+  <table>
+    <tr><th style="width:50px">批次</th><th style="width:150px">实验/内容名称</th><th>核心内容</th><th style="width:80px">参考方法</th></tr>
+    <tr>
+      <td rowspan="4" style="text-align:center;font-weight:700;color:#166534">第<br>一<br>批</td>
+      <td><strong>食品中亚硝酸盐测定</strong></td>
+      <td>格里斯试剂显色反应 → 分光光度法(538nm) → 标准曲线 → 含量计算 → GB 5009.33<br>交互模拟：加试剂→显色→测吸光度→自动计算</td>
+      <td>GB 5009.33-2016</td>
+    </tr>
+    <tr>
+      <td><strong>饮料中苯甲酸/山梨酸测定</strong></td>
+      <td>HPLC分离 → 紫外检测器(230nm/254nm) → 保留时间定性+峰面积定量<br>交互模拟：进样→色谱图实时绘制→峰识别→含量计算</td>
+      <td>GB 5009.28-2016</td>
+    </tr>
+    <tr>
+      <td><strong>食品中蛋白质测定（凯氏定氮法）</strong></td>
+      <td>消化→蒸馏→滴定→计算（与COD滴定技术高度重合）<br>交互模拟：消化炉加热→蒸馏→滴定终点识别→自动计算蛋白质含量</td>
+      <td>GB 5009.5-2016</td>
+    </tr>
+    <tr>
+      <td><strong>食品中铅/砷测定</strong></td>
+      <td>样品前处理(湿法消解) → AA/ICP-MS → 标准曲线法<br>交互模拟：消解→上机→谱图识别→定量→超标判定</td>
+      <td>GB 5009.12/11</td>
+    </tr>
+    <tr>
+      <td rowspan="3" style="text-align:center;font-weight:700;color:#5b21b6">第<br>二<br>批</td>
+      <td><strong>食品中农药残留(GC/LC-MS)</strong></td>
+      <td>QuEChERS前处理 → GC-MS/LC-MS → 多残留同步分析<br>交互模拟：前处理步骤→上机→总离子流图→提取离子→定量</td>
+      <td>GB 23200系列</td>
+    </tr>
+    <tr>
+      <td><strong>食用油酸价/过氧化值</strong></td>
+      <td>滴定法(酸价) → 碘量法(过氧化值) → 卫生指标判定<br>交互模拟：滴定操作→颜色变化→终点识别→自动计算</td>
+      <td>GB 5009.229/227</td>
+    </tr>
+    <tr>
+      <td><strong>食品微生物检测(菌落总数/大肠菌群)</strong></td>
+      <td>样品稀释→平板接种→培养→菌落计数→MPN法<br>交互模拟：稀释操作→涂布→培养箱→菌落计数→结果判定</td>
+      <td>GB 4789.2/3</td>
+    </tr>
+  </table>
+
+  <div class="two-col" style="margin-top:16px">
+    <div style="background:#fff;border:1px solid #e5e0d8;border-radius:8px;padding:14px">
+      <h4 style="font-size:13px;font-weight:700;color:#166534;margin-bottom:6px">内容扩线（公众号/小红书）</h4>
+      <ul class="phase-actions" style="font-size:12px">
+        <li>火锅店的亚硝酸盐到底有多高？实测</li>
+        <li>奶茶里的添加剂，一杯抵一天摄入量？</li>
+        <li>酱油里的重金属，真的要担心吗？</li>
+        <li>街边摊的油，用酸价试纸测一下</li>
+        <li>啤酒和白酒哪个添加剂多</li>
+        <li>"零添加"食品真的零添加吗</li>
+      </ul>
+    </div>
+    <div style="background:#fff;border:1px solid #e5e0d8;border-radius:8px;padding:14px">
+      <h4 style="font-size:13px;font-weight:700;color:#166534;margin-bottom:6px">院校合作素材包</h4>
+      <ul class="phase-actions" style="font-size:12px">
+        <li>食品检测虚拟仿真实验包（交互HTML）</li>
+        <li>食品检测标准方法速查手册</li>
+        <li>AI辅助食品检测教学指南</li>
+        <li>食品检验员考证备考题库交互版</li>
+        <li>教材配套数字资源提案模板</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <strong>关键判断：</strong>食品检测不是"转行"，是"产能复用"。交互框架一样的、技术方法高度重合的、客户群体一致的——投入产出比极高。但前提是环境方向已经跑通，不要两边资源分散。
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 总结对比 -->
+<!-- ════════════════════════════════════ -->
+<div class="section" style="margin-top:28px">
+  <div class="section-title st-gray">📊 四条路径速度对比</div>
+
+  <table>
+    <tr><th>路径</th><th>启动成本</th><th>启动周期</th><th>首次变现</th><th>月收天花板</th><th>建议启动时间</th></tr>
+    <tr>
+      <td><strong style="color:#b91c1c">P0 内容导流</strong></td>
+      <td>近乎零</td>
+      <td>今天就能开始</td>
+      <td>第5-8周</td>
+      <td>¥4,000-12,000</td>
+      <td><strong style="color:#b91c1c">立即</strong></td>
+    </tr>
+    <tr>
+      <td><strong style="color:#b45309">P1 AI课程</strong></td>
+      <td>¥0-200（工具费）</td>
+      <td>2周准备</td>
+      <td>第6-8周</td>
+      <td>¥8,000-25,000</td>
+      <td>7月中</td>
+    </tr>
+    <tr>
+      <td><strong style="color:#1e40af">P2 咨询SaaS</strong></td>
+      <td>¥0（自有技术）</td>
+      <td>4-8周开发</td>
+      <td>第12-16周</td>
+      <td>¥17,000-42,000</td>
+      <td>等P0验证</td>
+    </tr>
+    <tr>
+      <td><strong style="color:#166534">P3 食品检测</strong></td>
+      <td>0（方法复用）</td>
+      <td>6-8周</td>
+      <td>第16-20周</td>
+      <td>¥12,000-33,000</td>
+      <td>等P0/P1验证</td>
+    </tr>
+  </table>
+
+  <div class="highlight" style="border-left-color:#1a1f36;background:#f1f0ec;text-align:center;font-size:14px">
+    <strong>🎯 执行节奏：</strong>7月全力P0 → 8月追加P1 → 9-10月看数据决定P2/P3
+  </div>
+</div>
+
+</div>
+</body>
+</html>

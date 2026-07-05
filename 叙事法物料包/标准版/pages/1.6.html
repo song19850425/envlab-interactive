@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>国家发改委污染治理专项 · 叙事法</title>
+<style>
+:root{--ink:#1a1f36;--paper:#fafaf8;--card:#fff;--muted:#6b7280;--line:#e5e5e0;--accent:#f5c518;--accent-dim:#f5c51820;--warn:#c2410c;--warn-light:#fff7ed}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Times New Roman","Songti SC","Noto Serif SC","PingFang SC","Microsoft YaHei",serif;background:var(--paper);color:var(--ink);line-height:1.8;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.topbar{position:sticky;top:0;z-index:50;background:var(--card);border-bottom:1px solid var(--line);padding:0 32px;display:flex;align-items:center;height:52px;gap:20px;font-family:"PingFang SC","Microsoft YaHei",sans-serif;backdrop-filter:blur(8px)}
+.topbar a{text-decoration:none;font-size:.8rem;font-weight:600;color:var(--muted);letter-spacing:.02em;transition:color .2s}
+.topbar a:hover{color:var(--ink)}
+.topbar .crumb{color:var(--line);font-size:.8rem;user-select:none}
+.topbar .page-id{margin-left:auto;font-size:.75rem;font-weight:700;color:var(--muted);letter-spacing:.06em}
+.wrapper{max-width:720px;margin:0 auto;padding:56px 24px 80px}
+.article-header{margin-bottom:56px;border-bottom:2px solid var(--ink);padding-bottom:36px}
+.article-header .meta-row{font-size:.75rem;font-weight:600;color:var(--muted);letter-spacing:.06em;margin-bottom:12px;font-family:"PingFang SC","Microsoft YaHei",sans-serif;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.article-header .meta-row .m-sep{width:1px;height:14px;background:var(--line);flex-shrink:0}
+.article-header .meta-row .m-bar{flex:1;height:1px;background:var(--line)}
+.article-header h1{font-size:2.1rem;font-weight:900;letter-spacing:-.02em;line-height:1.2;margin-bottom:14px}
+.article-header .subtitle{font-size:.85rem;color:var(--muted);font-family:"PingFang SC","Microsoft YaHei",sans-serif;display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+.article-header .stars{color:var(--accent);letter-spacing:4px;font-size:.95rem}
+.article-header .income-tag{font-size:.75rem;padding:2px 12px;border:1px solid var(--line);letter-spacing:.03em;color:var(--muted)}
+.act{margin-bottom:48px;position:relative;padding-left:48px}
+.act::before{content:'';position:absolute;left:13px;top:42px;bottom:-48px;width:1px;background:var(--line)}
+.act:last-child::before{display:none}
+.act-label{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.12em;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:12px}
+.act-label::before{content:'';width:28px;height:28px;border:2px solid var(--ink);border-radius:50%;position:absolute;left:0;background:var(--paper)}
+.act-label .label-line{flex:1;height:1px;background:var(--line)}
+.act-title{font-size:1.15rem;font-weight:700;margin-bottom:18px;letter-spacing:-.01em;line-height:1.35}
+.act-body{font-size:.92rem;color:#374151;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.act-body h4{font-size:.88rem;font-weight:700;color:var(--ink);margin:20px 0 8px;letter-spacing:-.01em}
+.act-body blockquote{border-left:3px solid var(--accent);padding:12px 0 12px 20px;margin:16px 0;font-style:italic;color:#4b5563;font-size:.88rem;line-height:1.8;background:var(--accent-dim);border-radius:0 4px 4px 0}
+.act-body table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.82rem;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.act-body th{text-align:left;padding:10px 16px;background:#fafaf8;font-weight:600;font-size:.73rem;color:var(--muted);border-bottom:2px solid var(--ink);letter-spacing:.04em;text-transform:uppercase;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+.act-body td{padding:10px 16px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.65}
+.act-body tr:last-child td{border-bottom:none}
+.act-body p{margin:8px 0}
+.act-body ul,.act-body ol{padding-left:22px;margin:8px 0}
+.act-body li{margin:6px 0;line-height:1.65}
+.act-body code{font-family:"JetBrains Mono","Fira Code",monospace;font-size:.78rem;background:var(--paper);padding:1px 6px;border-radius:3px;border:1px solid var(--line)}
+.act-body strong{color:var(--ink);font-weight:700}
+.act-body hr{border:none;border-top:1px solid var(--line);margin:20px 0}
+.tag-bar{display:flex;flex-wrap:wrap;gap:8px;border-top:1px solid var(--line);padding-top:28px;margin-top:12px}
+.tag{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:.73rem;padding:3px 14px;border:1px solid var(--line);letter-spacing:.02em;color:var(--muted);transition:all .2s}
+.tag:hover{border-color:var(--ink);color:var(--ink);cursor:default}
+.footnote{text-align:center;padding:48px 20px;color:var(--muted);font-size:.72rem;font-family:"PingFang SC","Microsoft YaHei",sans-serif;letter-spacing:.04em;border-top:1px solid var(--line)}
+@media(max-width:640px){.wrapper{padding:32px 16px 48px}.article-header h1{font-size:1.5rem}.act{padding-left:36px}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="index.html">← 总览</a>
+  <span class="crumb">/</span>
+  <a href="index.html#板块一">板块一</a>
+  <span class="page-id">NO.1.6</span>
+</div>
+<div class="wrapper">
+  <div class="article-header">
+    <div class="meta-row"><span>1.6</span><span class="m-sep"></span><span>板块一 · 政策性资金申报</span><span class="m-bar"></span></div>
+    <h1>国家发改委污染治理专项</h1>
+    <div class="subtitle">
+      <span class="stars">★★☆☆☆</span>
+      <span class="income-tag">40-70万</span>
+    </div>
+  </div>
+  
+      <section class="act" id="act-1">
+        <div class="act-label">场景 SCENE</div>
+        <h3 class="act-title">场景</h3>
+        <div class="act-body"><blockquote>一家化工企业，用了二十年"先污染后治理"的老路，现在走不下去了。</blockquote>
+<p>某沿江省份化工园区，一家氯化聚乙烯生产企业的老板姓宋，今年53岁。干了25年化工，身家十几个亿，但2025年是他创业以来最头疼的一年。问题出在一纸通知上：长江经济带化工企业清洁生产改造三年行动计划，2026年底前达不到标准的，停产整顿。</p>
+<p><strong>谁在焦虑？</strong></p>
+<p>- <strong>宋老板的财务总监</strong>：清洁生产改造方案已经由第三方设计院做好了，总投资6200万。但公司过去两年利润在1500-2000万之间，这不是"挤一挤"能挤出来的钱。银行的贷款经理倒是来了好几拨，一听说"清洁生产改造"这种环保项目，基本都摇头："现金流看不到增量，抵押物不够，我们没法批。"</p>
+<p>- <strong>园区管委会主任</strong>：园区32家企业，有14家需要清洁生产改造。改完了还好说，怕就怕改到一半钱断了——企业停产、园区空着、税收归零。不是没想过帮企业跑资金，但"发改委的门朝哪开"都不知道。</p>
+<p>- <strong>市发改委环资科科长</strong>：省里每年下通知让组织申报，但企业准备的申报材料简直没法看。一个企业申报460万补贴，材料的"建设内容"写了不到三行字，评审专家怎么给分？</p>
+<p><strong>政策背景</strong>：国家发改委污染治理和节能降碳专项每年安排中央预算内投资约100亿元，单个项目最高支持1亿元。但支持的"清洁生产改造"类项目，补助比例不超过总投资的15%。</p>
+<hr></div>
+      </section>
+      <section class="act" id="act-2">
+        <div class="act-label">痛点 PAIN</div>
+        <h3 class="act-title">痛点</h3>
+        <div class="act-body"><blockquote>企业不懂政策、政府不懂企业、银行不懂风险——三个"不懂"构成了清洁生产改造的融资死循环。</blockquote>
+<table><tr><th>利益相关方</th><th>核心痛点</th><th>深层原因</th></tr><tr><td>工业企业</td><td>改造投入大、自筹资金不足</td><td>传统行业利润薄，环保改造ROI难以说服股东</td></tr><tr><td>发改委</td><td>有钱发不出去</td><td>基层项目申报质量差，评审通过率低</td></tr><tr><td>商业银行</td><td>不敢为环保改造放贷</td><td>缺乏绿色项目识别能力，风险评估模型陈旧</td></tr><tr><td>咨询公司机会</td><td>—</td><td>**项目策划+申报材料+资金拼盘三重整合**</td></tr></table>
+<p><strong>致命细节</strong>：发改委污染治理专项的评审不是"比惨大会"，而是"比好大会"。评审表中有一项占了15分："是否采用行业领先的清洁生产技术"。很多企业申报书写了50页，从头到尾都在说"我改造后能减排多少"，但一句没提技术先进性。这一项可能直接丢15分，排名就从"通过"掉到"不合格"。申报材料的品质，直接决定资金归属。</p>
+<hr></div>
+      </section>
+      <section class="act" id="act-3">
+        <div class="act-label">方案 SOLUTION</div>
+        <h3 class="act-title">方案</h3>
+        <div class="act-body"><blockquote>发改委的钱不好拿，但拿到就是"含金量"最高的钱——中央预算内投资意味着国家背书。</blockquote>
+<h4>我们六步申报法</h4>
+<p>```</p>
+<p>① 入企诊断     → 逐一走访目标企业，判断改造必要性和技术可行性</p>
+<p>② 技术对标     → 查询工信部《清洁生产技术目录》，匹配最高等级技术方案</p>
+<p>③ 投资估算     → 精确核算设备采购、安装、调试全链条成本，杜绝"拍脑袋"</p>
+<p>④ 资金拼盘     → 15%发改委补助 + 30%银行贷款 + 55%企业自筹 = 可行方案</p>
+<p>⑤ 材料打磨     → 对标评审评分表逐项编写，技术先进性单独成章</p>
+<p>⑥ 省级沟通     → 推动项目进入省级推荐名单，确保"出门不撞车"</p>
+<p>```</p>
+<h4>关键技术方法</h4>
+<p>- <strong>行业清洁生产技术对标数据库</strong>：覆盖化工、钢铁、建材、有色、纺织、印染六大行业</p>
+<p>- <strong>改造投资测算模型</strong>：基于上百个项目的真实成本数据反推合理造价区间</p>
+<p>- <strong>发改委评审评分模拟</strong>：用历史评审数据训练，提前预判项目得分和排名</p>
+<h4>关键数据锚点</h4>
+<p>- <strong>主管部门</strong>：国家发改委（环资司）</p>
+<p>- <strong>资金类型</strong>：中央预算内投资，单个项目 ≤ 1亿元</p>
+<p>- <strong>核心门槛</strong>：清洁生产改造类项目补助比例 ≤ 15%</p>
+<p>- <strong>窗口</strong>：每年9-10月（唯一窗口，错过等一年）</p>
+<p>- <strong>2026年</strong>：政策稳定，但评审标准趋严，优先支持"减污降碳协同增效"项目</p>
+<hr></div>
+      </section>
+      <section class="act" id="act-4">
+        <div class="act-label">价值 VALUE</div>
+        <h3 class="act-title">价值</h3>
+        <div class="act-body"><h4>对客户的三重价值</h4>
+<table><tr><th>价值维度</th><th>具体收益</th><th>量化预期</th></tr><tr><td>直接资金</td><td>发改委补助降低改造负担</td><td>单个项目300-1500万元</td></tr><tr><td>合规保障</td><td>避免停产整顿/关停风险</td><td>保住数亿产值和税收</td></tr><tr><td>品牌溢价</td><td>清洁生产通过审核=国家背书</td><td>供应链绿色认证，订单竞争力提升</td></tr></table>
+<h4>对我们的商业价值</h4>
+<p>- <strong>单项目收入</strong>：40-70万元（诊段+方案+申报）</p>
+<p>- <strong>核心竞争力</strong>：懂企业技术+懂发改委评分规则=稀缺品类</p>
+<p>- <strong>延伸机会</strong>：改造后的节能诊断、碳核查、绿色工厂申报</p>
+<hr></div>
+      </section>
+      <section class="act" id="act-5">
+        <div class="act-label">行动 ACTION</div>
+        <h3 class="act-title">行动</h3>
+        <div class="act-body"><h4>项目开发节奏（对标每年9-10月唯一窗口）</h4>
+<table><tr><th>时间节点</th><th>行动项</th><th>责任人</th></tr><tr><td>**现在-5月**</td><td>锁定长江经济带/黄河流域有清洁生产改造需求的化工园区</td><td>商务团队</td></tr><tr><td>**6月**</td><td>园区宣讲会+意向企业入企诊断</td><td>技术团队</td></tr><tr><td>**7月**</td><td>逐个企业出具《清洁生产改造可行性分析》+《资金申报建议》</td><td>项目负责人</td></tr><tr><td>**8月**</td><td>编制申报材料（技术先进性专章+资金拼盘方案）</td><td>全员</td></tr><tr><td>**9-10月**</td><td>正式申报，省级发改委推荐</td><td>专家团队</td></tr></table>
+<blockquote>🔑 **销售话术锚点**："宋总，您6200万的改造费用，发改委能帮您掏15%——将近1000万，是不要还的。您自己掏55%，剩下30%走银行绿色信贷。比起您自己扛6200万，压力直接减半。但前提是，您的申报材料要写对15分的技术先进性那一栏。这个事，交给我们来办。"</blockquote>
+<h4>目标客户画像</h4>
+<p>- 化工、钢铁、建材、纺织印染等行业的大型企业</p>
+<p>- 位于长江经济带/黄河流域等重点区域</p>
+<p>- 有明确清洁生产改造需求且投资额 ≥ 3000万元</p>
+<p>- 企业有自筹能力，只需申报"最后一公里"的助推</p>
+<hr>
+<p>## 叙事标签</p>
+<p><code>政策性资金</code> <code>污染治理专项</code> <code>国家发改委</code> <code>每年9-10月</code> <code>清洁生产</code> <code>中央预算内投资</code> <code>补助≤15%</code></p></div>
+      </section>
+  <div class="tag-bar"></div>
+</div>
+<div class="footnote">54项核心业务叙事法 · 2026年更新版</div>
+</body>
+</html>

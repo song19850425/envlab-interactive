@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>十万分之一天平有多敏感？打开防风罩+拍一下桌子，读数能跳15mg</title>
+<style>
+:root {
+  --ink: #1a1a2e;
+  --gray: #6b7280;
+  --line: #e5e5e0;
+  --teal: #0d9488;
+  --teal-light: #f0fdfa;
+  --paper: #faf9f6;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body {
+  font-family: -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;
+  background: #f0efe8;
+  color: var(--ink);
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+}
+.article {
+  max-width: 680px;
+  margin: 0 auto;
+  background: #fff;
+  min-height: 100vh;
+}
+
+/* Cover */
+.cover {
+  background: linear-gradient(170deg, #0f172a 0%, #1a2332 40%, #0d9488 100%);
+  color: #fff;
+  padding: 60px 28px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(ellipse at 30% 20%, rgba(13,148,136,.15) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 80%, rgba(255,255,255,.03) 0%, transparent 50%);
+}
+.cover .eyebrow {
+  font-size: 12px; font-weight: 700; letter-spacing: .2em;
+  color: rgba(255,255,255,.3); margin-bottom: 16px; position: relative;
+}
+.cover h1 {
+  font-size: 34px; font-weight: 900; letter-spacing: -.03em;
+  line-height: 1.2; position: relative;
+}
+.cover h1 .hl { color: #5eead4; }
+.cover .tagline {
+  font-size: 14px; color: rgba(255,255,255,.45);
+  margin-top: 16px; position: relative; line-height: 1.6;
+}
+.cover .stat-strip {
+  display: flex; gap: 24px; justify-content: center;
+  margin-top: 32px; position: relative; flex-wrap: wrap;
+}
+.cover .stat-item { text-align: center; }
+.cover .stat-item .sn {
+  font-size: 32px; font-weight: 900; color: #5eead4; line-height: 1;
+}
+.cover .stat-item .sl {
+  font-size: 11px; color: rgba(255,255,255,.25); margin-top: 4px;
+  letter-spacing: .05em;
+}
+
+/* Sections */
+.sec { padding: 44px 28px; }
+.sec-gray { background: #fafaf8; }
+.sec-label {
+  font-size: 11px; font-weight: 700; letter-spacing: .15em;
+  color: var(--teal); margin-bottom: 6px;
+}
+.sec-title {
+  font-size: 26px; font-weight: 900; letter-spacing: -.02em;
+  line-height: 1.25; margin-bottom: 10px;
+}
+.sec-desc {
+  font-size: 14px; color: var(--gray); line-height: 1.8;
+}
+
+/* Demo cards */
+.demo-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px 22px;
+  margin-top: 16px;
+}
+.demo-card .d-icon { font-size: 28px; margin-bottom: 8px; }
+.demo-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.demo-card p { font-size: 13px; color: var(--gray); line-height: 1.7; }
+.demo-card .d-tag {
+  display: inline-block;
+  font-size: 11px; font-weight: 600; padding: 2px 12px;
+  border-radius: 4px; margin-top: 8px;
+}
+
+/* Interactive embed hint */
+/* Callout */
+.callout {
+  background: #fefce8;
+  border-left: 3px solid #eab308;
+  padding: 14px 18px;
+  margin: 16px 0;
+  border-radius: 0 6px 6px 0;
+  font-size: 13px;
+  color: #713f12;
+  line-height: 1.7;
+}
+.callout-green {
+  background: var(--teal-light);
+  border-left-color: var(--teal);
+  color: #134e4a;
+}
+
+/* Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 16px 0;
+}
+.data-table th {
+  background: #1a1a2e;
+  color: #fff;
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+}
+.data-table td {
+  padding: 10px 14px;
+  border-bottom: 0.5px solid var(--line);
+}
+.data-table tr:nth-child(even) td { background: #fafaf8; }
+.data-table .highlight { color: var(--teal); font-weight: 700; }
+.data-table .danger { color: #dc2626; font-weight: 700; }
+
+/* CTA */
+.cta {
+  background: #0f172a;
+  color: #fff;
+  text-align: center;
+  padding: 44px 28px;
+}
+.cta h2 { font-size: 24px; font-weight: 900; margin-bottom: 10px; letter-spacing: -.02em; }
+.cta p { font-size: 13px; color: rgba(255,255,255,.4); line-height: 1.7; margin-bottom: 20px; }
+.cta .btn {
+  display: inline-block;
+  padding: 12px 36px;
+  background: var(--teal);
+  color: #fff;
+  font-size: 14px; font-weight: 700;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.footer {
+  text-align: center; padding: 28px;
+  color: var(--gray); font-size: 11px;
+  border-top: 1px solid var(--line);
+}
+
+@media(max-width:480px) {
+  .cover { padding: 44px 20px 36px; }
+  .cover h1 { font-size: 26px; }
+  .cover .stat-item .sn { font-size: 24px; }
+  .sec { padding: 32px 18px; }
+  .sec-title { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+<div class="article">
+
+<!-- Cover -->
+<div class="cover">
+  <div class="eyebrow">ENVLAB · 实验室科普</div>
+  <h1>十万分之一天平<br>有多<span class="hl">敏感</span>？</h1>
+  <p class="tagline">打开防风罩 + 拍一下桌子<br>读数能跳 15mg——相当于一片羽毛的 1/70</p>
+  <div class="stat-strip">
+    <div class="stat-item"><div class="sn">0.01 mg</div><div class="sl">分辨率</div></div>
+    <div class="stat-item"><div class="sn">120 g</div><div class="sl">最大量程</div></div>
+    <div class="stat-item"><div class="sn">1/10⁷</div><div class="sl">相对精度</div></div>
+    <div class="stat-item"><div class="sn">±0.5 mg</div><div class="sl">气流噪声</div></div>
+  </div>
+</div>
+
+<!-- Hook -->
+<div class="sec">
+  <p class="sec-desc" style="font-size:15px;color:var(--ink);">
+    在环境监测实验室里，有一台仪器让所有新手都"不敢碰"——那就是十万分之一天平。
+  </p>
+  <p class="sec-desc" style="margin-top:12px;">
+    不是因为操作复杂，而是因为<strong>它太敏感了</strong>。你呼一口气，读数跳一下；隔壁关门，读数再跳一下。很多新人第一次用，盯着跳动的数字看了五分钟都不敢记录。
+  </p>
+  <p class="sec-desc" style="margin-top:12px;">
+    这不是矫情。十万分之一天平能分辨 <strong>0.01 毫克</strong>——相当于一片标准滤纸重量的 1/1000。在这种精度下，空气流动、体温辐射、桌面振动，都是"干扰信号"。
+  </p>
+</div>
+
+<!-- What is it -->
+<div class="sec sec-gray">
+  <div class="sec-label">BACKGROUND</div>
+  <h2 class="sec-title">什么是"十万分之一"？</h2>
+  <p class="sec-desc">
+    天平的分级由<strong>可读性</strong>（最小显示分度值 d）决定：
+  </p>
+  <table class="data-table">
+    <tr><th>级别</th><th>可读性</th><th>典型用途</th></tr>
+    <tr><td>千分之一</td><td>1 mg (0.001 g)</td><td>一般试剂称量</td></tr>
+    <tr><td>万分之一</td><td>0.1 mg (0.0001 g)</td><td>分析天平，常规定量</td></tr>
+    <tr><td style="font-weight:700;color:var(--teal);">十万分之一</td><td class="highlight">0.01 mg (0.00001 g)</td><td>精密分析，环境监测</td></tr>
+    <tr><td>百万分之一</td><td>0.001 mg (0.000001 g)</td><td>微量分析，科研专用</td></tr>
+  </table>
+  <p class="sec-desc" style="margin-top:12px;">
+    在环境检测领域，HJ 标准中很多项目的称量要求使用<strong>十万分之一天平</strong>——比如滤膜称重法测 PM2.5、土壤重金属分析前的样品称量。
+  </p>
+</div>
+
+<!-- How sensitive -->
+<div class="sec">
+  <div class="sec-label">HOW SENSITIVE?</div>
+  <h2 class="sec-title">到底有多敏感？<br>三个实验给你看</h2>
+
+  <div class="demo-card">
+    <div class="d-icon">🌬️</div>
+    <h4>实验一：打开防风罩</h4>
+    <p>十万分之一天平自带玻璃防风罩，关上时柜内气流稳定，读数平静如水。打开罩门——空气对流瞬间涌入，读数立刻开始 <strong>±0.5 mg</strong> 的随机跳动。</p>
+    <span class="d-tag" style="background:#fef2f2;color:#dc2626;">误差来源 1</span>
+  </div>
+
+  <div class="demo-card">
+    <div class="d-icon">🫨</div>
+    <h4>实验二：在桌上拍一下</h4>
+    <p>不是拍天平，是拍天平所在的实验台。用力适度（模拟隔壁台面有人放器材），天平读数瞬间跳动 <strong>5~15 mg</strong>——足够让一次称量作废。</p>
+    <span class="d-tag" style="background:#fef2f2;color:#dc2626;">误差来源 2</span>
+  </div>
+
+  <div class="demo-card">
+    <div class="d-icon">👃</div>
+    <h4>实验三：在旁边吹一口气</h4>
+    <p>对准天平侧面轻轻吹一口气（模拟人员走动带起的气流），读数跳 <strong>2~5 mg</strong>。这就是为什么使用十万分之一天平的实验室，<strong>不能开空调直吹、不能有人来回走动</strong>。</p>
+    <span class="d-tag" style="background:#fef2f2;color:#dc2626;">误差来源 3</span>
+  </div>
+
+  <div class="callout">
+    <strong>一句话总结：</strong>十万分之一天平不是称不准，而是它太准了——它忠实记录了环境中每一个扰动。你看到的"不稳定"，其实是实验室真实状态的反映。
+  </div>
+</div>
+
+<!-- Error Magnitude -->
+<div class="sec sec-gray">
+  <div class="sec-label">ERROR ANALYSIS</div>
+  <h2 class="sec-title">15 mg 误差是什么概念？</h2>
+
+  <table class="data-table">
+    <tr><th>操作</th><th>读数波动</th><th>相对误差（称量0.5g样品）</th></tr>
+    <tr><td>防风罩关闭·安静环境</td><td class="highlight">±0.02 mg</td><td>&lt; 0.004% ✅</td></tr>
+    <tr><td>打开防风罩</td><td>±0.5 mg</td><td>0.1% ⚠️</td></tr>
+    <tr><td>旁边吹一口气</td><td>±2~5 mg</td><td>0.4~1.0% ⚠️⚠️</td></tr>
+    <tr><td>拍桌子</td><td class="danger">±5~15 mg</td><td class="danger">1~3% ❌</td></tr>
+    <tr><td>剧烈振动（关门/仪器运行）</td><td class="danger">±15 mg+</td><td class="danger">&gt;3% ❌❌</td></tr>
+  </table>
+
+  <p class="sec-desc" style="margin-top:12px;">
+    HJ 标准对精密称量的要求通常是 <strong>±0.1%</strong>。换句话说——拍一下桌子造成的误差，是标准允许上限的 <strong>10~30 倍</strong>。
+  </p>
+</div>
+
+<!-- Interactive Demo -->
+<div class="sec">
+  <div class="sec-label">SEE IT IN ACTION</div>
+  <h2 class="sec-title">👇 看看读数怎么跳</h2>
+  <p class="sec-desc">
+    下面这段动画展示了一个完整流程：防风罩关闭（稳定）→ 打开防风罩（波动）→ 拍桌子振动（剧烈跳动）→ 恢复稳定。<br>全程约 8 秒，看看十万分之一的精度有多"敏感"。
+  </p>
+
+  <div style="margin-top: 20px; text-align: center;">
+    <img src="十万分之一天平-演示动画.gif" alt="十万分之一天平灵敏度演示动画"
+         style="max-width: 100%; border-radius: 12px; border: 1px solid var(--line); box-shadow: 0 4px 20px rgba(0,0,0,.08);">
+    <p style="font-size:12px;color:var(--gray);margin-top:8px;">动图 · 26帧循环播放 | 防风罩关闭→打开→振动→恢复</p>
+  </div>
+
+  <div class="callout callout-green" style="margin-top:20px;">
+    <strong>想亲手调参数？</strong>
+    完整交互版在 EnvLab 叙事式教学页面中，<strong>关注公众号回复「天平」</strong>获取链接，可以亲自开关防风罩、调振动强度、按 TARE 去皮。
+  </div>
+</div>
+
+<!-- Lab Tips -->
+<div class="sec sec-gray">
+  <div class="sec-label">LAB TIPS</div>
+  <h2 class="sec-title">精密称量的四个黄金法则</h2>
+
+  <div class="demo-card">
+    <h4>1️⃣ 预热 30 分钟以上</h4>
+    <p>天平内部的电磁线圈需要达到热平衡。开机直接用的误差可达 ±0.1 mg。</p>
+  </div>
+  <div class="demo-card">
+    <h4>2️⃣ 关好防风罩再读数</h4>
+    <p>稳定后显示的数字才是有效数据。很多新手打开罩门放样品，关上就马上读数——这时柜内气流还没稳定。</p>
+  </div>
+  <div class="demo-card">
+    <h4>3️⃣ 使用专用防震台</h4>
+    <p>十万分之一天平必须放在大理石材质的防震台面上，不能和通风橱、离心机共用台面。</p>
+  </div>
+  <div class="demo-card">
+    <h4>4️⃣ 每年校准一次</h4>
+    <p>使用标准砝码进行三点校准（出厂配带 50g/100g/200g 标准砝码），偏离超过 ±0.2 mg 需调整。</p>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <h2>想亲手试试<br>十万分之一的敏感度？</h2>
+  <p>
+    关注公众号，回复关键词获取交互模拟器链接<br>
+    还可以免费领取 54 项环境咨询业务完整索引
+  </p>
+  <div class="btn">📩 关注公众号 · 回复「天平」</div>
+  <p style="margin-top:12px;font-size:11px;color:rgba(255,255,255,.2);">
+    下一篇预告：GC 气相色谱图怎么看？<br>
+    调一调温度和流速，秒懂分离度原理
+  </p>
+</div>
+
+<div class="footer">
+  EnvLab 交互实验系列 · 电子天平 · 十万分之一称重<br>
+  全部科普工具免费开放 · 关注获取链接
+</div>
+
+</div>
+</body>
+</html>

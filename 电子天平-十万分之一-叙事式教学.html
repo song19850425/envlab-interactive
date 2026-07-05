@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>电子天平 · 十万分之一称重叙事式教学</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+    --ink:#1a1a2e;--ink-light:#555;--paper:#faf9f6;--paper-warm:#f5f0e8;
+    --acc:#c0362c;--acc-light:#fdf2f0;
+    --teal:#0d9488;--teal-light:#f0fdfa;
+    --gold:#b45309;--gold-light:#fefce8;
+    --border:#e8e0d4;
+    --sr:'Noto Serif SC','Source Han Serif SC','Songti SC',serif;
+    --sn:'Inter',-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
+    --mono:'JetBrains Mono','Consolas',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sn);color:var(--ink);background:var(--paper);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+#sp{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--teal),var(--acc));z-index:1000;transition:width .1s linear}
+
+#nv{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:999;display:flex;flex-direction:column;gap:14px}
+.nd{width:10px;height:10px;border-radius:50%;background:var(--border);cursor:pointer;transition:.3s;border:2px solid transparent;position:relative}
+.nd.ac{background:var(--teal);transform:scale(1.5)}
+.nd:hover{border-color:var(--teal)}
+.nl{position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:11px;white-space:nowrap;color:var(--ink-light);background:#fff;padding:3px 10px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.1);opacity:0;pointer-events:none;transition:opacity .2s}
+.nd:hover .nl{opacity:1}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 24px;position:relative;background:linear-gradient(180deg,var(--teal-light) 0%,var(--paper) 100%)}
+.hero-badge{display:inline-block;padding:6px 18px;border-radius:20px;background:var(--teal-light);color:var(--teal);font-size:12px;font-weight:600;letter-spacing:1px;margin-bottom:24px;border:1px solid rgba(13,148,136,.15)}
+.hero h1{font-family:var(--sr);font-size:clamp(36px,6vw,72px);font-weight:900;line-height:1.1;color:var(--ink);max-width:700px}
+.hero h1 em{font-style:normal;color:var(--teal)}
+.hero-sub{margin-top:20px;font-size:clamp(14px,2vw,18px);color:var(--ink-light);max-width:560px;line-height:1.7}
+.hero-stats{display:flex;gap:32px;margin-top:48px;flex-wrap:wrap;justify-content:center}
+.hero-stat{text-align:center}
+.hero-stat .num{font-family:var(--sr);font-size:36px;font-weight:900;color:var(--teal);display:block;line-height:1}
+.hero-stat .lbl{font-size:12px;color:var(--ink-light);margin-top:4px}
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--ink-light);font-size:12px;animation:float 2s ease-in-out infinite}
+.scroll-hint .arrow{font-size:18px}
+@keyframes float{0%,100%{transform:translateX(-50%)}50%{transform:translateX(-50%) translateY(8px)}}
+
+.section{max-width:900px;margin:0 auto;padding:100px 24px;opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+.section.visible{opacity:1;transform:translateY(0)}
+.section-num{font-size:11px;font-weight:600;letter-spacing:3px;color:var(--teal);margin-bottom:8px}
+.section-title{font-family:var(--sr);font-size:clamp(28px,4vw,48px);font-weight:700;line-height:1.2;color:var(--ink);margin-bottom:12px}
+.section-desc{font-size:16px;color:var(--ink-light);line-height:1.8;max-width:600px;margin-bottom:48px}
+
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:32px}
+.card{background:#fff;border-radius:14px;padding:24px;border:1px solid var(--border);cursor:pointer;transition:.35s;position:relative}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--teal);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.card:hover::before,.card.revealed::before{transform:scaleX(1)}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.08)}
+.card.revealed{background:var(--teal-light);border-color:rgba(13,148,136,.2)}
+.card-icon{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
+.card-name{font-weight:700;font-size:15px}
+.card-sub{font-size:12px;color:var(--ink-light)}
+.card-detail{font-size:13px;color:var(--ink-light);line-height:1.6;margin-top:10px;max-height:0;overflow:hidden;transition:max-height .5s,margin-top .5s}
+.card.revealed .card-detail{max-height:300px;margin-top:10px}
+.card-tag{display:inline-block;margin-top:8px;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600}
+
+.tl{position:relative;padding-left:40px}
+.tl::before{content:'';position:absolute;left:15px;top:8px;bottom:8px;width:2px;background:var(--border)}
+.ps{position:relative;margin-bottom:40px;opacity:0;transform:translateX(-20px);transition:.6s}
+.ps.visible{opacity:1;transform:translateX(0)}
+.ps::before{content:'';position:absolute;left:-33px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--border);transition:.3s}
+.ps.visible::before{background:var(--teal);border-color:var(--teal)}
+.ps-num{font-size:11px;font-weight:700;color:var(--teal);margin-bottom:4px}
+.ps-title{font-weight:700;font-size:16px;margin-bottom:6px}
+.ps-desc{font-size:14px;color:var(--ink-light);line-height:1.7}
+.ps-note{display:inline-block;margin-top:8px;padding:4px 12px;background:var(--teal-light);color:var(--teal);border-radius:6px;font-size:12px}
+
+/* ═══ Balance Simulator ═══ */
+.exp-section{background:linear-gradient(180deg,var(--teal-light) 0%,var(--paper) 100%);padding:80px 24px 100px}
+.exp-section .section{padding-top:0}
+
+.balance-wrap{max-width:700px;margin:0 auto;background:linear-gradient(160deg,#0f172a,#020617);border-radius:22px;padding:0;box-shadow:0 8px 40px rgba(0,0,0,.25);border:1px solid rgba(13,148,136,.1);overflow:hidden}
+.balance-head{padding:16px 24px;background:rgba(0,0,0,.3);border-bottom:1px solid rgba(13,148,136,.08);display:flex;justify-content:space-between;align-items:center}
+.balance-head h3{font-size:15px;font-weight:700;color:#e2e8f0;font-family:var(--sr)}
+.balance-head .bh-status{display:flex;align-items:center;gap:8px;font-size:11px;color:#64748b}
+
+/* Main display */
+.display-area{padding:28px 32px;text-align:center;position:relative;background:rgba(13,148,136,.02)}
+.display-label{font-size:10px;color:#475569;letter-spacing:2px;text-transform:uppercase}
+.display-value{font-family:var(--mono);font-size:clamp(42px,7vw,64px);font-weight:700;line-height:1.2;color:#4ade80;text-shadow:0 0 16px rgba(74,222,128,.12);letter-spacing:-1px;transition:color .3s}
+.display-value.unstable{color:#fbbf24}
+.display-unit{font-size:13px;color:#475569;margin-top:2px}
+.display-stable{display:inline-flex;align-items:center;gap:6px;padding:3px 12px;border-radius:6px;font-size:11px;font-weight:600;margin-top:8px}
+.display-stable .ds-dot{width:6px;height:6px;border-radius:50%;background:rgba(74,222,128,.4)}
+
+/* Pan visual */
+.pan-area{display:flex;justify-content:center;align-items:flex-end;padding:8px 0 20px;position:relative}
+.pan-viz{width:160px;height:100px;position:relative}
+.pan-viz svg{width:100%;height:auto}
+
+/* Sample items on pan */
+.pan-sample{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);font-size:32px;line-height:1;transition:transform .3s ease;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
+
+/* Sample tray */
+.sample-tray{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:0 32px 16px}
+.samp-btn{padding:8px 14px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:500;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);color:#94a3b8;transition:.2s;display:flex;align-items:center;gap:6px;font-family:var(--sn)}
+.samp-btn:hover{background:rgba(13,148,136,.08);border-color:rgba(13,148,136,.2);color:#e2e8f0}
+.samp-btn.active{background:rgba(13,148,136,.12);border-color:rgba(13,148,136,.3);color:#2dd4bf;box-shadow:0 0 12px rgba(13,148,136,.08)}
+.samp-btn .samp-icon{font-size:18px}
+
+/* Controls */
+.ctrl-area{padding:0 32px 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:500px){.ctrl-area{grid-template-columns:1fr}}
+.ctrl-group{}
+.ctrl-group .cg-label{display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-bottom:4px}
+.ctrl-group .cg-label b{color:#e2e8f0;font-family:var(--mono)}
+.ctrl-group input[type=range]{width:100%;height:4px;-webkit-appearance:none;appearance:none;background:rgba(13,148,136,.08);border-radius:2px;outline:none}
+.ctrl-group input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#0d9488;cursor:pointer;border:2px solid rgba(255,255,255,.1);box-shadow:0 0 10px rgba(13,148,136,.3)}
+
+.btn-row{display:flex;gap:8px;padding:0 32px 24px;flex-wrap:wrap;justify-content:center}
+.btn{padding:10px 22px;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;font-family:var(--sn);border:1px solid transparent}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn-t{background:rgba(13,148,136,.12);color:#2dd4bf;border-color:rgba(13,148,136,.25)}
+.btn-t:hover:not(:disabled){background:rgba(13,148,136,.22);box-shadow:0 0 16px rgba(13,148,136,.15)}
+.btn-r{background:rgba(255,255,255,.04);color:#94a3b8;border-color:rgba(255,255,255,.06)}
+.btn-r:hover:not(:disabled){background:rgba(255,255,255,.08);color:#e2e8f0}
+
+/* Result */
+.weigh-result{padding:0 32px 20px;text-align:center}
+.wr-box{padding:16px;border-radius:12px;background:rgba(0,0,0,.15);border:1px solid rgba(13,148,136,.08)}
+.wr-label{font-size:11px;color:#64748b;margin-bottom:4px}
+.wr-value{font-family:var(--mono);font-size:24px;font-weight:700;color:#4ade80}
+.wr-detail{font-size:11px;color:#64748b;margin-top:6px;line-height:1.6}
+
+/* Log */
+.log-box{margin:0 32px 20px;padding:10px 14px;background:rgba(0,0,0,.1);border-radius:10px;border:1px solid rgba(13,148,136,.04);max-height:80px;overflow-y:auto;font-family:var(--mono);font-size:11px;color:#64748b;line-height:1.9}
+.log-box::-webkit-scrollbar{width:3px}
+.log-box::-webkit-scrollbar-thumb{background:rgba(13,148,136,.15);border-radius:2px}
+.log-box .lt{color:#475569;margin-right:6px}
+.log-box .lok{color:#4ade80}
+.log-box .lwarn{color:#fbbf24}
+
+/* Summary */
+.sum-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.sum-card{padding:20px;background:#fff;border-radius:12px;border:1px solid var(--border)}
+.sum-card .si{font-size:28px;margin-bottom:8px}
+.sum-card .st2{font-weight:700;font-size:14px;margin-bottom:4px}
+.sum-card .sd2{font-size:12px;color:var(--ink-light);line-height:1.6}
+
+.footer{text-align:center;padding:60px 24px;color:var(--ink-light);font-size:13px;border-top:1px solid var(--border);background:var(--paper-warm)}
+.footer a{color:var(--teal);text-decoration:none}
+
+@media(max-width:600px){
+    .hero-stats{gap:24px}
+    #nv{right:12px}
+    .tl{padding-left:32px}
+    .display-value{font-size:clamp(36px,8vw,48px)}
+    .pan-viz{width:130px}
+    .ctrl-area{padding:0 16px 20px}
+    .sample-tray{padding:0 16px 12px}
+    .btn-row{padding:0 16px 20px}
+}
+</style>
+</head>
+<body>
+
+<div id="sp"></div>
+
+<div id="nv">
+    <div class="nd ac" onclick="gs(0)"><span class="nl">开篇</span></div>
+    <div class="nd" onclick="gs(1)"><span class="nl">结构与原理</span></div>
+    <div class="nd" onclick="gs(2)"><span class="nl">称量方法</span></div>
+    <div class="nd" onclick="gs(3)"><span class="nl">操作流程</span></div>
+    <div class="nd" onclick="gs(4)"><span class="nl">交互模拟</span></div>
+    <div class="nd" onclick="gs(5)"><span class="nl">总结</span></div>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+    <div class="hero-badge">实验室基础 · 交互式教学</div>
+    <h1>十万分之一<em>电子天平</em>精密称重</h1>
+    <p class="hero-sub">0.01 mg 分辨率 · 最大量程 120 g<br>电磁力平衡电测法是现代精密称重的核心技术。</p>
+    <div class="hero-stats">
+        <div class="hero-stat"><span class="num">0.01</span><span class="lbl">mg 分辨率</span></div>
+        <div class="hero-stat"><span class="num">120</span><span class="lbl">g 最大量程</span></div>
+        <div class="hero-stat"><span class="num">3</span><span class="lbl">种称量方法</span></div>
+        <div class="hero-stat"><span class="num">±0.05</span><span class="lbl">mg 典型准确度</span></div>
+    </div>
+    <div class="scroll-hint"><span>向下滚动开始</span><span class="arrow">↓</span></div>
+</section>
+
+<!-- ═══ SECTION 01 · 结构与原理 ═══ -->
+<section class="section" id="s1">
+    <div class="section-num">Section 01 · 结构与原理</div>
+    <h2 class="section-title">天平结构与工作原理</h2>
+    <p class="section-desc">十万分之一天平采用电磁力平衡电测原理，是现代最精密的称量技术。点击卡片查看各部分详情。</p>
+    <div class="card-grid">
+        <div class="card" onclick="rc(this)">
+            <div class="card-icon" style="background:#f0fdfa;">⚖️</div>
+            <div class="card-name">电磁力平衡线圈</div>
+            <div class="card-sub">Electromagnetic Balance</div>
+            <div class="card-detail">核心测量元件。当样品放置秤盘，杠杆发生位移，位置传感器检测到偏移，通过PID控制自动增大线圈电流产生补偿电磁力，直到杠杆恢复平衡。电流大小与样品重力成正比。</div>
+            <span class="card-tag" style="background:#f0fdfa;color:#0d9488;">核心元件</span>
+        </div>
+        <div class="card" onclick="rc(this)">
+            <div class="card-icon" style="background:#fef2f2;">🛡️</div>
+            <div class="card-name">防风罩</div>
+            <div class="card-sub">Draft Shield</div>
+            <div class="card-detail">十万分之一天平必须配备防风罩（玻璃材质）。气流扰动可造成 0.1~1 mg 的读数波动。防风罩将秤盘与外界气流隔离，确保称量环境的稳定性。开门操作后需等待数据稳定。</div>
+            <span class="card-tag" style="background:#fef2f2;color:#dc2626;">必须关闭</span>
+        </div>
+        <div class="card" onclick="rc(this)">
+            <div class="card-icon" style="background:#eff6ff;">🌡️</div>
+            <div class="card-name">环境传感器</div>
+            <div class="card-sub">Environmental Sensor</div>
+            <div class="card-detail">内置温度传感器实时补偿热漂移。高档天平配备温湿度+气压三合一传感器，自动按空气浮力公式修正读数。预热 30 分钟后内部温度稳定，漂移最小。</div>
+            <span class="card-tag" style="background:#eff6ff;color:#0c4a6e;">自动补偿</span>
+        </div>
+        <div class="card" onclick="rc(this)">
+            <div class="card-icon" style="background:#fef3c7;">💻</div>
+            <div class="card-name">数据处理模块</div>
+            <div class="card-sub">Data Processing</div>
+            <div class="card-detail">采集线圈电流信号→A/D转换→数字滤波→显示读数。内置多种称量模式：常规称量/密度测定/统计/配方/差值称量。RS-232 接口输出数据至电脑或打印机。</div>
+            <span class="card-tag" style="background:#fef3c7;color:#92400e;">多种模式</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ SECTION 02 · 称量方法 ═══ -->
+<section class="section" id="s2">
+    <div class="section-num">Section 02 · 称量方法</div>
+    <h2 class="section-title">三种标准称量方法</h2>
+    <p class="section-desc">根据样品性质和实验目的，选择合适的称量方法是获得准确结果的前提。</p>
+    <div class="card-grid">
+        <div class="card" onclick="rc(this)">
+            <div class="card-icon" style="background:#f0fdfa;">🎯</div>
+            <div class="card-name">直接称量法</div>
+            <div class="card-sub">Direct Weighing</div>
+            <div class="card-detail">将样品直接放置在秤盘上读取重量。适用于不需要精确质量的粗略称量。操作：去皮→放样品→读数。注意：药品不能直接接触秤盘，需垫称量纸或容器。</div>
+            <span class="card-tag" style="background:#f0fdfa;color:#0d9488;">直接读数</span>
+        </div>
+        <div class="card" onclick="rc(this)">
+            <div class="card-icon" style="background:#eff6ff;">📉</div>
+            <div class="card-name">减量法</div>
+            <div class="card-sub">Weighing by Difference</div>
+            <div class="card-detail"><strong>最精密的固体称量方法。</strong>先称量瓶+样品总重 m₁，转移部分样品至目标容器，再称量瓶重 m₂。实际样品量 = m₁ − m₂。精度可达 ±0.02 mg。</div>
+            <span class="card-tag" style="background:#eff6ff;color:#0c4a6e;">高精度</span>
+        </div>
+        <div class="card" onclick="rc(this)">
+            <div class="card-icon" style="background:#fef3c7;">📈</div>
+            <div class="card-name">增量法</div>
+            <div class="card-sub">Weighing by Addition</div>
+            <div class="card-detail">放置空容器→去皮→逐步加入样品至目标重量。适用于配制标准溶液等需要精确质量的场景。每次添加后等待读数稳定，避免超量。</div>
+            <span class="card-tag" style="background:#fef3c7;color:#92400e;">逐步添加</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ SECTION 03 · 操作流程 ═══ -->
+<section class="section" id="s3">
+    <div class="section-num">Section 03 · 操作流程</div>
+    <h2 class="section-title">精密称重六步法</h2>
+    <p class="section-desc">优雅准确的称重来自规范的操作习惯。以下步骤适用于减量法精密称重。</p>
+    <div class="tl">
+        <div class="ps"><div class="ps-num">STEP 01</div><div class="ps-title">开机预热与自检</div><div class="ps-desc">开启电源，天平自动执行显示屏、线圈、传感器自检。预热 ≥ 30 分钟使内部恒温。预热期间可准备称量器具。</div><span class="ps-note">⏱️ 预热至少 30 分钟</span></div>
+        <div class="ps"><div class="ps-num">STEP 02</div><div class="ps-title">环境检查与校零</div><div class="ps-desc">确认防风罩关闭、天平水平（气泡居中）、无需受称量物。按 TARE 键去皮归零，确认显示"0.00000 g"稳定。</div><span class="ps-note">🔍 读数必须稳定在 ±0.02 mg</span></div>
+        <div class="ps"><div class="ps-num">STEP 03</div><div class="ps-title">称量瓶初重</div><div class="ps-desc">用纸条或镊子将称量瓶（含样品）轻轻放入秤盘中央，关闭防风罩，待读数稳定后记录 m₁。</div><span class="ps-note">⚠️ 手指温度影响称量瓶质量</span></div>
+        <div class="ps"><div class="ps-num">STEP 04</div><div class="ps-title">转移样品</div><div class="ps-desc">取出称量瓶，在目标容器上方打开瓶盖，轻轻敲击瓶壁使样品落入容器。盖上瓶盖，避免粉末飞散。</div><span class="ps-note">🧪 转移时瓶口应接近容器</span></div>
+        <div class="ps"><div class="ps-num">STEP 05</div><div class="ps-title">称量瓶终重</div><div class="ps-desc">将称量瓶放回秤盘，关闭防风罩，待读数稳定记录 m₂。试样量 = m₁ − m₂。</div><span class="ps-note">📋 两次重量应在同一仪器测量</span></div>
+        <div class="ps"><div class="ps-num">STEP 06</div><div class="ps-title">记录与校验</div><div class="ps-desc">记录 5 位有效数字（如 0.12345 g）。称量完成后清洁秤盘，关闭防风罩。定期用标准砝码校验。</div><span class="ps-note">📝 记录到 ±0.01 mg</span></div>
+    </div>
+</section>
+
+<!-- ═══ SECTION 04 · 交互模拟 ═══ -->
+<section class="exp-section" id="s4">
+    <div class="section" style="padding-bottom:0;opacity:1;transform:none;">
+        <div class="section-num">Section 04 · 交互模拟</div>
+        <h2 class="section-title">十万分之一天平 · 交互称重</h2>
+        <p class="section-desc">放置样品、使用防风罩、感受环境扰动对读数的实时影响。</p>
+    </div>
+
+    <div class="balance-wrap">
+        <div class="balance-head">
+            <h3>⚖️ METTLER XPR205 · 十万分之一天平</h3>
+            <div class="bh-status">
+                <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 6px rgba(74,222,128,.4);" id="statusLed"></span>
+                <span id="statusText">就绪</span>
+            </div>
+        </div>
+
+        <!-- Display -->
+        <div class="display-area">
+            <div class="display-label">质量 · Mass</div>
+            <div class="display-value" id="displayValue">0.00000</div>
+            <div class="display-unit">g · 十万分之一</div>
+            <div class="display-stable">
+                <span class="ds-dot" id="stableDot"></span>
+                <span id="stableText">稳定</span>
+            </div>
+        </div>
+
+        <!-- Pan visual -->
+        <div class="pan-area">
+            <div class="pan-viz">
+                <svg viewBox="0 0 160 100">
+                    <!-- Balance body -->
+                    <rect x="10" y="30" width="140" height="70" rx="6" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+                    <!-- Display cutout -->
+                    <rect x="20" y="36" width="120" height="16" rx="3" fill="rgba(0,0,0,.3)" stroke="rgba(255,255,255,.04)"/>
+                    <!-- Pan -->
+                    <ellipse cx="80" cy="60" rx="56" ry="10" fill="rgba(13,148,136,.1)" stroke="rgba(13,148,136,.15)" stroke-width="1.5"/>
+                    <!-- Wind shield lines -->
+                    <rect x="16" y="4" width="128" height="68" rx="4" fill="none" stroke="rgba(13,148,136,.06)" stroke-width="1" stroke-dasharray="4,4"/>
+                    <!-- Draft door -->
+                    <line x1="80" y1="4" x2="80" y2="72" stroke="rgba(13,148,136,.04)" stroke-width="1"/>
+                </svg>
+                <div class="pan-sample" id="panSample"></div>
+            </div>
+        </div>
+
+        <!-- Sample tray -->
+        <div class="sample-tray" id="sampleTray"></div>
+
+        <!-- Controls -->
+        <div class="ctrl-area">
+            <div class="ctrl-group">
+                <div class="cg-label"><span>🌬️ 防风罩</span><b id="draftVal">关闭</b></div>
+                <input type="range" id="draftSlider" min="0" max="1" value="1" step="1">
+            </div>
+            <div class="ctrl-group">
+                <div class="cg-label"><span>📳 振动</span><b id="vibeVal">无</b></div>
+                <input type="range" id="vibeSlider" min="0" max="2" value="0" step="1">
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="btn-row">
+            <button class="btn btn-t" id="tareBtn" onclick="doTare()">TARE 去皮</button>
+            <button class="btn btn-r" onclick="doReset()">🔄 重置</button>
+        </div>
+
+        <!-- Result -->
+        <div class="weigh-result">
+            <div class="wr-box">
+                <div class="wr-label">📋 称量结果</div>
+                <div class="wr-value" id="weighResult">—</div>
+                <div class="wr-detail" id="weighDetail">选择样品放置到天平上</div>
+            </div>
+        </div>
+
+        <!-- Log -->
+        <div class="log-box" id="expLog">
+            <div><span class="lt">⏳</span>选择样品放置到天平上开始称重</div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ SECTION 05 · 总结 ═══ -->
+<section class="section" id="s5">
+    <div class="section-num">Section 05 · 总结</div>
+    <h2 class="section-title">关键要点回顾</h2>
+    <div class="sum-grid">
+        <div class="sum-card"><div class="si">⚖️</div><div class="st2">电磁力平衡核心</div><div class="sd2">线圈电流补偿重力，精度达 0.01mg</div></div>
+        <div class="sum-card"><div class="si">🛡️</div><div class="st2">防风罩是必需</div><div class="sd2">气流扰动可造成 0.1~1mg 误差</div></div>
+        <div class="sum-card"><div class="si">📉</div><div class="st2">减量法最精密</div><div class="sd2">m₁ − m₂ 比直接称样更准确</div></div>
+        <div class="sum-card"><div class="si">📳</div><div class="st2">振动是杀手</div><div class="sd2">即使人走过都可能影响读数</div></div>
+    </div>
+</section>
+
+<div class="footer">
+    <p>EnvLab · 环境检测交互式教学平台</p>
+    <p style="margin-top:4px;">联系方式：jinghao.song@gmail.com</p>
+</div>
+
+<script>
+// ═══ Scroll & Nav ═══
+window.addEventListener('scroll',()=>{
+    const h=document.documentElement.scrollHeight-window.innerHeight;
+    document.getElementById('sp').style.width=(window.scrollY/h*100)+'%';
+});
+const secs=document.querySelectorAll('.section,.exp-section');
+const dots=document.querySelectorAll('.nd');
+const so=new IntersectionObserver(e=>e.forEach(n=>n.isIntersecting&&n.target.classList.add('visible')),{threshold:.1});
+secs.forEach(s=>so.observe(s));
+const po=new IntersectionObserver(e=>e.forEach(n=>n.isIntersecting&&n.target.classList.add('visible')),{threshold:.2});
+document.querySelectorAll('.ps').forEach(s=>po.observe(s));
+window.addEventListener('scroll',()=>{let c=0;secs.forEach((s,i)=>{if(window.scrollY>=s.offsetTop-300)c=i});dots.forEach((d,i)=>d.classList.toggle('ac',i===c))});
+function gs(i){if(secs[i])secs[i].scrollIntoView({behavior:'smooth'})}
+function rc(c){if(!c.classList.contains('revealed'))c.classList.add('revealed')}
+
+// ═══ Balance Simulator ═══
+const SAMPLES = [
+    {id:'bottle', icon:'🧪', name:'称量瓶+样品', weight:18.54320, type:'bottle'},
+    {id:'crucible', icon:'🏺', name:'坩埚', weight:15.23780, type:'cruc'},
+    {id:'filter', icon:'📄', name:'滤纸', weight:0.89240, type:'paper'},
+    {id:'powder', icon:'✨', name:'药粉', weight:0.12345, type:'powder'},
+    {id:'capsul', icon:'💊', name:'胶囊', weight:0.45678, type:'capsul'},
+];
+
+let state = {
+    sample: null,
+    tare: 0,         // tare offset in mg (displayed as grams)
+    draftClosed: true,
+    vibration: 0,    // 0=none, 1=minor, 2=major
+    _noiseInterval: null,
+};
+
+function buildSamples(){
+    const tray = document.getElementById('sampleTray');
+    tray.innerHTML = SAMPLES.map((s,i) =>
+        `<button class="samp-btn" data-i="${i}" onclick="placeSample(${i})">
+            <span class="samp-icon">${s.icon}</span>${s.name}
+        </button>`
+    ).join('');
+}
+buildSamples();
+
+function log(m, t){
+    const l=document.getElementById('expLog'), d=new Date();
+    const ts=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+':'+String(d.getSeconds()).padStart(2,'0');
+    const cls = t==='ok'?'lok':'lwarn';
+    l.innerHTML+=`<div><span class="lt">${ts}</span><span class="${cls}">${m}</span></div>`;
+    l.scrollTop=l.scrollHeight;
+}
+
+function placeSample(i){
+    if (state.sample === i) return;
+    state.sample = i;
+    document.querySelectorAll('.samp-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
+    const s = SAMPLES[i];
+    document.getElementById('panSample').textContent = s.icon;
+    document.getElementById('weighResult').textContent = '—';
+    document.getElementById('weighDetail').textContent = `样品已放置：${s.name}`;
+    log(`📌 放置样品：${s.name} (约 ${(s.weight/1000).toFixed(5)} g)`,'info');
+    updateDisplay();
+}
+
+function doTare(){
+    if (state.sample === null) {
+        state.tare = 0;
+        log('⚖️ 去皮归零 (空载)','ok');
+    } else {
+        state.tare = SAMPLES[state.sample].weight;
+        log(`⚖️ 去皮：${SAMPLES[state.sample].name} (${(state.tare/1000).toFixed(5)} g)`,'ok');
+    }
+    updateDisplay();
+}
+
+function doReset(){
+    if (state._noiseInterval) { clearInterval(state._noiseInterval); state._noiseInterval = null; }
+    state.sample = null; state.tare = 0;
+    document.querySelectorAll('.samp-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById('panSample').textContent = '';
+    document.getElementById('displayValue').textContent = '0.00000';
+    document.getElementById('displayValue').classList.remove('unstable');
+    document.getElementById('stableText').textContent = '稳定';
+    document.getElementById('stableDot').style.background = 'rgba(74,222,128,.4)';
+    document.getElementById('weighResult').textContent = '—';
+    document.getElementById('weighDetail').textContent = '选择样品放置到天平上';
+    document.getElementById('draftSlider').value = 1; state.draftClosed = true;
+    document.getElementById('draftVal').textContent = '关闭';
+    document.getElementById('vibeSlider').value = 0; state.vibration = 0;
+    document.getElementById('vibeVal').textContent = '无';
+    document.getElementById('expLog').innerHTML = '<div><span class="lt">⏳</span>选择样品放置到天平上开始称重</div>';
+    log('🔄 已重置','info');
+}
+
+function updateDisplay(){
+    const dv = document.getElementById('displayValue');
+    const baseWeight = state.sample !== null ? SAMPLES[state.sample].weight : 0;
+    const displayGrams = (baseWeight - state.tare) / 1000; // convert to grams
+
+    if (displayGrams < 0) {
+        dv.textContent = '-0.00000';
+        dv.style.color = '#dc2626';
+        dv.classList.remove('unstable');
+        document.getElementById('stableText').textContent = '超量程';
+        document.getElementById('stableDot').style.background = 'rgba(220,38,38,.5)';
+        document.getElementById('weighResult').textContent = 'ERROR';
+        document.getElementById('weighDetail').textContent = '显示负值，请去皮后重新称量';
+        return;
+    }
+
+    // Apply noise based on draft and vibration
+    const draftNoise = state.draftClosed ? 0 : (Math.random() * 0.5); // up to 0.5mg noise
+    const vibeNoise = state.vibration === 1 ? (Math.random() * 3) :
+                      state.vibration === 2 ? (Math.random() * 15) : 0; // up to 15mg
+    const noiseGrams = (draftNoise + vibeNoise) / 1000;
+    const finalGrams = displayGrams + noiseGrams;
+    const finalDisplay = finalGrams.toFixed(5);
+
+    dv.textContent = finalDisplay;
+
+    // Stability indicator
+    const noiseLevel = draftNoise + vibeNoise;
+    let stable = false;
+    if (noiseLevel < 0.3 && state.draftClosed) {
+        stable = true;
+        dv.classList.remove('unstable');
+        document.getElementById('stableText').textContent = '稳定';
+        document.getElementById('stableDot').style.background = 'rgba(74,222,128,.5)';
+    } else if (noiseLevel < 2) {
+        dv.classList.add('unstable');
+        document.getElementById('stableText').textContent = '轻微波动';
+        document.getElementById('stableDot').style.background = 'rgba(250,204,21,.5)';
+    } else {
+        dv.classList.add('unstable');
+        document.getElementById('stableText').textContent = '严重波动';
+        document.getElementById('stableDot').style.background = 'rgba(220,38,38,.5)';
+    }
+
+    // Update result
+    if (state.sample !== null && stable) {
+        const resultGrams = displayGrams.toFixed(5);
+        const resultMg = displayGrams.toFixed(2).replace('.','') + ' μg'; // wrong calc, let me just show it
+        document.getElementById('weighResult').textContent = resultGrams + ' g';
+        document.getElementById('weighDetail').textContent =
+            `样品：${SAMPLES[state.sample].name} · 去皮：${(state.tare/1000).toFixed(3)}g · 净重：${(displayGrams*1000).toFixed(2)} mg`;
+    }
+}
+
+function runNoise(){
+    if (state._noiseInterval) clearInterval(state._noiseInterval);
+    state._noiseInterval = setInterval(() => {
+        if (state.sample === null && state.tare === 0) return;
+        updateDisplay();
+    }, 300);
+}
+
+// Sliders
+document.getElementById('draftSlider').addEventListener('input', function(){
+    state.draftClosed = parseInt(this.value) > 0;
+    document.getElementById('draftVal').textContent = state.draftClosed ? '关闭' : '打开';
+    if (!state.draftClosed) {
+        log('🌬️ 防风罩打开 · 读数将受气流扰动','warn');
+    } else {
+        log('🛡️ 防风罩已关闭','info');
+    }
+});
+document.getElementById('vibeSlider').addEventListener('input', function(){
+    state.vibration = parseInt(this.value);
+    document.getElementById('vibeVal').textContent = state.vibration === 0 ? '无' : state.vibration === 1 ? '轻微' : '剧烈';
+    if (state.vibration > 0) log('📳 振动干扰：'+(state.vibration===1?'轻微(≤3mg)':'剧烈(≤15mg)'),'warn');
+    else log('📳 振动已消除','info');
+});
+
+runNoise();
+</script>
+</body>
+</html>

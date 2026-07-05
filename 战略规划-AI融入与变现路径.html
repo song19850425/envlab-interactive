@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小宋的环保笔记 · AI融入战略规划</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f3ed;color:#1a1f36;line-height:1.7;font-size:15px}
+.top-bar{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:32px 24px}
+.top-bar h1{font-size:22px;font-weight:800;letter-spacing:-.3px}
+.top-bar .sub{font-size:13px;color:#94a3b8;margin-top:6px}
+.top-bar .date{font-size:12px;color:#64748b;margin-top:4px}
+.container{max-width:900px;margin:0 auto;padding:24px 24px 60px}
+.section{margin-bottom:32px}
+.section-title{font-size:16px;font-weight:700;padding:8px 14px;border-radius:8px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.st-gray{background:#f1f0ec;color:#1a1f36;border-left:4px solid #1a1f36}
+.st-blue{background:#eff6ff;color:#1e40af;border-left:4px solid #1e40af}
+.st-green{background:#f0fdf4;color:#166534;border-left:4px solid #166534}
+.st-amber{background:#fffbeb;color:#b45309;border-left:4px solid #b45309}
+.st-teal{background:#f0fdfa;color:#0f766e;border-left:4px solid #0f766e}
+.st-purple{background:#f5f3ff;color:#5b21b6;border-left:4px solid #5b21b6}
+.st-red{background:#fef2f2;color:#b91c1c;border-left:4px solid #b91c1c}
+.st-rose{background:#fff1f2;color:#be185d;border-left:4px solid #be185d}
+
+.stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:14px 0}
+.stat-card{text-align:center;padding:14px;border:1px solid #e5e0d8;border-radius:10px;background:#fff}
+.stat-card .n{font-size:26px;font-weight:800}
+.stat-card .l{font-size:11px;color:#6b7280;margin-top:2px}
+
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+table th{background:#1a1f36;color:#fff;padding:8px 10px;text-align:left;font-weight:600;font-size:12px}
+table td{padding:7px 10px;border-bottom:1px solid #e5e0d8;vertical-align:top}
+table tr:hover{background:#fafaf8}
+
+.pill{display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600}
+.pill-green{background:#f0fdf4;color:#166534}
+.pill-blue{background:#eff6ff;color:#1e40af}
+.pill-amber{background:#fffbeb;color:#b45309}
+.pill-red{background:#fef2f2;color:#b91c1c}
+.pill-gray{background:#f1f0ec;color:#6b7280}
+.pill-purple{background:#f5f3ff;color:#5b21b6}
+
+.strategy-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0}
+@media(max-width:640px){.strategy-grid{grid-template-columns:1fr}}
+.strategy-card{border:1px solid #e5e0d8;border-radius:10px;padding:16px;background:#fff}
+.strategy-card .sc-title{font-size:14px;font-weight:700;margin-bottom:6px}
+.strategy-card .sc-desc{font-size:12px;color:#6b7280;line-height:1.6}
+.strategy-card .sc-tag{display:inline-block;padding:1px 8px;border-radius:8px;font-size:10px;font-weight:600;margin-top:6px}
+.strategy-card .sc-pm{font-size:24px;font-weight:800;margin:6px 0}
+
+.roadmap-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid #e5e0d8}
+.roadmap-item:last-child{border-bottom:none}
+.roadmap-item .rm-phase{flex-shrink:0;width:80px;font-size:11px;font-weight:700;text-align:center;padding:4px 0;border-radius:6px}
+.rm-p1{background:#fef2f2;color:#b91c1c}
+.rm-p2{background:#fffbeb;color:#b45309}
+.rm-p3{background:#eff6ff;color:#1e40af}
+.rm-p4{background:#f0fdf4;color:#166534}
+.rm-p5{background:#f5f3ff;color:#5b21b6}
+.roadmap-item .rm-content{flex:1}
+.roadmap-item .rm-title{font-size:14px;font-weight:600}
+.roadmap-item .rm-desc{font-size:12px;color:#6b7280;line-height:1.5;margin-top:3px}
+
+.matrix-table th:first-child{width:120px}
+.matrix-table td{text-align:center;font-size:12px}
+.matrix-table td:first-child{text-align:left;font-weight:600}
+
+.highlight{background:linear-gradient(135deg,#f0fdf4,#f0fdfa);border-left:4px solid #166534;padding:14px 18px;margin:14px 0;border-radius:0 8px 8px 0;font-size:13px}
+.highlight strong{color:#166534}
+.highlight-red{background:linear-gradient(135deg,#fef2f2,#fff1f2);border-left:4px solid #b91c1c;padding:14px 18px;margin:14px 0;border-radius:0 8px 8px 0;font-size:13px}
+.highlight-red strong{color:#b91c1c}
+
+.timeline{position:relative;padding-left:28px;margin:14px 0}
+.timeline::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:2px;background:#e5e0d8}
+.tl-item{position:relative;padding:12px 0 12px 16px;border-bottom:1px dashed #f0f0ec}
+.tl-item::before{content:'';position:absolute;left:-22px;top:18px;width:12px;height:12px;border-radius:50%;background:#1e40af;border:2px solid #fff;box-shadow:0 0 0 2px #1e40af}
+.tl-item .tl-date{font-size:11px;color:#6b7280;font-weight:600;margin-bottom:2px}
+.tl-item .tl-title{font-size:14px;font-weight:600}
+.tl-item .tl-desc{font-size:12px;color:#6b7280;line-height:1.5;margin-top:2px}
+.tl-item.tl-urgent::before{background:#b91c1c;box-shadow:0 0 0 2px #b91c1c}
+.tl-item.tl-milestone::before{background:#166534;box-shadow:0 0 0 2px #166534}
+
+.priority-bar{display:flex;gap:10px;margin:14px 0}
+@media(max-width:640px){.priority-bar{flex-direction:column}}
+.p-bar{flex:1;padding:16px;border-radius:10px;color:#fff;text-align:center}
+.p-bar .p-num{font-size:32px;font-weight:800;opacity:.9}
+.p-bar .p-label{font-size:13px;font-weight:600;margin-top:4px}
+.p-bar .p-desc{font-size:11px;opacity:.8;margin-top:6px;line-height:1.4}
+.p1{background:linear-gradient(135deg,#b91c1c,#dc2626)}
+.p2{background:linear-gradient(135deg,#b45309,#d97706)}
+.p3{background:linear-gradient(135deg,#1e40af,#2563eb)}
+.p4{background:linear-gradient(135deg,#0f766e,#14b8a6)}
+
+.tag{display:inline-block;padding:1px 8px;border-radius:8px;font-size:10px;margin:1px}
+.tag-cost{background:#f1f0ec;color:#6b7280}
+.tag-easy{background:#f0fdf4;color:#166534}
+.tag-hard{background:#fef2f2;color:#b91c1c}
+.tag-fast{background:#eff6ff;color:#1e40af}
+.tag-slow{background:#fffbeb;color:#b45309}
+
+.metric{font-size:12px;color:#6b7280;display:flex;gap:16px;flex-wrap:wrap;margin-top:4px}
+.metric span{display:flex;align-items:center;gap:4px}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>🧪 小宋的环保笔记 · AI融入战略规划</h1>
+  <div class="sub">一人公司 · ALL IN AI · 环境检测×内容×教育</div>
+  <div class="date">2026年7月2日 | 版本 1.0 | 覆盖全部项目和对话历史</div>
+</div>
+
+<div class="container">
+
+<!-- ════════════════════════════════════ -->
+<!-- 资产盘点 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title st-gray">📊 一、现有资产全面盘点</div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="n" style="color:#166534">37</div><div class="l">EnvLab交互实验</div></div>
+    <div class="stat-card"><div class="n" style="color:#0f766e">9</div><div class="l">PhET级精品</div></div>
+    <div class="stat-card"><div class="n" style="color:#b45309">8</div><div class="l">已封装Skill</div></div>
+    <div class="stat-card"><div class="n" style="color:#1e40af">10</div><div class="l">公众号草稿箱</div></div>
+    <div class="stat-card"><div class="n" style="color:#5b21b6">14</div><div class="l">已发布文章</div></div>
+  </div>
+
+  <table>
+    <tr><th colspan="2">资产类别</th><th>数量</th><th>说明</th></tr>
+    <tr><td>🔬</td><td>交互实验库</td><td>37个</td><td>7类：水质/大气/土壤评价/土壤修复/仪器分析/综合分析/工具报告</td></tr>
+    <tr><td>🏆</td><td>PhET级交互</td><td>9个</td><td>pH计/COD/PRB/ISCO/五气分析仪/电子天平/气相色谱 + 工具型4个</td></tr>
+    <tr><td>📝</td><td>公众号文章</td><td>10篇草稿 + 14篇已发</td><td>7条内容线：仪器科普/政策解读/数据科学/生活关联/论文翻译/实验室日常</td></tr>
+    <tr><td>🧠</td><td>WorkBuddy Skills</td><td>8个</td><td>env-full-process-ai / soil-investigation-sampling / wechat-auto-publisher / narrative-54 / bid-document-maker / env-fund-guide / env-performance-a-guide / presentation-generator</td></tr>
+    <tr><td>✍️</td><td>人设矩阵</td><td>1套</td><td>天坑硕士·实验室主任→咨询副总·6岁女儿爸·吉他手·篮球足球骑行</td></tr>
+    <tr><td>🏗️</td><td>渣土投资</td><td>1套</td><td>财务模型/双模式对比/汇报稿/南阳专版/宛城卧龙/竞品摸底——全套完成</td></tr>
+    <tr><td>📚</td><td>物料包</td><td>130个文件</td><td>54项业务叙事法全版本物料（已决定免费引流）</td></tr>
+    <tr><td>📐</td><td>技术底座</td><td>1套</td><td>PWA部署 / CloudStudio演示 / 赛博朋克配色规范 / 叙事式教学框架</td></tr>
+  </table>
+
+  <div class="highlight">
+    <strong>✅ 现状判断：</strong>你已经跑通了「AI → 内容 → 产品」的完整生产闭环。AI写文章、AI做交互实验、AI生成咨询文档，三条线都通了。缺的不是能力，是<strong>变现节奏</strong>。
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- AI融入点 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title st-blue">🤖 二、AI融入现有工作的5个场景</div>
+
+  <div class="strategy-grid">
+    <div class="strategy-card" style="border-left:3px solid #166534">
+      <div class="sc-title" style="color:#166534">场景一：内容自动化生产</div>
+      <div class="sc-desc">
+        <strong>现状</strong>：AI写公众号文章 → HTML排版 → push_to_wechat推送草稿箱，一次完成<br><br>
+        <strong>升级方向</strong>：<br>
+        ① 批量生产（一次选题生成3-5篇）<br>
+        ② 小红书双平台同步（HTML→小红书图文格式转换）<br>
+        ③ SEO优化（嵌入关键词长尾词）<br>
+        ④ 数据反馈→选题优化闭环
+      </div>
+      <div class="metric">
+        <span>✅ 已验证</span>
+        <span>🔄 可规模化</span>
+        <span><span class="tag tag-easy">低成本</span></span>
+      </div>
+    </div>
+    <div class="strategy-card" style="border-left:3px solid #1e40af">
+      <div class="sc-title" style="color:#1e40af">场景二：交互实验批量生产</div>
+      <div class="sc-desc">
+        <strong>现状</strong>：AI独立完成完整HTML交互页面（PhET级）<br><br>
+        <strong>升级方向</strong>：<br>
+        ① 建立组件库（滴定/图表/粒子/滑块等可复用组件）<br>
+        ② 模板化生产（同一框架×不同实验参数）<br>
+        ③ 食品检测横向扩张（方法高度重合，迁移成本极低）<br>
+        ④ 出版社教材配套数字资源合作
+      </div>
+      <div class="metric">
+        <span>✅ 已验证</span>
+        <span>🔄 需组件化</span>
+        <span><span class="tag tag-cost">中等成本</span></span>
+      </div>
+    </div>
+    <div class="strategy-card" style="border-left:3px solid #b45309">
+      <div class="sc-title" style="color:#b45309">场景三：咨询文档智能生成</div>
+      <div class="sc-desc">
+        <strong>现状</strong>：土壤调查全流程Skill / 投标文件Skill / 环保资金指南Skill / 创A指南Skill<br><br>
+        <strong>升级方向</strong>：<br>
+        ① 多Skill联动（方案→采样→报告 一站式）<br>
+        ② 行业数据自动注入（最新国标/地标/政策）<br>
+        ③ 从"生成文档"升级到"生成文档+评审意见"<br>
+        ④ 做成独立SaaS工具（用户输入参数→自动出报告）
+      </div>
+      <div class="metric">
+        <span>✅ 已验证</span>
+        <span>🔄 可产品化</span>
+        <span><span class="tag tag-fast">高价值</span></span>
+      </div>
+    </div>
+    <div class="strategy-card" style="border-left:3px solid #5b21b6">
+      <div class="sc-title" style="color:#5b21b6">场景四：环保×AI培训课程</div>
+      <div class="sc-desc">
+        <strong>现状</strong>：已有9门AI课程知识库（45个文件）<br><br>
+        <strong>升级方向</strong>：<br>
+        ① 环保AI实务课程（公众号引流→小鹅通变现）<br>
+        ② 核心卖点：不是通用AI课，是真在环境行业用AI的人输出经验<br>
+        ③ 政企内训专场（创A申报/资金申报/土壤调查→AI辅助）<br>
+        ④ 联名合作（环评机构/检测机构定向培训）
+      </div>
+      <div class="metric">
+        <span>📦 已有素材</span>
+        <span>🔄 需产品化</span>
+        <span><span class="tag tag-fast">高溢价</span></span>
+      </div>
+    </div>
+    <div class="strategy-card" style="border-left:3px solid #0f766e">
+      <div class="sc-title" style="color:#0f766e">场景五：个人品牌AI加速器</div>
+      <div class="sc-desc">
+        <strong>现状</strong>：人设已定稿，内容有固定生产流程<br><br>
+        <strong>升级方向</strong>：<br>
+        ① AI辅助选题（热点追踪+库存选题匹配）<br>
+        ② AI自动回复评论区（专业问题标准化解答）<br>
+        ③ 多平台统一人设（公众号/小红书/知乎/B站）<br>
+        ④ AI辅助私域运营（自动标签→定向推送→转化跟踪）
+      </div>
+      <div class="metric">
+        <span>🔄 自动化</span>
+        <span><span class="tag tag-easy">低成本</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 变现路径 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title st-green">💰 三、5条变现路径评估</div>
+
+  <div class="priority-bar">
+    <div class="p-bar p1">
+      <div class="p-num">P0</div>
+      <div class="p-label">内容导流 → 咨询变现</div>
+      <div class="p-desc">启动成本：近乎零<br>天花板：¥5-15万/年</div>
+    </div>
+    <div class="p-bar p2">
+      <div class="p-num">P1</div>
+      <div class="p-label">环保×AI课程</div>
+      <div class="p-desc">启动成本：2周集中产出<br>天花板：¥10-30万/年</div>
+    </div>
+    <div class="p-bar p3">
+      <div class="p-num">P2</div>
+      <div class="p-label">咨询产品化(SaaS)</div>
+      <div class="p-desc">启动成本：4-8周开发<br>天花板：¥20-50万/年</div>
+    </div>
+    <div class="p-bar p4">
+      <div class="p-num">P3</div>
+      <div class="p-label">食品检测横向扩张</div>
+      <div class="p-desc">启动成本：6-8周<br>天花板：¥15-40万/年</div>
+    </div>
+  </div>
+
+  <table class="matrix-table">
+    <tr><th style="width:130px">评估维度</th><th>P0 内容导流</th><th>P1 AI课程</th><th>P2 咨询产品化</th><th>P3 食品扩张</th><th>💤 渣土工具</th></tr>
+    <tr>
+      <td>启动成本</td>
+      <td><span class="tag tag-easy">接近零</span></td>
+      <td><span class="tag tag-easy">低</span></td>
+      <td><span class="tag tag-cost">中</span></td>
+      <td><span class="tag tag-cost">中</span></td>
+      <td><span class="tag tag-hard">高</span></td>
+    </tr>
+    <tr>
+      <td>启动周期</td>
+      <td><span class="tag tag-easy">立即</span></td>
+      <td><span class="tag tag-easy">1-2周</span></td>
+      <td><span class="tag tag-cost">4-8周</span></td>
+      <td><span class="tag tag-cost">6-8周</span></td>
+      <td><span class="tag tag-hard">12周+</span></td>
+    </tr>
+    <tr>
+      <td>年收入天花板</td>
+      <td>¥5-15万</td>
+      <td>¥10-30万</td>
+      <td>¥20-50万</td>
+      <td>¥15-40万</td>
+      <td>¥20-50万(需实操)</td>
+    </tr>
+    <tr>
+      <td>可持续性</td>
+      <td>★★★★</td>
+      <td>★★★★</td>
+      <td>★★★★★</td>
+      <td>★★★★</td>
+      <td>★★★</td>
+    </tr>
+    <tr>
+      <td>差异化壁垒</td>
+      <td>★★★★（交互Demo）</td>
+      <td>★★★★★（行业独有）</td>
+      <td>★★★★</td>
+      <td>★★★</td>
+      <td>★★★</td>
+    </tr>
+    <tr>
+      <td>风险</td>
+      <td>低（零成本试错）</td>
+      <td>低（分步录制）</td>
+      <td>中（技术开发）</td>
+      <td>中低（高迁移性）</td>
+      <td>高（重资产+政策）</td>
+    </tr>
+  </table>
+
+  <div class="highlight">
+    <strong>🎯 综合结论：</strong>P0（内容导流）是唯一可以<strong>今天就开始</strong>且<strong>成本为零</strong>的路径。P1（AI课程）是<strong>短期变现天花板最高</strong>的路径——你已经是少数真在「用AI做环保」的人，卖经验比卖工具更有议价能力。P2（咨询产品化）是<strong>中长期最可持续</strong>的路径，需先做流量验证。P3（食品检测扩张）验证后值得投入。<strong>建议采用「P0→P1→P2→P3」的渐进节奏</strong>。
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 5条变现路径详细设计 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title st-teal">📋 四、5条变现路径详细拆解</div>
+
+  <table>
+    <tr><th style="width:130px">路径</th><th>产品形态</th><th>定价策略</th><th>获客渠道</th></tr>
+    <tr>
+      <td><strong>P0 内容导流</strong></td>
+      <td>公众号免费内容 + 关键词回复引流 + 咨询入口</td>
+      <td>咨询费：¥5,000-20,000/单<br>年度顾问：¥30,000-80,000/年</td>
+      <td>公众号搜索流量 + 朋友圈转发 + 环保社群</td>
+    </tr>
+    <tr>
+      <td><strong>P1 AI课程</strong></td>
+      <td>
+        ① 录播课《环保人AI实战：从报告到交互的7个拿手活》<br>
+        ② 政企内训专场<br>
+        ③ 一对一AI工作流咨询
+      </td>
+      <td>
+        录播课：¥299（长期有效）<br>
+        内训：¥10,000-30,000/场<br>
+        一对一：¥800-1,500/小时
+      </td>
+      <td>公众号导流 + BOSS直聘/环评圈 + 朋友圈裂变</td>
+    </tr>
+    <tr>
+      <td><strong>P2 咨询产品化</strong></td>
+      <td>
+        ① 环保资金申报AI助手（Web工具）<br>
+        ② 土壤调查报告自动生成器<br>
+        ③ 创A创B自评工具
+      </td>
+      <td>
+        月付：¥99/月<br>
+        年付：¥999/年<br>
+        企业版：¥9,800/年
+      </td>
+      <td>EnvLab流量 → 工具导流 → 付费转化</td>
+    </tr>
+    <tr>
+      <td><strong>P3 食品检测</strong></td>
+      <td>
+        ① 食品检测交互实验（复用环境检测模板）<br>
+        ② 食品检验员培训配套<br>
+        ③ 院校教材数字资源包
+      </td>
+      <td>
+        单实验：¥9.9<br>
+        课程包：¥199-499<br>
+        院校合作：¥5,000-20,000/校
+      </td>
+      <td>食品检测社群 + 职教院校 + 教材出版社</td>
+    </tr>
+    <tr>
+      <td><strong>💤 渣土工具</strong></td>
+      <td>
+        ① 渣土项目投资可行性评估工具<br>
+        ② 渣土车调度管理系统
+      </td>
+      <td>
+        项目评估报告：¥3,000-8,000/份<br>
+        管理系统：¥30,000-80,000/套
+      </td>
+      <td>城管/住建/国企招标 + 河南地市巡查</td>
+    </tr>
+  </table>
+
+  <div class="highlight-red">
+    <strong>⚠️ 关于渣土投资：</strong>基本面数据完整（财务模型/双模式对比/南阳版/宛城卧龙版/竞品摸底），但项目中500万设备投资 + 环评 + 特许经营+国企合作意愿 三个致命级未知未解决。建议<strong>保持项目储备不动，等政策明朗或找到合作方再启动</strong>。当前不建议投入新资源。
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 月度路线图 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title st-amber">🗺️ 五、月度行动路线图</div>
+
+  <div class="timeline">
+    <div class="tl-item tl-urgent">
+      <div class="tl-date">2026年7月 · 🔥 启动期</div>
+      <div class="tl-title">内容矩阵启动 + 课程筹备</div>
+      <div class="tl-desc">
+        ▸ 公众号：草稿箱10篇排期发布（每2-3天1篇，先发政策类+科普类），每篇挂关键词钩子<br>
+        ▸ 小红书：启动"实验室×日常"系列，每周2-3篇，赛博朋克风封面<br>
+        ▸ 知乎：入驻环保/检测话题，回答5-10个专业问题，锚点EnvLab交互链接<br>
+        ▸ 课程：确定《环保人AI实战》7节课大纲，录制前2节验证效果<br>
+        ▸ 关键词：回复「资金」送资金渠道速查表 · 回复「传感器」送选购指南 · 回复「pH」送饮料pH实测数据
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-date">2026年8月 · 📈 增长期</div>
+      <div class="tl-title">流量验证 + 首次变现</div>
+      <div class="tl-desc">
+        ▸ 公众号：粉丝破1000，打开率稳定>15%，有复访粉丝<br>
+        ▸ 小红书：粉丝破500，每周咨询≥5条<br>
+        ▸ 课程：完整7节课上线，首批¥199早鸟价，目标30单<br>
+        ▸ 咨询：接3-5单轻咨询（资金申报/土壤调查方向），验证客单价<br>
+        ▸ 增长：找到1-2个高ROI渠道（哪类选题打开率高→加大投入）
+      </div>
+    </div>
+
+    <div class="tl-item tl-milestone">
+      <div class="tl-date">2026年9月 · 💰 变现期</div>
+      <div class="tl-title">首次变现高潮</div>
+      <div class="tl-desc">
+        ▸ 课程：早鸟期结束，正常价¥299，累计¥10,000+收入<br>
+        ▸ 政企内训：联系1-2家环评机构/检测公司做AI内训，¥10,000-30,000/场<br>
+        ▸ 咨询：跑通标准化咨询SOP，月均3-5单<br>
+        ▸ 资金申报：赶上2026年下半年省级水污染防治资金申报窗口<br>
+        ▸ 里程碑：个人月收入首次突破¥15,000
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-date">2026年Q4 · 🚀 扩张期</div>
+      <div class="tl-title">工具产品化 + 食品检测起步</div>
+      <div class="tl-desc">
+        ▸ 咨询产品化：将资金申报/土壤调查能力封装为Web工具，¥99/月<br>
+        ▸ EnvLab：完成批次一（剩余7个基础→PhET升级），启动批次二（深内容/质控训练）<br>
+        ▸ 食品检测：启动横向扩张，做3-5个食品检测交互Demo，接触1-2所院校<br>
+        ▸ 渣土：保持关注，如有政策松动或合作方意向再启动<br>
+        ▸ 目标：全渠道月收入稳定¥20,000-30,000
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-date">2027年H1 · 🔭 规模化</div>
+      <div class="tl-title">一人公司走向团队化</div>
+      <div class="tl-desc">
+        ▸ 评估是否需要第一个兼职（内容/设计/运营外包）<br>
+        ▸ 完成食品检测方向验证，确定是否二次扩张<br>
+        ▸ 咨询产品化工具月活>500，年付客户>50<br>
+        ▸ 课程体系化：2-3门课，形成教材+录播+内训组合<br>
+        ▸ 探索海外市场：LinkedIn英文内容 + EnvLab英文版
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 关键决策清单 -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title st-purple">🎯 六、关键决策清单（现在该做什么）</div>
+
+  <table>
+    <tr><th>优先级</th><th>行动项</th><th>预计投入</th><th>预期产出</th><th>完成时限</th></tr>
+    <tr>
+      <td><span class="pill pill-red">立即</span></td>
+      <td>公众号排期发布10篇草稿箱</td>
+      <td>1小时排期</td>
+      <td>连续2-3周持续更新</td>
+      <td>今天</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-red">立即</span></td>
+      <td>小红书启动"实验室日常"系列</td>
+      <td>2小时/篇</td>
+      <td>每周3篇，测试赛博朋克风</td>
+      <td>本周内</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-amber">本周</span></td>
+      <td>知乎入驻+回答5个环保问题</td>
+      <td>3小时</td>
+      <td>SEO长尾流量+专业背书</td>
+      <td>7月5日</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-amber">本周</span></td>
+      <td>确定课程大纲+录制前2节</td>
+      <td>8小时</td>
+      <td>验证课程质量和录播流程</td>
+      <td>7月6日</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-blue">7月中</span></td>
+      <td>关键词钩子素材准备（资金/传感器/pH速查表等）</td>
+      <td>4小时</td>
+      <td>7个钩子的回复内容就绪</td>
+      <td>7月15日</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-blue">7月中</span></td>
+      <td>课程上线小鹅通/ima知识库</td>
+      <td>4小时</td>
+      <td>首批早鸟价¥199上线</td>
+      <td>7月15日</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-green">7月底</span></td>
+      <td>EnvLab批次一升级（7个基础→PhET）</td>
+      <td>分散执行</td>
+      <td>实验库总数增至44个</td>
+      <td>7月31日</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-green">8月</span></td>
+      <td>跑通第一个政企内训</td>
+      <td>持续</td>
+      <td>¥10,000-30,000/场收入</td>
+      <td>8月31日</td>
+    </tr>
+  </table>
+
+  <div class="highlight">
+    <strong>💡 核心原则：</strong><br>
+    → 先做「发文章」和「发小红书」这两件事，不需要额外准备，不需要等任何条件。<br>
+    → 每天花1小时做内容，2小时后坐等反馈。哪类内容有反馈，就加大投入。<br>
+    → 不要追求完美。先完成，再迭代。草稿箱已有10篇，不发就是沉没成本。<br>
+    → <strong>等流量来，等咨询来，等客户来——最慢的路径，恰恰是唯一能走通的路径。</strong>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- 一句话总结 -->
+<!-- ════════════════════════════════════ -->
+<div class="section" style="margin-top:28px">
+  <div class="stat-row">
+    <div class="stat-card" style="grid-column:1/-1;border:2px solid #1e40af;background:#eff6ff">
+      <div style="font-size:16px;font-weight:700;color:#1e40af;margin-bottom:6px">🎯 一句话决策</div>
+      <div style="font-size:14px;color:#1e40af;line-height:1.6">
+        <strong>7月先把10篇草稿发了 + 小红书开起来 + 课程大纲定了，</strong><br>
+        到8月底看数据——如果流量类（政策/资金方向）反馈好就加码咨询变现，<br>
+        如果工具类（交互Demo方向）反馈好就加速EnvLab产品化，<br>
+        哪条路走得通就走哪条。<strong>先开枪，后瞄准。</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

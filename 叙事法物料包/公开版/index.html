@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>54项核心业务 · 叙事法</title>
+<style>
+:root{--ink:#1a1f36;--paper:#fafaf8;--card:#fff;--muted:#6b7280;--line:#e5e5e0;--accent:#f5c518}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.masthead{background:var(--ink);color:var(--paper);padding:72px 32px 52px;text-align:center}
+.masthead .eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:18px}
+.masthead h1{font-family:"Times New Roman","Songti SC","Noto Serif SC",serif;font-size:3rem;font-weight:900;letter-spacing:-.03em;line-height:1.1;margin-bottom:12px;max-width:640px;margin-left:auto;margin-right:auto}
+.masthead h1 .hl{color:var(--accent)}
+.masthead .sub{font-size:.9rem;color:rgba(255,255,255,.4);line-height:1.7;max-width:520px;margin:0 auto 36px}
+.masthead .stat-row{display:flex;gap:48px;justify-content:center;flex-wrap:wrap}
+.masthead .stat{text-align:center}
+.masthead .stat .stat-num{font-size:3rem;font-weight:900;letter-spacing:-.02em;line-height:1;color:var(--accent)}
+.masthead .stat .stat-lbl{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-top:6px}
+
+.nav-strip{position:sticky;top:0;z-index:100;background:var(--card);border-bottom:1px solid var(--line);display:flex;gap:0;overflow-x:auto;justify-content:center;backdrop-filter:blur(8px)}
+.nav-item{display:flex;align-items:center;gap:6px;padding:14px 22px;text-decoration:none;font-size:.76rem;font-weight:600;color:var(--muted);letter-spacing:.03em;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+.nav-item:hover{color:var(--ink)}
+.nav-item.active{color:var(--ink);border-bottom-color:var(--ink)}
+.nav-num{font-size:.7rem;font-weight:800;color:var(--accent);min-width:18px}
+
+.search-row{display:flex;justify-content:center;margin-top:32px}
+.search-row input{width:100%;max-width:480px;padding:12px 24px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:var(--paper);font-size:.84rem;font-family:inherit;outline:none;transition:all .3s;letter-spacing:.01em;text-align:center;border-radius:4px}
+.search-row input::placeholder{color:rgba(255,255,255,.2)}
+.search-row input:focus{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.08)}
+
+.main{max-width:960px;margin:0 auto;padding:52px 24px 80px}
+.block{margin-bottom:64px;scroll-margin-top:80px}
+.block-head{display:flex;align-items:flex-start;gap:24px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.block-num{font-family:"Times New Roman","Songti SC",serif;font-size:3.2rem;font-weight:900;color:var(--accent);line-height:1;letter-spacing:-.03em;min-width:60px}
+.block-title{font-size:1.15rem;font-weight:700;letter-spacing:-.01em;line-height:1.3}
+.block-desc{font-size:.78rem;color:var(--muted);margin-top:4px}
+.biz-list{display:grid;grid-template-columns:1fr;gap:0}
+.biz-item{display:flex;align-items:center;gap:16px;padding:16px 20px 16px 8px;text-decoration:none;border-bottom:1px solid var(--line);transition:all .15s;position:relative}
+.biz-item:hover{background:var(--card);padding-left:14px}
+.biz-item.high-value::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ink)}
+.biz-num{font-size:.7rem;font-weight:700;color:var(--muted);min-width:40px;letter-spacing:.04em}
+.biz-title{font-size:.9rem;font-weight:600;color:var(--ink);flex:1;letter-spacing:-.01em}
+.biz-income{font-size:.72rem;color:var(--muted);flex-shrink:0;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.biz-stars{font-size:.7rem;color:var(--accent);letter-spacing:3px;flex-shrink:0}
+.no-result{text-align:center;padding:48px;color:var(--muted);font-size:.88rem;display:none}
+.footer{text-align:center;padding:40px;border-top:1px solid var(--line);color:var(--muted);font-size:.72rem;letter-spacing:.05em}
+@media(max-width:640px){.masthead{padding:44px 20px 36px}.masthead h1{font-size:1.8rem}.masthead .stat-row{gap:28px}.block-num{font-size:2.2rem;min-width:40px}.nav-item{padding:12px 14px;font-size:.7rem}.biz-item{gap:10px;padding:14px 12px}}
+</style>
+</head>
+<body>
+<div class="masthead">
+  <div class="eyebrow">Narrative Business System · 2026</div>
+  <h1>54项核心业务<br><span class="hl">叙事法</span></h1>
+  <p class="sub">从数据条目到商业故事。每一项业务都经过五幕叙事重构——场景、痛点、方案、价值、行动。</p>
+  <div class="search-row">
+    <input type="text" id="searchInput" placeholder="搜索业务名称或编号…">
+  </div>
+  <div class="stat-row" style="margin-top:32px">
+    <div class="stat"><div class="stat-num">54</div><div class="stat-lbl">业务</div></div>
+    <div class="stat"><div class="stat-num">7</div><div class="stat-lbl">板块</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-lbl">叙事维度</div></div>
+    <div class="stat"><div class="stat-num">2026</div><div class="stat-lbl">版本</div></div>
+  </div>
+</div>
+<div class="nav-strip">
+  <a href="#板块一" class="nav-item"><span class="nav-num">01</span><span class="nav-text">一</span></a><a href="#板块二" class="nav-item"><span class="nav-num">02</span><span class="nav-text">二</span></a><a href="#板块三" class="nav-item"><span class="nav-num">03</span><span class="nav-text">三</span></a><a href="#板块四" class="nav-item"><span class="nav-num">04</span><span class="nav-text">四</span></a><a href="#板块五" class="nav-item"><span class="nav-num">05</span><span class="nav-text">五</span></a><a href="#板块六" class="nav-item"><span class="nav-num">06</span><span class="nav-text">六</span></a><a href="#板块七" class="nav-item"><span class="nav-num">07</span><span class="nav-text">七</span></a>
+</div>
+<div class="main">
+  <div class="no-result" id="noResult">未找到匹配的业务</div>
+  
+        <div class="block" id="板块一">
+          <div class="block-head">
+            <span class="block-num">01</span>
+            <div class="block-info">
+              <h2 class="block-title">板块一：政策性资金申报</h2>
+              <p class="block-desc">生态环境类中央奖补/国债/国际贷款·9项</p>
+            </div>
+          </div>
+          <div class="biz-list">
+            <a href="1.1.html" class="biz-item high-value">
+              <span class="biz-num">1.1</span>
+              <span class="biz-title">历史遗留废弃矿山生态修复示范工程</span>
+              <span class="biz-income">100-150万</span>
+              <span class="biz-stars">★★★★★</span>
+            </a>
+            <a href="1.2.html" class="biz-item">
+              <span class="biz-num">1.2</span>
+              <span class="biz-title">水污染防治专项资金</span>
+              <span class="biz-income">60-100万</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="1.3.html" class="biz-item">
+              <span class="biz-num">1.3</span>
+              <span class="biz-title">土壤污染防治专项资金</span>
+              <span class="biz-income">60-100万</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="1.4.html" class="biz-item">
+              <span class="biz-num">1.4</span>
+              <span class="biz-title">大气污染防治专项资金</span>
+              <span class="biz-income">40-70万</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="1.5.html" class="biz-item">
+              <span class="biz-num">1.5</span>
+              <span class="biz-title">农业农村环境整治专项资金</span>
+              <span class="biz-income">30-60万</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="1.6.html" class="biz-item">
+              <span class="biz-num">1.6</span>
+              <span class="biz-title">国家发改委污染治理专项</span>
+              <span class="biz-income">40-70万</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="1.7.html" class="biz-item">
+              <span class="biz-num">1.7</span>
+              <span class="biz-title">国家发改委节能降碳专项</span>
+              <span class="biz-income">50-80万</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="1.8.html" class="biz-item">
+              <span class="biz-num">1.8</span>
+              <span class="biz-title">超长期特别国债及中央预算内投资</span>
+              <span class="biz-income">80-150万</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="1.9.html" class="biz-item">
+              <span class="biz-num">1.9</span>
+              <span class="biz-title">国际金融组织/外国政府贷款</span>
+              <span class="biz-income">80-120万</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a></div>
+        </div>
+        <div class="block" id="板块二">
+          <div class="block-head">
+            <span class="block-num">02</span>
+            <div class="block-info">
+              <h2 class="block-title">板块二：产业基金与融资渠道</h2>
+              <p class="block-desc">股权融资/FDI/政策性贷款·5项</p>
+            </div>
+          </div>
+          <div class="biz-list">
+            <a href="2.1.html" class="biz-item">
+              <span class="biz-num">2.1</span>
+              <span class="biz-title">政策性产业基金（基金债）</span>
+              <span class="biz-income">80-150万</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="2.2.html" class="biz-item">
+              <span class="biz-num">2.2</span>
+              <span class="biz-title">外商投资（FDI）——中东财团产业投资通道</span>
+              <span class="biz-income">100-200万/单（含佣金）</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="2.3.html" class="biz-item">
+              <span class="biz-num">2.3</span>
+              <span class="biz-title">政策性银行贷款——EOD模式</span>
+              <span class="biz-income">100-200万</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="2.4.html" class="biz-item">
+              <span class="biz-num">2.4</span>
+              <span class="biz-title">政策性银行贷款——国储林项目</span>
+              <span class="biz-income">80-120万</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="2.5.html" class="biz-item">
+              <span class="biz-num">2.5</span>
+              <span class="biz-title">产业平台公司融资</span>
+              <span class="biz-income">60-100万</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a></div>
+        </div>
+        <div class="block" id="板块三">
+          <div class="block-head">
+            <span class="block-num">03</span>
+            <div class="block-info">
+              <h2 class="block-title">板块三：数据资产与平台转型</h2>
+              <p class="block-desc">资产盘活/信用提升/数据融资·4项</p>
+            </div>
+          </div>
+          <div class="biz-list">
+            <a href="3.1.html" class="biz-item high-value">
+              <span class="biz-num">3.1</span>
+              <span class="biz-title">数据资产盘活与入表</span>
+              <span class="biz-income">50-100万+分成</span>
+              <span class="biz-stars">★★★★☆</span>
+            </a>
+            <a href="3.2.html" class="biz-item">
+              <span class="biz-num">3.2</span>
+              <span class="biz-title">平台公司评级提升（2A→2A+→3A）</span>
+              <span class="biz-income">80-150万+分成</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="3.3.html" class="biz-item">
+              <span class="biz-num">3.3</span>
+              <span class="biz-title">产业型国企转型咨询</span>
+              <span class="biz-income">40-80万+分成</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="3.4.html" class="biz-item">
+              <span class="biz-num">3.4</span>
+              <span class="biz-title">数据资产质押融资</span>
+              <span class="biz-income">60-120万+融资额分成</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a></div>
+        </div>
+        <div class="block" id="板块四">
+          <div class="block-head">
+            <span class="block-num">04</span>
+            <div class="block-info">
+              <h2 class="block-title">板块四：全过程咨询配套</h2>
+              <p class="block-desc">项目全流程支撑服务·10项</p>
+            </div>
+          </div>
+          <div class="biz-list">
+            <a href="4.1.html" class="biz-item">
+              <span class="biz-num">4.1</span>
+              <span class="biz-title">项目策划与包装</span>
+              <span class="biz-income">固定费 | **客户粘性**：中 | **备注**：引流业务</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="4.2.html" class="biz-item">
+              <span class="biz-num">4.2</span>
+              <span class="biz-title">申报材料编制</span>
+              <span class="biz-income">固定费+成功费 | **客户粘性**：高 | **备注**：核心业务</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="4.3.html" class="biz-item">
+              <span class="biz-num">4.3</span>
+              <span class="biz-title">答辩与评审辅导</span>
+              <span class="biz-income">成功费为主 | **客户粘性**：高 | **备注**：高价值</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="4.4.html" class="biz-item">
+              <span class="biz-num">4.4</span>
+              <span class="biz-title">商务对接与协调</span>
+              <span class="biz-income">按日收费 | **客户粘性**：中 | **备注**：关系导向</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="4.5.html" class="biz-item">
+              <span class="biz-num">4.5</span>
+              <span class="biz-title">绩效评价与后续服务</span>
+              <span class="biz-income">年费 | **客户粘性**：高 | **备注**：持续收费</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="4.6.html" class="biz-item">
+              <span class="biz-num">4.6</span>
+              <span class="biz-title">政府化债资金申请</span>
+              <span class="biz-income">固定费 | **客户粘性**：中 | **备注**：政策驱动</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="4.7.html" class="biz-item">
+              <span class="biz-num">4.7</span>
+              <span class="biz-title">平台公司项目融资</span>
+              <span class="biz-income">融资额1-2% | **客户粘性**：高 | **备注**：高价值</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="4.8.html" class="biz-item">
+              <span class="biz-num">4.8</span>
+              <span class="biz-title">建信产业基金对接</span>
+              <span class="biz-income">融资额1-2% | **客户粘性**：中 | **备注**：资源导向</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="4.9.html" class="biz-item">
+              <span class="biz-num">4.9</span>
+              <span class="biz-title">上市公司扶持政策争取</span>
+              <span class="biz-income">固定费+成功费 | **客户粘性**：中 | **备注**：高端客户</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="4.10.html" class="biz-item">
+              <span class="biz-num">4.10</span>
+              <span class="biz-title">专项债项目包装与申报</span>
+              <span class="biz-income">固定费+成功费 | **客户粘性**：高 | **备注**：高频需求</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a></div>
+        </div>
+        <div class="block" id="板块五">
+          <div class="block-head">
+            <span class="block-num">05</span>
+            <div class="block-info">
+              <h2 class="block-title">板块五：农业农村资金</h2>
+              <p class="block-desc">农业产业/乡村发展/农田建设·8项</p>
+            </div>
+          </div>
+          <div class="biz-list">
+            <a href="5.1.html" class="biz-item">
+              <span class="biz-num">5.1</span>
+              <span class="biz-title">国家现代农业产业园</span>
+              <span class="biz-income">80-120万</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="5.2.html" class="biz-item">
+              <span class="biz-num">5.2</span>
+              <span class="biz-title">优势特色产业集群</span>
+              <span class="biz-income">100-150万</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="5.3.html" class="biz-item">
+              <span class="biz-num">5.3</span>
+              <span class="biz-title">农业产业强镇</span>
+              <span class="biz-income">30-50万</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="5.4.html" class="biz-item">
+              <span class="biz-num">5.4</span>
+              <span class="biz-title">中央财政常态化帮扶资金</span>
+              <span class="biz-income">40-60万</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="5.5.html" class="biz-item">
+              <span class="biz-num">5.5</span>
+              <span class="biz-title">高标准农田建设资金</span>
+              <span class="biz-income">60-100万</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="5.6.html" class="biz-item">
+              <span class="biz-num">5.6</span>
+              <span class="biz-title">农业防灾减灾资金</span>
+              <span class="biz-income">15-30万</span>
+              <span class="biz-stars">★☆☆☆☆</span>
+            </a>
+            <a href="5.7.html" class="biz-item">
+              <span class="biz-num">5.7</span>
+              <span class="biz-title">农业社会化服务资金</span>
+              <span class="biz-income">20-35万</span>
+              <span class="biz-stars">★☆☆☆☆</span>
+            </a>
+            <a href="5.8.html" class="biz-item">
+              <span class="biz-num">5.8</span>
+              <span class="biz-title">农村人居环境整治资金</span>
+              <span class="biz-income">40-70万</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a></div>
+        </div>
+        <div class="block" id="板块六">
+          <div class="block-head">
+            <span class="block-num">06</span>
+            <div class="block-info">
+              <h2 class="block-title">板块六：自然资源口资金</h2>
+              <p class="block-desc">生态修复/地灾防治/国土规划·10项</p>
+            </div>
+          </div>
+          <div class="biz-list">
+            <a href="6.1.html" class="biz-item">
+              <span class="biz-num">6.1</span>
+              <span class="biz-title">山水林田湖草沙一体化保护和修复工程</span>
+              <span class="biz-income">150-300万</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="6.2.html" class="biz-item">
+              <span class="biz-num">6.2</span>
+              <span class="biz-title">历史遗留废弃工矿土地整治</span>
+              <span class="biz-income">80-150万</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="6.3.html" class="biz-item">
+              <span class="biz-num">6.3</span>
+              <span class="biz-title">海洋生态保护修复</span>
+              <span class="biz-income">80-120万</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="6.4.html" class="biz-item">
+              <span class="biz-num">6.4</span>
+              <span class="biz-title">特大型地质灾害防治</span>
+              <span class="biz-income">60-100万</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="6.5.html" class="biz-item">
+              <span class="biz-num">6.5</span>
+              <span class="biz-title">耕地保护监督</span>
+              <span class="biz-income">30-60万</span>
+              <span class="biz-stars">★☆☆☆☆</span>
+            </a>
+            <a href="6.6.html" class="biz-item">
+              <span class="biz-num">6.6</span>
+              <span class="biz-title">国土空间生态修复综合管理</span>
+              <span class="biz-income">40-70万</span>
+              <span class="biz-stars">★☆☆☆☆</span>
+            </a>
+            <a href="6.7.html" class="biz-item">
+              <span class="biz-num">6.7</span>
+              <span class="biz-title">国土空间规划及用途管制</span>
+              <span class="biz-income">40-80万</span>
+              <span class="biz-stars">★☆☆☆☆</span>
+            </a>
+            <a href="6.8.html" class="biz-item">
+              <span class="biz-num">6.8</span>
+              <span class="biz-title">矿产资源保护与利用研究</span>
+              <span class="biz-income">30-50万</span>
+              <span class="biz-stars">★☆☆☆☆</span>
+            </a>
+            <a href="6.9.html" class="biz-item">
+              <span class="biz-num">6.9</span>
+              <span class="biz-title">矿业权管理与生态文明</span>
+              <span class="biz-income">30-60万</span>
+              <span class="biz-stars">★☆☆☆☆</span>
+            </a>
+            <a href="6.10.html" class="biz-item">
+              <span class="biz-num">6.10</span>
+              <span class="biz-title">生态保护修复中央预算内投资</span>
+              <span class="biz-income">100-180万</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a></div>
+        </div>
+        <div class="block" id="板块七">
+          <div class="block-head">
+            <span class="block-num">07</span>
+            <div class="block-info">
+              <h2 class="block-title">板块七：住建口资金</h2>
+              <p class="block-desc">城市更新/管网改造/保障安居·8项</p>
+            </div>
+          </div>
+          <div class="biz-list">
+            <a href="7.1.html" class="biz-item">
+              <span class="biz-num">7.1</span>
+              <span class="biz-title">城市更新示范城市</span>
+              <span class="biz-income">8-12亿元/城市</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="7.2.html" class="biz-item">
+              <span class="biz-num">7.2</span>
+              <span class="biz-title">燃气管道等老化更新改造</span>
+              <span class="biz-income">中央预算内投资</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="7.3.html" class="biz-item">
+              <span class="biz-num">7.3</span>
+              <span class="biz-title">保障性安居工程（中央预算内投资）</span>
+              <span class="biz-income">中央预算内投资</span>
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="7.4.html" class="biz-item">
+              <span class="biz-num">7.4</span>
+              <span class="biz-title">城市管网及污水处理补助</span>
+              
+              <span class="biz-stars">★★☆☆☆</span>
+            </a>
+            <a href="7.5.html" class="biz-item">
+              <span class="biz-num">7.5</span>
+              <span class="biz-title">超长期特别国债——地下管网</span>
+              <span class="biz-income">2026年1600亿总盘 | **重点推荐** ✅</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="7.6.html" class="biz-item">
+              <span class="biz-num">7.6</span>
+              <span class="biz-title">中央预算内投资——城市更新</span>
+              <span class="biz-income">2026年970亿总盘 | **重点推荐** ✅</span>
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="7.7.html" class="biz-item">
+              <span class="biz-num">7.7</span>
+              <span class="biz-title">地方政府专项债——住建领域</span>
+              
+              <span class="biz-stars">★★★☆☆</span>
+            </a>
+            <a href="7.8.html" class="biz-item">
+              <span class="biz-num">7.8</span>
+              <span class="biz-title">保障性安居工程补助</span>
+              
+              <span class="biz-stars">★★☆☆☆</span>
+            </a></div>
+        </div>
+</div>
+<div class="footer">基于《54项核心业务速查表（2026年更新版）》重构 · 叙事法 v2.1</div>
+<script>
+(function(){
+  var navItems=document.querySelectorAll('.nav-item');
+  function updateNav(){
+    var cur='';
+    document.querySelectorAll('.block').forEach(function(s){
+      if(window.scrollY>=s.offsetTop-80) cur=s.id;
+    });
+    navItems.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});
+  }
+  window.addEventListener('scroll',updateNav,{passive:true});
+  navItems.forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'});});});
+  var search=document.getElementById('searchInput');
+  var noResult=document.getElementById('noResult');
+  search.addEventListener('input',function(){
+    var q=this.value.toLowerCase().trim();var any=false;
+    document.querySelectorAll('.block').forEach(function(b){
+      var vis=false;
+      b.querySelectorAll('.biz-item').forEach(function(it){
+        var txt=(it.textContent||'').toLowerCase();var m=!q||txt.includes(q);
+        it.style.display=m?'':'none';if(m)vis=true;
+      });
+      b.style.display=vis?'':'none';if(vis)any=true;
+    });
+    noResult.style.display=any?'none':'block';
+  });
+})();
+</script>
+</body>
+</html>
