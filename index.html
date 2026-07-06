@@ -42,7 +42,7 @@ h2 .en{font-weight:400;font-size:10px;color:var(--muted);margin-left:2px}
 <body>
 
 <div class="hero">
-  <h1>🧪 <em>EnvLab</em> · 环境检测交互实验室</h1>
+  <h1>🧪 <em>EnvLab</em> · 环境交互实验室</h1>
   <div class="sub">53 interactive PhET-style labs · <em>Free</em> · Open source · No login needed</div>
   <div class="count">
     <span>🧪 水质/仪器 Water & Instruments <b>14</b></span>
@@ -133,6 +133,20 @@ h2 .en{font-weight:400;font-size:10px;color:var(--muted);margin-left:2px}
   <a class="card" href="水质评价标准速查表.html"><span class="ico">📊</span><span class="info"><div class="nm"><span class="zh">水质评价速查表</span><span class="en">Water Quality Standards Ref</span></div><span class="sg">standard limits quick lookup</span></span></a>
 </div>
 
+<!-- 留言区（使用 utteranc.es · 基于 GitHub Issues） -->
+<div style="max-width:600px;margin:24px auto;padding:0 12px">
+  <h2 style="background:rgba(244,114,182,.08);color:var(--pink);border-left:3px solid var(--pink);cursor:default;margin-bottom:8px">💬 留言</h2>
+  <p style="font-size:11px;color:var(--muted);text-align:center;margin-bottom:10px">需要 GitHub 账号登录 · 留言会同步到仓库 Issues</p>
+  <script src="https://utteranc.es/client.js"
+    repo="song19850425/envlab-interactive"
+    issue-term="pathname"
+    theme="icy-dark"
+    crossorigin="anonymous"
+    async>
+  </script>
+  <noscript><p style="font-size:11px;color:var(--muted);text-align:center">留言需要启用 JavaScript</p></noscript>
+</div>
+
 <script>function tog(e,i){document.getElementById(i).classList.toggle('hide');e.classList.toggle('collapsed')}
 
 // 访问计数器 (countapi.xyz - 免费无登录)
@@ -143,7 +157,7 @@ fetch('https://api.countapi.xyz/hit/envlab-interactive/visits')
 </script>
 
 <div class="ft">
-  EnvLab · 环境检测交互实验室 · Interactive Environmental Testing Labs<br>
+  EnvLab · 环境交互实验室 · Interactive Environmental Testing Labs<br>
   全部单文件 HTML 即开即用 · Zero backend no login · <em>jinghao.song@gmail.com</em><br>
   <a href="https://github.com/song19850425/envlab-interactive" style="color:var(--accent);text-decoration:none">Open Source on GitHub</a>
   <span style="display:inline-block;margin-left:12px;font-size:9px;color:var(--muted)">·</span>
