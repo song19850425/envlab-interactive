@@ -133,7 +133,14 @@ h2 .en{font-weight:400;font-size:10px;color:var(--muted);margin-left:2px}
   <a class="card" href="水质评价标准速查表.html"><span class="ico">📊</span><span class="info"><div class="nm"><span class="zh">水质评价速查表</span><span class="en">Water Quality Standards Ref</span></div><span class="sg">standard limits quick lookup</span></span></a>
 </div>
 
-<script>function tog(e,i){document.getElementById(i).classList.toggle('hide');e.classList.toggle('collapsed')}</script>
+<script>function tog(e,i){document.getElementById(i).classList.toggle('hide');e.classList.toggle('collapsed')}
+
+// 访问计数器 (countapi.xyz - 免费无登录)
+fetch('https://api.countapi.xyz/hit/envlab-interactive/visits')
+  .then(r=>r.json())
+  .then(d=>{document.getElementById('visitCount').textContent=d.value.toLocaleString()})
+  .catch(()=>document.getElementById('visitCount').textContent='?');
+</script>
 
 <div class="ft">
   EnvLab · 环境检测交互实验室 · Interactive Environmental Testing Labs<br>
@@ -141,6 +148,7 @@ h2 .en{font-weight:400;font-size:10px;color:var(--muted);margin-left:2px}
   <a href="https://github.com/song19850425/envlab-interactive" style="color:var(--accent);text-decoration:none">Open Source on GitHub</a>
   <span style="display:inline-block;margin-left:12px;font-size:9px;color:var(--muted)">·</span>
   <a href="https://github.com/song19850425/envlab-interactive/graphs/traffic" style="color:var(--muted);text-decoration:none;font-size:9px">📊 访问统计</a>
+  <span style="display:inline-block;margin-left:12px;font-size:9px;color:var(--muted)">👁️ 总访问: <b id="visitCount" style="font-family:'Courier New',monospace">...</b></span>
 </div>
 
 <!-- Cloudflare Web Analytics -->
