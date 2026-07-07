@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>🐾 宠物健康管家 · Pet Health Manager</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  :root{
+    --bg:#0e1117;--panel:#161b22;--panel2:#1c2230;--border:#262d38;
+    --pink:#e8255a;--blue:#3b82f6;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;
+    --text:#e6edf3;--muted:#8b949e;--radius:18px;
+  }
+  body{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:var(--bg);color:var(--text);padding:18px;line-height:1.6;font-size:15px}
+  .hero{text-align:center;padding:24px 12px 8px}
+  .hero h1{font-size:30px;letter-spacing:1px}
+  .hero .en{color:var(--muted);font-size:13px;margin-top:4px;letter-spacing:3px;text-transform:uppercase}
+  .hero .tag{display:inline-block;margin-top:10px;padding:5px 14px;background:rgba(232,37,90,.12);color:var(--pink);border:1px solid rgba(232,37,90,.4);border-radius:999px;font-size:12px}
+  .wrap{max-width:920px;margin:0 auto}
+  .pet-bar{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0}
+  .pet-card{flex:1;min-width:150px;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:14px;cursor:pointer;transition:.18s;position:relative}
+  .pet-card:hover{border-color:var(--blue)}
+  .pet-card.active{border-color:var(--pink);box-shadow:0 0 0 2px rgba(232,37,90,.25)}
+  .pet-card .emoji{font-size:34px}
+  .pet-card .pn{font-size:17px;font-weight:700;margin-top:4px}
+  .pet-card .ps{font-size:12px;color:var(--muted)}
+  .pet-card .badge{position:absolute;top:10px;right:10px;font-size:11px;padding:2px 8px;border-radius:999px}
+  .badge.ok{background:rgba(34,197,94,.15);color:var(--green)}
+  .badge.warn{background:rgba(239,68,68,.15);color:var(--red)}
+  .add-pet{display:flex;align-items:center;justify-content:center;color:var(--muted);border-style:dashed;font-size:13px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 18px;position:sticky;top:0;background:var(--bg);padding:8px 0;z-index:5}
+  .tab{background:var(--panel);border:1px solid var(--border);color:var(--muted);padding:9px 16px;border-radius:999px;cursor:pointer;font-size:14px;transition:.15s;white-space:nowrap}
+  .tab.active{background:var(--pink);color:#fff;border-color:var(--pink)}
+  .view{display:none;animation:fade .25s}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;overflow-x:auto}
+  .card h3{font-size:16px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+  .stat{background:var(--panel2);border-radius:14px;padding:14px}
+  .stat .lab{font-size:12px;color:var(--muted)}
+  .stat .val{font-size:22px;font-weight:800;margin-top:3px}
+  .stat .sub{font-size:12px;margin-top:2px}
+  .alert{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.4);border-radius:14px;padding:14px;margin-bottom:12px;display:flex;gap:10px;align-items:center}
+  .alert .ic{font-size:26px}
+  .alert .txt b{color:var(--red)}
+  .ok-box{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);border-radius:14px;padding:12px;font-size:14px;color:var(--green)}
+  form{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+  form>div{display:flex;flex-direction:column}
+  label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
+  input,select{background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:12px 12px;border-radius:10px;font-size:16px;font-family:inherit;min-height:46px}
+  input:focus,select:focus{outline:none;border-color:var(--blue)}
+  button.act{background:var(--pink);color:#fff;border:none;padding:12px 20px;border-radius:10px;font-size:16px;cursor:pointer;font-weight:600;min-height:46px}
+  button.act:hover{filter:brightness(1.08)}
+  button.ghost{background:transparent;border:1px solid var(--border);color:var(--muted);padding:9px 14px;border-radius:10px;cursor:pointer;font-size:13px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--border);white-space:nowrap}
+  th{color:var(--muted);font-weight:600;font-size:12px}
+  .pill{font-size:11px;padding:2px 9px;border-radius:999px}
+  .pill.blue{background:rgba(59,130,246,.15);color:var(--blue)}
+  .pill.red{background:rgba(239,68,68,.15);color:var(--red)}
+  .pill.green{background:rgba(34,197,94,.15);color:var(--green)}
+  canvas{width:100%;height:220px;background:var(--panel2);border-radius:14px;display:block}
+  .empty{color:var(--muted);font-size:13px;padding:10px 0}
+  .note{font-size:12px;color:var(--muted);margin-top:8px}
+  .biz{background:linear-gradient(135deg,rgba(232,37,90,.08),rgba(59,130,246,.08));border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-top:8px}
+  .biz h4{font-size:15px;margin:14px 0 6px;color:var(--pink)}
+  .biz ul{margin-left:18px;font-size:14px}
+  .biz li{margin:4px 0}
+  .biz .k{color:var(--blue);font-weight:700}
+  .share{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.35);border-radius:14px;padding:14px;margin:14px 0;font-size:14px}
+  .share b{color:var(--blue)}
+  @media(max-width:640px){
+    body{padding:10px;font-size:14px}
+    .hero h1{font-size:23px}
+    .hero .en{font-size:11px}
+    .pet-card{flex:1 1 46%;min-width:0}
+    .pet-card .emoji{font-size:30px}
+    .tabs{overflow-x:auto;flex-wrap:nowrap}
+    .tab{padding:9px 13px;font-size:13px;flex:0 0 auto}
+    form{flex-direction:column;align-items:stretch}
+    form>div{width:100%}
+    input,select,button.act{width:100%}
+    .grid{grid-template-columns:1fr 1fr}
+    .card{padding:14px}
+    th,td{font-size:12px;padding:8px 6px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <h1>🐾 宠物健康管家</h1>
+    <div class="en">Pet Health Manager</div>
+    <div class="tag">记录 · 曲线 · 超时自动提醒 · Track-on-Time 习惯闭环</div>
+  </div>
+
+  <div class="share">
+    📲 <b>手机使用：</b>把这个页面"添加到主屏幕"（浏览器菜单 → 添加至主屏幕），就能像 App 一样全屏打开，数据存在你手机本地，不上传任何服务器。
+  </div>
+
+  <div class="pet-bar" id="petBar"></div>
+
+  <div class="tabs">
+    <div class="tab active" data-v="dashboard">📊 今日</div>
+    <div class="tab" data-v="feed">🍖 喂食</div>
+    <div class="tab" data-v="vaccine">💉 疫苗</div>
+    <div class="tab" data-v="deworm">🛡️ 驱虫</div>
+    <div class="tab" data-v="weight">⚖️ 体重</div>
+    <div class="tab" data-v="biz">💡 逻辑</div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="view active" id="view-dashboard">
+    <div id="alertZone"></div>
+    <div class="card">
+      <h3>📌 今日状态 · <span id="dashName"></span></h3>
+      <div class="grid" id="dashStats"></div>
+    </div>
+    <div class="card">
+      <h3>⚖️ 体重曲线</h3>
+      <canvas id="weightChart"></canvas>
+      <div class="note">数据本地保存（localStorage），刷新不丢。可删空重新录入。</div>
+    </div>
+  </div>
+
+  <!-- FEED -->
+  <div class="view" id="view-feed">
+    <div class="card">
+      <h3>➕ 添加喂食记录</h3>
+      <form id="feedForm">
+        <div><label>日期</label><input type="date" id="feedDate" required></div>
+        <div><label>食物</label><input type="text" id="feedFood" placeholder="如 鸡胸肉/狗粮" required></div>
+        <div><label>分量(g)</label><input type="number" id="feedAmt" placeholder="150"></div>
+        <button class="act" type="submit">记录</button>
+      </form>
+    </div>
+    <div class="card">
+      <h3>📋 喂食历史</h3>
+      <table id="feedTable"><thead><tr><th>日期</th><th>食物</th><th>分量</th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <!-- VACCINE -->
+  <div class="view" id="view-vaccine">
+    <div class="card">
+      <h3>➕ 添加疫苗记录</h3>
+      <form id="vacForm">
+        <div><label>日期</label><input type="date" id="vacDate" required></div>
+        <div><label>疫苗类型</label><input type="text" id="vacType" placeholder="狂犬/猫三联" required></div>
+        <div><label>下次到期</label><input type="date" id="vacNext"></div>
+        <button class="act" type="submit">记录</button>
+      </form>
+    </div>
+    <div class="card">
+      <h3>📋 疫苗记录</h3>
+      <table id="vacTable"><thead><tr><th>日期</th><th>类型</th><th>下次到期</th><th>状态</th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <!-- DEWORM -->
+  <div class="view" id="view-deworm">
+    <div class="card">
+      <h3>➕ 添加驱虫记录</h3>
+      <form id="dewForm">
+        <div><label>日期</label><input type="date" id="dewDate" required></div>
+        <div><label>类型</label><input type="text" id="dewType" placeholder="体内/体外" required></div>
+        <div><label>周期(天)</label><input type="number" id="dewCycle" value="30" required></div>
+        <button class="act" type="submit">记录</button>
+      </form>
+      <div class="note">默认周期 30 天。系统自动计算「距上次 X 天」，超周期即红色提醒。</div>
+    </div>
+    <div class="card">
+      <h3>📋 驱虫记录</h3>
+      <table id="dewTable"><thead><tr><th>日期</th><th>类型</th><th>周期</th><th>距上次</th><th>状态</th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <!-- WEIGHT -->
+  <div class="view" id="view-weight">
+    <div class="card">
+      <h3>➕ 添加体重记录</h3>
+      <form id="wForm">
+        <div><label>日期</label><input type="date" id="wDate" required></div>
+        <div><label>体重(kg)</label><input type="number" step="0.01" id="wKg" placeholder="5.20" required></div>
+        <button class="act" type="submit">记录</button>
+      </form>
+    </div>
+    <div class="card">
+      <h3>📋 体重历史</h3>
+      <table id="wTable"><thead><tr><th>日期</th><th>体重(kg)</th><th>变化</th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <!-- BIZ -->
+  <div class="view" id="view-biz">
+    <div class="biz">
+      <h4>🎯 为什么是蓝海</h4>
+      <ul>
+        <li>中国宠物主 <span class="k">超 1 亿</span>，宠物经济规模 <span class="k">≈7000 亿/年</span>，年增 15%+</li>
+        <li>现有 App（波奇/宠物家）都只做<span class="k">单一功能</span>，没有形成「记录→提醒→复购」闭环</li>
+        <li><span class="k">ToT 习惯缺口</span>：用户记 3 天就忘，因为「没有非记不可的理由」——而<b>超时驱虫提醒</b>就是那个理由</li>
+      </ul>
+      <h4>🧩 你的差异化打法（零开发成本起步）</h4>
+      <ul>
+        <li><b>① 交互式 HTML 即开即用</b>：本 Demo 就是 MVP，用 EnvLab 同款技术，无需 App 上架</li>
+        <li><b>② 自动化提醒 = WorkBuddy Automation</b>：把「超时未驱虫→自动提醒」做成每周跑的循环，微信/短信推给用户</li>
+        <li><b>③ 习惯闭环</b>：每次提醒附带「一键购驱虫药」→ 佣金变现（宠物电商 CPS）</li>
+        <li><b>④ 内容引流</b>：宠物健康科普笔记（工科爸爸人设复用）→ 小红书引流到管家</li>
+      </ul>
+      <h4>💰 变现路径（由轻到重）</h4>
+      <ul>
+        <li><span class="k">L1 佣金</span>：驱虫药/疫苗 CPS 分润，零库存（预计 ARPU ¥20-60/年）</li>
+        <li><span class="k">L2 会员</span>：多宠管理 + 体检报告解读 + 在线问诊入口（¥99/年）</li>
+        <li><span class="k">L3 B端</span>：宠物医院 SaaS 引流工具（按门店收费）</li>
+      </ul>
+      <h4>🚀 验证 MVP 的最小动作</h4>
+      <ul>
+        <li>本页面发到小红书 + 朋友圈，标题「给猫主子做了个健康管家，超时驱虫自动催我」</li>
+        <li>收集 50 个真实宠物主反馈 → 判断是否值得做 App</li>
+        <li>提醒自动化用现有 automation 能力即可跑通，<b>几乎零边际成本</b></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+const KEY='petHealthManager_v1';
+const todayStr=()=>new Date().toISOString().slice(0,10);
+const days=(a,b)=>Math.floor((new Date(b)-new Date(a))/86400000);
+let pets=[], cur=null;
+
+function seed(){
+  const t=todayStr();
+  pets=[
+    {id:'p1',name:'旺财',emoji:'🐕',species:'狗狗 · 中华田园',birthday:'2021-05-10',
+     feedings:[{date:t,food:'鸡胸肉+狗粮',amt:180}],
+     vaccines:[{date:'2026-03-01',type:'狂犬',next:'2027-03-01'}],
+     dewormings:[{date:'2026-05-28',type:'体内',cycle:30}],
+     weights:[{date:'2026-03-01',kg:14.2},{date:'2026-04-15',kg:14.6},{date:'2026-06-01',kg:15.1},{date:t,kg:15.3}]},
+    {id:'p2',name:'咪咪',emoji:'🐱',species:'猫咪 · 英短',birthday:'2022-08-01',
+     feedings:[],
+     vaccines:[{date:'2026-04-10',type:'猫三联',next:'2026-10-10'}],
+     dewormings:[{date:'2026-06-20',type:'体外',cycle:30}],
+     weights:[{date:'2026-04-10',kg:4.1},{date:'2026-06-01',kg:4.3},{date:t,kg:4.35}]}
+  ];
+  save();
+}
+function save(){localStorage.setItem(KEY,JSON.stringify(pets));}
+function load(){try{pets=JSON.parse(localStorage.getItem(KEY))||[];}catch(e){pets=[];}if(!pets.length)seed();cur=pets[0];}
+
+function renderPets(){
+  const bar=document.getElementById('petBar');
+  bar.innerHTML='';
+  pets.forEach(p=>{
+    const d=p.dewormings[p.dewormings.length-1];
+    let overdue=false;
+    if(d){const diff=days(d.date,todayStr());if(diff>d.cycle)overdue=true;}
+    const el=document.createElement('div');
+    el.className='pet-card'+(p.id===cur.id?' active':'');
+    el.innerHTML=`<div class="emoji">${p.emoji}</div><div class="pn">${p.name}</div><div class="ps">${p.species}</div>`+
+      (overdue?`<div class="badge warn">⚠ 驱虫逾期</div>`:`<div class="badge ok">✓ 正常</div>`);
+    el.onclick=()=>{cur=p;renderAll();};
+    bar.appendChild(el);
+  });
+  const add=document.createElement('div');
+  add.className='pet-card add-pet';add.innerHTML='+ 添加宠物';
+  add.onclick=addPet;bar.appendChild(add);
+}
+
+function addPet(){
+  const name=prompt('宠物名字：');if(!name)return;
+  const emoji=prompt('emoji（如 🐶🐱🐰）：','🐶')||'🐶';
+  const species=prompt('品种/描述：','未知')||'未知';
+  const birthday=prompt('生日（YYYY-MM-DD，可空）：','')||'';
+  pets.push({id:'p'+Date.now(),name,emoji,species,birthday,feedings:[],vaccines:[],dewormings:[],weights:[]});
+  save();cur=pets[pets.length-1];renderAll();
+}
+
+function latest(arr){return arr.length?arr[arr.length-1]:null;}
+
+function renderDashboard(){
+  document.getElementById('dashName').textContent=cur.name;
+  const az=document.getElementById('alertZone');az.innerHTML='';
+  const d=latest(cur.dewormings);
+  if(d){const diff=days(d.date,todayStr());
+    if(diff>d.cycle){az.innerHTML+=`<div class="alert"><div class="ic">⚠️</div><div class="txt"><b>驱虫已超时 ${diff-d.cycle} 天！</b><br>上次驱虫 ${d.date}（${d.type}），周期 ${d.cycle} 天。建议立即驱虫 🛡️</div></div>`;}
+  }
+  const v=latest(cur.vaccines);
+  if(v&&v.next&&v.next<todayStr()){az.innerHTML+=`<div class="alert"><div class="ic">💉</div><div class="txt"><b>疫苗已到期！</b><br>${v.type} 应于 ${v.next} 前接种。</div></div>`;}
+  if(!az.innerHTML)az.innerHTML='<div class="ok-box">✓ 一切正常，暂无待办提醒</div>';
+
+  const fedToday=cur.feedings.some(f=>f.date===todayStr());
+  const w=latest(cur.weights);
+  const feedCount=cur.feedings.length;
+  const stats=[
+    {lab:'今日喂食',val:fedToday?'✓ 已喂':'未喂',sub:fedToday?'棒棒的':'记得喂哦',c:fedToday?'var(--green)':'var(--amber)'},
+    {lab:'上次驱虫',val:d?days(d.date,todayStr())+'天前':'无',sub:d?`周期${d.cycle}天`:'请记录',c:d&&days(d.date,todayStr())>d.cycle?'var(--red)':'var(--text)'},
+    {lab:'最新体重',val:w?w.kg+'kg':'—',sub:w?w.date:'未记录',c:'var(--text)'},
+    {lab:'累计记录',val:feedCount+'条',sub:'喂食+疫苗+驱虫',c:'var(--blue)'}
+  ];
+  document.getElementById('dashStats').innerHTML=stats.map(s=>`<div class="stat"><div class="lab">${s.lab}</div><div class="val" style="color:${s.c}">${s.val}</div><div class="sub" style="color:var(--muted)">${s.sub}</div></div>`).join('');
+  drawWeight();
+}
+
+function drawWeight(){
+  const cv=document.getElementById('weightChart');if(!cv)return;const ctx=cv.getContext('2d');
+  const dpr=window.devicePixelRatio||1;
+  const cssW=cv.clientWidth||cv.parentElement.clientWidth;const cssH=220;
+  cv.width=cssW*dpr;cv.height=cssH*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,cssW,cssH);
+  const ws=cur.weights.slice().sort((a,b)=>a.date<b.date?-1:1);
+  if(ws.length<2){ctx.fillStyle='#8b949e';ctx.font='14px sans-serif';ctx.fillText('记录至少 2 条体重后显示曲线',20,40);return;}
+  const pad=40,min=Math.min(...ws.map(w=>w.kg))-0.5,max=Math.max(...ws.map(w=>w.kg))+0.5;
+  const W=cssW-pad*2,H=cssH-pad*2;
+  const X=i=>pad+W*i/(ws.length-1);
+  const Y=v=>pad+H-(v-min)/(max-min)*H;
+  ctx.strokeStyle='#262d38';ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){const y=pad+H*i/4;ctx.beginPath();ctx.moveTo(pad,y);ctx.lineTo(cssW-pad,y);ctx.stroke();
+    ctx.fillStyle='#8b949e';ctx.font='11px sans-serif';ctx.fillText((max-(max-min)*i/4).toFixed(1),6,y+4);}
+  ctx.strokeStyle='#e8255a';ctx.lineWidth=2.5;ctx.beginPath();
+  ws.forEach((w,i)=>{const x=X(i),y=Y(w.kg);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});
+  ctx.stroke();
+  ws.forEach((w,i)=>{const x=X(i),y=Y(w.kg);ctx.fillStyle='#e8255a';ctx.beginPath();ctx.arc(x,y,4,0,7);ctx.fill();
+    ctx.fillStyle='#e6edf3';ctx.font='11px sans-serif';ctx.fillText(w.kg,x-12,y-10);ctx.fillStyle='#8b949e';ctx.fillText(w.date.slice(5),x-14,cssH-12);});
+}
+
+function renderTables(){
+  const ft=document.querySelector('#feedTable tbody');
+  ft.innerHTML=cur.feedings.length?cur.feedings.slice().reverse().map(f=>`<tr><td>${f.date}</td><td>${f.food}</td><td>${f.amt||'—'}g</td></tr>`).join(''):'<tr><td colspan="3" class="empty">暂无记录</td></tr>';
+  const vt=document.querySelector('#vacTable tbody');
+  vt.innerHTML=cur.vaccines.length?cur.vaccines.slice().reverse().map(v=>{const st=v.next&&v.next<todayStr()?'<span class="pill red">已到期</span>':'<span class="pill green">有效</span>';return `<tr><td>${v.date}</td><td>${v.type}</td><td>${v.next||'—'}</td><td>${st}</td></tr>`;}).join(''):'<tr><td colspan="4" class="empty">暂无记录</td></tr>';
+  const dt=document.querySelector('#dewTable tbody');
+  dt.innerHTML=cur.dewormings.length?cur.dewormings.slice().reverse().map(d=>{const diff=days(d.date,todayStr());const od=diff>d.cycle;return `<tr><td>${d.date}</td><td>${d.type}</td><td>${d.cycle}天</td><td>${diff}天</td><td>${od?'<span class="pill red">超时'+(diff-d.cycle)+'天</span>':'<span class="pill blue">正常</span>'}</td></tr>`;}).join(''):'<tr><td colspan="5" class="empty">暂无记录</td></tr>';
+  const wt=document.querySelector('#wTable tbody');
+  const ws=cur.weights.slice().reverse();
+  wt.innerHTML=ws.length?ws.map((w,i)=>{const prev=cur.weights.slice().reverse()[i+1];const ch=prev?((w.kg-prev.kg>=0?'+':'')+(w.kg-prev.kg).toFixed(2)+'kg'):'—';const col=prev?(w.kg>=prev.kg?'var(--green)':'var(--amber)'):'var(--muted)';return `<tr><td>${w.date}</td><td>${w.kg}</td><td style="color:${col}">${ch}</td></tr>`;}).join(''):'<tr><td colspan="3" class="empty">暂无记录</td></tr>';
+}
+
+document.getElementById('feedForm').onsubmit=e=>{e.preventDefault();cur.feedings.push({date:feedDate.value,food:feedFood.value,amt:feedAmt.value||null});save();renderAll();e.target.reset();feedDate.value=todayStr();};
+document.getElementById('vacForm').onsubmit=e=>{e.preventDefault();cur.vaccines.push({date:vacDate.value,type:vacType.value,next:vacNext.value||null});save();renderAll();e.target.reset();vacDate.value=todayStr();};
+document.getElementById('dewForm').onsubmit=e=>{e.preventDefault();cur.dewormings.push({date:dewDate.value,type:dewType.value,cycle:+dewCycle.value});save();renderAll();e.target.reset();dewDate.value=todayStr();dewCycle.value=30;};
+document.getElementById('wForm').onsubmit=e=>{e.preventDefault();cur.weights.push({date:wDate.value,kg:+wKg.value});save();renderAll();e.target.reset();wDate.value=todayStr();};
+
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');document.getElementById('view-'+t.dataset.v).classList.add('active');
+  if(t.dataset.v==='dashboard')drawWeight();
+});
+window.addEventListener('resize',()=>{if(document.getElementById('view-dashboard').classList.contains('active'))drawWeight();});
+
+function renderAll(){renderPets();renderDashboard();renderTables();}
+
+[feedDate,vacDate,dewDate,wDate].forEach(el=>el.value=todayStr());
+load();renderAll();
+</script>
+</body>
+</html>
