@@ -18,11 +18,11 @@
 </head>
 <body class="p-6 md:p-16">
     <div class="max-w-6xl mx-auto">
-        <header class="flex flex-col md:flex-row justify-between items-end mb-24 gap-8 border-l-4 border-indigo-600 pl-8 text-white">
+        <header class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8 border-l-4 border-indigo-600 pl-8 text-white">
             <div>
                 <div class="flex items-center gap-2 mb-3">
                     <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_#22c55e]"></span>
-                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mono">Byte-Song / Core_6 Strategy</span>
+                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mono">Byte-Song / Six-Core Strategy</span>
                 </div>
                 <h1 class="text-4xl font-black tracking-tighter uppercase italic">EnvLab <span class="text-indigo-500">MVP</span></h1>
                 <p class="text-sm text-slate-500 mt-2 max-w-md">环境实训数字化核心引擎。专注湿化学、精密色谱、光学分析及大气物理监测逻辑。</p>
@@ -34,26 +34,41 @@
                 <div class="text-[10px] text-slate-600 font-bold uppercase tracking-[0.2em] mt-2 italic">Byte-Song Design</div>
             </div>
         </header>
+        <section class="mb-16 p-8 rounded-3xl border border-slate-800 bg-slate-900/40">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="logic-tag">INDEX</span>
+                <h2 class="text-lg font-black text-white tracking-tight">项目索引 · Project Index</h2>
+            </div>
+            <p class="text-sm text-slate-400 leading-relaxed mb-6 max-w-3xl">EnvLab 是逻辑驱动（Logic-Driven）的环境监测数字孪生实训平台，由 Byte-Song 设计。以下六大分析模块均已上线，点击上方卡片或下方索引即可进入对应的 PhET 级交互实验页。</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-xs">
+                <a href="总氮测定-PhET级升级.html" class="px-3 py-2 rounded-lg bg-slate-800/60 text-slate-300 hover:text-white hover:bg-indigo-500/20 transition">① 总氮测定 · HJ 636</a>
+                <a href="FTIR红外光谱-PhET级升级.html" class="px-3 py-2 rounded-lg bg-slate-800/60 text-slate-300 hover:text-white hover:bg-indigo-500/20 transition">② FTIR 红外光谱</a>
+                <a href="GC-MS气质联用-PhET级升级.html" class="px-3 py-2 rounded-lg bg-slate-800/60 text-slate-300 hover:text-white hover:bg-indigo-500/20 transition">③ GC-MS 气质联用</a>
+                <a href="HPLC液相色谱-PhET级升级.html" class="px-3 py-2 rounded-lg bg-slate-800/60 text-slate-300 hover:text-white hover:bg-indigo-500/20 transition">④ HPLC 液相色谱</a>
+                <a href="噪声仪测吉他-PhET级叙事教学.html" class="px-3 py-2 rounded-lg bg-slate-800/60 text-slate-300 hover:text-white hover:bg-indigo-500/20 transition">⑤ 环境噪声监测</a>
+                <a href="环境空气PM25采样-PhET级升级.html" class="px-3 py-2 rounded-lg bg-slate-800/60 text-slate-300 hover:text-white hover:bg-indigo-500/20 transition">⑥ PM2.5 重量法</a>
+            </div>
+        </section>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="glass-card p-8 rounded-3xl flex flex-col justify-between group" onclick="window.location.href='CODcr化学需氧量-PhET级升级.html'">
+            <div class="glass-card p-8 rounded-3xl flex flex-col justify-between group" onclick="window.location.href='总氮测定-PhET级升级.html'">
                 <div class="mb-8">
                     <div class="flex justify-between items-start mb-6">
-                        <i class="fas fa-burn text-2xl text-indigo-500"></i>
-                        <span class="logic-tag">HJ 828-2017</span>
+                        <i class="fas fa-flask text-2xl text-indigo-500"></i>
+                        <span class="logic-tag">HJ 636-2012</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-2">CODcr 化学需氧量</h3>
-                    <p class="text-[11px] text-slate-500 leading-relaxed">重铬酸钾消解回流滴定全过程模拟。对齐国标监测标准 SOP。</p>
+                    <h3 class="text-xl font-bold mb-2">总氮测定</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">碱性过硫酸钾消解紫外分光光度法全过程模拟。对齐国标监测标准 SOP。</p>
                 </div>
                 <div class="text-xs font-bold text-slate-400 group-hover:text-white flex items-center gap-2 uppercase tracking-widest">Execute_Logic <i class="fas fa-chevron-right text-[10px]"></i></div>
             </div>
-            <div class="glass-card p-8 rounded-3xl flex flex-col justify-between group" onclick="window.location.href='UV-Vis分光光度-PhET级升级.html'">
+            <div class="glass-card p-8 rounded-3xl flex flex-col justify-between group" onclick="window.location.href='FTIR红外光谱-PhET级升级.html'">
                 <div class="mb-8">
                     <div class="flex justify-between items-start mb-6">
-                        <i class="fas fa-vial text-2xl text-indigo-500"></i>
-                        <span class="logic-tag">光学基础</span>
+                        <i class="fas fa-wave-square text-2xl text-indigo-500"></i>
+                        <span class="logic-tag">红外光谱</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-2">UV-Vis 分光光度分析</h3>
-                    <p class="text-[11px] text-slate-500 leading-relaxed">朗伯-比色定律算法引擎。包含标曲拟合与实时吸光度读数。</p>
+                    <h3 class="text-xl font-bold mb-2">FTIR 红外光谱分析</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">傅里叶变换红外光谱分析模拟。包含特征吸收峰识别与谱图解析。</p>
                 </div>
                 <div class="text-xs font-bold text-slate-400 group-hover:text-white flex items-center gap-2 uppercase tracking-widest">Execute_Logic <i class="fas fa-chevron-right text-[10px]"></i></div>
             </div>
