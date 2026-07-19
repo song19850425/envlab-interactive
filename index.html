@@ -1,175 +1,123 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EnvLab · Interactive Environmental Lab</title>
-<style>
-:root{--bg:#0a0e17;--card:#131a2e;--card2:#1e293b;--border:rgba(255,255,255,.06);--text:#e2e8f0;--muted:#64748b;--accent:#0ea5e9;--pink:#f472b6;--green:#22c55e;--amber:#f59e0b;--purple:#a78bfa}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,'PingFang SC','Microsoft YaHei','Segoe UI',sans-serif;font-size:13px;min-height:100vh}
-.hero{text-align:center;padding:32px 20px 24px;background:linear-gradient(135deg,#0f172a,#1e1b4b);position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 40%,rgba(244,114,182,.05) 0%,transparent 50%),radial-gradient(circle at 70% 60%,rgba(14,165,233,.03) 0%,transparent 40%);pointer-events:none}
-.hero h1{font-size:22px;font-weight:800;position:relative;z-index:1}
-.hero h1 em{color:var(--pink);font-style:normal}
-.hero .sub{font-size:11px;color:var(--muted);margin-top:2px;position:relative}
-.hero .sub em{color:var(--accent);font-style:normal}
-.hero .count{display:flex;gap:16px;justify-content:center;margin-top:10px;position:relative;flex-wrap:wrap}
-.hero .count span{font-size:10px;color:var(--muted)}
-.hero .count b{color:var(--accent);font-weight:700}
-.wrap{max-width:960px;margin:0 auto;padding:12px}
-h2{font-size:13px;font-weight:700;margin:12px 0 4px;padding:5px 10px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:6px}
-h2 .arrow{font-size:9px;transition:transform .2s;color:var(--muted)}
-h2.collapsed .arrow{transform:rotate(-90deg)}
-h2 .en{font-weight:400;font-size:10px;color:var(--muted);margin-left:2px}
-.cat{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:5px;margin-bottom:2px;overflow:hidden;max-height:3000px;transition:max-height .4s}
-.cat.hide{max-height:0;margin-bottom:0}
-.card{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--card);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text);transition:.2s;font-size:11px}
-.card:hover{background:var(--card2);border-color:var(--accent);transform:translateY(-1px)}
-.card .ico{font-size:15px;width:20px;text-align:center;flex-shrink:0}
-.card .info{flex:1;min-width:0}
-.card .info .nm{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
-.card .info .nm .zh{font-size:12px;font-weight:600}
-.card .info .nm .en{font-size:10px;color:var(--muted);font-weight:400}
-.card .info .sg{font-size:9px;color:var(--muted);display:block;margin-top:1px}
-.card .tag{font-size:8px;padding:1px 5px;border-radius:3px;font-weight:600;flex-shrink:0}
-.tag-p{background:rgba(244,114,182,.15);color:var(--pink)}
-.tag-b{background:rgba(14,165,233,.15);color:var(--accent)}
-.ft{text-align:center;padding:20px;font-size:10px;color:var(--muted);margin-top:12px;border-top:1px solid var(--border);line-height:1.8}
-.ft em{color:var(--pink);font-style:normal}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnvLab MVP | Byte-Song Laboratory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700;900&display=swap');
+        :root { --brand: #6366f1; --dark-bg: #030711; }
+        body { background-color: var(--dark-bg); color: #e2e8f0; font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .glass-card { background: #0f172a; border: 1px solid #1e293b; transition: all 0.4s ease; cursor: pointer; }
+        .glass-card:hover { border-color: var(--brand); transform: translateY(-4px); box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.3); }
+        .logic-tag { background: rgba(99, 102, 241, 0.1); color: #818cf8; font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: bold; }
+    </style>
 </head>
-<body>
-
-<div class="hero">
-  <h1>🧪 <em>EnvLab</em> · 环境交互实验室</h1>
-  <div class="sub">53 interactive PhET-style labs · <em>Free</em> · Open source · No login needed</div>
-  <div class="count">
-    <span>🧪 水质/仪器 Water & Instruments <b>14</b></span>
-    <span>🧱 土壤修复 Soil Remediation <b>6</b></span>
-    <span>🌍 环境采样 Sampling <b>5</b></span>
-    <span>🎪 亲子实验 Parent-Child <b>18</b></span>
-    <span>📖 工具 Tools <b>6</b></span>
-  </div>
-</div>
-
-<div class="wrap">
-
-<!-- 亲子科学实验室 -->
-<h2 style="background:rgba(244,114,182,.08);color:var(--pink);border-left:3px solid var(--pink)" onclick="tog(this,'c0')">
-  <span class="arrow">▼</span> 🎪 亲子科学实验室 <span class="en">Parent-Child Science Lab</span>
-</h2>
-<div class="cat" id="c0">
-  <a class="card" href="亲子实验-pH试纸-PhET级.html"><span class="ico">🧪</span><span class="info"><div class="nm"><span class="zh">pH试纸测遍全家的水</span><span class="en">pH Paper · Household Liquids</span></div><span class="sg">10 liquids · color chart comparison</span></span><span class="tag tag-p">classic</span></a>
-  <a class="card" href="显微镜看微生物-PhET级叙事教学.html"><span class="ico">🔬</span><span class="info"><div class="nm"><span class="zh">显微镜看微生物</span><span class="en">Microscope · Microorganisms</span></div><span class="sg">7 organisms · 3 zoom levels · bestiary</span></span><span class="tag tag-p">classic</span></a>
-  <a class="card" href="噪声仪测吉他-PhET级叙事教学.html"><span class="ico">🎸</span><span class="info"><div class="nm"><span class="zh">噪声仪测爸爸的吉他</span><span class="en">Sound Meter · Guitar dB</span></div><span class="sg">6 strings · 7 everyday sound comparisons</span></span><span class="tag tag-p">classic</span></a>
-  <a class="card" href="自制净水器-PhET级叙事教学.html"><span class="ico">🚰</span><span class="info"><div class="nm"><span class="zh">自制净水器</span><span class="en">DIY Water Filter</span></div><span class="sg">6 stackable materials · real-time scoring</span></span><span class="tag tag-p">classic</span></a>
-  <a class="card" href="亲子实验-十万分之一天平-PhET级.html"><span class="ico">⚖️</span><span class="info"><div class="nm"><span class="zh">十万分之一天平称羽毛</span><span class="en">0.01mg Precision Balance</span></div><span class="sg">draft shield · vibration · tare</span></span><span class="tag tag-p">new</span></a>
-  <a class="card" href="亲子实验-PM2.5监测-PhET级.html"><span class="ico">🌫️</span><span class="info"><div class="nm"><span class="zh">PM2.5 监测小实验</span><span class="en">PM2.5 Air Quality Monitor</span></div><span class="sg">weather · sampling · AQI calculation</span></span><span class="tag tag-p">new</span></a>
-  <a class="card" href="亲子实验-日照温度计-PhET级.html"><span class="ico">🌡️</span><span class="info"><div class="nm"><span class="zh">日照温度计</span><span class="en">Sun Surface Temperature</span></div><span class="sg">6 surfaces · time/season/cloud comparison</span></span><span class="tag tag-p">🆕 B组</span></a>
-  <a class="card" href="亲子实验-风速与蒸发-PhET级.html"><span class="ico">💨</span><span class="info"><div class="nm"><span class="zh">风速与蒸发</span><span class="en">Wind & Evaporation</span></div><span class="sg">wind/temp/humidity · evaporation rate curve</span></span><span class="tag tag-p">🆕 B组</span></a>
-  <a class="card" href="亲子实验-种子发芽-PhET级.html"><span class="ico">🌱</span><span class="info"><div class="nm"><span class="zh">种子发芽条件</span><span class="en">Seed Germination</span></div><span class="sg">3 seeds · light/water control · growth stages</span></span><span class="tag tag-p">🆕 B组</span></a>
-  <a class="card" href="亲子实验-云的分类与降雨-PhET级.html"><span class="ico">☁️</span><span class="info"><div class="nm"><span class="zh">云的分类与降雨</span><span class="en">Cloud Types & Rain</span></div><span class="sg">temp/humidity/wind · cloud formation · rain sim</span></span><span class="tag tag-p">B组</span></a>
-  <a class="card" href="亲子实验-心跳与运动-PhET级.html"><span class="ico">🫀</span><span class="info"><div class="nm"><span class="zh">心跳与运动</span><span class="en">Heartbeat & Exercise</span></div><span class="sg">5 exercises · real-time HR · recovery curve</span></span><span class="tag tag-p">🆕 C组</span></a>
-  <a class="card" href="亲子实验-听力测试-PhET级.html"><span class="ico">👂</span><span class="info"><div class="nm"><span class="zh">听力测试</span><span class="en">Hearing Test</span></div><span class="sg">frequency/volume/age · audio waveform</span></span><span class="tag tag-p">🆕 C组</span></a>
-  <a class="card" href="亲子实验-喝水平衡-PhET级.html"><span class="ico">💧</span><span class="info"><div class="nm"><span class="zh">每天喝多少水</span><span class="en">Daily Water Balance</span></div><span class="sg">intake/output · activity/weather · hydration</span></span><span class="tag tag-p">🆕 C组</span></a>
-  <a class="card" href="亲子实验-洗手细菌-PhET级.html"><span class="ico">🧴</span><span class="info"><div class="nm"><span class="zh">洗手 vs 细菌</span><span class="en">Hand Washing & Bacteria</span></div><span class="sg">6 methods · Petri dish · germ reduction %</span></span><span class="tag tag-p">🆕 C组</span></a>
-  <a class="card" href="亲子实验-油锅温度-PhET级.html"><span class="ico">🍳</span><span class="info"><div class="nm"><span class="zh">油锅温度检测</span><span class="en">Frying Oil Smoke Point</span></div><span class="sg">5 oils · heat/time · smoke warning</span></span><span class="tag tag-p">🆕 A组</span></a>
-  <a class="card" href="亲子实验-鸡蛋沉浮-PhET级.html"><span class="ico">🥚</span><span class="info"><div class="nm"><span class="zh">鸡蛋沉浮实验</span><span class="en">Egg Floating · Salt Density</span></div><span class="sg">salt · density · sink/float/suspend</span></span><span class="tag tag-p">🆕 A组</span></a>
-  <a class="card" href="亲子实验-溶解极限-PhET级.html"><span class="ico">🧂</span><span class="info"><div class="nm"><span class="zh">糖盐溶解极限</span><span class="en">Solubility Limit</span></div><span class="sg">3 solutes · temp · saturation</span></span><span class="tag tag-p">🆕 A组</span></a>
-  <a class="card" href="亲子实验-柠檬汽水-PhET级.html"><span class="ico">🫧</span><span class="info"><div class="nm"><span class="zh">自制柠檬汽水</span><span class="en">DIY Lemon Soda</span></div><span class="sg">acid+base · CO₂ bubbles · pH change</span></span><span class="tag tag-p">🆕 A组</span></a>
-</div>
-
-<!-- 土壤修复 -->
-<h2 style="background:rgba(14,165,233,.08);color:var(--accent);border-left:3px solid var(--accent)" onclick="tog(this,'c1')">
-  <span class="arrow">▼</span> 🧱 土壤与地下水修复 <span class="en">Soil & Groundwater Remediation</span>
-</h2>
-<div class="cat" id="c1">
-  <a class="card" href="SVE土壤气提-PhET级升级.html"><span class="ico">🌬️</span><span class="info"><div class="nm"><span class="zh">SVE 土壤气提</span><span class="en">Soil Vapor Extraction</span></div><span class="sg">4 parameters · concentration curve animation</span></span></a>
-  <a class="card" href="土壤淋洗洗脱-PhET级升级.html"><span class="ico">💧</span><span class="info"><div class="nm"><span class="zh">土壤淋洗/洗脱</span><span class="en">Soil Washing</span></div><span class="sg">3 reagents · percolation animation</span></span></a>
-  <a class="card" href="P&T抽水处理-PhET级升级.html"><span class="ico">🕳️</span><span class="info"><div class="nm"><span class="zh">P&T 抽水处理</span><span class="en">Pump & Treat</span></div><span class="sg">water table drawdown · plume shrinkage</span></span></a>
-  <a class="card" href="截获槽暗管-PhET级升级.html"><span class="ico">🧱</span><span class="info"><div class="nm"><span class="zh">水力截获槽/暗管</span><span class="en">Hydraulic Cut-off Wall</span></div><span class="sg">wall vs no-wall · particle interception</span></span></a>
-  <a class="card" href="微生物修复-PhET级升级.html"><span class="ico">🦠</span><span class="info"><div class="nm"><span class="zh">原位微生物修复</span><span class="en">In-Situ Bioremediation</span></div><span class="sg">aerobic/anaerobic · bacteria S-curve</span></span></a>
-  <a class="card" href="AAS原子吸收-PhET级升级.html"><span class="ico">⚗️</span><span class="info"><div class="nm"><span class="zh">AAS 原子吸收光谱</span><span class="en">Atomic Absorption Spectrometry</span></div><span class="sg">heavy metal detection</span></span></a>
-</div>
-
-<!-- 环境采样 -->
-<h2 style="background:rgba(251,191,36,.08);color:var(--amber);border-left:3px solid var(--amber)" onclick="tog(this,'c2')">
-  <span class="arrow">▼</span> 🌍 环境采样系列 <span class="en">Environmental Sampling</span>
-</h2>
-<div class="cat" id="c2">
-  <a class="card" href="地表水采样布点-PhET级升级.html"><span class="ico">🌊</span><span class="info"><div class="nm"><span class="zh">地表水采样布点</span><span class="en">Surface Water Sampling</span></div><span class="sg">SVG river · 5 sections · 3 depths</span></span></a>
-  <a class="card" href="土壤采样布点-PhET级升级.html"><span class="ico">🌱</span><span class="info"><div class="nm"><span class="zh">土壤采样布点</span><span class="en">Soil Sampling Grid Design</span></div><span class="sg">3 methods · sample count calculation</span></span></a>
-  <a class="card" href="地下水洗井采样-PhET级升级.html"><span class="ico">💧</span><span class="info"><div class="nm"><span class="zh">地下水洗井采样</span><span class="en">GW Purging & Sampling</span></div><span class="sg">3 parameter stabilization · well animation</span></span></a>
-  <a class="card" href="环境空气PM25采样-PhET级升级.html"><span class="ico">🌬️</span><span class="info"><div class="nm"><span class="zh">环境空气PM2.5采样</span><span class="en">Ambient Air PM2.5 Sampling</span></div><span class="sg">filter · calibration · 24h sampling</span></span></a>
-  <a class="card" href="固定源废气采样-PhET级升级.html"><span class="ico">🏭</span><span class="info"><div class="nm"><span class="zh">固定源废气采样</span><span class="en">Stationary Source Emissions</span></div><span class="sg">isokinetic sampling · 18-point grid</span></span></a>
-</div>
-
-<!-- 水质与仪器 -->
-<h2 style="background:rgba(34,197,55,.08);color:var(--green);border-left:3px solid var(--green)" onclick="tog(this,'c3')">
-  <span class="arrow">▼</span> 🧪 水质检测 & 仪器分析 <span class="en">Water Quality & Instrument Analysis</span>
-</h2>
-<div class="cat" id="c3">
-  <a class="card" href="总氮测定-PhET级升级.html"><span class="ico">🧪</span><span class="info"><div class="nm"><span class="zh">总氮测定</span><span class="en">Total Nitrogen Test</span></div><span class="sg">dual wavelength · standard curve</span></span></a>
-  <a class="card" href="浊度测定-PhET级升级.html"><span class="ico">🧪</span><span class="info"><div class="nm"><span class="zh">浊度测定</span><span class="en">Turbidity Measurement</span></div><span class="sg">4 samples · calibration knob</span></span></a>
-  <a class="card" href="GC-MS气质联用-PhET级升级.html"><span class="ico">⚗️</span><span class="info"><div class="nm"><span class="zh">GC-MS 气质联用</span><span class="en">Gas Chromatography-Mass Spec</span></div><span class="sg">chromatogram · mass spectrum library</span></span></a>
-  <a class="card" href="HPLC液相色谱-PhET级升级.html"><span class="ico">⚗️</span><span class="info"><div class="nm"><span class="zh">HPLC 液相色谱</span><span class="en">High Performance Liquid Chromatography</span></div><span class="sg">mobile phase · column temperature</span></span></a>
-  <a class="card" href="ICP-OES等离子体发射光谱-PhET级升级.html"><span class="ico">⚗️</span><span class="info"><div class="nm"><span class="zh">ICP-OES</span><span class="en">Inductively Coupled Plasma-OES</span></div><span class="sg">multi-element simultaneous detection</span></span></a>
-  <a class="card" href="AFS原子荧光-PhET级升级.html"><span class="ico">⚗️</span><span class="info"><div class="nm"><span class="zh">AFS 原子荧光</span><span class="en">Atomic Fluorescence Spectrometry</span></div><span class="sg">As/Se/Hg detection</span></span></a>
-  <a class="card" href="LC-MS液质联用-PhET级升级.html"><span class="ico">⚗️</span><span class="info"><div class="nm"><span class="zh">LC-MS 液质联用</span><span class="en">Liquid Chromatography-Mass Spec</span></div><span class="sg">ion source · mass spectrum</span></span></a>
-  <a class="card" href="FTIR红外光谱-PhET级升级.html"><span class="ico">⚗️</span><span class="info"><div class="nm"><span class="zh">FTIR 红外光谱</span><span class="en">Fourier Transform Infrared</span></div><span class="sg">functional group · fingerprint region</span></span></a>
-</div>
-
-<!-- 工具 -->
-<h2 style="background:rgba(147,51,234,.08);color:var(--purple);border-left:3px solid var(--purple)" onclick="tog(this,'c4')">
-  <span class="arrow">▼</span> 📖 工具 & 速查 <span class="en">Assessment Tools & References</span>
-</h2>
-<div class="cat" id="c4">
-  <a class="card" href="读懂一条河Demo.html"><span class="ico">🌊</span><span class="info"><div class="nm"><span class="zh">读懂一条河</span><span class="en">River Health Assessment</span></div><span class="sg">water quality evaluation demo</span></span></a>
-  <a class="card" href="环境质量综合体检中心.html"><span class="ico">🩺</span><span class="info"><div class="nm"><span class="zh">环境质量综合体检中心</span><span class="en">Environmental Health Checkup</span></div><span class="sg">multi-dimension comprehensive analysis</span></span></a>
-  <a class="card" href="监测方案智能生成器.html"><span class="ico">📐</span><span class="info"><div class="nm"><span class="zh">监测方案智能生成器</span><span class="en">Monitoring Plan Generator</span></div><span class="sg">3-step · 4 types · auto generation</span></span></a>
-  <a class="card" href="环境质量空间关联分析.html"><span class="ico">🗺️</span><span class="info"><div class="nm"><span class="zh">环境质量空间关联分析</span><span class="en">Spatial Correlation Analysis</span></div><span class="sg">geo-environmental data association</span></span></a>
-  <a class="card" href="气相色谱方法开发速查表.html"><span class="ico">🧪</span><span class="info"><div class="nm"><span class="zh">气相色谱方法开发速查表</span><span class="en">GC Method Dev Quick Ref</span></div><span class="sg">method development reference</span></span></a>
-  <a class="card" href="水质评价标准速查表.html"><span class="ico">📊</span><span class="info"><div class="nm"><span class="zh">水质评价速查表</span><span class="en">Water Quality Standards Ref</span></div><span class="sg">standard limits quick lookup</span></span></a>
-</div>
-
-<!-- 留言区（使用 utteranc.es · 基于 GitHub Issues） -->
-<div style="max-width:600px;margin:24px auto;padding:0 12px">
-  <h2 style="background:rgba(244,114,182,.08);color:var(--pink);border-left:3px solid var(--pink);cursor:default;margin-bottom:8px">💬 留言</h2>
-  <p style="font-size:11px;color:var(--muted);text-align:center;margin-bottom:10px">需要 GitHub 账号登录 · 留言会同步到仓库 Issues</p>
-  <script src="https://utteranc.es/client.js"
-    repo="song19850425/envlab-interactive"
-    issue-term="pathname"
-    theme="icy-dark"
-    crossorigin="anonymous"
-    async>
-  </script>
-  <noscript><p style="font-size:11px;color:var(--muted);text-align:center">留言需要启用 JavaScript</p></noscript>
-</div>
-
-<script>function tog(e,i){document.getElementById(i).classList.toggle('hide');e.classList.toggle('collapsed')}
-
-// 访问计数器 (countapi.xyz - 免费无登录)
-fetch('https://api.countapi.xyz/hit/envlab-interactive/visits')
-  .then(r=>r.json())
-  .then(d=>{document.getElementById('visitCount').textContent=d.value.toLocaleString()})
-  .catch(()=>document.getElementById('visitCount').textContent='?');
-</script>
-
-<div class="ft">
-  EnvLab · 环境交互实验室 · Interactive Environmental Testing Labs<br>
-  全部单文件 HTML 即开即用 · Zero backend no login · <em>jinghao.song@gmail.com</em><br>
-  <a href="https://github.com/song19850425/envlab-interactive" style="color:var(--accent);text-decoration:none">Open Source on GitHub</a>
-  <span style="display:inline-block;margin-left:12px;font-size:9px;color:var(--muted)">·</span>
-  <a href="https://github.com/song19850425/envlab-interactive/graphs/traffic" style="color:var(--muted);text-decoration:none;font-size:9px">📊 访问统计</a>
-  <span style="display:inline-block;margin-left:12px;font-size:9px;color:var(--muted)">👁️ 总访问: <b id="visitCount" style="font-family:'Courier New',monospace">...</b></span>
-</div>
-
-<!-- Cloudflare Web Analytics -->
-<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "替换为你的Cloudflare Token"}'></script>
-<!-- 获取token：cloudflare.com → Analytics → Web Analytics → 添加站点 → 复制 token 替换上方 "替换为你的Cloudflare Token" -->
-
-
-</div>
+<body class="p-6 md:p-16">
+    <div class="max-w-6xl mx-auto">
+        <header class="flex flex-col md:flex-row justify-between items-end mb-24 gap-8 border-l-4 border-indigo-600 pl-8 text-white">
+            <div>
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_#22c55e]"></span>
+                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mono">Byte-Song / Core_6 Strategy</span>
+                </div>
+                <h1 class="text-4xl font-black tracking-tighter uppercase italic">EnvLab <span class="text-indigo-500">MVP</span></h1>
+                <p class="text-sm text-slate-500 mt-2 max-w-md">环境实训数字化核心引擎。专注湿化学、精密色谱、光学分析及大气物理监测逻辑。</p>
+            </div>
+            <div class="text-right">
+                <a href="mailto:jinghao.song@gmail.com" class="text-[10px] font-bold text-slate-400 hover:text-white transition mono">
+                    <i class="far fa-envelope mr-1"></i> jinghao.song@gmail.com
+                </a>
+                <div class="text-[10px] text-slate-600 font-bold uppercase tracking-[0.2em] mt-2 italic">Byte-Song Design</div>
+            </div>
+        </header>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="glass-card p-8 rounded-3xl flex flex-col justify-between group" onclick="window.location.href='总氮测定-PhET级升级.html'">
+                <div class="mb-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <i class="fas fa-burn text-2xl text-indigo-500"></i>
+                        <span class="logic-tag">HJ 828-2017</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">CODcr 化学需氧量</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">重铬酸钾消解回流滴定全过程模拟。对齐国标监测标准 SOP。</p>
+                </div>
+                <div class="text-xs font-bold text-slate-400 group-hover:text-white flex items-center gap-2 uppercase tracking-widest">Execute_Logic <i class="fas fa-chevron-right text-[10px]"></i></div>
+            </div>
+            <div class="glass-card p-8 rounded-3xl flex flex-col justify-between group" onclick="window.location.href='FTIR红外光谱-PhET级升级.html'">
+                <div class="mb-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <i class="fas fa-vial text-2xl text-indigo-500"></i>
+                        <span class="logic-tag">光学基础</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">UV-Vis 分光光度分析</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">朗伯-比色定律算法引擎。包含标曲拟合与实时吸光度读数。</p>
+                </div>
+                <div class="text-xs font-bold text-slate-400 group-hover:text-white flex items-center gap-2 uppercase tracking-widest">Execute_Logic <i class="fas fa-chevron-right text-[10px]"></i></div>
+            </div>
+            <div class="glass-card p-8 rounded-3xl flex flex-col justify-between group border-t-2 border-indigo-500" onclick="window.location.href='GC-MS气质联用-PhET级升级.html'">
+                <div class="mb-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <i class="fas fa-chart-line text-2xl text-indigo-500"></i>
+                        <span class="logic-tag">精密色谱</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">GC 气相色谱分析</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">进样、色谱柱分离、检测器响应模拟。支持 VOCs 定量分析演练。</p>
+                </div>
+                <div class="text-xs font-bold text-slate-400 group-hover:text-white flex items-center gap-2 uppercase tracking-widest">Execute_Logic <i class="fas fa-chevron-right text-[10px]"></i></div>
+            </div>
+            <div class="glass-card p-8 rounded-3xl flex flex-col justify-between group border-t-2 border-indigo-500" onclick="window.location.href='HPLC液相色谱-PhET级升级.html'">
+                <div class="mb-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <i class="fas fa-microchip text-2xl text-indigo-500"></i>
+                        <span class="logic-tag">精密色谱</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">LC 液相色谱分析</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">高压输液与柱分离模拟。侧重于多环芳烃等非挥发性物质分析。</p>
+                </div>
+                <div class="text-xs font-bold text-slate-400 group-hover:text-white flex items-center gap-2 uppercase tracking-widest">Execute_Logic <i class="fas fa-chevron-right text-[10px]"></i></div>
+            </div>
+            <div class="glass-card p-8 rounded-3xl flex flex-col justify-between group" onclick="window.location.href='噪声仪测吉他-PhET级叙事教学.html'">
+                <div class="mb-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <i class="fas fa-volume-up text-2xl text-indigo-500"></i>
+                        <span class="logic-tag">物理监测</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">环境噪声污染监测</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">声级计操作逻辑。包含等效 A 声级计算与背景噪声修正。</p>
+                </div>
+                <div class="text-xs font-bold text-slate-400 group-hover:text-white flex items-center gap-2 uppercase tracking-widest">Execute_Logic <i class="fas fa-chevron-right text-[10px]"></i></div>
+            </div>
+            <div class="glass-card p-8 rounded-3xl flex flex-col justify-between group" onclick="window.location.href='环境空气PM25采样-PhET级升级.html'">
+                <div class="mb-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <i class="fas fa-smog text-2xl text-indigo-500"></i>
+                        <span class="logic-tag">HJ 618-2011</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">PM2.5 重量法测定</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">模拟滤膜恒重与采样称量全流程。支持 AQI 自动解析。</p>
+                </div>
+                <div class="text-xs font-bold text-slate-400 group-hover:text-white flex items-center gap-2 uppercase tracking-widest">Execute_Logic <i class="fas fa-chevron-right text-[10px]"></i></div>
+            </div>
+        </div>
+        <footer class="mt-40 pb-12 flex flex-col md:flex-row justify-between items-center border-t border-slate-900 pt-10 gap-8">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full border border-slate-800 p-1">
+                    <div class="w-full h-full rounded-full bg-slate-900 flex items-center justify-center text-[10px] font-bold">BS</div>
+                </div>
+                <div>
+                    <div class="text-[10px] text-slate-600 font-bold uppercase tracking-[0.2em] mb-1 italic text-white">Byte-Song Architecture</div>
+                    <div class="text-xs font-bold text-indigo-400">数字化实验室架构师 · 环境监测学术专家</div>
+                </div>
+            </div>
+            <div class="flex gap-10 text-[9px] text-slate-600 font-bold uppercase tracking-[0.3em]">
+                <span>CMA/CNAS Standard</span>
+                <span>Logic Driven</span>
+                <span>Company of One</span>
+            </div>
+        </footer>
+    </div>
 </body>
 </html>
